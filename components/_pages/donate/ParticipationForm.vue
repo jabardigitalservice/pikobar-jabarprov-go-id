@@ -91,7 +91,7 @@
           {{ logistic.matg_id }}
         </div>
         <div v-if="!$store.state.donate.selectedLogistics.length" class="logistic-selected text-center border-red-200">
-          Tidak ada data. <a href="#table-logistik" class="font-italic">Tambahkan sekarang</a>
+          Tidak ada data, <a href="#table-logistik" class="text-red-600">tambahkan sekarang</a>
         </div>
       </div>
       <div class="mb-4">
@@ -100,15 +100,16 @@
         </label>
         <div class="relative">
           <button
-            class="border border-green-400 text-green-600 rounded-lg px-4 text-sm py-1 mr-2"
+            :class="[payload.statement_letter_url.match(/http/gi) ? 'border-green-400 text-green-600' : 'border-red-400 text-red-600']"
+            class="border rounded-lg px-4 text-sm py-1 mr-2 my-1"
             @click.prevent="uploadDocument()"
           >
             <FontAwesomeIcon v-if="payload.statement_letter_url.match(/http/gi)" class="inline-block mr-2 text-green-600" :icon="icons.faCheckCircle" />
-            <FontAwesomeIcon v-else class="inline-block mr-2 text-green-600" :icon="icons.faFileUpload" />
+            <FontAwesomeIcon v-else class="inline-block mr-2 text-red-600" :icon="icons.faFileUpload" />
             Upload Dokumen
           </button>
           <button
-            class="border border-gray-400 text-gray-600 rounded-lg px-4 text-sm py-1"
+            class="border border-gray-400 text-gray-600 rounded-lg px-4 text-sm py-1 my-1"
             @click.prevent="downloadDocument()"
           >
             <FontAwesomeIcon class="inline-block mr-2 text-gray-600" :icon="icons.faFileDownload" />
@@ -141,14 +142,14 @@
           @verify="onVerify"
           @expired="onExpired"
           size="invisible"
-          sitekey="_SITEKEY_RECAPTCHA_HERE_">
+          sitekey="6LeuqfwUAAAAAPwDUkbNvIawZX7T9o_gxMzLZXNZ">
         </vue-recaptcha>
       </client-only>
       <button
-        :disabled="$store.state.donate.selectedLogistics.length ? false : true"
+        :disabled="$store.state.donate.selectedLogistics.length && payload.statement_letter_url ? false : true"
         type="submit"
         class="text-white rounded-lg px-6 py-2"
-        :class="[$store.state.donate.selectedLogistics.length ? 'bg-brand-green' : 'bg-gray-400 cursor-not-allowed']"
+        :class="[$store.state.donate.selectedLogistics.length && payload.statement_letter_url ? 'bg-brand-green' : 'bg-gray-400 cursor-not-allowed']"
       >
         Kirim
       </button>
@@ -159,6 +160,7 @@
 <script>
 import { faCheckCircle, faTrash, faFileDownload, faFileUpload } from '@fortawesome/free-solid-svg-icons'
 import VueRecaptcha from 'vue-recaptcha'
+import { uploadDocument } from '../../../api/donation'
 export default {
   components: { VueRecaptcha },
   data () {
@@ -268,12 +270,10 @@ export default {
     uploadDocument () {
       const fileInput = document.createElement('input')
       fileInput.setAttribute('type', 'file')
-      fileInput.setAttribute('name', 'file')
       fileInput.addEventListener('change', (e) => {
-        const formData = new FormData()
-        formData.append('file', e.target.files[0])
-        // SEND REQUEST UPLOAD & GET RESPONSE FILE URL
-        this.payload.statement_letter_url = 'https://blablabla.com'
+        uploadDocument(e.target.files[0]).then((res) => {
+          this.payload.statement_letter_url = res
+        })
       })
       fileInput.click()
     },

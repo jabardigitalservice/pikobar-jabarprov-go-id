@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { storage } from '../lib/firebase'
 
 const WMSApi = axios.create({
   baseURL: process.env.WMS_BASE_URL,
@@ -52,4 +53,15 @@ export async function getLogistics (config = {}) {
     total,
     data
   }
+}
+export async function uploadDocument (file) {
+  const timestamp = Number(new Date())
+  const storageRef = await storage.ref('donation-documents/' + timestamp.toString())
+    .put(file)
+    .then(async function (snapshot) {
+      return await snapshot.ref.getDownloadURL().then(function (downloadURL) {
+        return downloadURL
+      })
+    })
+  return storageRef
 }
