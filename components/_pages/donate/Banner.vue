@@ -24,7 +24,7 @@ export default {
           sequence: 1,
           title: 'Banner 1',
           action_url: '#',
-          url: require('~/assets/banner-placeholder.jpg'),
+          url: '/img/donasi-1.png',
           objectFit: 'cover'
         },
         {
@@ -32,7 +32,7 @@ export default {
           sequence: 2,
           title: 'Banner 2',
           action_url: '#',
-          url: require('~/assets/banner-placeholder.jpg'),
+          url: '/img/donasi-2.png',
           objectFit: 'cover'
         },
         {
@@ -40,7 +40,15 @@ export default {
           sequence: 3,
           title: 'Banner 3',
           action_url: '#',
-          url: require('~/assets/banner-placeholder.jpg'),
+          url: '/img/donasi-3.png',
+          objectFit: 'cover'
+        },
+        {
+          id: 3,
+          sequence: 4,
+          title: 'Banner 4',
+          action_url: '#',
+          url: '/img/donasi-4.png',
           objectFit: 'cover'
         }
       ]

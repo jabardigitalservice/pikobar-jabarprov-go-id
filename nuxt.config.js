@@ -15,7 +15,8 @@ export default {
     APP_TITLE,
     URL: process.env.URL,
     WMS_API_KEY: process.env.WMS_API_KEY,
-    WMS_BASE_URL: process.env.WMS_BASE_URL
+    WMS_BASE_URL: process.env.WMS_BASE_URL,
+    RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY
   },
   router: {
     prefetchLinks: false

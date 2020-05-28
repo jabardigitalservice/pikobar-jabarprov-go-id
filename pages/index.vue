@@ -136,10 +136,10 @@
       </div>
       <div class="flex flex-row flex-wrap items-stretch my-8">
         <div
-          class="w-full mb-8 lg:mb-0 lg:w-1/4 rounded-lg bg-white shadow-md lg:mr-8 p-5 md:p-8"
+          class="w-full flex flex-col mb-8 lg:mb-0 lg:w-1/4 lg:mr-8"
           style="min-width:320px"
         >
-          <div class="flex flex-col justify-between items-start h-full">
+          <div class="flex flex-col justify-between items-start mb-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
             <header>
               <h3 class="text-lg lg:text-2xl">
                 <strong>Tanya kepada sesama wargi Jabar soal penanganan COVID-19 di Forum Pikobar!</strong>
@@ -151,6 +151,20 @@
               target="_blank"
             >
               <b>Tanyakan Sekarang</b>
+            </a>
+          </div>
+          <div class="flex flex-col justify-between items-start p-5 md:p-8 rounded-lg bg-white shadow-md">
+            <header>
+              <h3 class="text-lg lg:text-2xl">
+                <strong>Ingin berkontribusi membantu Jabar dalam menangani COVID-19?</strong>
+              </h3>
+            </header>
+            <a
+              class="mt-8 px-6 py-4 inline-block rounded-lg bg-brand-green text-white border-2 border-solid border-brand-green"
+              href="https://indorelawan.org/p/pikobar"
+              target="_blank"
+            >
+              <b>Daftar Relawan</b>
             </a>
           </div>
         </div>

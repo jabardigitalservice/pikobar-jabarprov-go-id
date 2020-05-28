@@ -134,16 +134,16 @@
           </option>
         </select>
       </div>
-      <hr class="mb-4" />
+      <hr class="mb-4">
       <client-only>
         <vue-recaptcha
           ref="invisibleRecaptcha"
-          :loadRecaptchaScript="true"
+          :load-recaptcha-script="true"
+          size="invisible"
+          :sitekey="recaptchaKey"
           @verify="onVerify"
           @expired="onExpired"
-          size="invisible"
-          sitekey="6LeuqfwUAAAAAPwDUkbNvIawZX7T9o_gxMzLZXNZ">
-        </vue-recaptcha>
+        />
       </client-only>
       <button
         :disabled="$store.state.donate.selectedLogistics.length && payload.statement_letter_url ? false : true"
@@ -189,6 +189,9 @@ export default {
     }
   },
   computed: {
+    recaptchaKey () {
+      return process.env.RECAPTCHA_SITE_KEY
+    },
     hasAtLeastOneError () {
       return Object.keys(this.errors).some((key) => {
         return !!this.errors[key]

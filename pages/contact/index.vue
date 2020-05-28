@@ -12,56 +12,16 @@
     </div>
     <br>
     <div class="container mx-auto">
-      <div class="m-4 md:m-8 p-4 md:p-8 bg-white border-solid border border-gray-400 rounded-lg">
-        <section id="hospitalList">
-          <h2 class="text-2xl font-bold leading-tight">
-            Daftar Rumah Sakit Rujukan
-          </h2>
-          <p class="mb-6 mt-2 text-base opacity-50 leading-tight">
-            Berikut ini adalah rumah sakit yang menjadi rujukan untuk pasien dengan status Pasien dalam Pengawasan. Anda harus mengunjungi fasilitas kesehatan terdekat terlebih dahulu seperti klinik/rumah sakit umum sebelum akhirnya dapat dirujuk ke rumah sakit di bawah ini.
-          </p>
-          <br>
-          <div>
-            <ContactList :items="hospitals" />
-          </div>
-        </section>
-      </div>
-      <div class="m-4 md:m-8 p-4 md:p-8 bg-white border-solid border border-gray-400 rounded-lg">
-        <section id="callCenterList">
-          <h2 class="mb-6 text-2xl font-bold leading-tight">
-            Hubungi Call Center
-          </h2>
-          <CallCenter />
-        </section>
-      </div>
-      <div class="m-4 md:m-8 p-4 md:p-8 bg-white border-solid border border-gray-400 rounded-lg">
-        <section id="taskForceList">
-          <h2 class="mb-6 text-2xl font-bold leading-tight">
-            Website Gugus Tugas Kota/Kabupaten Jawa Barat
-          </h2>
-          <TaskForce />
-        </section>
-      </div>
+      <ContactsAccordion />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
-import ContactList from '~/components/ContactList'
-import CallCenter from '~/components/CallCenter'
-import TaskForce from '~/components/TaskForce'
 export default {
   components: {
-    ContactList,
-    CallCenter,
-    TaskForce
-  },
-  computed: {
-    ...mapState('hospitals', {
-      hospitals: 'items'
-    })
+    ContactsAccordion: () => import('~/components/ContactsAccordion')
   },
   mounted () {
     this.$store.dispatch('hospitals/getItems')

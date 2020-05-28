@@ -1,33 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-row flex-wrap md:flex-no-wrap items-stretch rounded-none sm:rounded overflow-hidden">
-      <input
-        v-model="searchString"
-        class="min-w-0 inline-block w-full flex-none sm:flex-1 bg-gray-200 p-4"
-        placeholder="Cari kabupaten atau kota..."
-        @keyup.enter="performFiltering"
-      >
-      <div class="flex-1 w-full mt-2 sm:mt-0 sm:flex-none sm:w-auto flex justify-end items-stretch">
-        <button
-          class="mr-2 sm:mr-0 px-4 py-2 bg-brand-blue hover:bg-brand-blue-lighter text-white flex justify-center items-center"
-          @click="performFiltering"
-        >
-          <FontAwesomeIcon :icon="icon.faSearch" class="mr-2" />
-          <span>
-            Cari
-          </span>
-        </button>
-        <button
-          class="px-4 py-2 bg-gray-300 hover:bg-gray-200 text-gray-800 flex justify-center items-center"
-          @click="onReset"
-        >
-          <FontAwesomeIcon :icon="icon.faTimes" class="mr-2" />
-          <span>
-            Reset
-          </span>
-        </button>
-      </div>
-    </div>
+    <StringSearchQuery v-if="showSearchBar" :value="mSearchString" @search="onLocalSearchStringChanged" />
     <br>
     <table class="w-full">
       <thead class="hidden md:table-header-group">
@@ -99,26 +72,30 @@
 <script>
 import { ContentLoader } from 'vue-content-loader'
 import { mapActions } from 'vuex'
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 export default {
   name: 'TaskForce',
   components: {
+    StringSearchQuery: () => import('../StringSearchQuery'),
     ContentLoader
   },
   props: {
+    searchString: {
+      type: String,
+      default: null
+    },
     count: {
       type: Number,
       default: 9999
+    },
+    showSearchBar: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
     return {
       isPending: true,
-      searchString: '',
-      icon: {
-        faSearch,
-        faTimes
-      },
+      mSearchString: '',
       filteredTaskForces: null
     }
   },
@@ -131,7 +108,14 @@ export default {
     this.isPending = true
     this.getItems()
       .then(() => {
-        this.performFiltering()
+        this.$watch(
+          'searchString',
+          function handler (v) {
+            this.mSearchString = v
+            this.performFiltering(this.mSearchString)
+          },
+          { immediate: true }
+        )
       })
       .finally(() => {
         this.isPending = false
@@ -141,22 +125,23 @@ export default {
     ...mapActions('task-forces', {
       getItems: 'getItems'
     }),
-    performFiltering () {
+    onLocalSearchStringChanged (str) {
+      this.$emit('update:searchString')
+      this.mSearchString = str
+      this.performFiltering(str)
+    },
+    performFiltering (str) {
       if (!this.taskForces) {
         this.filteredTaskForces = null
       }
-      if (!this.searchString) {
+      if (!str) {
         this.filteredTaskForces = this.taskForces.filter((_, index) => index < this.count)
       }
-      if (this.searchString) {
+      if (str) {
         this.filteredTaskForces = this.taskForces.filter((taskForce) => {
-          return taskForce.name.toLowerCase().includes(this.searchString.toLowerCase())
+          return taskForce.name.toLowerCase().includes(str.toLowerCase())
         }).filter((_, index) => index < this.count)
       }
-    },
-    onReset () {
-      this.searchString = ''
-      this.performFiltering()
     }
   }
 }

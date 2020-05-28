@@ -36,9 +36,6 @@
     <section class="m-4 md:m-8 rounded-lg border border-solid border-gray-300 bg-white">
       <KPBMContact />
     </section>
-    <section class="m-4 md:m-8 rounded-lg border border-solid border-gray-300 bg-white">
-      <ThanksTo />
-    </section>
   </div>
 </template>
 <script>
@@ -49,8 +46,7 @@ export default {
   components: {
     DonationBanners: () => import('../../components/_pages/donate/Banner'),
     KPBMContact: () => import('../../components/_pages/donate/KPBMContact'),
-    CollectedDonationTable: () => import('../../components/_pages/donate/CollectedDonationTable'),
-    ThanksTo: () => import('../../components/_pages/donate/ThanksTo')
+    CollectedDonationTable: () => import('../../components/_pages/donate/CollectedDonationTable')
   },
   data () {
     return {

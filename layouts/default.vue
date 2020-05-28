@@ -16,34 +16,36 @@
         </div>
       </div>
     </div>
-    <Appbar />
+    <Appbar :drawer-active="isDrawerOpen" @toggle:drawer="isDrawerOpen = $event" />
+    <AppDrawer ref="drawer" :show.sync="isDrawerOpen" class="-mt-4 md:hidden" />
     <div
       class="w-full"
       style="min-height: 75vh;"
     >
+      <div ref="sidebarTopRef" style="visibility: hidden;" />
       <nuxt />
     </div>
     <BackToTopButton />
     <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32">
-      <SponsorList v-if="showSponsors" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
+      <SponsorList :title-sponsor="this.$route.path.startsWith('/donate') ? 'Thanks To :' : null" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
     </AppFooter>
-    <Navbar class="lg:hidden" />
   </div>
 </template>
 
 <script>
+import _throttle from 'lodash/throttle'
 import Appbar from '~/components/Appbar'
+import AppDrawer from '~/components/AppDrawer'
 import AppFooter from '~/components/AppFooter'
 import SponsorList from '~/components/SponsorList'
-import Navbar from '~/components/Navbar'
 import BackToTopButton from '~/components/BackToTopButton'
 export default {
   components: {
     Appbar,
+    AppDrawer,
     BackToTopButton,
     AppFooter,
-    SponsorList,
-    Navbar
+    SponsorList
   },
   data () {
     return {
@@ -51,15 +53,13 @@ export default {
       defaultLayout: 'default',
       alertUpdate: false,
       refreshing: false,
-      registration: null
+      registration: null,
+      isDrawerOpen: false
     }
   },
   computed: {
     isTopLevelRoute () {
       return this.$route.path.split('/').length < 3
-    },
-    showSponsors () {
-      return !this.$route.path.startsWith('/donate')
     }
   },
   mounted () {
@@ -76,7 +76,37 @@ export default {
       })
     }
   },
+  beforeUpdate () {
+    this.$nextTick(() => {
+      this.setDrawerFixedPosition()
+      this.unwatchWindowResize()
+      setTimeout(() => {
+        this.watchWindowResize()
+      }, 50)
+    })
+  },
   methods: {
+    watchWindowResize () {
+      if (!window) {
+        return
+      }
+      window.addEventListener('resize', this.onWindowResize, { passive: false })
+    },
+    unwatchWindowResize () {
+      window.removeEventListener('resize', this.onWindowResize, { passive: false })
+    },
+    onWindowResize: _throttle(function (e) {
+      this.setDrawerFixedPosition()
+    }, 1000 / 60),
+    setDrawerFixedPosition () {
+      const ref = this.$refs.sidebarTopRef
+      const drawer = this.$refs.drawer
+      if (!ref || !drawer) {
+        return
+      }
+      const top = ref.offsetTop
+      drawer.$el.style.setProperty('top', top + 'px')
+    },
     showRefreshUI (e) {
       // Display a snackbar inviting the user to refresh/reload the app due
       // to an app update being available.
