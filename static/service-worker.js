@@ -1,26 +1,59 @@
-/* eslint-disable */
-// This is the code piece that GenerateSW mode can't provide for us.
-// This code listens for the user's confirmation to update the app.
-importScripts('https://cdn.jsdelivr.net/npm/workbox-cdn@4.3.1/workbox/workbox-sw.js')
-self.addEventListener('message', (e) => {
-  if (!e.data) {
-    return
-  }
+importScripts('https://cdn.jsdelivr.net/npm/workbox-cdn@5.1.2/workbox/workbox-sw.js')
+// --------------------------------------------------
+// Configure
+// --------------------------------------------------
+workbox.routing.registerRoute(
+  ({ request }) => request.mode === 'navigate',
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'pikobar-pages',
+    plugins: [
+      new workbox.cacheableResponse.CacheableResponsePlugin({
+        statuses: [200],
+      }),
+    ],
+  }),
+);
 
-  switch (e.data) {
-    case 'skipWaiting':
-      self.skipWaiting()
-      break
-    default:
-      // NOOP
-      break
-  }
-})
+workbox.routing.registerRoute(
+  ({ request }) =>
+    request.destination === 'style' ||
+    request.destination === 'script' ||
+    request.destination === 'worker',
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'pikobar-assets',
+    plugins: [
+      new workbox.cacheableResponse.CacheableResponsePlugin({
+        statuses: [200],
+      }),
+    ],
+  }),
+);
 
-workbox.core.clientsClaim() // Vue CLI 4 and Workbox v4, else
-// workbox.clientsClaim(); // Vue CLI 3 and Workbox v3.
+workbox.routing.registerRoute(
+  ({ request }) => request.destination === 'image',
+  new workbox.strategies.CacheFirst({
+    cacheName: 'pikobar-images',
+    plugins: [
+      new workbox.cacheableResponse.CacheableResponsePlugin({
+        statuses: [200],
+      }),
+      new workbox.expiration.ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+      }),
+    ],
+  }),
+);
 
-// The precaching code provided by Workbox.
+// Start controlling any existing clients as soon as it activates
+workbox.core.clientsClaim()
+
+workbox.core.skipWaiting()
+
+workbox.precaching.cleanupOutdatedCaches()
+
 self.__precacheManifest = [].concat(self.__precacheManifest || [])
 // workbox.precaching.suppressWarnings(); // Only used with Vue CLI 3 and Workbox v3.
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {},{
+  ignoreUrlParametersMatching: [/.*/]
+})
