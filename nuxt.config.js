@@ -116,9 +116,10 @@ export default {
       autoRegister: false,
       swURL: 'service-worker.js'
     },
-    themeColor: '#399F4F',
     manifest: {
       name: 'Pikobar | Jawa Barat',
+      start_url: '/',
+      theme_color: "#399F4F",
       background_color: '#399F4F',
       display: 'standalone',
       orientation: 'portrait'
