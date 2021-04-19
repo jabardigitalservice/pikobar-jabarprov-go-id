@@ -19,7 +19,7 @@
     "@iusername/percentile": "^1.0.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "@turf/turf": "^5.1.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "date-fns": "^2.11.0",
     "dotenv": "^8.2.0",
     "esri-loader": "^2.13.0",
