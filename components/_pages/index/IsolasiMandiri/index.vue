@@ -49,7 +49,7 @@
       <ActionCard
         class="w-full lg:w-1/2"
         title="Konsultasi dengan Dokter<br><br>"
-        body="Konsultasi dengan dokter melalui layanan hotline Pikobar"
+        body="Bagi Wargi yang membutuhkan obat, yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar"
         prompt="Tanyakan Sekarang"
         :event="konsultasiDokterEvent"
         :image="konsultasiDokterImage"
