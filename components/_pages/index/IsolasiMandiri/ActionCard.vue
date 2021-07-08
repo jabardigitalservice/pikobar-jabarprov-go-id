@@ -93,7 +93,7 @@ export default {
   &__content {
     @apply flex flex-col
     gap-6
-    justify-start
+    justify-between
     items-start
     col-span-6;
 
