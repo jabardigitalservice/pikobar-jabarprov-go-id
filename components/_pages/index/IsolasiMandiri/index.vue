@@ -57,8 +57,8 @@
       />
       <ActionCard
         class="w-full lg:w-1/2"
-        title="Permohonan Kebutuhan Vitamin/Obat"
-        body="Ajukan permohonan kebutuhan vitamin/obat untuk isolasi mandiri"
+        title="Permohonan Kebutuhan Vitamin"
+        body="Ajukan permohonan kebutuhan vitamin untuk isolasi mandiri"
         prompt="Ajukan Sekarang"
         :event="permohonanKebutuhanEvent"
         :image="permohonanKebutuhanImage"

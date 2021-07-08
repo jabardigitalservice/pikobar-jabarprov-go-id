@@ -1,8 +1,7 @@
 <template>
   <p class="text-gray-800">
-    Bagi Wargi Jabar yang kesulitan mendapatkan akses obat dan multivitamin selama
-    melakukan isolasi mandiri di rumah, melalui rekomendasi dokter telekonsultasi kami,
-    Wargi bisa mengajukan permohonan kebutuhan obat-obatan melalui
+    Bagi Wargi Jabar yang kesulitan mendapatkan akses vitamin selama melakukan isolasi mandiri di rumah,
+    Wargi bisa mengajukan permohonan kebutuhan vitamin melalui
     <a
       class="text-green-600 underline font-bold"
       :href="formLink"
@@ -11,6 +10,8 @@
     >
       link ini.
     </a>
+    Bagi Wargi yang membutuhkan obat,
+    yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar.
   </p>
 </template>
 
