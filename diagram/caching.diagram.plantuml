@@ -1,0 +1,84 @@
+@startuml
+
+title pikobar.jabarprov.go.id - Deployment Build Caching Diagram (github Cache)
+(*) --> "Pull Request Event"
+
+--> "@actions/checkout"
+
+partition "get last deploy timestamp" {
+  --> "curl https://api.netlify.com/api/v1/sites/:site_id"
+  --> "Set env
+    \lLAST_DEPLOY=response.published_deploy.published_at"
+  note right
+    Needed to determine
+    which Firebase item is new or updated
+    since last deployment
+  end note
+}
+
+partition "cache" {
+  --> "Check node_modules cache"
+  note right
+    Cache key:
+    cache-npm-<hashFile(package-lock.json)>
+  end note
+  if "cache hit" then
+    --> [No] "Refresh dependencies cache"
+    --> ===A1===
+  else
+    --> [Yes] ===A1===
+  endif
+
+  --> "Check pages/articles/_slug.vue cache"
+  note right
+    All previously rendered routes
+    must be re-rendered if route component
+    is updated, assuming such update will always
+    affect HTML templating.
+
+    Cache key:
+    cache-pages-articles-slug-<hashFile('pages/articles/_slug.vue')>
+  end note
+
+  if "cache hit" then
+    --> [NO] Set env\lFIREBASE_FETCH_ALL = 1
+    --> ===A2===
+  else
+    --> [YES] Set env\lFIREBASE_FETCH_ALL = 0
+    --> ===A2===
+  endif
+}
+
+partition "build script" {
+  --> "npm run nuxt generate"
+  --> "call generate.routes callback\lin nuxt.config.js"
+  --> "start fetching items from Firebase"
+  if "FIREBASE_FETCH_ALL" then
+    --> [YES] "Fetch all items"
+    --> ===A3===
+  else
+    --> [NO] "Fetch new items\lwhere created_at >= LAST_DEPLOY
+      \lFetch updated items\lwhere modified_at >= LAST_DEPLOY"
+    --> ===A3===
+  endif
+  --> "Generating HTML files and entry points\lfor necessary routes only"
+}
+
+
+partition "artifact" {
+  --> "@actions/upload-artifact\lpath: /dist/**/*"
+  note right
+    Append files into and/or overwrite files
+    in previously cached /dist folder
+  end note
+  --> "@actions/download-artifact\lpath: /dist"
+  note right
+    Download freshly updated /dist folder
+  end note
+}
+
+partition "deployment" {
+  --> "deploy /dist folder to netlify"
+}
+
+@enduml
