@@ -14,14 +14,14 @@
       <div>
         <OxygenBanner :total-item="totalItem" />
         <OxygenFilter
-          :oxygen-search="search"
-          :search.sync="search"
           :districs="districs"
           :sub-districs="subDistrics"
           :selected-district="selectedDistrict"
           :district-selected.sync="selectedDistrict"
           :selected-sub-district="selectedSubDistrict"
           :sub-district-selected.sync="selectedSubDistrict"
+          :selected-item-type="selectedItemType"
+          :item-type-selected.sync="selectedItemType"
           :on-search-items="onSearchItems"
           :on-reset="onReset"
         />
@@ -70,9 +70,9 @@ export default {
   data () {
     return {
       filteredOxygen: null,
-      search: '',
       selectedDistrict: null,
-      selectedSubDistrict: null
+      selectedSubDistrict: null,
+      selectedItemType: null
     }
   },
   computed: {
@@ -88,16 +88,16 @@ export default {
   },
   methods: {
     onReset () {
-      this.search = null
       this.selectedDistrict = null
       this.selectedSubDistrict = null
+      this.selectedItemType = null
       this.onSearchItems()
     },
     onSearchItems () {
       const params = {}
       if (this.selectedDistrict) { params.district_code = this.selectedDistrict.district_code }
       if (this.selectedSubDistrict) { params.subdistrict_code = this.selectedSubDistrict.subdistrict_code }
-      if (this.search) { params.search = this.search }
+      if (this.selectedItemType) { params.item_type = this.selectedItemType.value }
       this.$store.dispatch('oxygen/getItems', params)
     }
   }

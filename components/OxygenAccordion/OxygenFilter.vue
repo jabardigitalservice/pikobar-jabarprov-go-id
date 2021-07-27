@@ -1,11 +1,6 @@
 <template>
-  <div class="flex flex-col w-full mb-6 md:w-auto md:flex-row flex-wrap xl:ml-auto">
-    <input
-      v-model="search"
-      class="inline-block w-full flex-none rounded-md border border-grey-500 m-1 sm:flex-1 bg-white-200 p-2"
-      placeholder="Cari ..."
-    >
-    <div class="w-full md:w-64 m-1">
+  <div class="grid grid-cols-1 gap-2 sm:gap-2 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+    <div class="col-span-1 flex m-1">
       <client-only>
         <multiselect
           v-model="valueDistrict"
@@ -22,7 +17,7 @@
         />
       </client-only>
     </div>
-    <div class="w-full md:w-64 m-1">
+    <div class="col-span-1 flex m-1">
       <client-only>
         <multiselect
           v-model="valueSubDistrict"
@@ -39,22 +34,36 @@
         />
       </client-only>
     </div>
-    <div class="flex flex-wrap justify-start items-stretch">
+    <div class="col-span-1 flex m-1">
+      <client-only>
+        <multiselect
+          v-model="valueItemType"
+          class="optCity"
+          :options="itemTypeList"
+          :allow-empty="false"
+          placeholder="Pilih Jenis Barang"
+          track-by="value"
+          select-label=""
+          deselect-label=""
+          selected-label=""
+          label="label"
+        />
+      </client-only>
+    </div>
+    <div class="col-span-1 flex justify-start">
       <button
-        class="flex-none inline-flex items-center justify-around ml-4 mt-1 mb-1 md:mr-0 px-6 py-2 text-white rounded-md bg-brand-green hover:bg-brand-green-lighter"
+        type="button"
+        class="w-full items-center justify-around ml-4 mt-1 mb-1 md:mr-0 px-6 py-2 text-white rounded-md bg-brand-green hover:bg-brand-green-lighter"
         @click="onSearchItems"
       >
-        <span>
-          Cari
-        </span>
+        Cari
       </button>
       <button
-        class="flex-none inline-flex items-center rounded-md border border-green-500 justify-around ml-4 mt-1 mb-1 md:mr-0 px-6 py-2 text-gray-700 bg-white-400 hover:bg-white-500"
+        type="button"
+        class="w-full items-center px-3 py-2 rounded-md border border-green-500 justify-around ml-4 mt-1 mb-1 md:mr-0 px-6 py-2 text-gray-700 bg-white-400 hover:bg-white-500"
         @click="onReset"
       >
-        <span>
-          Reset
-        </span>
+        Reset
       </button>
     </div>
   </div>
@@ -71,15 +80,15 @@ export default {
       type: Array,
       default: () => []
     },
-    oxygenSearch: {
-      type: String,
-      default: null
-    },
     selectedDistrict: {
       type: Object,
       default: null
     },
     selectedSubDistrict: {
+      type: Object,
+      default: null
+    },
+    selectedItemType: {
       type: Object,
       default: null
     },
@@ -94,18 +103,16 @@ export default {
   },
   data () {
     return {
-      isSelectedDistrict: true
+      isSelectedDistrict: true,
+      itemTypeList: [
+        { label: 'Tabung Oksigen RS & Masyarakat', value: 'Tabung Oksigen RS & Masyarakat' },
+        { label: 'Isi Ulang Oksigen RS & Masyarakat', value: 'Isi Ulang Oksigen RS & Masyarakat' },
+        { label: 'Isi Ulang Oksigen', value: 'Isi Ulang Oksigen' },
+        { label: 'Isi Ulang Oksigen RS', value: 'Isi Ulang Oksigen RS' }
+      ]
     }
   },
   computed: {
-    search: {
-      get () {
-        return this.oxygenSearch
-      },
-      set (val) {
-        this.$emit('update:search', val)
-      }
-    },
     valueDistrict: {
       get () {
         return this.selectedDistrict
@@ -120,6 +127,14 @@ export default {
       },
       set (val) {
         this.$emit('update:sub-district-selected', val)
+      }
+    },
+    valueItemType: {
+      get () {
+        return this.selectedItemType
+      },
+      set (val) {
+        this.$emit('update:item-type-selected', val)
       }
     }
   },
