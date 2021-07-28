@@ -6,7 +6,7 @@
           v-model="valueDistrict"
           class="optCity"
           :options="districs"
-          :allow-empty="false"
+          :allow-empty="true"
           track-by="district_code"
           placeholder="Pilih Kabupaten/Kota"
           :searchable="true"
@@ -14,7 +14,11 @@
           deselect-label=""
           selected-label=""
           label="district_name"
-        />
+        >
+          <template v-slot:noResult>
+            Data Tidak Ditemukan.
+          </template>
+        </multiselect>
       </client-only>
     </div>
     <div class="col-span-1 flex m-1">
@@ -26,12 +30,17 @@
           :allow-empty="false"
           :disabled="isSelectedDistrict"
           placeholder="Pilih Kecamatan"
+          :searchable="true"
           track-by="subdistrict_code"
           select-label=""
           deselect-label=""
           selected-label=""
           label="subdistrict_name"
-        />
+        >
+          <template v-slot:noResult>
+            Data Tidak Ditemukan.
+          </template>
+        </multiselect>
       </client-only>
     </div>
     <div class="col-span-1 flex m-1">
@@ -47,7 +56,11 @@
           deselect-label=""
           selected-label=""
           label="label"
-        />
+        >
+          <template v-slot:noResult>
+            Data Tidak Ditemukan.
+          </template>
+        </multiselect>
       </client-only>
     </div>
     <div class="col-span-1 flex justify-start">
