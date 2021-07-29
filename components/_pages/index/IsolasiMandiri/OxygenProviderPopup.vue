@@ -235,10 +235,10 @@ export default {
     }
 
     &__banner {
-      display: none;
-      width: calc(80% - 2rem);
-      max-width: 192px;
-      @apply absolute top-0;
+      top: 0.5rem;
+      width: calc(50% - 2rem);
+      max-width: 100px;
+      @apply absolute hidden;
     }
 
     &__caption {
