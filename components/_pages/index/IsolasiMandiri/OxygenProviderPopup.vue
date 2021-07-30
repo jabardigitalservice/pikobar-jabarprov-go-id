@@ -21,12 +21,19 @@
         <figure
           v-for="(card, index) in cards"
           :key="index"
-          class="oxygen-provider-popup__card"
+          :class="{
+            'oxygen-provider-popup__card': true,
+            'oxygen-provider-popup__card--coming-soon': card.comingSoon
+          }"
           @click="onClickCard(card)"
         >
           <img
             :src="card.image"
             class="oxygen-provider-popup__card__image"
+          >
+          <img
+            :src="comingSoonBannerImage"
+            class="oxygen-provider-popup__card__banner"
           >
           <figcaption
             class="oxygen-provider-popup__card__caption"
@@ -49,10 +56,12 @@ import { mapState } from 'vuex'
 import { faTimes as iconFaTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import govBuildingImage from '~/assets/illustrations/gov-building.png'
 import citizenImage from '~/assets/illustrations/citizen.png'
+import comingSoonBannerImage from '~/assets/illustrations/coming-soon-banner.png'
 export default {
   data () {
     return {
       iconFaTimes,
+      comingSoonBannerImage,
       show: false
     }
   },
@@ -67,12 +76,13 @@ export default {
       return [
         {
           image: govBuildingImage,
-          title: 'Ajukan permohonan ke pemerintah',
+          title: 'Ajukan permohonan ke pemerintahan',
           body: `
             Pinjaman oksigen langsung dari pemerintah
             dengan mengisi formulir permohonan
           `,
-          backlink: this.formRequestToGovBacklink
+          backlink: null,
+          comingSoon: true
         },
         {
           image: citizenImage,
@@ -110,7 +120,9 @@ export default {
       this.close()
     },
     onClickCard (card) {
-      window.open(card.backlink, '_blank')
+      if (card.backlink) {
+        window.open(card.backlink, '_blank')
+      }
     }
   }
 }
@@ -198,18 +210,20 @@ export default {
 
   &__card {
     @apply cursor-pointer
+    relative
     w-full p-4
+    flex flex-col flex-no-wrap
+    items-center
     rounded-lg
     border border-solid border-gray-200
     text-center;
 
-    &:hover {
+    &:not(&--coming-soon):hover {
       @apply border-green-600;
     }
 
     @screen md {
-      @apply w-1/2
-      flex flex-col flex-no-wrap;
+      @apply w-1/2;
     }
 
     &__image {
@@ -218,6 +232,13 @@ export default {
       rounded-lg;
       width: 240px;
       max-width: 100%;
+    }
+
+    &__banner {
+      top: 0.5rem;
+      width: calc(50% - 2rem);
+      max-width: 100px;
+      @apply absolute hidden;
     }
 
     &__caption {
@@ -232,6 +253,18 @@ export default {
 
       @screen md {
         @apply flex-1 flex flex-col justify-between;
+      }
+    }
+
+    &--coming-soon {
+      @apply cursor-not-allowed;
+    }
+    &--coming-soon & {
+      &__image {
+        filter: brightness(50%);
+      }
+      &__banner {
+        @apply block;
       }
     }
   }
