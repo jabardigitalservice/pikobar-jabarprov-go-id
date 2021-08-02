@@ -39,6 +39,9 @@ export default {
   components: {
     IsolasiMandiri,
     Testimonial
+  },
+  mounted () {
+    this.$store.dispatch('self-isolation/getInfoItems')
   }
 }
 </script>
