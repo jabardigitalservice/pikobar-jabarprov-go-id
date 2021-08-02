@@ -98,6 +98,20 @@ export default {
 .html-content::v-deep {
   @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2;
   @apply col-span-1 flex flex-col text-center bg-white rounded-lg shadow;
+  @apply text-right text-sm text-gray-600;
+
+  .panduan-isolasi {
+    @apply text-gray-800;
+
+    ol {
+      @apply list-decimal list-outside;
+
+      li {
+        @apply ml-4 pl-4;
+      }
+    }
+  }
+
   @media (min-width: 1024px) {
     .lg:grid-cols-4 {
       grid-template-columns: repeat(4,minmax(0,1fr));
