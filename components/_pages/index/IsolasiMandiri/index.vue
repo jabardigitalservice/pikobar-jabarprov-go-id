@@ -98,5 +98,20 @@ export default {
 .html-content::v-deep {
   @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2;
   @apply col-span-1 flex flex-col text-center bg-white rounded-lg shadow;
+  @media (min-width: 1024px) {
+    .lg:grid-cols-4 {
+      grid-template-columns: repeat(4,minmax(0,1fr));
+    }
+  }
+  @media (min-width: 768px) {
+    .md:grid-cols-3 {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+  }
+  @media (min-width: 640px) {
+    .sm:grid-cols-2 {
+      grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+  }
 }
 </style>
