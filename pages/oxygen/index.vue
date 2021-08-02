@@ -62,7 +62,9 @@ export default {
   },
   mounted () {
     this.$store.dispatch('oxygen/getItems')
+    this.$store.dispatch('oxygen/getTotals')
     this.$store.dispatch('oxygen/getInfoItems')
+    this.$store.dispatch('oxygen/getCollectedDistricts')
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('oxygen_view')
@@ -70,7 +72,7 @@ export default {
     })
   },
   head () {
-    const title = 'Terapi Oksigen - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
+    const title = 'Cari Oksigen - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
     return {
       title,
       meta: [

@@ -3,48 +3,27 @@
     <h2 class="isoman__title">
       <strong>Pelayanan Kesehatan & Telekonsultasi Selama Isolasi Mandiri</strong>
     </h2>
-    <ExpandableContent>
-      <template #title>
-        Perawatan Bagi Pasien COVID-19
-      </template>
-      <PerawatanBagiPasien />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Panduan Isolasi di Rumah
-      </template>
-      <PanduanIsolasi />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Kontak Erat dari Pasien COVID-19
-      </template>
-      <KontakEratCovid19 />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Kapan Pasien COVID-19 Dinyatakan Bebas Isoman?
-      </template>
-      <BebasIsoman />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Jika Isoman Sudah Selesai, Haruskah Tes PCR Ulang?
-      </template>
-      <TestPCRUlang />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Konsultasi dengan Dokter
-      </template>
-      <KonsultasiDenganDokter />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Permohonan Kebutuhan Isolasi Mandiri
-      </template>
-      <PermohonanKebutuhanIsoman />
-    </ExpandableContent>
+    <ContentLoader
+      v-if="isInfoItemsLoading"
+      :speed="3"
+      :height="48"
+    >
+      <rect width="100%" height="100%" rx="2" ry="2" />
+    </ContentLoader>
+    <template v-else>
+      <ExpandableContent
+        v-for="(item, i) in infoItems"
+        :key="i"
+      >
+        <template #title>
+          {{ item.title }}
+        </template>
+        <div
+          class="html-content"
+          v-html="item.content"
+        />
+      </ExpandableContent>
+    </template>
     <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
       <ActionCard
         class="w-full lg:w-1/2"
@@ -69,14 +48,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { ContentLoader } from 'vue-content-loader'
 import ExpandableContent from './ExpandableContent'
-import PerawatanBagiPasien from './PerawatanBagiPasien'
-import PanduanIsolasi from './PanduanIsolasi'
-import KontakEratCovid19 from './KontakEratCovid19'
-import BebasIsoman from './BebasIsoman'
-import TestPCRUlang from './TestPCRUlang'
-import KonsultasiDenganDokter from './KonsultasiDenganDokter'
-import PermohonanKebutuhanIsoman from './PermohonanKebutuhanIsoman'
 import ActionCard from './ActionCard'
 import { konsultasiDokter, permohonanKebutuhan } from './backlinks'
 import {
@@ -89,14 +63,8 @@ import konsultasiDokterImage from '~/assets/illustrations/konsultasi-dokter.png'
 export default {
   components: {
     ExpandableContent,
-    PerawatanBagiPasien,
-    PanduanIsolasi,
-    KonsultasiDenganDokter,
-    PermohonanKebutuhanIsoman,
     ActionCard,
-    KontakEratCovid19,
-    BebasIsoman,
-    TestPCRUlang
+    ContentLoader
   },
   data () {
     return {
@@ -107,6 +75,12 @@ export default {
       permohonanKebutuhanImage,
       permohonanKebutuhanEvent
     }
+  },
+  computed: {
+    ...mapState('self-isolation', [
+      'isInfoItemsLoading',
+      'infoItems'
+    ])
   }
 }
 </script>
@@ -118,6 +92,36 @@ export default {
 
     @screen md {
       @apply mb-8 text-2xl;
+    }
+  }
+}
+.html-content::v-deep {
+  @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2 col-span-1 flex flex-col;
+
+  .panduan-isolasi {
+    @apply text-left text-gray-800;
+    ol {
+      @apply list-outside text-left text-gray-800;
+
+      li {
+        @apply ml-4 pl-4;
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lg:grid-cols-4 {
+      grid-template-columns: repeat(4,minmax(0,1fr));
+    }
+  }
+  @media (min-width: 768px) {
+    .md:grid-cols-3 {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+  }
+  @media (min-width: 640px) {
+    .sm:grid-cols-2 {
+      grid-template-columns: repeat(2,minmax(0,1fr));
     }
   }
 }
