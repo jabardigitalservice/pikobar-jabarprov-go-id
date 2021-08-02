@@ -95,4 +95,7 @@ export default {
     }
   }
 }
+.html-content::v-deep {
+  @apply grid grid-cols-1 gap-2;
+}
 </style>
