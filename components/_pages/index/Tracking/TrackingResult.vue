@@ -98,7 +98,7 @@ export default {
         case 'packing':
           return 'PAKET ANDA SEDANG DI PACKING'
         case 'distribution':
-          return 'PAKET ANDA SEDANG DI DISTRIBUSI'
+          return 'PAKET ANDA SEDANG DI DISTRIBUSIKAN'
         case 'received':
           return 'SUDAH DITERIMA'
         default:
