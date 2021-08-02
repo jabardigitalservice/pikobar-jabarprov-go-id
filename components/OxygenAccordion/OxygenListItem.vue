@@ -2,7 +2,7 @@
   <div class="mb-8 pl-5 relative">
     <div class="absolute top-0 bottom-0 left-0 w-1 bg-orange-300" />
     <h5 class="inline-block text-lg font-bold leading-loose">
-      {{ name }}
+      {{ oxygen_center_name }}
     </h5>
     <p class="opacity-75">
       {{ address }}
@@ -24,13 +24,13 @@
         </a>
       </template>
       <a
-        v-if="itemType"
+        v-if="item_type"
         class="inline-block px-4 py-1 bg-green-100 rounded mt-2 mr-2 text-gray-800 hover:opacity-50"
-        :title="`Buka Laman ${itemType}`"
+        :title="`Buka Laman ${item_type}`"
       >
         <i class="fas fa-globe-asia fa-sm mr-1" />
         <span>
-          {{ itemType }}
+          {{ item_type }}
         </span>
       </a>
     </p>
@@ -40,7 +40,8 @@
 <script>
 export default {
   props: {
-    name: {
+    // eslint-disable-next-line vue/prop-name-casing
+    oxygen_center_name: {
       type: String,
       default: ''
     },
@@ -56,7 +57,8 @@ export default {
       type: Array,
       default: () => []
     },
-    itemType: {
+    // eslint-disable-next-line vue/prop-name-casing
+    item_type: {
       type: String,
       default: ''
     }
