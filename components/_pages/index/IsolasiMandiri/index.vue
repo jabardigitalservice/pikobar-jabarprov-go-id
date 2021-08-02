@@ -96,6 +96,7 @@ export default {
   }
 }
 .html-content::v-deep {
-  @apply grid grid-cols-1 gap-2;
+  @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2;
+  @apply col-span-1 flex flex-col text-center bg-white rounded-lg shadow;
 }
 </style>
