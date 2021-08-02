@@ -3,48 +3,27 @@
     <h2 class="isoman__title">
       <strong>Pelayanan Kesehatan & Telekonsultasi Selama Isolasi Mandiri</strong>
     </h2>
-    <ExpandableContent>
-      <template #title>
-        Perawatan Bagi Pasien COVID-19
-      </template>
-      <PerawatanBagiPasien />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Panduan Isolasi di Rumah
-      </template>
-      <PanduanIsolasi />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Kontak Erat dari Pasien COVID-19
-      </template>
-      <KontakEratCovid19 />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Kapan Pasien COVID-19 Dinyatakan Bebas Isoman?
-      </template>
-      <BebasIsoman />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Jika Isoman Sudah Selesai, Haruskah Tes PCR Ulang?
-      </template>
-      <TestPCRUlang />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Konsultasi dengan Dokter
-      </template>
-      <KonsultasiDenganDokter />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Permohonan Kebutuhan Isolasi Mandiri
-      </template>
-      <PermohonanKebutuhanIsoman />
-    </ExpandableContent>
+    <ContentLoader
+      v-if="isInfoItemsLoading"
+      :speed="3"
+      :height="48"
+    >
+      <rect width="100%" height="100%" rx="2" ry="2" />
+    </ContentLoader>
+    <template v-else>
+      <ExpandableContent
+        v-for="(item, i) in infoItems"
+        :key="i"
+      >
+        <template #title>
+          {{ item.title }}
+        </template>
+        <div
+          class="html-content"
+          v-html="item.content"
+        />
+      </ExpandableContent>
+    </template>
     <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
       <ActionCard
         class="w-full lg:w-1/2"
@@ -69,14 +48,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { ContentLoader } from 'vue-content-loader'
 import ExpandableContent from './ExpandableContent'
-import PerawatanBagiPasien from './PerawatanBagiPasien'
-import PanduanIsolasi from './PanduanIsolasi'
-import KontakEratCovid19 from './KontakEratCovid19'
-import BebasIsoman from './BebasIsoman'
-import TestPCRUlang from './TestPCRUlang'
-import KonsultasiDenganDokter from './KonsultasiDenganDokter'
-import PermohonanKebutuhanIsoman from './PermohonanKebutuhanIsoman'
 import ActionCard from './ActionCard'
 import { konsultasiDokter, permohonanKebutuhan } from './backlinks'
 import {
@@ -89,14 +63,8 @@ import konsultasiDokterImage from '~/assets/illustrations/konsultasi-dokter.png'
 export default {
   components: {
     ExpandableContent,
-    PerawatanBagiPasien,
-    PanduanIsolasi,
-    KonsultasiDenganDokter,
-    PermohonanKebutuhanIsoman,
     ActionCard,
-    KontakEratCovid19,
-    BebasIsoman,
-    TestPCRUlang
+    ContentLoader
   },
   data () {
     return {
@@ -107,6 +75,12 @@ export default {
       permohonanKebutuhanImage,
       permohonanKebutuhanEvent
     }
+  },
+  computed: {
+    ...mapState('self-isolation', [
+      'isInfoItemsLoading',
+      'infoItems'
+    ])
   }
 }
 </script>
@@ -118,6 +92,55 @@ export default {
 
     @screen md {
       @apply mb-8 text-2xl;
+    }
+  }
+}
+.html-content::v-deep {
+  .table-ap {
+    display: grid;
+    gap: 0 1rem;
+    @apply -mt-4;
+
+    &__col-header {
+      @apply px-4 py-2 mt-4
+      bg-green-600
+      text-lg text-white;
+    }
+
+    &__col-header,
+    &__col-body {
+      @apply block
+      border border-solid border-green-600;
+    }
+
+    &__col-body {
+      @apply border-t-0 border-b-0;
+    }
+
+    &__col-sect {
+      @apply px-4 py-2
+      border-b border-solid border-gray-400;
+
+      &--last {
+        @apply border-b border-solid border-green-600;
+      }
+
+      &__title {
+        @apply block text-green-600;
+      }
+
+      &__divider {
+        @apply -mx-4;
+      }
+
+      ul {
+        @apply mt-4
+        text-gray-800 leading-normal;
+      }
+
+      ul > li + li {
+        @apply mt-4;
+      }
     }
   }
 }

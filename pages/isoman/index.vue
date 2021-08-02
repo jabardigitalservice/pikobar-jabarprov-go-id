@@ -32,6 +32,9 @@ import IsolasiMandiri from '../../components/_pages/index/IsolasiMandiri'
 export default {
   components: {
     IsolasiMandiri
+  },
+  mounted () {
+    this.$store.dispatch('self-isolation/getInfoItems')
   }
 }
 </script>
