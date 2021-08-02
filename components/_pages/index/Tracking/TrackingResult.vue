@@ -21,7 +21,7 @@
             <span class="self-center sm:self-start my-2">Status Permohonan Anda</span>
             <span class="text-xl font-bold self-center">{{ requestStatus }}</span>
             <span
-              v-if="activeTabId === 'verification' && this.trackingResult.verify_info && !trackingResult.verify_info.approved"
+              v-if="displayReason"
               class="mt-2 self-center sm:self-start"
             >
               Alasan: {{ trackingResult.verify_info.reason }}
@@ -133,6 +133,11 @@ export default {
       } else {
         return 'SEDANG DALAM TAHAPAN VERIFIKASI'
       }
+    },
+    displayReason () {
+      return this.activeTabId === 'verification' &&
+        this.trackingResult.verify_info &&
+        !this.trackingResult.verify_info.approved
     }
   },
   created () {
