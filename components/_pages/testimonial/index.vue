@@ -8,7 +8,7 @@
         <TestimoniCard
           :name="testimoni.name"
           :address="testimoni.address"
-          :image="defaultAvatar"
+          :image="testimoni.image"
           :message="testimoni.message"
         />
       </slide>
@@ -20,7 +20,6 @@
 import { Carousel, Slide } from 'vue-carousel'
 import TestimoniCard from './TestimoniCard'
 import dataTestimoni from './testimoni'
-import defaultAvatar from '~/assets/illustrations/default_avatar.png'
 
 export default {
   components: {
@@ -30,7 +29,6 @@ export default {
   },
   data () {
     return {
-      defaultAvatar,
       dataTestimoni
     }
   }
