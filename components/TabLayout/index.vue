@@ -6,7 +6,11 @@
       <li
         v-for="(tab, index) in tabs"
         :key="index"
-        :class="['relative cursor-pointer px-4 py-4 sm:px-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === mActiveTabId && 'border-b-4 border-solid border-brand-green']"
+        :class="[
+          'relative px-4 py-4 sm:px-6 whitespace-no-wrap select-none',
+          tab.id === mActiveTabId && 'border-b-4 border-solid border-brand-green',
+          !fixed && 'hover:bg-gray-200 cursor-pointer'
+        ]"
         @click="onClickTab(tab.id)"
       >
         <a :class="['text-lg', tab.id === mActiveTabId && 'font-bold text-brand-green']">
@@ -27,6 +31,10 @@ export default {
     activeTabId: {
       type: String,
       default: null
+    },
+    fixed: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -44,8 +52,10 @@ export default {
   },
   methods: {
     onClickTab (newTabId) {
-      this.mActiveTabId = newTabId
-      this.$emit('change', newTabId)
+      if (!this.fixed) {
+        this.mActiveTabId = newTabId
+        this.$emit('change', newTabId)
+      }
     }
   }
 }
