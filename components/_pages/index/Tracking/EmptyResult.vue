@@ -6,7 +6,7 @@
         Data Permohonan Tidak Ditemukan
       </span>
       <span class="text-center">
-        Maaf, Kami tidak dapat menemukan Data Permohonan yang Anda cari.
+        Maaf, kami tidak dapat menemukan data permohonan yang anda cari.
       </span>
     </div>
   </div>
