@@ -96,15 +96,12 @@ export default {
   }
 }
 .html-content::v-deep {
-  @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2;
-  @apply col-span-1 flex flex-col text-center bg-white rounded-lg shadow;
-  @apply text-right text-sm text-gray-600;
+  @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2 col-span-1 flex flex-col;
 
   .panduan-isolasi {
-    @apply text-gray-800;
-
+    @apply text-left text-gray-800;
     ol {
-      @apply list-decimal list-outside;
+      @apply list-outside text-left text-gray-800;
 
       li {
         @apply ml-4 pl-4;
