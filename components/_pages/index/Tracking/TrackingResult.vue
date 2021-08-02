@@ -21,7 +21,7 @@
             <span class="self-center sm:self-start my-2">Status Permohonan Anda</span>
             <span class="text-xl font-bold self-center">{{ requestStatus }}</span>
             <span
-              v-if="activeTabId === 'verification' && !trackingResult.verify_info.approved"
+              v-if="activeTabId === 'verification' && this.trackingResult.verify_info && !trackingResult.verify_info.approved"
               class="mt-2 self-center sm:self-start"
             >
               Alasan: {{ trackingResult.verify_info.reason }}
@@ -94,11 +94,13 @@ export default {
     requestStatus () {
       switch (this.activeTabId) {
         case 'verification':
-          return this.trackingResult.verify_info.approved ? 'LOLOS VERIFIKASI' : 'TIDAK MEMENUHI VERIFIKASI'
+          return this.verificationLabel
         case 'packing':
           return 'PAKET ANDA SEDANG DI PACKING'
         case 'distribution':
-          return 'PAKET ANDA SEDANG DI DISTRIBUSIKAN'
+          return this.trackingResult.delivery_info.status === 'RETURNED'
+            ? 'PENGIRIMAN PAKET GAGAL DILAKUKAN'
+            : 'PAKET ANDA SEDANG DI DISTRIBUSIKAN'
         case 'received':
           return 'SUDAH DITERIMA'
         default:
@@ -123,6 +125,13 @@ export default {
         }
       } else {
         return ''
+      }
+    },
+    verificationLabel () {
+      if (this.trackingResult.verify_info) {
+        return this.trackingResult.verify_info.approved ? 'LOLOS VERIFIKASI' : 'TIDAK MEMENUHI VERIFIKASI'
+      } else {
+        return 'SEDANG DALAM TAHAPAN VERIFIKASI'
       }
     }
   },
