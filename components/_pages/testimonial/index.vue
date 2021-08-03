@@ -69,7 +69,8 @@ export default {
   .testimoni {
     &__carousel {
       .VueCarousel-inner {
-        @apply block overflow-hidden;
+        display: contents;
+        @apply overflow-hidden;
       }
       .VueCarousel-dot {
         @apply hidden;
