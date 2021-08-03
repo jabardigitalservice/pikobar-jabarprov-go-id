@@ -89,16 +89,19 @@ export default {
   gap-8
   border border-solid border-gray-300
   bg-white;
+
   &__content {
     @apply flex flex-col
     gap-6
     justify-between
     items-start
     col-span-6;
+
     @screen lg {
       @apply col-span-4;
     }
   }
+
   &__btn-link {
     @apply bg-brand-green-darker
     text-white text-sm font-bold tracking-wide
@@ -108,9 +111,11 @@ export default {
     flex flex-row
     items-center
     justify-around;
+
     &:focus {
       @apply outline-none;
     }
+
     @screen lg {
       @apply px-6 py-2
       text-base;
