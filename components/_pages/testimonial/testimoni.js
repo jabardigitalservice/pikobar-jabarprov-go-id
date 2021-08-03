@@ -1,6 +1,6 @@
 import imgFebbyW from '~/assets/testimoni/ImgTestimoni-Febby-Wulandari.jpg'
 import imgRinsaK from '~/assets/testimoni/ImgTestimoni-Rinsa-K.jpg'
-import imgJuanM from '~/assets/testimoni/ImgTestimoni-Juan-Moses-Wandy.jpg'
+import imgBonaventura from '~/assets/testimoni/ImgTestimoni-Bonaventura-Wastu-Sotyagung.jpg'
 import imgKartika from '~/assets/testimoni/ImgTestimoni-Kartika.jpg'
 import imgElmaA from '~/assets/testimoni/ImgTestimoni-Elma-Anugrah.jpg'
 import imgDefault from '~/assets/testimoni/default_avatar.png'
@@ -17,10 +17,10 @@ export default [
     message: 'Terima kasih Pemerintah Jabar, obatnya sampai dirumah saya dengan keadaan bersih dan tidak rusak.',
     image: imgRinsaK
   }, {
-    name: 'Juan Moses Wandy',
-    address: 'Gg. Kembang, Bogor Utara',
-    message: 'Terimakasih Pemerintah Jabar dan jajaran Tim Pikobar, anak kami yang isoman berusia 5 tahun sudah mendapatkan vitamin dari program Pikobar ini.',
-    image: imgJuanM
+    name: 'Bonaventura Wastu Sotyagung',
+    address: 'Puri Kintamani, Kab. Bogor',
+    message: 'Terima kasih atas perhatiannya. Semangat untuk semua pihak yang berkontribusi dalam menghadapi pandemi ini.',
+    image: imgBonaventura
   }, {
     name: 'Novie',
     address: 'Bekasi Utara',
