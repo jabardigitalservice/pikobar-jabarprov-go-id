@@ -1,7 +1,7 @@
 <template>
   <div class="action-card">
     <img
-      class="mx-auto col-span-6 h-32 object-contain object-center lg:h-auto lg:col-span-2"
+      class="mx-auto col-span-2 h-32 object-contain object-center lg:h-auto lg:col-end-1"
       style="max-width: 150px; max-height: 150px;"
       width="80%"
       :src="image"
@@ -85,7 +85,7 @@ export default {
 .action-card {
   @apply p-4
   rounded-md
-  grid grid-cols-6
+  grid grid-cols-2
   gap-8
   border border-solid border-gray-300
   bg-white;
@@ -95,10 +95,10 @@ export default {
     gap-6
     justify-between
     items-start
-    col-span-6;
+    col-span-2;
 
     @screen lg {
-      @apply col-span-4;
+      @apply col-start-1;
     }
   }
 
