@@ -44,6 +44,17 @@
         :backlink="permohonanKebutuhan"
       />
     </div>
+    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6">
+      <ActionCard
+        class="w-full"
+        title="Lacak Permohonan Vitamin/Obat Anda"
+        body="Anda dapat mengetahui status tindak lanjut permohonan obat/vitamin yang telah diajukan melalui tombol di bawah ini"
+        prompt="Lacak di Sini"
+        :event="trackApplicationEvent"
+        :image="deliveryImage"
+        :backlink="trackApplication"
+      />
+    </div>
   </div>
 </template>
 
@@ -52,13 +63,15 @@ import { mapState } from 'vuex'
 import { ContentLoader } from 'vue-content-loader'
 import ExpandableContent from './ExpandableContent'
 import ActionCard from './ActionCard'
-import { konsultasiDokter, permohonanKebutuhan } from './backlinks'
+import { konsultasiDokter, permohonanKebutuhan, trackApplication } from './backlinks'
 import {
   TAP_KONSULTASI_DOKTER as konsultasiDokterEvent,
-  TAP_PERMOHONAN_ISOMAN as permohonanKebutuhanEvent
+  TAP_PERMOHONAN_ISOMAN as permohonanKebutuhanEvent,
+  TAP_TRACK_APPLICATION as trackApplicationEvent
 } from './events'
 import permohonanKebutuhanImage from '~/assets/illustrations/permohonan-kebutuhan-isoman.png'
 import konsultasiDokterImage from '~/assets/illustrations/konsultasi-dokter.png'
+import deliveryImage from '~/assets/illustrations/delivery.svg'
 
 export default {
   components: {
@@ -73,7 +86,10 @@ export default {
       konsultasiDokterEvent,
       permohonanKebutuhan,
       permohonanKebutuhanImage,
-      permohonanKebutuhanEvent
+      permohonanKebutuhanEvent,
+      trackApplication,
+      trackApplicationEvent,
+      deliveryImage
     }
   },
   computed: {
