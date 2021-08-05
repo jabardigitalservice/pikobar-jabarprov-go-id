@@ -1,13 +1,14 @@
 <template>
   <div class="action-card">
     <img
-      class="mx-auto col-span-2 h-32 object-contain object-center lg:h-auto lg:col-end-1"
-      style="max-width: 150px; max-height: 150px;"
-      width="80%"
       :src="image"
+      class="action-card__image"
       alt="action illustration"
     >
     <div class="action-card__content">
+      <h3 class="action-card__title">
+        {{ title }}
+      </h3>
       <p class="text-gray-800">
         {{ body }}
       </p>
@@ -98,18 +99,29 @@ export default {
 
 .action-card {
   @apply p-4
-  rounded-md
-  grid grid-cols-2
+  grid
   gap-8
+  rounded-md
   border border-solid border-gray-300
   bg-white;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 8rem 1fr;
+
+  @screen lg {
+    @apply grid gap-8;
+    grid-template-rows: unset;
+  }
 
   &__top {
     @apply flex-none;
   }
 
   &__image {
-    @apply mx-auto mb-4 h-32 object-contain object-center;
+    @apply mx-auto col-span-2 w-auto h-32 object-contain object-center;
+
+    @screen lg {
+      @apply w-32 h-auto col-end-1;
+    }
   }
 
   &__title {
@@ -117,8 +129,8 @@ export default {
   }
 
   &__content {
-    margin-top: 1.5em;
-    @apply flex-1 flex flex-col
+    @apply flex flex-col
+    gap-6
     justify-between
     items-start
     col-span-2;
@@ -131,7 +143,7 @@ export default {
   &__btn-link {
     @apply bg-brand-green-darker
     text-white text-sm font-bold tracking-wide
-    mt-4 px-4 py-3
+    px-4 py-3
     rounded-lg
     gap-3
     flex flex-row
