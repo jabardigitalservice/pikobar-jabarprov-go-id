@@ -50,7 +50,7 @@
         prompt="Klik untuk pengajuan"
         :event="peminjamOksigenEvent"
         :image="peminjamOksigenImage"
-        @click="onOpenOxygenRequestPopup"
+        :backlink="peminjamOksigenJotform"
       />
       <ActionCard
         :class="['isoman__action-card', asyncCardClassModifiers]"
@@ -73,7 +73,6 @@
         :backlink="trackApplication"
       />
     </div>
-    <OxygenProviderPopup ref="popup" />
   </div>
 </template>
 
@@ -82,7 +81,6 @@ import { mapState } from 'vuex'
 import { ContentLoader } from 'vue-content-loader'
 import ExpandableContent from './ExpandableContent'
 import ActionCard from './ActionCard'
-import OxygenProviderPopup from './OxygenProviderPopup'
 import { konsultasiDokter, permohonanKebutuhan, trackApplication } from './backlinks'
 import {
   TAP_KONSULTASI_DOKTER as konsultasiDokterEvent,
@@ -101,8 +99,7 @@ export default {
   components: {
     ExpandableContent,
     ActionCard,
-    ContentLoader,
-    OxygenProviderPopup
+    ContentLoader
   },
   data () {
     return {
