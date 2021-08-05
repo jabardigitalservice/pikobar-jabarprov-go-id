@@ -76,20 +76,20 @@ export default {
       return [
         {
           image: govBuildingImage,
-          title: 'Ajukan permohonan ke pemerintahan',
+          title: 'Pinjam tabung oksigen dari pemerintah',
           body: `
-            Pinjaman oksigen langsung dari pemerintah
-            dengan mengisi formulir permohonan
+            Ajukan permohonan peminjaman tabung oksigen milik pemerintah
           `,
           backlink: null,
           comingSoon: true
         },
         {
           image: citizenImage,
-          title: 'Cari pemilik tabung oksigen',
+          title: 'Pinjam tabung oksigen dari warga',
           body: `
-            Pinjaman oksigen langsung dari warga sekitar
-            dengan mencari pemilik tabung sekitar Anda
+            Dapatkan informasi mengenai peminjaman tabung dari warga,
+            komunitas & lembaga yang memiliki tabung oksigen dan sudah
+            terdaftar di sekitar Anda
           `,
           backlink: this.formRequestBacklink
         }
@@ -244,15 +244,10 @@ export default {
     &__caption {
       p:nth-child(1) {
         @apply my-2 text-xl font-bold;
-        padding: 0 12.5%;
       }
 
       p:nth-child(2) {
         @apply text-gray-600 text-base;
-      }
-
-      @screen md {
-        @apply flex-1 flex flex-col justify-between;
       }
     }
 
