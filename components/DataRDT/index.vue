@@ -1,6 +1,6 @@
 <template>
   <div class="flex-row lg:flex xl:flex">
-    <div class="w-full lg:w-8/12 text-white overflow-hidden mr-5 mt-5">
+    <div class="w-full lg:w-6/12 text-white overflow-hidden mr-5 mt-5">
       <div class="rdt-antigen p-5 rounded-lg shadow-md">
         <div :class="isLoading ? 'block' : 'hidden'">
           <ContentLoader
@@ -59,8 +59,8 @@
             Rapid Test Antigen merupakan tes diagnostik cepat untuk mengidentifikasi orang yang terinfeksi virus Covid-19 dengan mendeteksi adanya materi genetik atau protein spesifik dari virus Covid-19 dalam tubuh seseorang.
           </div>
           <div class="w-full h-auto text-sm mr-10 mt-5 row flex-row lg:flex xl:flex">
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="text-4xl">
+            <div class="w-full pl-2 h-auto text-left">
+              <div class="text-4xl font-extrabold">
                 {{ Number(data.antigen.total).toLocaleString('id-ID') }}
               </div>
               <div class="text-sm">
@@ -71,26 +71,24 @@
                 </div>
               </div>
             </div>
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.antigen.positif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.antigen_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Positif
-                </div>
+          </div>
+          <div class="w-full h-auto text-sm mr-10 mt-5 row flex flex-col sm:flex-row">
+            <div class="w-full sm:w-1/2 md:w-1/3 mb-3 sm:mb-0 pl-2 h-auto text-left">
+              <div class="mb-1">
+                <span class="text-2xl font-extrabold">{{ Number(data.antigen.positif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.antigen_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Positif
               </div>
             </div>
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.antigen.negatif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.antigen_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Negatif
-                </div>
+            <div class="w-full sm:w-1/2 md:w-1/3 pl-2 h-auto text-left">
+              <div class="mb-1">
+                <span class="text-2xl font-extrabold">{{ Number(data.antigen.negatif).toLocaleString('id-ID') }}</span>
+                <span class="text-sm">({{ Number(data.antigen_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
+              </div>
+              <div class="text-sm">
+                Negatif
               </div>
             </div>
           </div>
@@ -101,134 +99,24 @@
           </div>
         </div>
       </div>
-
-      <div class="rdt-main p-5 mt-5 rounded-lg shadow-md">
-        <div :class="isLoading ? 'block' : 'hidden'">
-          <ContentLoader
-            :speed="2"
-            width="400"
-            height="150"
-            primary-color="rgba(214, 210, 210,0.6)"
-            secondary-color="rgba(214, 210, 210,1)"
-            style="max-width: 400px;"
-          >
-            <rect
-              x="0"
-              y="0"
-              rx="8"
-              ry="6"
-              width="50%"
-              height="16"
-            />
-            <rect
-              x="0"
-              y="30"
-              rx="8"
-              ry="6"
-              width="66%"
-              height="16"
-            />
-            <rect
-              x="0"
-              y="60"
-              rx="8"
-              ry="6"
-              width="20%"
-              height="16"
-            />
-            <rect
-              x="0"
-              y="90"
-              rx="8"
-              ry="6"
-              width="50%"
-              height="16"
-            />
-            <rect
-              x="0"
-              y="120"
-              rx="8"
-              ry="6"
-              width="66%"
-              height="16"
-            />
-          </ContentLoader>
-        </div>
-        <div :class="!isLoading ? 'block' : 'hidden'">
-          <b class="text-lg">Rapid Diagnostic Test (RDT) Antibodi</b>
-          <div class="w-full h-auto text-sm mr-10 mt-2">
-            Rapid Test Antibodi atau test diagnostik cepat berdasarkan antibodi merupakan skrining medis awal untuk mendeteksi adanya kandungan antibodi virus Covid-19 dalam darah. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode Polymerase Chain Reaction (PCR).
-          </div>
-          <div class="w-full h-auto text-sm mr-10 mt-5 row flex-row lg:flex xl:flex">
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="text-4xl">
-                {{ Number(data.rdt.total).toLocaleString('id-ID') }}
-              </div>
-              <div class="text-sm">
-                Jumlah RDT
-                <div class="tooltip pl-1">
-                  &#9432;
-                  <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) Antibodi yang telah dilakukan</span>
-                </div>
-              </div>
-            </div>
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.rdt.positif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.rdt_persentase_by_total.positif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Reaktif
-                </div>
-              </div>
-            </div>
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.rdt.negatif).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.rdt_persentase_by_total.negatif.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Non Reaktif
-                </div>
-              </div>
-            </div>
-            <div class="w-full md:w-1/2 lg:w-1/4 pl-2 h-auto text-left">
-              <div class="h-20 pt-3">
-                <div class="mb-1">
-                  <span class="text-2xl">{{ Number(data.rdt.invalid).toLocaleString('id-ID') }}</span>
-                  <span class="text-sm">({{ Number(data.rdt_persentase_by_total.invalid.toFixed(2)).toLocaleString('id-ID') }}%)</span>
-                </div>
-                <div class="text-sm">
-                  Invalid
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 text-sm">
-            <span>
-              Update Terakhir: {{ data.rdt.tanggal }}
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="w-full lg:w-4/12 bg-white overflow-hidden rounded-lg shadow-md flex-row mt-5 p-5">
-      <img src="/img/illustrasi-rdt.svg" width="300px" class="mx-auto mb-5">
-      <div class="float-left py-5 px-5 mt-5">
-        <div class="text-xl font-bold">
-          Jika Anda ingin mengikuti <br>
-          Tes Masif Covid-19, daftarkan diri Anda di sini
+    <div class="w-full lg:w-6/12 bg-white overflow-hidden rounded-lg shadow-md flex flex-row justify-center items-center mt-5 p-5">
+      <div class="w-full h-auto justify-center items-center my-5 row flex-row lg:flex xl:flex">
+        <div class="w-full md:w-full lg:w-1/2 text-center py-5 px-5">
+          <img src="/img/illustrasi-rdt.svg" width="300px" class="mx-auto" alt="Ilustrasi RDT">
         </div>
-        <br>
-        <a
-          class="cursor-pointer px-2 py-2 text-center rounded-md bg-brand-green hover:bg-brand-green-light text-white"
-          style="align-items: flex-end;"
-          href="https://pikobar.jabarprov.go.id/temp/disclaimer/rdt/?uid=_userUID"
-        >
-          Daftar Tes Masif
-        </a>
+        <div class="w-full md:w-full lg:w-1/2 text-center lg:text-left py-5 px-5">
+          <div class="text-xl font-bold">
+            Jika Anda ingin mengikuti Tes Masif Covid-19, daftarkan diri Anda di sini
+          </div>
+          <br>
+          <a
+            class="cursor-pointer py-2 px-4 text-center rounded-md bg-brand-green inline-block hover:bg-brand-green-light text-white"
+            style="align-items: flex-end;"
+            href="https://pikobar.jabarprov.go.id/temp/disclaimer/rdt/?uid=_userUID">
+            Daftar Tes Masif
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -319,14 +207,8 @@ export default {
 </script>
 
 <style scoped>
-  .rdt-main {
-    background-color: #5AAA4E;
-  }
   .rdt-antigen {
     background-color: #e2a000;
-  }
-  .text-green {
-    color: #5AAA4E !important;
   }
   /* Tooltip container */
   .tooltip {
@@ -346,7 +228,6 @@ export default {
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
-     width: 120px;
     top: 100%;
     left: 50%;
     margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */

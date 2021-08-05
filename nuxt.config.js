@@ -17,7 +17,10 @@ export default {
     WMS_API_KEY: process.env.WMS_API_KEY,
     WMS_BASE_URL: process.env.WMS_BASE_URL,
     RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
-    DASHBOARD_API_KEY: process.env.DASHBOARD_API_KEY
+    DASHBOARD_API_KEY: process.env.DASHBOARD_API_KEY,
+    ISOMAN_RECAPTCHA_KEY: process.env.ISOMAN_RECAPTCHA_KEY,
+    ISOMAN_API_BASEURL: process.env.ISOMAN_API_BASEURL,
+    NUXT_ENV_OXYGEN_CENTER_BASE_URL: process.env.NUXT_ENV_OXYGEN_CENTER_BASE_URL
   },
   router: {
     prefetchLinks: false

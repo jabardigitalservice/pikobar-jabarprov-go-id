@@ -1,17 +1,12 @@
 <template>
   <div class="action-card">
-    <div class="action-card__top">
-      <img
-        class="action-card__image"
-        style="max-width: 150px; max-height: 150px;"
-        width="80%"
-        :src="image"
-        alt="action illustration"
-      >
-      <h3 class="action-card__title">
-        {{ title }}
-      </h3>
-    </div>
+    <img
+      class="mx-auto col-span-2 h-32 object-contain object-center lg:h-auto lg:col-end-1"
+      style="max-width: 150px; max-height: 150px;"
+      width="80%"
+      :src="image"
+      alt="action illustration"
+    >
     <div class="action-card__content">
       <p class="text-gray-800">
         {{ body }}
@@ -103,9 +98,9 @@ export default {
 
 .action-card {
   @apply p-4
-  flex flex-col
-  justify-start
   rounded-md
+  grid grid-cols-2
+  gap-8
   border border-solid border-gray-300
   bg-white;
 
@@ -129,7 +124,7 @@ export default {
     col-span-2;
 
     @screen lg {
-      @apply col-span-6;
+      @apply col-start-1;
     }
   }
 
@@ -138,9 +133,10 @@ export default {
     text-white text-sm font-bold tracking-wide
     mt-4 px-4 py-3
     rounded-lg
+    gap-3
     flex flex-row
     items-center
-    justify-between;
+    justify-around;
 
     &:focus {
       @apply outline-none;

@@ -3,51 +3,30 @@
     <h2 class="isoman__title">
       <strong>Pelayanan Kesehatan & Telekonsultasi Selama Isolasi Mandiri</strong>
     </h2>
-    <ExpandableContent>
-      <template #title>
-        Perawatan Bagi Pasien COVID-19
-      </template>
-      <PerawatanBagiPasien />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Panduan Isolasi di Rumah
-      </template>
-      <PanduanIsolasi />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Kontak Erat dari Pasien COVID-19
-      </template>
-      <KontakEratCovid19 />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Kapan Pasien COVID-19 Dinyatakan Bebas Isoman?
-      </template>
-      <BebasIsoman />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Jika Isoman Sudah Selesai, Haruskah Tes PCR Ulang?
-      </template>
-      <TestPCRUlang />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Konsultasi dengan Dokter
-      </template>
-      <KonsultasiDenganDokter />
-    </ExpandableContent>
-    <ExpandableContent>
-      <template #title>
-        Permohonan Kebutuhan Isolasi Mandiri
-      </template>
-      <PermohonanKebutuhanIsoman />
-    </ExpandableContent>
-    <div class="isoman__action-cards">
+    <ContentLoader
+      v-if="isInfoItemsLoading"
+      :speed="3"
+      :height="48"
+    >
+      <rect width="100%" height="100%" rx="2" ry="2" />
+    </ContentLoader>
+    <template v-else>
+      <ExpandableContent
+        v-for="(item, i) in infoItems"
+        :key="i"
+      >
+        <template #title>
+          {{ item.title }}
+        </template>
+        <div
+          class="html-content"
+          v-html="item.content"
+        />
+      </ExpandableContent>
+    </template>
+    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
       <ActionCard
-        class="action-card--whitespaced"
+        class="w-full lg:w-1/2"
         title="Konsultasi dengan Dokter"
         body="Bagi Wargi yang membutuhkan obat, yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar"
         prompt="Tanyakan Sekarang"
@@ -56,6 +35,7 @@
         :backlink="konsultasiDokter"
       />
       <ActionCard
+        class="w-full lg:w-1/2"
         title="Permohonan Kebutuhan Vitamin"
         body="Ajukan permohonan kebutuhan vitamin untuk isolasi mandiri"
         prompt="Ajukan Sekarang"
@@ -63,64 +43,41 @@
         :image="permohonanKebutuhanImage"
         :backlink="permohonanKebutuhan"
       />
+    </div>
+    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6">
       <ActionCard
-        :class="asyncCardClasses"
-        title="Saya Butuh Tabung Oksigen"
-        body="Cari pinjaman tabung oksigen baik dari warga maupun pemerintah"
-        prompt="Cek di Sini"
-        :event="peminjamOksigenEvent"
-        :image="peminjamOksigenImage"
-        @click="onOpenOxygenRequestPopup"
-      />
-      <ActionCard
-        :class="asyncCardClasses"
-        title="Saya Punya Tabung Oksigen"
-        body="Pinjamkan atau donasikan tabung oksigen bagi warga yang membutuhkan"
-        prompt="Isi Formulir"
-        :event="pemberiOksigenEvent"
-        :image="pemberiOksigenImage"
-        :backlink="pemberiOksigenJotform"
+        class="w-full"
+        title="Lacak Permohonan Vitamin/Obat Anda"
+        body="Anda dapat mengetahui status tindak lanjut permohonan obat/vitamin yang telah diajukan melalui tombol di bawah ini"
+        prompt="Lacak di Sini"
+        :event="trackApplicationEvent"
+        :image="deliveryImage"
+        :backlink="trackApplication"
       />
     </div>
-    <OxygenProviderPopup ref="popup" />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { ContentLoader } from 'vue-content-loader'
 import ExpandableContent from './ExpandableContent'
-import PerawatanBagiPasien from './PerawatanBagiPasien'
-import PanduanIsolasi from './PanduanIsolasi'
-import KontakEratCovid19 from './KontakEratCovid19'
-import BebasIsoman from './BebasIsoman'
-import TestPCRUlang from './TestPCRUlang'
-import KonsultasiDenganDokter from './KonsultasiDenganDokter'
-import PermohonanKebutuhanIsoman from './PermohonanKebutuhanIsoman'
 import ActionCard from './ActionCard'
-import OxygenProviderPopup from './OxygenProviderPopup'
-import { konsultasiDokter, permohonanKebutuhan } from './backlinks'
+import { konsultasiDokter, permohonanKebutuhan, trackApplication } from './backlinks'
 import {
   TAP_KONSULTASI_DOKTER as konsultasiDokterEvent,
   TAP_PERMOHONAN_ISOMAN as permohonanKebutuhanEvent,
-  TAP_PEMINJAM_OKSIGEN as peminjamOksigenEvent,
-  TAP_PEMBERI_OKSIGEN as pemberiOksigenEvent
+  TAP_TRACK_APPLICATION as trackApplicationEvent
 } from './events'
 import permohonanKebutuhanImage from '~/assets/illustrations/permohonan-kebutuhan-isoman.png'
 import konsultasiDokterImage from '~/assets/illustrations/konsultasi-dokter.png'
-import peminjamOksigenImage from '~/assets/illustrations/peminjam-oksigen.png'
-import pemberiOksigenImage from '~/assets/illustrations/pemberi-oksigen.png'
+import deliveryImage from '~/assets/illustrations/delivery.svg'
 
 export default {
   components: {
     ExpandableContent,
-    PerawatanBagiPasien,
-    PanduanIsolasi,
-    KonsultasiDenganDokter,
-    PermohonanKebutuhanIsoman,
     ActionCard,
-    KontakEratCovid19,
-    BebasIsoman,
-    TestPCRUlang,
-    OxygenProviderPopup
+    ContentLoader
   },
   data () {
     return {
@@ -130,51 +87,16 @@ export default {
       permohonanKebutuhan,
       permohonanKebutuhanImage,
       permohonanKebutuhanEvent,
-      peminjamOksigenImage,
-      peminjamOksigenEvent,
-      peminjamOksigenJotform: null,
-      pemberiOksigenImage,
-      pemberiOksigenEvent,
-      pemberiOksigenJotform: null,
-      isBacklinkLoading: true,
-      isBacklinkError: false
+      trackApplication,
+      trackApplicationEvent,
+      deliveryImage
     }
   },
   computed: {
-    asyncCardClasses () {
-      if (this.isBacklinkLoading) {
-        return 'action-card--loading'
-      }
-      if (this.isBacklinkError) {
-        return 'action-card--error'
-      }
-      return ''
-    }
-  },
-  mounted () {
-    this.getBacklinksFromRemoteConfig()
-  },
-  methods: {
-    async getBacklinksFromRemoteConfig () {
-      this.isBacklinkLoading = true
-      this.isBacklinkError = false
-      this.peminjamOksigenJotform = null
-      this.pemberiOksigenJotform = null
-      try {
-        const backlinks = await this.$store.dispatch('oxygen/getFormBacklinks')
-        if (backlinks) {
-          this.peminjamOksigenJotform = backlinks.form_request
-          this.pemberiOksigenJotform = backlinks.form_provide
-        }
-      } catch (e) {
-        this.isBacklinkError = true
-      } finally {
-        this.isBacklinkLoading = false
-      }
-    },
-    onOpenOxygenRequestPopup () {
-      this.$refs.popup.open()
-    }
+    ...mapState('self-isolation', [
+      'isInfoItemsLoading',
+      'infoItems'
+    ])
   }
 }
 </script>
@@ -188,34 +110,34 @@ export default {
       @apply mb-8 text-2xl;
     }
   }
+}
+.html-content::v-deep {
+  @apply grid grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 gap-2 col-span-1 flex flex-col;
 
-  &__action-cards {
-    gap: 16px;
-    @apply flex flex-col flex-wrap mt-4;
+  .panduan-isolasi {
+    @apply text-left text-gray-800;
+    ol {
+      @apply list-outside text-left text-gray-800;
 
-    > * {
-      width: 100%;
-    }
-
-    @screen sm {
-      @apply flex-row;
-
-      > * {
-        // for each action card
-        // 16px is gap
-        width: calc((100% - 16px) / 2);
+      li {
+        @apply ml-4 pl-4;
       }
     }
+  }
 
-    @screen lg {
-      gap: 24px;
-      @apply gap-6 mt-6;
-
-      > * {
-        // for each action card
-        // 24px is gap
-        width: calc((100% - 24px) / 2);
-      }
+  @media (min-width: 1024px) {
+    .lg:grid-cols-4 {
+      grid-template-columns: repeat(4,minmax(0,1fr));
+    }
+  }
+  @media (min-width: 768px) {
+    .md:grid-cols-3 {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+  }
+  @media (min-width: 640px) {
+    .sm:grid-cols-2 {
+      grid-template-columns: repeat(2,minmax(0,1fr));
     }
   }
 }
