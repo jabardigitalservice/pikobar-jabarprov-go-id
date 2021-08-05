@@ -183,7 +183,7 @@ export default {
 
     @screen sm {
       @apply grid grid-cols-2
-      gap-4 mt-2;
+      gap-4 mt-4;
     }
 
     @screen lg {
