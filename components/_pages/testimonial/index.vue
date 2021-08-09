@@ -3,29 +3,30 @@
     <h2 class="testimoni__title">
       <strong>Testimoni</strong>
     </h2>
-    <carousel class="testimoni__carousel">
-      <slide v-for="testimoni in dataTestimoni" :key="testimoni.key">
-        <TestimoniCard
-          :name="testimoni.name"
-          :address="testimoni.address"
-          :image="testimoni.image"
-          :message="testimoni.message"
-        />
-      </slide>
-    </carousel>
+    <client-only>
+      <carousel class="testimoni__carousel">
+        <slide v-for="testimoni in dataTestimoni" :key="testimoni.key">
+          <TestimoniCard
+            :name="testimoni.name"
+            :address="testimoni.address"
+            :image="testimoni.image"
+            :message="testimoni.message"
+          />
+        </slide>
+      </carousel>
+    </client-only>
   </div>
 </template>
 
 <script>
-import { Carousel, Slide } from 'vue-carousel'
 import TestimoniCard from './TestimoniCard'
 import dataTestimoni from './testimoni'
 
 export default {
   components: {
     TestimoniCard,
-    Carousel,
-    Slide
+    Carousel: () => import('vue-carousel/src/Carousel.vue'),
+    Slide: () => import('vue-carousel/src/Slide.vue')
   },
   data () {
     return {

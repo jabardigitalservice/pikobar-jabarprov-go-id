@@ -1,14 +1,14 @@
 <template>
   <div class="action-card">
     <img
-      class="mx-auto col-span-2 h-32 object-contain object-center lg:h-auto lg:col-end-1"
-      style="max-width: 150px; max-height: 150px;"
-      width="80%"
       :src="image"
+      class="action-card__image"
       alt="action illustration"
     >
     <div class="action-card__content">
-      <h3 class="font-bold text-xl" v-html="title" />
+      <h3 class="action-card__title">
+        {{ title }}
+      </h3>
       <p class="text-gray-800">
         {{ body }}
       </p>
@@ -23,7 +23,7 @@
         </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-5 h-5 ml-3"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -62,7 +62,7 @@ export default {
     },
     backlink: {
       type: String,
-      required: true
+      default: ''
     },
     image: {
       type: String,
@@ -71,6 +71,12 @@ export default {
   },
   methods: {
     onClick () {
+      if (this.$listeners.click) {
+        return this.$listeners.click()
+      }
+      if (!this.backlink) {
+        return
+      }
       if (analytics && this.event) {
         analytics.logEvent(this.event)
       }
@@ -82,13 +88,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes btn-loading {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .action-card {
   @apply p-4
-  rounded-md
-  grid grid-cols-2
+  grid
   gap-8
+  rounded-md
   border border-solid border-gray-300
   bg-white;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 8rem 1fr;
+
+  @screen lg {
+    @apply grid gap-8;
+    grid-template-rows: unset;
+  }
+
+  &__top {
+    @apply flex-none;
+  }
+
+  &__image {
+    @apply mx-auto col-span-2 w-auto h-32 object-contain object-center;
+
+    @screen lg {
+      @apply w-32 h-auto col-end-1;
+    }
+  }
+
+  &__title {
+    @apply font-bold text-xl;
+  }
 
   &__content {
     @apply flex flex-col
@@ -105,7 +143,7 @@ export default {
   &__btn-link {
     @apply bg-brand-green-darker
     text-white text-sm font-bold tracking-wide
-    p-4
+    px-4 py-3
     rounded-lg
     gap-3
     flex flex-row
@@ -115,10 +153,42 @@ export default {
     &:focus {
       @apply outline-none;
     }
+  }
 
-    @screen lg {
-      @apply px-6 py-2
-      text-base;
+  &--loading &,
+  &--error & {
+    &__btn-link * {
+      display: none
+    }
+  }
+
+  &--loading &__btn-link {
+    width: 120px;
+    height: 38px;
+    animation: btn-loading 1s ease infinite alternate;
+    @apply bg-gray-200;
+  }
+
+  &--error &__btn-link {
+    @apply bg-red-600;
+
+    &::before {
+      content: 'Terjadi kesalahan';
+      display: inline-block;
+    }
+  }
+
+  @screen sm {
+    &--whitespaced &__title::after {
+      content: ' ';
+      display: block;
+      white-space: pre;
+    }
+  }
+
+  @screen lg {
+    &--whitespaced &__title::after {
+      display: none;
     }
   }
 }

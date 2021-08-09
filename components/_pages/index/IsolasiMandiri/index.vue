@@ -24,9 +24,9 @@
         />
       </ExpandableContent>
     </template>
-    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6 lg:gap-6">
+    <div class="isoman__action-card-grids">
       <ActionCard
-        class="w-full lg:w-1/2"
+        class="isoman__action-card"
         title="Konsultasi dengan Dokter"
         body="Bagi Wargi yang membutuhkan obat, yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar"
         prompt="Tanyakan Sekarang"
@@ -35,13 +35,31 @@
         :backlink="konsultasiDokter"
       />
       <ActionCard
-        class="w-full lg:w-1/2"
+        class="isoman__action-card"
         title="Permohonan Kebutuhan Vitamin"
         body="Ajukan permohonan kebutuhan vitamin untuk isolasi mandiri"
         prompt="Ajukan Sekarang"
         :event="permohonanKebutuhanEvent"
         :image="permohonanKebutuhanImage"
         :backlink="permohonanKebutuhan"
+      />
+      <ActionCard
+        :class="['isoman__action-card', asyncCardClassModifiers]"
+        title="Saya Butuh Tabung Oksigen"
+        body="Warga dapat ajukan permohonan tabung oksigen ke pemerintah & warga di sini"
+        prompt="Klik untuk pengajuan"
+        :event="peminjamOksigenEvent"
+        :image="peminjamOksigenImage"
+        :backlink="peminjamOksigenJotform"
+      />
+      <ActionCard
+        :class="['isoman__action-card', asyncCardClassModifiers]"
+        title="Saya Punya Tabung Oksigen"
+        body="Pinjam atau donasikan tabung oksigen Anda bagi warga yang membutuhkan"
+        prompt="Daftar sekarang"
+        :event="pemberiOksigenEvent"
+        :image="pemberiOksigenImage"
+        :backlink="pemberiOksigenJotform"
       />
     </div>
     <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6">
@@ -67,11 +85,15 @@ import { konsultasiDokter, permohonanKebutuhan, trackApplication } from './backl
 import {
   TAP_KONSULTASI_DOKTER as konsultasiDokterEvent,
   TAP_PERMOHONAN_ISOMAN as permohonanKebutuhanEvent,
-  TAP_TRACK_APPLICATION as trackApplicationEvent
+  TAP_TRACK_APPLICATION as trackApplicationEvent,
+  TAP_PEMINJAM_OKSIGEN as peminjamOksigenEvent,
+  TAP_PEMBERI_OKSIGEN as pemberiOksigenEvent
 } from './events'
 import permohonanKebutuhanImage from '~/assets/illustrations/permohonan-kebutuhan-isoman.png'
 import konsultasiDokterImage from '~/assets/illustrations/konsultasi-dokter.png'
 import deliveryImage from '~/assets/illustrations/delivery.svg'
+import peminjamOksigenImage from '~/assets/illustrations/peminjam-oksigen.png'
+import pemberiOksigenImage from '~/assets/illustrations/pemberi-oksigen.png'
 
 export default {
   components: {
@@ -89,14 +111,56 @@ export default {
       permohonanKebutuhanEvent,
       trackApplication,
       trackApplicationEvent,
-      deliveryImage
+      deliveryImage,
+      peminjamOksigenImage,
+      peminjamOksigenEvent,
+      peminjamOksigenJotform: null,
+      pemberiOksigenImage,
+      pemberiOksigenEvent,
+      pemberiOksigenJotform: null,
+      isBacklinkLoading: true,
+      isBacklinkError: false
     }
   },
   computed: {
     ...mapState('self-isolation', [
       'isInfoItemsLoading',
       'infoItems'
-    ])
+    ]),
+    asyncCardClassModifiers () {
+      if (this.isBacklinkLoading) {
+        return 'action-card--loading'
+      }
+      if (this.isBacklinkError) {
+        return 'action-card--error'
+      }
+      return ''
+    }
+  },
+  mounted () {
+    this.getBacklinksFromRemoteConfig()
+  },
+  methods: {
+    async getBacklinksFromRemoteConfig () {
+      this.isBacklinkLoading = true
+      this.isBacklinkError = false
+      this.peminjamOksigenJotform = null
+      this.pemberiOksigenJotform = null
+      try {
+        const backlinks = await this.$store.dispatch('oxygen/getFormBacklinks')
+        if (backlinks) {
+          this.peminjamOksigenJotform = backlinks.form_request
+          this.pemberiOksigenJotform = backlinks.form_provide
+        }
+      } catch (e) {
+        this.isBacklinkError = true
+      } finally {
+        this.isBacklinkLoading = false
+      }
+    },
+    onOpenOxygenRequestPopup () {
+      this.$refs.popup.open()
+    }
   }
 }
 </script>
@@ -108,6 +172,27 @@ export default {
 
     @screen md {
       @apply mb-8 text-2xl;
+    }
+  }
+
+  &__action-card-grids {
+    @apply block;
+
+    @screen sm {
+      @apply grid grid-cols-2
+      gap-4 mt-4;
+    }
+
+    @screen lg {
+      @apply gap-6 mt-6;
+    }
+  }
+
+  &__action-card {
+    @apply my-4;
+
+    @screen sm {
+      @apply m-0;
     }
   }
 }
