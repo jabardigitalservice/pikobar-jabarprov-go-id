@@ -153,7 +153,7 @@ export default {
             { to: '/articles?tab=jabar', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
             { to: '/contact', label: 'Kontak' },
-            { href: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial' }
+            { href: process.env.NUXT_ENV_BANSOS_URL, label: 'Bantuan Sosial' }
           ]
         }
       ]

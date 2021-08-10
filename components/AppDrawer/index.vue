@@ -93,7 +93,7 @@ export default {
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
-        { to: 'https://bansos.pikobar.jabarprov.go.id/', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen }
+        { to: process.env.NUXT_ENV_BANSOS_URL, label: 'Bantuan Sosial', icon: this.icon.faBoxOpen }
       ]
     }
   },

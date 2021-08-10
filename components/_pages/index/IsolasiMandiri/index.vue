@@ -44,7 +44,7 @@
         :backlink="permohonanKebutuhan"
       />
       <ActionCard
-        :class="['isoman__action-card', asyncCardClassModifiers]"
+        class="isoman__action-card"
         title="Saya Butuh Tabung Oksigen"
         body="Warga dapat ajukan permohonan tabung oksigen ke pemerintah & warga di sini"
         prompt="Klik untuk pengajuan"
@@ -53,7 +53,7 @@
         :backlink="peminjamOksigenJotform"
       />
       <ActionCard
-        :class="['isoman__action-card', asyncCardClassModifiers]"
+        class="isoman__action-card"
         title="Saya Punya Tabung Oksigen"
         body="Pinjam atau donasikan tabung oksigen Anda bagi warga yang membutuhkan"
         prompt="Daftar sekarang"
@@ -114,50 +114,19 @@ export default {
       deliveryImage,
       peminjamOksigenImage,
       peminjamOksigenEvent,
-      peminjamOksigenJotform: null,
+      peminjamOksigenJotform: process.env.NUXT_ENV_FORM_OXYGEN_REQUEST,
       pemberiOksigenImage,
       pemberiOksigenEvent,
-      pemberiOksigenJotform: null,
-      isBacklinkLoading: true,
-      isBacklinkError: false
+      pemberiOksigenJotform: process.env.NUXT_ENV_FORM_OXYGEN_PROVIDE
     }
   },
   computed: {
     ...mapState('self-isolation', [
       'isInfoItemsLoading',
       'infoItems'
-    ]),
-    asyncCardClassModifiers () {
-      if (this.isBacklinkLoading) {
-        return 'action-card--loading'
-      }
-      if (this.isBacklinkError) {
-        return 'action-card--error'
-      }
-      return ''
-    }
-  },
-  mounted () {
-    this.getBacklinksFromRemoteConfig()
+    ])
   },
   methods: {
-    async getBacklinksFromRemoteConfig () {
-      this.isBacklinkLoading = true
-      this.isBacklinkError = false
-      this.peminjamOksigenJotform = null
-      this.pemberiOksigenJotform = null
-      try {
-        const backlinks = await this.$store.dispatch('oxygen/getFormBacklinks')
-        if (backlinks) {
-          this.peminjamOksigenJotform = backlinks.form_request
-          this.pemberiOksigenJotform = backlinks.form_provide
-        }
-      } catch (e) {
-        this.isBacklinkError = true
-      } finally {
-        this.isBacklinkLoading = false
-      }
-    },
     onOpenOxygenRequestPopup () {
       this.$refs.popup.open()
     }

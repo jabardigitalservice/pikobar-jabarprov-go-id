@@ -11,7 +11,7 @@
         </a>
       </li>
       <li class="mr-4">
-        <a href="https://twitter.com/pikobar" target="_blank">
+        <a :href="twitterBacklink" target="_blank">
           <img :src="iconTwitter" class="w-10 h-10 object-contain object-center">
         </a>
       </li>
@@ -26,7 +26,8 @@ export default {
   data () {
     return {
       faInstagram,
-      iconTwitter
+      iconTwitter,
+      twitterBacklink: process.env.NUXT_ENV_PIKOBAR_TWITTER_URL
     }
   }
 }
