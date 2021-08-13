@@ -5,7 +5,6 @@ export const state = () => ({
   isItemsLoading: true,
   infoItems: [],
   isInfoItemsLoading: true,
-  formBacklinks: null,
   districs: [],
   isDistricsLoading: true,
   subDistrics: [],
@@ -64,20 +63,6 @@ export const actions = {
       commit('setInfoItemsLoading', false)
     }
     return state.infoItems
-  },
-  async getFormBacklinks ({ state, commit }) {
-    const { formBacklinks } = state
-    if (!formBacklinks) {
-      const remoteConfig = await import('../lib/firebase-client')
-        .then(m => m.default || m)
-        .then((firebase) => {
-          return firebase.remoteConfig
-        })
-      await remoteConfig.fetchAndActivate()
-      const backlinks = remoteConfig.getValue('oxygen_request_and_provide')._value
-      commit('setFormBacklinks', JSON.parse(backlinks))
-    }
-    return state.formBacklinks
   },
   async getCollectedDistricts ({ state, commit }) {
     const { districs } = state
