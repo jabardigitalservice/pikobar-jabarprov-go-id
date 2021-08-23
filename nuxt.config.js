@@ -93,7 +93,9 @@ export default {
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
     { src: '~/plugins/vue-fullscreen', mode: 'client' },
     { src: '~/plugins/vue-multiselect', mode: 'client' },
-    { src: '~/plugins/custom', mode: 'client' }
+    { src: '~/plugins/custom', mode: 'client' },
+    { src: '~/plugins/vee-validate', mode: 'client' },
+    { src: '~/plugins/validate', mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules
