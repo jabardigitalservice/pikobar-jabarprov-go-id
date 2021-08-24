@@ -41,7 +41,7 @@
         </div>
       </div>
       <div v-if="imagePosition === 'right'" class="flex-1">
-        <img class="content-card__grid__image" :src="image" alt="content-card-image">
+        <img class="content-card__image" :src="image" alt="content-card-image">
       </div>
     </div>
   </div>
