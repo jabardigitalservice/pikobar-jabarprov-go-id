@@ -153,23 +153,8 @@ export default {
         TODO: Proceed to next step
       */
     },
-    options (name) {
-      switch (name) {
-        case 'city':
-          return [
-            { name: 'Pilih Kota' },
-            ...this.cities
-          ]
-        case 'district':
-          return [
-            { name: 'Pilih Kecamatan' },
-            ...this.districts
-          ]
-        case 'subdistrict':
-          return [
-            { name: 'Pilih Kelurahan' },
-            ...this.subDistricts
-          ]
+    generateRtRwOptions (val) {
+      switch (val) {
         case 'rw': {
           const listRw = []
           for (let i = 0; i < 60; i++) {
@@ -199,6 +184,25 @@ export default {
         default:
           return []
       }
+    },
+    options (name) {
+      const options = {
+        city: [
+          { name: 'Pilih Kota' },
+          ...this.cities
+        ],
+        district: [
+          { name: 'Pilih Kecamatan' },
+          ...this.districts
+        ],
+        subdistrict: [
+          { name: 'Pilih Kelurahan' },
+          ...this.subDistricts
+        ],
+        rw: this.generateRtRwOptions('rw'),
+        rt: this.generateRtRwOptions('rt')
+      }
+      return options[name.toLowerCase()] ?? []
     }
   }
 }
