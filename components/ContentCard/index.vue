@@ -2,23 +2,23 @@
   <div class="content-card">
     <div class="content-card__grid">
       <div v-if="imagePosition === 'left'" class="flex-1">
-        <img class="content-card__grid__image" :src="image" alt="content-card-image">
+        <img class="content-card__image" :src="image" alt="content-card-image">
       </div>
-      <div class="content-card__grid__info">
-        <div class="content-card__grid__info__content">
-          <p v-if="header" class="content-card__grid__info__content__header">
+      <div class="content-card__info">
+        <div class="content-card__content">
+          <p v-if="header" class="content-card__header">
             {{ header }}
           </p>
-          <p class="content-card__grid__info__content__title">
+          <p class="content-card__title">
             {{ title }}
           </p>
-          <p class="content-card__grid__info__content__body text-black-500">
+          <p class="content-card__body text-black-500">
             {{ body }}
           </p>
           <a
             :href="backLink"
             target="_blank"
-            :class="[buttonType ? 'content-card__grid__info__content__btn-link-outline' : 'content-card__grid__info__content__btn-link']"
+            :class="[buttonType ? 'content-card__btn-link-outline' : 'content-card__btn-link']"
           >
             <span>
               {{ prompt }}
@@ -100,56 +100,55 @@ export default {
       @screen sm {
         @apply grid-cols-2;
       }
+    }
 
-      &__image {
-        @apply w-full h-full object-cover object-center rounded-lg;
+    &__info {
+      @apply flex-1 p-6 flex flex-col justify-between;
+    }
+
+    &__content {
+      @apply flex flex-col gap-2 justify-between items-start col-span-2;
+
+      @screen lg {
+        @apply col-start-1;
       }
+    }
 
-      &__info {
-        @apply flex-1 p-6 flex flex-col justify-between;
+    &__image {
+      @apply w-full h-full object-cover object-center rounded-lg;
+    }
 
-        &__content {
-          @apply flex flex-col gap-2 justify-between items-start col-span-2;
+    &__header {
+      @apply text-sm text-green-600;
+    }
 
-          @screen lg {
-            @apply col-start-1;
-          }
+    &__title {
+      @apply text-3xl font-semibold;
+    }
 
-          &__header {
-            @apply text-sm text-green-600;
-          }
+    &__body {
+      @apply mt-3 text-base;
+    }
 
-          &__title {
-            @apply text-3xl font-semibold;
-          }
+    &__btn-link {
+      @apply inline-flex bg-brand-green-darker
+      text-white text-sm font-bold tracking-wide
+      px-3 py-3
+      rounded-lg
+      mt-6
+      gap-2
+      items-center
+      justify-around;
 
-          &__body {
-            @apply mt-3 text-base;
-          }
-
-          &__btn-link {
-            @apply bg-brand-green-darker
-            text-white text-sm font-bold tracking-wide
-            px-3 py-3
-            rounded-lg
-            mt-6
-            gap-2
-            inline-flex
-            items-center
-            justify-around;
-
-            &-outline {
-              @apply inline-flex items-center px-3 py-2 border
-              border-green-500
-              shadow-sm
-              mt-6
-              gap-2
-              text-base
-              rounded-md
-              text-green-700
-            }
-          }
-        }
+      &-outline {
+        @apply inline-flex items-center px-3 py-2 border
+        border-green-500
+        shadow-sm
+        mt-6
+        gap-2
+        text-base
+        rounded-md
+        text-green-700
       }
     }
   }
