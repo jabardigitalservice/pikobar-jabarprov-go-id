@@ -1,7 +1,10 @@
 import axios from 'axios'
 
+const baseURL = process.env.NUXT_ENV_APP_MODE === 'production'
+  ? process.env.ISOMAN_API_BASEURL
+  : process.env.ISOMAN_API_BASEURL_STAGING
 const isomanAPI = axios.create({
-  baseURL: process.env.ISOMAN_API_BASEURL
+  baseURL
 })
 
 export {
