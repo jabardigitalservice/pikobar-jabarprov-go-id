@@ -13,7 +13,7 @@ export async function getTrackingResult (params) {
     const response = await isomanAPI.post('/track', params)
     return response.data
   } catch (e) {
-    return e
+    throw e
   }
 }
 
@@ -22,7 +22,7 @@ export async function getCitiesResult () {
     const response = await isomanAPI.get('/cities')
     return response.data
   } catch (e) {
-    return e
+    throw e
   }
 }
 export async function getDistrictsResult (params) {
@@ -34,7 +34,7 @@ export async function getDistrictsResult (params) {
     })
     return response.data
   } catch (e) {
-    return e
+    throw e
   }
 }
 export async function getSubDistrictsResult (params) {
@@ -46,6 +46,6 @@ export async function getSubDistrictsResult (params) {
     })
     return response.data
   } catch (e) {
-    return e
+    throw e
   }
 }
