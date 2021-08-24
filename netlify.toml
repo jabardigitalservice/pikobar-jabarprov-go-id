@@ -10,3 +10,7 @@
   for = "/_nuxt/*.js"
   [headers.values]
     Cache-Control = "public, s-max-age=86400"
+[context.production.environment]
+  NUXT_ENV_APP_MODE = "production"
+[context.deploy-preview.environment]
+  NUXT_ENV_APP_MODE = "staging"
