@@ -5,8 +5,8 @@
     <ImageCarouselButtonNav
       v-show="showNavigation"
       type="left"
-      :disabled="isBtnPrevDisabled"
       class="image-carousel__btn-nav"
+      :disabled="isBtnPrevDisabled"
       :style="[btnPrevPositionStyles]"
       @click="onNavigate('backward')"
     />
@@ -37,9 +37,9 @@
     </div>
     <ImageCarouselButtonNav
       v-show="showNavigation"
-      :disabled="isBtnNextDisabled"
       type="right"
       class="image-carousel__btn-nav image-carousel__btn-nav--next"
+      :disabled="isBtnNextDisabled"
       :style="[btnNextPositionStyles]"
       @click="onNavigate()"
     />
