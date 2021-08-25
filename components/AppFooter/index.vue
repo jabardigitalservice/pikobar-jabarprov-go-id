@@ -144,11 +144,7 @@ export default {
             @apply mt-8 border-t bg-green-800 border-green-200 pt-4;
 
             &-text {
-                @apply pb-4 text-base text-white;
-
-                @screen lg {
-                    @apply text-center;
-                }
+                @apply pb-4 text-base text-white text-center;
             }
         }
     }
