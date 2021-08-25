@@ -26,7 +26,7 @@
       <nuxt />
     </div>
     <BackToTopButton />
-    <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32">
+    <AppFooter v-show="isTopLevelRoute">
       <SponsorList :title-sponsor="this.$route.path.startsWith('/donate') ? 'Thanks To :' : null" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
     </AppFooter>
   </div>
