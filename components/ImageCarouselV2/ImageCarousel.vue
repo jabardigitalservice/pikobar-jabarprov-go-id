@@ -1,6 +1,7 @@
 <template>
   <div
     class="image-carousel"
+    :style="[carouselStyles]"
   >
     <ImageCarouselButtonNav
       v-show="showNavigation"
@@ -27,10 +28,12 @@
             :key="index"
             :style="[slidePaddingStyles]"
           >
-            <ImageCarouselItem
-              v-bind="item"
-              @click="onClickSlide(item, index)"
-            />
+            <slot name="item" v-bind="{ item, index }">
+              <ImageCarouselItem
+                v-bind="item"
+                @click="onClickSlide(item, index)"
+              />
+            </slot>
           </VueCarouselSlide>
         </VueCarousel>
       </client-only>
@@ -47,6 +50,7 @@
 </template>
 
 <script>
+import _merge from 'lodash/merge'
 import ImageCarouselSkeleton from './ImageCarouselSkeleton'
 import ImageCarouselItem from './ImageCarouseItem'
 import ImageCarouselButtonNav from './ImageCarouselButtonNav'
@@ -74,26 +78,6 @@ export default {
       type: Boolean
     },
     /**
-     * Number of slide to show on each page
-     * @See https://ssense.github.io/vue-carousel/api/#perPage
-     */
-    perPage: {
-      type: Number,
-      default: 1
-    },
-    /**
-     * @See https://ssense.github.io/vue-carousel/api/#perPageCustom
-     */
-    perPageCustom: {
-      type: [Number, Array],
-      default: () => {
-        return [
-          [720, 2],
-          [1024, 3]
-        ]
-      }
-    },
-    /**
      * Gap between slides
      */
     slideGap: {
@@ -106,6 +90,20 @@ export default {
     buttonGap: {
       type: Number,
       default: 32
+    },
+    navigation: {
+      type: Boolean,
+      default: true
+    },
+    carouselProps: {
+      type: Object,
+      default: () => ({
+        perPage: 1,
+        perPageCustom: [
+          [720, 2],
+          [1024, 3]
+        ]
+      })
     }
   },
   data () {
@@ -120,31 +118,49 @@ export default {
   },
   computed: {
     carouselConfig () {
-      const config = {
+      const defaultCarouselProps = this.$options
+        .props
+        .carouselProps
+        .default()
+      const defaultConfig = {
         autoplay: true,
         autoplayTimeout: 4000,
         paginationEnabled: false,
         navigationEnabled: false,
-        perPage: this.perPage,
-        perPageCustom: this.perPageCustom,
         spacePadding: 0,
         mouseDrag: true,
         touchDrag: true,
-        loop: false
+        loop: false,
+        scrollPerPage: false
       }
-      return config
+      return _merge(
+        defaultCarouselProps,
+        defaultConfig,
+        this.carouselProps
+      )
     },
     showNavigation () {
-      if (this.loading) {
+      if (!this.navigation || this.loading) {
         return false
       }
-      if (Array.isArray(this.perPageCustom)) {
+
+      const { perPageCustom } = this.carouselConfig
+      if (Array.isArray(perPageCustom)) {
         // arr[0] is minimum width of each perPageCustom config pair
-        const widths = this.perPageCustom.map(arr => arr[0])
+        const widths = perPageCustom.map(arr => arr[0])
         const minWidth = Math.min(...widths)
         return this.currentViewportWidth > minWidth
       }
       return false
+    },
+    carouselStyles () {
+      const styles = {}
+      if (!this.showNavigation) {
+        Object.assign(styles, {
+          margin: `0 ${this.slideGap / -2}px`
+        })
+      }
+      return styles
     },
     slidePaddingStyles () {
       return {
@@ -211,7 +227,6 @@ $--button-gap: 32px;
   justify-start items-center;
 
   &__track {
-    min-height: 200px;
     @apply flex-1;
   }
 
