@@ -95,3 +95,5 @@ config.firebase.sdk.js
 config.firebase.service-account.js
 migration/export.json
 migration/export_update.json
+
+pages/playground.vue
