@@ -5,7 +5,6 @@
       <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
     </label>
     <input
-      v-if="type !== 'select'"
       :value="value"
       :name="name"
       class="input-text"
@@ -49,10 +48,6 @@ export default {
       default: null
     },
     note: {
-      type: String,
-      default: null
-    },
-    rules: {
       type: String,
       default: null
     },
