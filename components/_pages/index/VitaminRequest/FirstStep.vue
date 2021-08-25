@@ -151,7 +151,8 @@ export default {
         behavior: 'smooth'
       })
     },
-    onNext () {
+    async onNext () {
+      await this.$refs.firstStep.validate()
       this.$emit('update:step', 2)
       window.scrollTo({
         top: 0,
