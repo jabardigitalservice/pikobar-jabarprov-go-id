@@ -152,7 +152,10 @@ export default {
       })
     },
     async onNext () {
-      await this.$refs.firstStep.validate()
+      const valid = await this.$refs.firstStep.validate()
+      if (!valid) {
+        return
+      }
       this.$emit('update:step', 2)
       window.scrollTo({
         top: 0,
