@@ -96,7 +96,6 @@ export default {
         test_location_id: null,
         other_test_location: null,
         test_type_id: null,
-        other_test_type: null,
         test_result_photo: null,
         is_reported: null,
         is_reported_tracing: null
@@ -105,11 +104,13 @@ export default {
   },
   computed: {
     ...mapState('isoman', [
-      'testLocations'
+      'testLocations',
+      'testTypes'
     ])
   },
   async created () {
     await this.$store.dispatch('isoman/getTestLocations')
+    await this.$store.dispatch('isoman/getTestTypes')
   },
   methods: {
     onBack () {
@@ -132,10 +133,8 @@ export default {
           ...this.testLocations
         ],
         test_type_id: [
-          { name: 'Pilih Jenis Tes' }
-          /**
-            @todo: Fill options with API data
-          */
+          { name: 'Pilih Jenis Tes' },
+          ...this.testTypes
         ],
         is_reported: [
           { name: 'Sudah', id: true },

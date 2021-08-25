@@ -2,14 +2,16 @@ import {
   getCitiesResult,
   getDistrictsResult,
   getSubDistrictsResult,
-  getTestLocationsResult
+  getTestLocationsResult,
+  getTestTypesResult
 } from '../api/isoman'
 
 export const state = () => ({
   cities: [],
   districts: [],
   subDistricts: [],
-  testLocations: []
+  testLocations: [],
+  testTypes: []
 })
 
 export const mutations = {
@@ -30,6 +32,9 @@ export const mutations = {
   },
   SET_TEST_LOCATIONS (state, result) {
     state.testLocations = result
+  },
+  SET_TEST_TYPES (state, result) {
+    state.testTypes = result
   }
 }
 
@@ -55,5 +60,9 @@ export const actions = {
   async getTestLocations ({ commit }) {
     const result = await getTestLocationsResult()
     commit('SET_TEST_LOCATIONS', result || [])
+  },
+  async getTestTypes ({ commit }) {
+    const result = await getTestTypesResult()
+    commit('SET_TEST_TYPES', result || [])
   }
 }

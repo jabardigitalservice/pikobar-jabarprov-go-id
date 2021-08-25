@@ -63,3 +63,14 @@ export async function getTestLocationsResult () {
     throw e
   }
 }
+export async function getTestTypesResult () {
+  try {
+    const response = await isomanAPI({
+      url: '/test-types',
+      method: 'GET'
+    })
+    return response.data
+  } catch (e) {
+    throw e
+  }
+}
