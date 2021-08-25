@@ -28,11 +28,6 @@ export default {
       type: String,
       default: null
     }
-  },
-  computed: {
-    isClickable () {
-      return 'click' in this.$listeners
-    }
   }
 }
 </script>
