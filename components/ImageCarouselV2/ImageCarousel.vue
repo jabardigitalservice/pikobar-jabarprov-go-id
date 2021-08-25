@@ -59,10 +59,6 @@ export default {
     ImageCarouselButtonNav
   },
   props: {
-    height: {
-      type: Number,
-      default: 200
-    },
     /**
      * Array of ImageCarouselItem's props
      * @See './ImageCarouselItem.vue'
@@ -125,7 +121,7 @@ export default {
   computed: {
     carouselConfig () {
       const config = {
-        autoplay: false,
+        autoplay: true,
         autoplayTimeout: 4000,
         paginationEnabled: false,
         navigationEnabled: false,
