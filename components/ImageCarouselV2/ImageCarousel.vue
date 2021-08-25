@@ -11,11 +11,11 @@
       @click="onNavigate('backward')"
     />
     <div class="image-carousel__track">
+      <ImageCarouselSkeleton
+        v-show="loading || isServerSide"
+        key="skeleton"
+      />
       <client-only>
-        <ImageCarouselSkeleton
-          v-show="loading || isServerSide"
-          key="skeleton"
-        />
         <VueCarousel
           v-show="!loading"
           ref="vueCarousel"
