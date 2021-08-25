@@ -63,13 +63,24 @@ export default {
       type: Number,
       default: 200
     },
+    /**
+     * Array of ImageCarouselItem's props
+     * @See './ImageCarouselItem.vue'
+     */
     items: {
       type: Array,
       default: null
     },
+    /**
+     * Show loading hint
+     */
     loading: {
       type: Boolean
     },
+    /**
+     * Number of slide to show on each page
+     * @See https://ssense.github.io/vue-carousel/api/#perPage
+     */
     perPage: {
       type: Number,
       default: 1
@@ -86,10 +97,16 @@ export default {
         ]
       }
     },
+    /**
+     * Gap between slides
+     */
     slideGap: {
       type: Number,
       default: 32
     },
+    /**
+     * Gap between button and carousel track
+     */
     buttonGap: {
       type: Number,
       default: 32
@@ -97,6 +114,8 @@ export default {
   },
   data () {
     return {
+      // determine if current render is happened
+      // on server or client side
       isServerSide: true,
       isBtnPrevDisabled: false,
       isBtnNextDisabled: false,
@@ -124,6 +143,7 @@ export default {
         return false
       }
       if (Array.isArray(this.perPageCustom)) {
+        // arr[0] is minimum width of each perPageCustom config pair
         const widths = this.perPageCustom.map(arr => arr[0])
         const minWidth = Math.min(...widths)
         return this.currentViewportWidth > minWidth
@@ -137,11 +157,15 @@ export default {
     },
     btnPrevPositionStyles () {
       return {
+        // ensure gap always reflect buttonGap value
+        // regardless of gap between slide
         marginRight: `${this.buttonGap - (this.slideGap / 2)}px`
       }
     },
     btnNextPositionStyles () {
       return {
+        // ensure gap always reflect buttonGap value
+        // regardless of gap between slide
         marginLeft: `${this.buttonGap - (this.slideGap / 2)}px`
       }
     }
@@ -156,14 +180,21 @@ export default {
   },
   methods: {
     handleViewportResize () {
+      // viewport width is used to determine whether to show
+      // navigation button or not
       this.currentViewportWidth = window.innerWidth
     },
     onCarouselUpdated () {
       const { vueCarousel } = this.$refs
+
+      // VueCarousel doesn't emit any event to determine
+      // whether carousel can be advanced / navigated forward or backward
+      // so, manual handling is written
       this.isBtnPrevDisabled = !vueCarousel.canAdvanceBackward
       this.isBtnNextDisabled = !vueCarousel.canAdvanceForward
     },
     onNavigate (direction) {
+      // utilize VueCarousel own navigation method
       this.$refs.vueCarousel.handleNavigation(direction)
     },
     onClickSlide (slide, slideIndex) {
