@@ -4,18 +4,23 @@
       <span class="input-label md:text-base">{{ label }}</span>
       <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
     </label>
-    <input
-      :value="value"
-      :name="name"
-      class="input-text"
-      :placeholder="placeholder"
-      :type="type"
-      :accept="accept"
-      @input="$emit('input', $event.target.value)"
-      @change="$emit('input', $event.target.value)"
-      @blur="$emit('blur')"
-      @focus="$emit('focus')"
+    <div
+      v-for="option in options"
+      :key="option.id"
+      class="flex flex-row"
     >
+      <input
+        :value="option.id"
+        :name="name"
+        class="form-radio"
+        type="radio"
+        @input="$emit('input', $event.target.value)"
+        @change="$emit('input', $event.target.value)"
+        @blur="$emit('blur')"
+        @focus="$emit('focus')"
+      >
+      <span class="ml-2">{{ option.name }}</span>
+    </div>
   </div>
 </template>
 
@@ -43,32 +48,19 @@ export default {
       type: String,
       default: null
     },
-    placeholder: {
-      type: String,
-      default: null
-    },
     note: {
       type: String,
       default: null
     },
-    accept: {
-      type: String,
+    options: {
+      type: Array,
       default: null
-    },
-    type: {
-      type: String,
-      default: 'text'
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.input-text {
-  appearance: none;
-  @apply w-full min-w-0 px-4 py-2 rounded
-  border border-solid border-gray-300;
-}
+<style scoped>
 .input-label {
   @apply font-bold text-gray-700 leading-loose
   text-sm;

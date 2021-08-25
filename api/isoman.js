@@ -52,3 +52,25 @@ export async function getSubDistrictsResult (params) {
     throw e
   }
 }
+export async function getTestLocationsResult () {
+  try {
+    const response = await isomanAPI({
+      url: '/test-locations',
+      method: 'GET'
+    })
+    return response.data
+  } catch (e) {
+    throw e
+  }
+}
+export async function getTestTypesResult () {
+  try {
+    const response = await isomanAPI({
+      url: '/test-types',
+      method: 'GET'
+    })
+    return response.data
+  } catch (e) {
+    throw e
+  }
+}

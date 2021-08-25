@@ -1,6 +1,6 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
-    <ValidationObserver ref="firstStep" class="w-full">
+    <ValidationObserver ref="secondStep" class="w-full">
       <form
         ref="form"
         lazy-validation
@@ -20,14 +20,17 @@
             :name="item.name"
             :options="options(item.name)"
           />
-          <TextArea
-            v-else-if="item.type === 'area'"
+          <RadioButton
+            v-else-if="item.type === 'radio'"
             v-model="form[item.model]"
             :label="item.label"
             :required="item.required"
             :name="item.name"
             :placeholder="item.placeholder"
+            :accept="item.accept"
             :note="item.note"
+            :type="item.type"
+            :options="options(item.name)"
           />
           <Input
             v-else
@@ -52,12 +55,12 @@
       </form>
     </ValidationObserver>
     <hr class="my-6 -mx-10">
-    <div class="flex justify-end gap-2">
+    <div class="flex flex-row gap-2 lg:justify-between">
       <button
         class="button__cancel sm:mr-0 hover:bg-gray-100 lg:w-40 w-full"
-        @click="onCancel"
+        @click="onBack"
       >
-        Batal
+        Kembali
       </button>
       <button
         class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-40 w-full"
@@ -72,144 +75,75 @@
 <script>
 import { mapState } from 'vuex'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import firstStepInput from './firstStep'
+import secondStepInput from './secondStep.js'
 import Input from '~/components/Input'
 import SelectInput from '~/components/SelectInput'
-import TextArea from '~/components/TextArea'
+import RadioButton from '~/components/RadioButton'
 export default {
   components: {
     ValidationObserver,
     ValidationProvider,
     Input,
     SelectInput,
-    TextArea
+    RadioButton
   },
   data () {
     return {
-      inputList: firstStepInput,
+      inputList: secondStepInput,
       form: {
-        name: '',
-        nik: '',
-        ktp_photo: null,
-        birth_date: null,
-        phone_primary: '',
-        phone_secondary: '',
-        email: '',
-        city_id: null,
-        district_id: null,
-        subdistrict_id: null,
-        rt: null,
-        rw: null,
-        package_id: null,
-        address: '',
-        landmark: ''
+        date_check: null,
+        date_confirmation: null,
+        test_location_id: null,
+        other_test_location: null,
+        test_type_id: null,
+        test_result_photo: null,
+        is_reported: null,
+        is_reported_tracing: null
       }
     }
   },
   computed: {
     ...mapState('isoman', [
-      'cities',
-      'districts',
-      'subDistricts'
+      'testLocations',
+      'testTypes'
     ])
   },
-  watch: {
-    async 'form.city_id' (val) {
-      if (val !== null) {
-        this.form.district_id = null
-        this.$store.dispatch('isoman/deleteDistricts')
-
-        this.form.subdistrict_id = null
-        this.$store.dispatch('isoman/deleteSubDistricts')
-
-        const params = {
-          city_id: val
-        }
-        await this.$store.dispatch('isoman/getDistricts', params)
-      }
-    },
-    async 'form.district_id' (val) {
-      if (val !== null) {
-        this.form.subdistrict_id = null
-        this.$store.dispatch('isoman/deleteSubDistricts')
-
-        const params = {
-          district_id: val
-        }
-        await this.$store.dispatch('isoman/getSubDistricts', params)
-      }
-    }
-  },
   async created () {
-    await this.$store.dispatch('isoman/getCities')
+    await this.$store.dispatch('isoman/getTestLocations')
+    await this.$store.dispatch('isoman/getTestTypes')
   },
   methods: {
-    onCancel () {
-      this.$emit('update:step', 0)
+    onBack () {
+      this.$emit('update:step', 1)
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       })
     },
     async onNext () {
-      const valid = await this.$refs.firstStep.validate()
-      if (!valid) {
-        return
-      }
-      this.$emit('update:step', 2)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    },
-    generateRtRwOptions (val) {
-      switch (val) {
-        case 'rw': {
-          const listRw = []
-          for (let i = 0; i < 60; i++) {
-            listRw.push({
-              name: i + 1,
-              id: i + 1
-            })
-          }
-          return [
-            { name: 'Pilih RW' },
-            ...listRw
-          ]
-        }
-        case 'rt': {
-          const listRt = []
-          for (let i = 0; i < 50; i++) {
-            listRt.push({
-              name: i + 1,
-              id: i + 1
-            })
-          }
-          return [
-            { name: 'Pilih RT' },
-            ...listRt
-          ]
-        }
-        default:
-          return []
-      }
+      await this.$refs.secondStep.validate()
+      /**
+        @todo: Proceed to next step
+      */
     },
     options (name) {
       const options = {
-        city: [
-          { name: 'Pilih Kota' },
-          ...this.cities
+        test_location_id: [
+          { name: 'Pilih Lokasi' },
+          ...this.testLocations
         ],
-        district: [
-          { name: 'Pilih Kecamatan' },
-          ...this.districts
+        test_type_id: [
+          { name: 'Pilih Jenis Tes' },
+          ...this.testTypes
         ],
-        subdistrict: [
-          { name: 'Pilih Kelurahan' },
-          ...this.subDistricts
+        is_reported: [
+          { name: 'Sudah', id: true },
+          { name: 'Belum', id: false }
         ],
-        rw: this.generateRtRwOptions('rw'),
-        rt: this.generateRtRwOptions('rt')
+        is_reported_tracing: [
+          { name: 'Sudah', id: true },
+          { name: 'Belum', id: false }
+        ]
       }
       return options[name.toLowerCase()] ?? []
     }
