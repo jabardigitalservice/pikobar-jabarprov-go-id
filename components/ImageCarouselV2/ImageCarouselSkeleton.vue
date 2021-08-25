@@ -1,5 +1,9 @@
 <template>
   <div class="image-carousel-skeleton">
+    <!--
+      FIXME: do not use content-loader since relative width
+      and height on SVG would throw error
+    -->
     <content-loader
       :speed="2"
       width="100%"
