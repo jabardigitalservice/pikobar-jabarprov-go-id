@@ -1,22 +1,22 @@
 <template>
   <div>
     <div
-      v-for="(row, indexColumn) in chunkedOrigin"
-      :key="indexColumn"
+      v-for="(row, indexChunked) in chunkedSponsors"
+      :key="indexChunked"
       class="grid gap-6 my-6 grid-flow-col auto-cols-max md:auto-cols-min justify-center"
       target="_blank"
     >
       <div
-        v-for="(s, indexRow) in row"
+        v-for="(val, indexRow) in row"
         :key="indexRow"
-        :href="s.url || '#'"
+        :href="val.url || '#'"
         class="object-center rounded-md bg-gray-50"
       >
         <img
           class="mx-auto object-contain object-scale-down h-24"
           style="width: 10rem"
-          :src="s.logo"
-          :alt="s.alt"
+          :src="val.logo"
+          :alt="val.alt"
         >
       </div>
     </div>
@@ -117,7 +117,7 @@ export default {
     }
   },
   computed: {
-    chunkedOrigin () {
+    chunkedSponsors () {
       return this.sponsors.reduce((result, item, index) => {
         const chunkIndex = Math.floor(index / 6)
 
