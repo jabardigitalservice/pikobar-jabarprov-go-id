@@ -1,10 +1,10 @@
 <template>
   <!-- eslint-disable vue/valid-v-slot -->
   <SimpleTable
+    fixed-layout
     :headers="headers"
     :rows="documents"
     :loading="loading"
-    fixed-layout
     @click:row="onClickRow"
   >
     <template #item.published_at="{ value }">
@@ -40,6 +40,9 @@ export default {
         {
           value: 'published_at',
           text: 'Tanggal Rilis',
+          // "table-layout: fixed", along with "white-space: nowrap"
+          // mandates for width to be defined explicitly
+          // to prevent equal column width
           width: '20ch'
         },
         {
