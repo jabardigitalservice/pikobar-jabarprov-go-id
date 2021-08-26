@@ -8,7 +8,7 @@ export async function get (options = { lastSnapshot: null }) {
   let query = db.collection('documents')
     .where('published', '==', true)
     .orderBy(ORDER_INDEX, 'desc')
-    .limit(8)
+    .limit(options.limit || 8)
   if (options.lastSnapshot) {
     query = query.startAfter(options.lastSnapshot)
   }
