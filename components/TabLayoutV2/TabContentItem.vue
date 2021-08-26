@@ -12,6 +12,6 @@ export default {
 
 <style lang="scss" scoped>
 .tablayout-content-item {
-
+  @apply mt-4;
 }
 </style>

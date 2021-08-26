@@ -155,7 +155,7 @@ export default {
   }
 
   &__content-wrapper {
-    @apply block mt-4;
+    @apply block;
   }
 }
 </style>
