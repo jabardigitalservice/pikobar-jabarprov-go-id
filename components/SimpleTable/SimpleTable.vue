@@ -26,32 +26,51 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="(row, rowIndex) in rows"
-        :key="rowIndex"
-        @click="onClickRow({ row, rowIndex })"
-      >
-        <td
-          v-for="(col, colIndex) in headers"
-          :key="colIndex"
-          @click="onClickCell({ row, rowIndex, col, colIndex })"
+      <template v-if="loading">
+        <tr
+          v-for="i in 5"
+          :key="i"
         >
-          <slot
-            :name="`item.${col.value}`"
-            v-bind="{ row, rowIndex, col, colIndex, value: row[col.value] }"
+          <td
+            v-for="(col, j) in headers"
+            :key="j"
           >
-            <span>
-              {{ row[col.value] }}
-            </span>
-          </slot>
-        </td>
-      </tr>
+            <SimpleTableCellSkeleton />
+          </td>
+        </tr>
+      </template>
+      <template v-else>
+        <tr
+          v-for="(row, rowIndex) in rows"
+          :key="rowIndex"
+          @click="onClickRow({ row, rowIndex })"
+        >
+          <td
+            v-for="(col, colIndex) in headers"
+            :key="colIndex"
+            @click="onClickCell({ row, rowIndex, col, colIndex })"
+          >
+            <slot
+              :name="`item.${col.value}`"
+              v-bind="{ row, rowIndex, col, colIndex, value: row[col.value] }"
+            >
+              <span>
+                {{ row[col.value] }}
+              </span>
+            </slot>
+          </td>
+        </tr>
+      </template>
     </tbody>
   </table>
 </template>
 
 <script>
+import SimpleTableCellSkeleton from './SimpleTableCellSkeleton'
 export default {
+  components: {
+    SimpleTableCellSkeleton
+  },
   props: {
     headers: {
       type: Array,
@@ -64,6 +83,9 @@ export default {
       type: Array,
       default: () => []
     },
+    /**
+     * Used for "table-layout: fixed;" css attribute
+     */
     fixedLayout: {
       type: Boolean
     }
