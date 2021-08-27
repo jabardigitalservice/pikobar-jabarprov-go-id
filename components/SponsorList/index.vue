@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="app">
     <div
       v-for="(row, indexChunked) in chunkedSponsors"
       :key="indexChunked"
@@ -113,13 +113,27 @@ export default {
           alt: 'Lapor Covid-19',
           url: 'https://laporcovid19.org/'
         }
-      ]
+      ],
+      chunkedSponsors: []
     }
   },
-  computed: {
-    chunkedSponsors () {
-      return this.sponsors.reduce((result, item, index) => {
-        const chunkIndex = Math.floor(index / 6)
+  mounted () {
+    this.chunkedSponsors = this.chunkedList(this.sponsors, window.innerWidth)
+    window.addEventListener('resize', () => {
+      this.chunkedSponsors = this.chunkedList(this.sponsors, window.innerWidth)
+    })
+  },
+  methods: {
+    chunkedList (array, sizeScreenWidth) {
+      let eachData = 6
+      if (sizeScreenWidth < 550) {
+        eachData = 2
+      } else if (sizeScreenWidth < 720) {
+        eachData = 3
+      }
+
+      return array.reduce((result, item, index) => {
+        const chunkIndex = Math.floor(index / eachData)
 
         if (!result[chunkIndex]) {
           result[chunkIndex] = [] // start a new chunk
