@@ -6,9 +6,7 @@
         Info yang memuat infografis terkait Covid-19
       </p>
       <div class="mt-10">
-        <!--
-          TODO: insert infographic list view
-        -->
+        <InfographicCarousel />
       </div>
     </template>
     <template #content.document>
@@ -25,6 +23,7 @@
 </template>
 
 <script>
+import InfographicCarousel from '../InfographicCarousel'
 import DocumentTable from '../DocumentTable'
 import { TabLayout } from '~/components/TabLayoutV2'
 
@@ -32,6 +31,7 @@ export default {
   name: 'HomepageInfographicAndDocument',
   components: {
     TabLayout,
+    InfographicCarousel,
     DocumentTable
   },
   data () {
