@@ -93,12 +93,19 @@ export default {
   async mounted () {
     await this.$nextTick()
     this.syncActiveMarker()
+    window.addEventListener('resize', this.handleViewportResize)
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.handleViewportResize)
   },
   methods: {
     onClickTabItem (tab, tabIndex) {
       this.mValue = tabIndex
       this.$emit('change', tabIndex)
       this.$emit('click:tab', tab, tabIndex)
+    },
+    handleViewportResize () {
+      this.updateActiveMarker(this.mValue)
     },
     syncActiveMarker () {
       this.$watch(
@@ -107,12 +114,12 @@ export default {
         },
         async function handler (v) {
           await this.$nextTick()
-          this.moveActiveMarker(v)
+          this.updateActiveMarker(v)
         },
         { immediate: true }
       )
     },
-    moveActiveMarker (tabIndex) {
+    updateActiveMarker (tabIndex) {
       const track = this.$refs.itemTrack
       const tabEl = this.$refs.tabItems?.[tabIndex].$el
 
