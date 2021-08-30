@@ -9,7 +9,7 @@
 import { mapState } from 'vuex'
 import { ImageCarousel } from '~/components/ImageCarouselV2'
 export default {
-  name: 'HomepageImageCarousel',
+  name: 'HomepageBannerCarousel',
   components: {
     ImageCarousel
   },
