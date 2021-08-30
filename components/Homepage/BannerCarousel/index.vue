@@ -2,6 +2,7 @@
   <ImageCarousel
     :items="banners"
     :loading="loading"
+    @click:slide="onClickSlide"
   />
 </template>
 
@@ -31,6 +32,19 @@ export default {
   },
   mounted () {
     this.$store.dispatch('banners/getItems')
+  },
+  methods: {
+    onClickSlide (slide) {
+      const { route } = slide
+      if (typeof route !== 'string' || !route.length) {
+        return
+      }
+      if (route.startsWith('http')) {
+        return window.open(route, '_blank')
+      } else {
+        return this.$router.push(route)
+      }
+    }
   }
 }
 </script>
