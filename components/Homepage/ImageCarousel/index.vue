@@ -2,8 +2,6 @@
   <ImageCarousel
     :items="banners"
     :loading="loading"
-    :peek-width="0.1"
-    peek-center
   />
 </template>
 
