@@ -1,42 +1,45 @@
 <template>
   <div
     class="image-carousel"
-    :style="[carouselStyles]"
   >
     <ImageCarouselButtonNav
       v-show="showNavigation"
       type="left"
-      class="image-carousel__btn-nav"
+      class="image-carousel__btn-nav image-carousel__btn-nav--prev"
       :disabled="isBtnPrevDisabled"
       :style="[btnPrevPositionStyles]"
-      @click="onNavigate('backward')"
+      @click="onNavigate('prev')"
     />
-    <div class="image-carousel__track">
-      <ImageCarouselSkeleton
-        v-show="loading || isServerSide"
-        key="skeleton"
-      />
-      <client-only>
-        <VueCarousel
-          v-show="!loading"
-          ref="vueCarousel"
-          v-bind="carouselConfig"
-          @hook:updated="onCarouselUpdated"
-        >
-          <VueCarouselSlide
-            v-for="(item, index) in items"
-            :key="index"
-            :style="[slidePaddingStyles]"
+    <div class="image-carousel__track-outer">
+      <div class="image-carousel__track-inner">
+        <ImageCarouselSkeleton
+          v-show="isLoading"
+        />
+        <client-only>
+          <Swiper
+            v-show="!isLoading"
+            ref="swiper"
+            class="swiper image-carousel__swiper"
+            :options="swiperOptions"
+            @ready="onSwiperReady"
+            @resize="onSwiperResize"
+            @slide-change="onSwiperSlideChange"
           >
-            <slot name="item" v-bind="{ item, index }">
-              <ImageCarouselItem
-                v-bind="item"
-                @click="onClickSlide(item, index)"
-              />
-            </slot>
-          </VueCarouselSlide>
-        </VueCarousel>
-      </client-only>
+            <SwiperSlide
+              v-for="(item, index) in items"
+              :key="index"
+              class="swiper-slide image-carousel__swiper-slide"
+            >
+              <slot name="item" v-bind="{ item, index }">
+                <ImageCarouselItem
+                  v-bind="item"
+                  @click="onClickSlide(item, index)"
+                />
+              </slot>
+            </SwiperSlide>
+          </Swiper>
+        </client-only>
+      </div>
     </div>
     <ImageCarouselButtonNav
       v-show="showNavigation"
@@ -44,12 +47,13 @@
       class="image-carousel__btn-nav image-carousel__btn-nav--next"
       :disabled="isBtnNextDisabled"
       :style="[btnNextPositionStyles]"
-      @click="onNavigate()"
+      @click="onNavigate('next')"
     />
   </div>
 </template>
 
 <script>
+import { Swiper, SwiperSlide, directive as swiper } from 'vue-awesome-swiper'
 import _merge from 'lodash/merge'
 import ImageCarouselSkeleton from './ImageCarouselSkeleton'
 import ImageCarouselItem from './ImageCarouseItem'
@@ -58,9 +62,14 @@ import ImageCarouselButtonNav from './ImageCarouselButtonNav'
 export default {
   name: 'ImageCarousel',
   components: {
+    Swiper,
+    SwiperSlide,
     ImageCarouselSkeleton,
     ImageCarouselItem,
     ImageCarouselButtonNav
+  },
+  directives: {
+    swiper
   },
   props: {
     /**
@@ -78,31 +87,42 @@ export default {
       type: Boolean
     },
     /**
-     * Gap between slides
-     */
-    slideGap: {
-      type: Number,
-      default: 32
-    },
-    /**
      * Gap between button and carousel track
      */
     buttonGap: {
       type: Number,
       default: 32
     },
-    navigation: {
-      type: Boolean,
-      default: true
-    },
-    carouselProps: {
+    swiperProps: {
       type: Object,
       default: () => ({
-        perPage: 1,
-        perPageCustom: [
-          [720, 2],
-          [1024, 3]
-        ]
+        slidesPerView: 1.25,
+        spaceBetween: 8,
+        centeredSlides: true,
+        centeredSlidesBounds: false,
+        breakpoints: {
+          480: {
+            slidesPerView: 1.25,
+            spaceBetween: 16,
+            centeredSlides: true,
+            centeredSlidesBounds: true,
+            navigation: false
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 16,
+            centeredSlides: false,
+            centeredSlidesBounds: true,
+            navigation: true
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 32,
+            centeredSlides: false,
+            centeredSlidesBounds: true,
+            navigation: true
+          }
+        }
       })
     }
   },
@@ -111,103 +131,73 @@ export default {
       // determine if current render is happened
       // on server or client side
       isServerSide: true,
-      isBtnPrevDisabled: false,
+      isBtnPrevDisabled: true,
       isBtnNextDisabled: false,
-      currentViewportWidth: 0
+      showNavigation: false
     }
   },
   computed: {
-    carouselConfig () {
-      const defaultCarouselProps = this.$options
+    swiperOptions () {
+      const defaultProps = this.$options
         .props
-        .carouselProps
+        .swiperProps
         .default()
-      const defaultConfig = {
-        autoplay: true,
-        autoplayTimeout: 4000,
-        paginationEnabled: false,
-        navigationEnabled: false,
-        spacePadding: 0,
-        mouseDrag: true,
-        touchDrag: true,
-        loop: false,
-        scrollPerPage: false
+      const defaultOptions = {
+        autoplay: {
+          delay: 4000
+        },
+        pagination: false,
+        navigation: false,
+        allowTouchMove: true,
+        loop: false
       }
       return _merge(
-        defaultCarouselProps,
-        defaultConfig,
-        this.carouselProps
+        defaultProps,
+        defaultOptions,
+        this.swiperProps
       )
     },
-    showNavigation () {
-      if (!this.navigation || this.loading) {
-        return false
-      }
-
-      const { perPageCustom } = this.carouselConfig
-      if (Array.isArray(perPageCustom)) {
-        // arr[0] is minimum width of each perPageCustom config pair
-        const widths = perPageCustom.map(arr => arr[0])
-        const minWidth = Math.min(...widths)
-        return this.currentViewportWidth > minWidth
-      }
-      return false
-    },
-    carouselStyles () {
-      const styles = {}
-      if (!this.showNavigation) {
-        Object.assign(styles, {
-          margin: `0 ${this.slideGap / -2}px`
-        })
-      }
-      return styles
-    },
-    slidePaddingStyles () {
-      return {
-        padding: `0 ${this.slideGap / 2}px`
-      }
+    isLoading () {
+      return this.loading || this.isServerSide
     },
     btnPrevPositionStyles () {
       return {
-        // ensure gap always reflect buttonGap value
-        // regardless of gap between slide
-        marginRight: `${this.buttonGap - (this.slideGap / 2)}px`
+        marginRight: `${this.buttonGap}px`
       }
     },
     btnNextPositionStyles () {
       return {
-        // ensure gap always reflect buttonGap value
-        // regardless of gap between slide
-        marginLeft: `${this.buttonGap - (this.slideGap / 2)}px`
+        marginLeft: `${this.buttonGap}px`
       }
     }
   },
-  mounted () {
+  async mounted () {
+    await this.$nextTick()
     this.isServerSide = false
-    this.handleViewportResize()
-    window.addEventListener('resize', this.handleViewportResize)
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.handleViewportResize)
   },
   methods: {
-    handleViewportResize () {
-      // viewport width is used to determine whether to show
-      // navigation button or not
-      this.currentViewportWidth = window.innerWidth
+    onSwiperReady () {
+      const { $swiper } = this.$refs.swiper
+      this.showNavigation = $swiper.params.navigation
     },
-    onCarouselUpdated () {
-      const { vueCarousel } = this.$refs
-
-      // VueCarousel doesn't emit any event to determine
-      // whether carousel can be advanced / navigated forward or backward
-      // so, manual handling is written
-      this.isBtnPrevDisabled = !vueCarousel.canAdvanceBackward
-      this.isBtnNextDisabled = !vueCarousel.canAdvanceForward
+    onSwiperResize () {
+      const { $swiper } = this.$refs.swiper
+      this.showNavigation = $swiper.params.navigation
+    },
+    onSwiperSlideChange () {
+      const { $swiper } = this.$refs.swiper
+      const { isBeginning, isEnd } = $swiper
+      this.isBtnPrevDisabled = isBeginning
+      this.isBtnNextDisabled = isEnd
     },
     onNavigate (direction) {
-      // utilize VueCarousel own navigation method
-      this.$refs.vueCarousel.handleNavigation(direction)
+      const { $swiper } = this.$refs.swiper
+      switch (direction) {
+        case 'prev':
+          return $swiper.slidePrev()
+        case 'next':
+          return $swiper.slideNext()
+      }
     },
     onClickSlide (slide, slideIndex) {
       this.$emit('click:slide', slide, slideIndex)
@@ -220,18 +210,54 @@ export default {
 $--button-gap: 32px;
 
 .image-carousel {
-  overflow: hidden;
-
-  @apply
+  @apply relative w-full
   flex flex-row flex-no-wrap
   justify-start items-center;
 
-  &__track {
-    @apply flex-1;
+  &__track-outer {
+    @apply overflow-hidden flex-1;
+  }
+
+  &__track-inner {
+    @apply w-full;
+  }
+
+  &__swiper {
+    @apply flex-none w-full;
+  }
+
+  &__swiper-slide {
+    // width: 80% !important;
   }
 
   &__btn-nav {
-    @apply flex-none;
+    transition: all 0.3s ease;
+    transition-property: transform, opacity;
+    transform: translateY(0);
+
+    @apply z-10 absolute
+    flex-none;
+
+    &--prev {
+      left: 1rem;
+    }
+
+    &--next {
+      right: 1rem;
+    }
+  }
+
+  &:not(:hover) & {
+    &__btn-nav {
+      transform: translateY(1rem);
+      @apply opacity-0;
+    }
   }
 }
+</style>
+
+<style lang="scss">
+/* purgecss start ignore */
+@import 'swiper/css/swiper.css';
+/* purgecss end ignore */
 </style>
