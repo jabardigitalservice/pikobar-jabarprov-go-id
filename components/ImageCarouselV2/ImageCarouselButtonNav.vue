@@ -41,16 +41,17 @@ export default {
   @apply inline-flex justify-center items-center
   w-12 h-12
   rounded-full
-  border border-solid border-gray-400;
+  border border-solid border-gray-400
+  text-gray-800
+  bg-white;
 
   &__icon {
-    @apply text-gray-800;
+    color: inherit;
   }
 
   &:disabled {
     @apply cursor-not-allowed
-    bg-gray-200 text-gray-500
-    opacity-50;
+    bg-gray-200 text-gray-500;
   }
 
   &:focus,
