@@ -14,6 +14,7 @@
         :name="name"
         class="form-radio"
         type="radio"
+        :checked="option.id.toString() === value"
         @input="$emit('input', $event.target.value)"
         @change="$emit('input', $event.target.value)"
         @blur="$emit('blur')"

@@ -1,4 +1,4 @@
-import { required, email, numeric, length } from 'vee-validate/dist/rules'
+import { required, email, numeric, length, mimes, image } from 'vee-validate/dist/rules'
 import { extend, setInteractionMode } from 'vee-validate'
 import { isPhoneNumber } from './validate'
 
@@ -29,4 +29,14 @@ extend('numeric', {
 extend('length', {
   ...length,
   message: 'This field must be {length} characters'
+})
+
+extend('mimes', {
+  ...mimes,
+  message: 'File type doesn\'t match the requirement'
+})
+
+extend('image', {
+  ...image,
+  message: 'This field must be filled with image'
 })

@@ -29,6 +29,16 @@
             :placeholder="item.placeholder"
             :note="item.note"
           />
+          <FileInput
+            v-else-if="item.type === 'file'"
+            v-model="form[item.model]"
+            :label="item.label"
+            :required="item.required"
+            :name="item.name"
+            :placeholder="item.placeholder"
+            :accept="item.accept"
+            :note="item.note"
+          />
           <Input
             v-else
             v-model="form[item.model]"
@@ -74,6 +84,7 @@ import { mapState } from 'vuex'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import firstStepInput from './firstStep'
 import Input from '~/components/Input'
+import FileInput from '~/components/FileInput'
 import SelectInput from '~/components/SelectInput'
 import TextArea from '~/components/TextArea'
 export default {
@@ -82,66 +93,53 @@ export default {
     ValidationProvider,
     Input,
     SelectInput,
-    TextArea
+    TextArea,
+    FileInput
   },
   data () {
     return {
       inputList: firstStepInput,
-      form: {
-        name: '',
-        nik: '',
-        ktp_photo: null,
-        birth_date: null,
-        phone_primary: '',
-        phone_secondary: '',
-        email: '',
-        city_id: null,
-        district_id: null,
-        subdistrict_id: null,
-        rt: null,
-        rw: null,
-        package_id: null,
-        address: '',
-        landmark: ''
-      }
+      form: {}
     }
   },
   computed: {
     ...mapState('isoman', [
+      'formRequest',
       'cities',
       'districts',
       'subDistricts'
     ])
   },
-  watch: {
-    async 'form.city_id' (val) {
+  async created () {
+    this.form = { ...this.formRequest }
+    await this.$store.dispatch('isoman/getCities')
+
+    this.$watch('form.city_id', async (val) => {
+      this.form.district_id = null
+      this.$store.dispatch('isoman/deleteDistricts')
+
+      this.form.subdistrict_id = null
+      this.$store.dispatch('isoman/deleteSubDistricts')
+
       if (val !== null) {
-        this.form.district_id = null
-        this.$store.dispatch('isoman/deleteDistricts')
-
-        this.form.subdistrict_id = null
-        this.$store.dispatch('isoman/deleteSubDistricts')
-
         const params = {
           city_id: val
         }
         await this.$store.dispatch('isoman/getDistricts', params)
       }
-    },
-    async 'form.district_id' (val) {
-      if (val !== null) {
-        this.form.subdistrict_id = null
-        this.$store.dispatch('isoman/deleteSubDistricts')
+    })
 
+    this.$watch('form.district_id', async (val) => {
+      this.form.subdistrict_id = null
+      this.$store.dispatch('isoman/deleteSubDistricts')
+
+      if (val !== null) {
         const params = {
           district_id: val
         }
         await this.$store.dispatch('isoman/getSubDistricts', params)
       }
-    }
-  },
-  async created () {
-    await this.$store.dispatch('isoman/getCities')
+    })
   },
   methods: {
     onCancel () {
@@ -156,6 +154,7 @@ export default {
       if (!valid) {
         return
       }
+      this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
       window.scrollTo({
         top: 0,

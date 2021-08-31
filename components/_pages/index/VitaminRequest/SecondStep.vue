@@ -32,6 +32,16 @@
             :type="item.type"
             :options="options(item.name)"
           />
+          <FileInput
+            v-else-if="item.type === 'file'"
+            v-model="form[item.model]"
+            :label="item.label"
+            :required="item.required"
+            :name="item.name"
+            :placeholder="item.placeholder"
+            :accept="item.accept"
+            :note="item.note"
+          />
           <Input
             v-else
             v-model="form[item.model]"
@@ -79,31 +89,25 @@ import secondStepInput from './secondStep.js'
 import Input from '~/components/Input'
 import SelectInput from '~/components/SelectInput'
 import RadioButton from '~/components/RadioButton'
+import FileInput from '~/components/FileInput'
 export default {
   components: {
     ValidationObserver,
     ValidationProvider,
     Input,
     SelectInput,
-    RadioButton
+    RadioButton,
+    FileInput
   },
   data () {
     return {
       inputList: secondStepInput,
-      form: {
-        date_check: null,
-        date_confirmation: null,
-        test_location_id: null,
-        other_test_location: null,
-        test_type_id: null,
-        test_result_photo: null,
-        is_reported: null,
-        is_reported_tracing: null
-      }
+      form: {}
     }
   },
   computed: {
     ...mapState('isoman', [
+      'formRequest',
       'testLocations',
       'testTypes'
     ])
@@ -111,9 +115,11 @@ export default {
   async created () {
     await this.$store.dispatch('isoman/getTestLocations')
     await this.$store.dispatch('isoman/getTestTypes')
+    this.form = { ...this.formRequest }
   },
   methods: {
     onBack () {
+      this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 1)
       window.scrollTo({
         top: 0,
@@ -121,10 +127,16 @@ export default {
       })
     },
     async onNext () {
-      await this.$refs.secondStep.validate()
-      /**
-        @todo: Proceed to next step
-      */
+      const valid = await this.$refs.secondStep.validate()
+      if (!valid) {
+        return
+      }
+      this.$store.dispatch('isoman/updateForm', this.form)
+      this.$emit('update:step', 3)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     },
     options (name) {
       const options = {
@@ -137,12 +149,12 @@ export default {
           ...this.testTypes
         ],
         is_reported: [
-          { name: 'Sudah', id: true },
-          { name: 'Belum', id: false }
+          { name: 'Sudah', id: 1 },
+          { name: 'Belum', id: 0 }
         ],
         is_reported_tracing: [
-          { name: 'Sudah', id: true },
-          { name: 'Belum', id: false }
+          { name: 'Sudah', id: 1 },
+          { name: 'Belum', id: 0 }
         ]
       }
       return options[name.toLowerCase()] ?? []
