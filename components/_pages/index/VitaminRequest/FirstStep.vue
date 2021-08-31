@@ -29,6 +29,16 @@
             :placeholder="item.placeholder"
             :note="item.note"
           />
+          <FileInput
+            v-else-if="item.type === 'file'"
+            v-model="form[item.model]"
+            :label="item.label"
+            :required="item.required"
+            :name="item.name"
+            :placeholder="item.placeholder"
+            :accept="item.accept"
+            :note="item.note"
+          />
           <Input
             v-else
             v-model="form[item.model]"
@@ -74,6 +84,7 @@ import { mapState } from 'vuex'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import firstStepInput from './firstStep'
 import Input from '~/components/Input'
+import FileInput from '~/components/FileInput'
 import SelectInput from '~/components/SelectInput'
 import TextArea from '~/components/TextArea'
 export default {
@@ -82,7 +93,8 @@ export default {
     ValidationProvider,
     Input,
     SelectInput,
-    TextArea
+    TextArea,
+    FileInput
   },
   data () {
     return {

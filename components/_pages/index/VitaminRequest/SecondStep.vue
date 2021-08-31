@@ -32,6 +32,16 @@
             :type="item.type"
             :options="options(item.name)"
           />
+          <FileInput
+            v-else-if="item.type === 'file'"
+            v-model="form[item.model]"
+            :label="item.label"
+            :required="item.required"
+            :name="item.name"
+            :placeholder="item.placeholder"
+            :accept="item.accept"
+            :note="item.note"
+          />
           <Input
             v-else
             v-model="form[item.model]"
@@ -79,13 +89,15 @@ import secondStepInput from './secondStep.js'
 import Input from '~/components/Input'
 import SelectInput from '~/components/SelectInput'
 import RadioButton from '~/components/RadioButton'
+import FileInput from '~/components/FileInput'
 export default {
   components: {
     ValidationObserver,
     ValidationProvider,
     Input,
     SelectInput,
-    RadioButton
+    RadioButton,
+    FileInput
   },
   data () {
     return {
