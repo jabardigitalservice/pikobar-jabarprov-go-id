@@ -19,7 +19,7 @@
         class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-40 w-full"
         @click="onNext"
       >
-        Berikutnya
+        Simpan
       </button>
     </div>
   </div>
