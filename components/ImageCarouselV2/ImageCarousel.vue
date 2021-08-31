@@ -207,8 +207,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$--button-gap: 32px;
-
 .image-carousel {
   @apply relative w-full
   flex flex-row flex-no-wrap
@@ -224,10 +222,6 @@ $--button-gap: 32px;
 
   &__swiper {
     @apply flex-none w-full;
-  }
-
-  &__swiper-slide {
-    // width: 80% !important;
   }
 
   &__btn-nav {
