@@ -102,20 +102,12 @@ export default {
   data () {
     return {
       inputList: secondStepInput,
-      form: {
-        date_check: null,
-        date_confirmation: null,
-        test_location_id: null,
-        other_test_location: null,
-        test_type_id: null,
-        test_result_photo: null,
-        is_reported: null,
-        is_reported_tracing: null
-      }
+      form: {}
     }
   },
   computed: {
     ...mapState('isoman', [
+      'formRequest',
       'testLocations',
       'testTypes'
     ])
@@ -123,9 +115,11 @@ export default {
   async created () {
     await this.$store.dispatch('isoman/getTestLocations')
     await this.$store.dispatch('isoman/getTestTypes')
+    this.form = { ...this.formRequest }
   },
   methods: {
     onBack () {
+      this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 1)
       window.scrollTo({
         top: 0,
@@ -133,10 +127,16 @@ export default {
       })
     },
     async onNext () {
-      await this.$refs.secondStep.validate()
-      /**
-        @todo: Proceed to next step
-      */
+      const valid = await this.$refs.secondStep.validate()
+      if (!valid) {
+        return
+      }
+      this.$store.dispatch('isoman/updateForm', this.form)
+      this.$emit('update:step', 3)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     },
     options (name) {
       const options = {
