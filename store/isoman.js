@@ -11,7 +11,32 @@ export const state = () => ({
   districts: [],
   subDistricts: [],
   testLocations: [],
-  testTypes: []
+  testTypes: [],
+  formRequest: {
+    name: '',
+    nik: '',
+    ktp_photo: null,
+    birth_date: null,
+    phone_primary: '',
+    phone_secondary: '',
+    email: '',
+    city_id: null,
+    district_id: null,
+    subdistrict_id: null,
+    rt: null,
+    rw: null,
+    package_id: null,
+    address: '',
+    landmark: '',
+    date_check: null,
+    date_confirmation: null,
+    test_location_id: null,
+    other_test_location: null,
+    test_type_id: null,
+    test_result_photo: null,
+    is_reported: null,
+    is_reported_tracing: null
+  }
 })
 
 export const mutations = {
@@ -35,12 +60,15 @@ export const mutations = {
   },
   SET_TEST_TYPES (state, result) {
     state.testTypes = result
+  },
+  SET_FORM (state, result) {
+    state.formRequest = result
   }
 }
 
 export const actions = {
-  async getCities ({ commit }, params) {
-    const result = await getCitiesResult(params)
+  async getCities ({ commit }) {
+    const result = await getCitiesResult()
     commit('SET_CITIES', result || [])
   },
   async getDistricts ({ commit }, params) {
@@ -64,5 +92,8 @@ export const actions = {
   async getTestTypes ({ commit }) {
     const result = await getTestTypesResult()
     commit('SET_TEST_TYPES', result || [])
+  },
+  updateForm ({ commit }, data) {
+    commit('SET_FORM', data)
   }
 }
