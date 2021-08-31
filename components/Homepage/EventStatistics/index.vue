@@ -83,7 +83,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(2, auto);
-    gap: 2rem;
+    gap: 1rem;
   }
 
   &__top-grid-item {
@@ -95,6 +95,9 @@ export default {
   }
 
   @screen md {
+    &__grid {
+      gap: 2rem;
+    }
     &__top-grid-item {
       grid-column: auto / span 6;
     }
