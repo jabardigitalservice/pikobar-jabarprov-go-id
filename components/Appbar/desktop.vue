@@ -9,10 +9,13 @@
         </nuxt-link>
         <nuxt-link to="/">
           <div class="text-left">
-            <p class="text-base">
-              Pusat Informasi &amp; Koordinasi COVID-19
+            <p class="text-2xl font-bold">
+              PIKOBAR
             </p>
-            <p class="text-sm text-gray-700">
+            <p class="text-xs text-gray-700 font-bold">
+              Pusat Informasi &amp; Koordinasi
+            </p>
+            <p class="text-xs text-gray-700 font-bold -mt-1">
               Provinsi Jawa Barat
             </p>
           </div>
@@ -131,7 +134,6 @@ export default {
         faBell
       },
       menus: [
-        { to: '/', label: 'Home', exact: true },
         {
           to: '#',
           label: 'Data',
