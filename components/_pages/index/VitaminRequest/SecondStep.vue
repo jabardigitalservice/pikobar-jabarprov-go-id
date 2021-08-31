@@ -149,12 +149,12 @@ export default {
           ...this.testTypes
         ],
         is_reported: [
-          { name: 'Sudah', id: true },
-          { name: 'Belum', id: false }
+          { name: 'Sudah', id: 1 },
+          { name: 'Belum', id: 0 }
         ],
         is_reported_tracing: [
-          { name: 'Sudah', id: true },
-          { name: 'Belum', id: false }
+          { name: 'Sudah', id: 1 },
+          { name: 'Belum', id: 0 }
         ]
       }
       return options[name.toLowerCase()] ?? []

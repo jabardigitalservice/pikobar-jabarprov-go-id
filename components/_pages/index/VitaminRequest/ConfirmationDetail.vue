@@ -65,6 +65,8 @@ export default {
         }
         const array = areas[item.model.toLowerCase()] ?? []
         return this.getDropdownLabel(array, this.formRequest[item.model])
+      } else if (item.model === 'is_reported' || item.model === 'is_reported_tracing') {
+        return this.formRequest[item.model] === '1' ? 'Sudah' : 'Belum'
       } else {
         return this.formRequest[item.model] || '-'
       }
