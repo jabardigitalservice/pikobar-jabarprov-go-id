@@ -132,6 +132,10 @@ export default {
     }
   },
   purgeCSS: {
+    paths: [
+      'components/_pages/index/VitaminRequest/firstStep.js',
+      'components/_pages/index/VitaminRequest/secondStep.js'
+    ],
     whitelistPatterns: [
       /(^|\.)fa-/, /-fa($|\.)/,
       /(^|\.)leaflet-/,
