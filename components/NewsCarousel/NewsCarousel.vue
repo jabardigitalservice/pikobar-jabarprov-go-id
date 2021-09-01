@@ -4,7 +4,6 @@
     :items="items"
     :loading="loading"
     :swiper-props="swiperProps"
-    @click:slide="onClickSlide"
   >
     <template #item="{ item }">
       <NewsCarouselItem v-bind="item" />
@@ -59,19 +58,6 @@ export default {
           }
         }
       })
-    }
-  },
-  methods: {
-    onClickSlide (slide) {
-      const { route } = slide
-      if (typeof route !== 'string' || !route.length) {
-        return
-      }
-      if (route.startsWith('http')) {
-        return window.open(route, '_blank')
-      } else {
-        return this.$router.push(route)
-      }
     }
   }
 }
