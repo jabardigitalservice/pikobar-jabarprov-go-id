@@ -9,6 +9,7 @@
 import { mapState } from 'vuex'
 import { NewsCarousel } from '~/components/NewsCarousel'
 export default {
+  name: 'RecentNewsCarousel',
   components: {
     NewsCarousel
   },

@@ -30,6 +30,7 @@
 <script>
 import { formatDateIndonesia } from '../../lib/date'
 export default {
+  name: 'NewsCarouselItem',
   inheritAttrs: false,
   props: {
     title: {
