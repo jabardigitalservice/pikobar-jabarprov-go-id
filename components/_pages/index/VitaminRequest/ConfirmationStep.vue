@@ -57,6 +57,11 @@ export default {
       this.isLoading = true
       await this.$store.dispatch('isoman/postForm')
       this.isLoading = false
+      this.$emit('update:step', 4)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     }
   }
 }
