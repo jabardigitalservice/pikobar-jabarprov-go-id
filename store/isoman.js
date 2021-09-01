@@ -3,7 +3,8 @@ import {
   getDistrictsResult,
   getSubDistrictsResult,
   getTestLocationsResult,
-  getTestTypesResult
+  getTestTypesResult,
+  postVitaminRequest
 } from '../api/isoman'
 
 export const state = () => ({
@@ -13,6 +14,7 @@ export const state = () => ({
   testLocations: [],
   testTypes: [],
   formRequest: {
+    request_type: 'vitamin', // @todo: set this prop dynamically when medicine request feature available
     name: '',
     nik: '',
     ktp_photo: null,
@@ -36,7 +38,8 @@ export const state = () => ({
     test_result_photo: null,
     is_reported: null,
     is_reported_tracing: null
-  }
+  },
+  receipt: {}
 })
 
 export const mutations = {
@@ -63,6 +66,40 @@ export const mutations = {
   },
   SET_FORM (state, result) {
     state.formRequest = result
+  },
+  RESET_FORM (state) {
+    state.formRequest = {
+      request_type: 'vitamin', // @todo: set this prop dynamically when medicine request feature available
+      name: '',
+      nik: '',
+      ktp_photo: null,
+      birth_date: null,
+      phone_primary: '',
+      phone_secondary: '',
+      email: '',
+      city_id: null,
+      district_id: null,
+      subdistrict_id: null,
+      rt: null,
+      rw: null,
+      package_id: null,
+      address: '',
+      landmark: '',
+      date_check: null,
+      date_confirmation: null,
+      test_location_id: null,
+      other_test_location: null,
+      test_type_id: null,
+      test_result_photo: null,
+      is_reported: null,
+      is_reported_tracing: null
+    }
+  },
+  SET_RECEIPT (state, result) {
+    state.receipt = result
+  },
+  RESET_RECEIPT (state) {
+    state.receipt = {}
   }
 }
 
@@ -95,5 +132,19 @@ export const actions = {
   },
   updateForm ({ commit }, data) {
     commit('SET_FORM', data)
+  },
+  async postForm ({ commit, state }) {
+    const formData = new FormData()
+    for (const key in state.formRequest) {
+      formData.append(key, state.formRequest[key])
+    }
+    const result = await postVitaminRequest(formData)
+    commit('SET_RECEIPT', result)
+  },
+  resetForm ({ commit }) {
+    commit('RESET_FORM')
+  },
+  resetReceipt ({ commit }) {
+    commit('RESET_RECEIPT')
   }
 }

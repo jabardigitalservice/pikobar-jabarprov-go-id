@@ -74,3 +74,15 @@ export async function getTestTypesResult () {
     throw e
   }
 }
+export async function postVitaminRequest (data) {
+  try {
+    const response = await isomanAPI({
+      url: '/request',
+      method: 'POST',
+      data
+    })
+    return response.data
+  } catch (e) {
+    return e
+  }
+}
