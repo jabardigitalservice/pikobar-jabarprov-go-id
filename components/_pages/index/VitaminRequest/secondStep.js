@@ -15,7 +15,9 @@ export default [
     name: 'date_confirmation',
     note: 'Digunakan untuk petugas mengetahui jumlah dosis obat/vitamin yang akan diberikan',
     type: 'date',
-    class: 'md:block md:w-8/12'
+    class: 'md:block md:w-8/12',
+    required: true,
+    rules: 'required'
   },
   {
     label: 'Lokasi Tes Lab',

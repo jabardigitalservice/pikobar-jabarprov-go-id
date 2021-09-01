@@ -118,12 +118,16 @@ export default [
     name: 'address',
     note: 'Diisi dengan domisili berada di wilayah Provinsi Jawa Barat',
     class: 'inline-block w-full',
-    type: 'area'
+    type: 'area',
+    rules: 'required',
+    required: true
   },
   {
     label: 'Keterangan lain/Patokan jalan',
     model: 'landmark',
     name: 'landmark',
-    placeholder: 'Patokan Jalan'
+    placeholder: 'Patokan Jalan',
+    rules: 'required',
+    required: true
   }
 ]
