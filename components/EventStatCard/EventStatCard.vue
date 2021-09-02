@@ -78,20 +78,31 @@
         <rect x="84" y="4" width="4" height="4" rx="1" transform="rotate(-90 84 4)" />
       </svg>
     </i>
-    <p class="evt-stat__title">
-      {{ title }}
-    </p>
-    <div class="evt-stat__body">
-      <slot />
-    </div>
-    <div class="evt-stat__grid">
-      <slot name="grid" />
-    </div>
+    <template v-if="loading">
+      <EventStatCardSkeleton
+        :dark="dark"
+      />
+    </template>
+    <template v-else>
+      <p class="evt-stat__title">
+        {{ title }}
+      </p>
+      <div class="evt-stat__body">
+        <slot />
+      </div>
+      <div class="evt-stat__grid">
+        <slot name="grid" />
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
+import EventStatCardSkeleton from './EventStatCardSkeleton'
 export default {
+  components: {
+    EventStatCardSkeleton
+  },
   inheritAttrs: false,
   props: {
     color: {
@@ -104,6 +115,9 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean
     }
   }
 }
