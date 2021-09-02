@@ -8,6 +8,12 @@
       class="mb-4"
     />
     <hr class="my-6 -mx-10">
+    <Alert
+      v-if="showAlert"
+      :label="alertMessage"
+      :show.sync="showAlert"
+      class="mb-3"
+    />
     <div class="flex flex-row gap-2 lg:justify-between">
       <button
         class="button__cancel sm:mr-0 hover:bg-gray-100 lg:w-40 w-full"
@@ -27,13 +33,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { identity, address, medical } from './confirmationDetail.js'
 import ConfirmationDetail from './ConfirmationDetail.vue'
 import Spinner from '~/components/Spinner'
+import Alert from '~/components/Alert'
 export default {
   components: {
     ConfirmationDetail,
-    Spinner
+    Spinner,
+    Alert
   },
   data () {
     return {
@@ -42,8 +51,15 @@ export default {
         address,
         medical
       ],
-      isLoading: false
+      isLoading: false,
+      showAlert: false,
+      alertMessage: 'Terjadi Kesalahan'
     }
+  },
+  computed: {
+    ...mapState('isoman', [
+      'receipt'
+    ])
   },
   methods: {
     onBack () {
@@ -57,11 +73,15 @@ export default {
       this.isLoading = true
       await this.$store.dispatch('isoman/postForm')
       this.isLoading = false
-      this.$emit('update:step', 4)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      if (Object.keys(this.receipt).length !== 0) {
+        this.$emit('update:step', 4)
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
+      } else {
+        this.showAlert = true
+      }
     }
   }
 }
