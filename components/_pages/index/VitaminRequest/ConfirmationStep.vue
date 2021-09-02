@@ -17,20 +17,23 @@
       </button>
       <button
         class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-40 w-full"
-        @click="onNext"
+        @click="onSubmit"
       >
-        Simpan
+        <Spinner v-if="isLoading" />
+        <span v-else>Simpan</span>
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import ConfirmationDetail from './ConfirmationDetail.vue'
 import { identity, address, medical } from './confirmationDetail.js'
+import ConfirmationDetail from './ConfirmationDetail.vue'
+import Spinner from '~/components/Spinner'
 export default {
   components: {
-    ConfirmationDetail
+    ConfirmationDetail,
+    Spinner
   },
   data () {
     return {
@@ -38,7 +41,8 @@ export default {
         identity,
         address,
         medical
-      ]
+      ],
+      isLoading: false
     }
   },
   methods: {
@@ -49,10 +53,10 @@ export default {
         behavior: 'smooth'
       })
     },
-    onNext () {
-      /**
-        @todo: Proceed to next step
-      */
+    async onSubmit () {
+      this.isLoading = true
+      await this.$store.dispatch('isoman/postForm')
+      this.isLoading = false
     }
   }
 }
