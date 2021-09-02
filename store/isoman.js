@@ -138,8 +138,8 @@ export const actions = {
     for (const key in state.formRequest) {
       formData.append(key, state.formRequest[key])
     }
-    const result = await postVitaminRequest(formData)
-    commit('SET_RECEIPT', result)
+    const response = await postVitaminRequest(formData)
+    if (response.request_number) { commit('SET_RECEIPT', response) }
   },
   resetForm ({ commit }) {
     commit('RESET_FORM')
