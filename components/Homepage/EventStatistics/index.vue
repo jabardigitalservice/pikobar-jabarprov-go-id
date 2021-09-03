@@ -59,7 +59,7 @@ import { mapGetters } from 'vuex'
 import {
   transformToTopStatisticsData,
   transformToBottomStatisticsData
-} from './data.transformer'
+} from './data.utils'
 
 import {
   EventStatCard,
