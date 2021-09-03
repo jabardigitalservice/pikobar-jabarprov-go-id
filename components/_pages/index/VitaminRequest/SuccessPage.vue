@@ -48,7 +48,7 @@ export default {
       },
       {
         title: 'Nama Pemohon',
-        value: this.receipt.name || 'R'
+        value: this.receipt.name || ''
       },
       {
         title: 'Nama Paket',
