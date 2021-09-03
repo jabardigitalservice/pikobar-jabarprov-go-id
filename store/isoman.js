@@ -4,8 +4,7 @@ import {
   getSubDistrictsResult,
   getTestLocationsResult,
   getTestTypesResult,
-  postVitaminRequest,
-  checkNikAvailability
+  postVitaminRequest
 } from '../api/isoman'
 
 export const state = () => ({
@@ -147,11 +146,5 @@ export const actions = {
   },
   resetReceipt ({ commit }) {
     commit('RESET_RECEIPT')
-  },
-  async checkNik ({ commit }, data) {
-    const result = await checkNikAvailability({
-      nik: data
-    })
-    console.log(result)
   }
 }
