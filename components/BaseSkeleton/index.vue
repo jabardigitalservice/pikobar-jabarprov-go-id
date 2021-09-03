@@ -55,7 +55,7 @@ export default {
 
   &--dark {
     background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.1);
   }
 }
 </style>
