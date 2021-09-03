@@ -110,14 +110,6 @@ export default {
       'subDistricts'
     ])
   },
-  watch: {
-    async 'form.nik' (val) {
-      if (val.length === 16) {
-        await this.$store.dispatch('isoman/checkNik', val)
-        console.log(val)
-      }
-    }
-  },
   async created () {
     this.form = { ...this.formRequest }
     await this.$store.dispatch('isoman/getCities')
