@@ -1,5 +1,8 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
+    <span class="step-info">
+      Cek kembali data yang sudah Anda inputkan, jika terdapat kesalah, silahkan kembali untuk memperbaiki
+    </span>
     <ConfirmationDetail
       v-for="content in contentList"
       :key="content.title"
@@ -104,5 +107,11 @@ export default {
     justify-center items-center border-gray-400
     border-2 border-solid font-bold
   }
+}
+.step-info {
+  @apply self-center mb-6 text-center;
+
+  font-size: 16px;
+  color: #4F4F4F;
 }
 </style>
