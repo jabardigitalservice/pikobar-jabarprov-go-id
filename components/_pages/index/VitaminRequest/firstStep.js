@@ -15,7 +15,7 @@ export default [
     name: 'nik',
     placeholder: 'NIK',
     note: 'Diisi dengan Nomor Induk Kependudukan Pemohon',
-    rules: 'required|length:16|numeric',
+    rules: 'required|length:16|numeric|nikAvailability',
     class: 'md:block md:w-8/12'
   },
   {

@@ -1,6 +1,7 @@
 import { required, email, numeric, length, mimes, image } from 'vee-validate/dist/rules'
 import { extend, setInteractionMode } from 'vee-validate'
 import { isPhoneNumber } from './validate'
+import { checkNikAvailability } from '~/api/isoman'
 
 setInteractionMode('eager')
 
@@ -39,4 +40,22 @@ extend('mimes', {
 extend('image', {
   ...image,
   message: 'This field must be filled with image'
+})
+
+extend('nikAvailability', {
+  validate: async (val) => {
+    if (val.length === 16) {
+      try {
+        await checkNikAvailability({
+          nik: val
+        })
+        return true
+      } catch (e) {
+        return false
+      }
+    } else {
+      return false
+    }
+  },
+  message: 'NIK is already registered'
 })
