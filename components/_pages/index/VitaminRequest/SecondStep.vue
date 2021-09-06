@@ -1,5 +1,8 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
+    <span class="step-info">
+      Isi informasi medis Anda dengan benar, sehingga kami bisa menyesuaikan obat dan vitamin dengan benar.
+    </span>
     <ValidationObserver ref="secondStep" class="w-full">
       <form
         ref="form"
@@ -187,5 +190,11 @@ export default {
     justify-center items-center border-gray-400
     border-2 border-solid font-bold
   }
+}
+.step-info {
+  @apply self-center mb-6 text-center;
+
+  font-size: 16px;
+  color: #4F4F4F;
 }
 </style>

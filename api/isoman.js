@@ -86,3 +86,15 @@ export async function postVitaminRequest (data) {
     throw e
   }
 }
+export async function checkNikAvailability (data) {
+  try {
+    const response = await isomanAPI({
+      url: '/nik-check',
+      method: 'POST',
+      data
+    })
+    return response.data
+  } catch (e) {
+    throw e
+  }
+}

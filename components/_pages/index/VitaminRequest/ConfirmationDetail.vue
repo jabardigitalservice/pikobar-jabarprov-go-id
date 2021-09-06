@@ -1,7 +1,7 @@
 <template>
   <div class="confirmation-detail">
     <span class="confirmation-detail__title">{{ title }}</span>
-    <div class="confirmation-detail__card">
+    <div class="confirmation-detail__card flex flex-col md:grid md:grid-flow-col md:grid-rows-4 lg:grid-rows-3">
       <div
         v-for="item in content"
         :key="item.label"
@@ -104,8 +104,8 @@ export default {
   }
 
   &__card {
-    @apply grid grid-rows-3 grid-flow-col gap-4
-    border rounded-md border-solid p-5;
+    @apply gap-4 border rounded-md
+    border-solid p-5;
 
     border-color: #E0E0E0;
   }

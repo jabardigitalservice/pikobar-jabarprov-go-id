@@ -1,5 +1,8 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
+    <span class="step-info">
+      Isi data diri anda sebagai pemohon dengan benar, sehingga kami bisa memverifikasi data Anda lebih cepat.
+    </span>
     <ValidationObserver ref="firstStep" class="w-full">
       <form
         ref="form"
@@ -240,5 +243,11 @@ export default {
     justify-center items-center border-gray-400
     border-2 border-solid font-bold
   }
+}
+.step-info {
+  @apply self-center mb-6 text-center;
+
+  font-size: 16px;
+  color: #4F4F4F;
 }
 </style>
