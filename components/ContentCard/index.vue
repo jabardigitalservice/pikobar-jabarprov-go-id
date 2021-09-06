@@ -2,7 +2,7 @@
   <div class="content-card">
     <div class="content-card__grid">
       <div v-if="imagePosition === 'left'" class="flex-1">
-        <img class="content-card__image" :src="image" alt="content-card-image">
+        <img class="content-card__image h-5/6" :src="image" alt="content-card-image">
       </div>
       <div class="content-card__info">
         <div class="content-card__content">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div v-if="imagePosition === 'right'" class="flex-1">
-        <img class="content-card__image" :src="image" alt="content-card-image">
+        <img class="content-card__image h-5/6" :src="image" alt="content-card-image">
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@ export default {
 
 <style lang="scss" scoped>
   .content-card {
-    @apply max-w-lg mx-auto;
+    @apply max-w-lg;
 
     @screen lg {
         @apply max-w-none;
@@ -103,7 +103,7 @@ export default {
     }
 
     &__info {
-      @apply flex-1 p-6 flex flex-col justify-between;
+      @apply flex-1 p-3 flex flex-col justify-between;
     }
 
     &__content {
@@ -115,7 +115,7 @@ export default {
     }
 
     &__image {
-      @apply w-full h-full object-cover object-center rounded-lg;
+      @apply object-cover object-center rounded-lg;
     }
 
     &__header {
