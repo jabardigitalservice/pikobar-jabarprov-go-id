@@ -67,7 +67,7 @@ export default {
   &::before {
     content: '';
 
-    @apply absolute inset-0
+    @apply z-10 absolute inset-0
     shadow-xl
     opacity-0
     transition-opacity
@@ -77,6 +77,10 @@ export default {
 
   &--shadowed::before {
     @apply opacity-100;
+  }
+
+  > * {
+    @apply relative z-10;
   }
 }
 </style>
