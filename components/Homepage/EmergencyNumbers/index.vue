@@ -1,5 +1,5 @@
 <template>
-  <div class="hotline-and-faq">
+  <div class="emergency-numbers">
     <ActionCard
       v-for="(action, i) in actions"
       :key="i"
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.hotline-and-faq {
+.emergency-numbers {
   @apply grid grid-cols-1 gap-4;
 
   @screen md {
