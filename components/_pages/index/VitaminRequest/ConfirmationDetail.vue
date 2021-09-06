@@ -24,6 +24,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { formatDateDayIndonesia } from '~/lib/date'
 export default {
   props: {
     title: {
@@ -67,6 +68,8 @@ export default {
         return this.getDropdownLabel(array, this.formRequest[item.model])
       } else if (item.model === 'is_reported' || item.model === 'is_reported_tracing') {
         return this.formRequest[item.model] === '1' ? 'Sudah' : 'Belum'
+      } else if (item.model === 'birth_date') {
+        return formatDateDayIndonesia(this.formRequest[item.model])
       } else {
         return this.formRequest[item.model] || '-'
       }
