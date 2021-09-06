@@ -6,6 +6,7 @@
         v-for="(stat, statIndex) in topStats"
         :key="`top:${statIndex}`"
         :class="[stat.className, 'evt-statistics__top-grid-item']"
+        :loading="isLoading"
         v-bind="stat"
       >
         <EventStatCardCounter
@@ -25,6 +26,7 @@
         v-for="(stat, statIndex) in bottomStats"
         :key="`bottom:${statIndex}`"
         :class="[stat.className, 'evt-statistics__bottom-grid-item']"
+        :loading="isLoading"
         v-bind="stat"
       >
         <EventStatCardCounter
@@ -53,10 +55,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import {
-  topStats,
-  bottomStats
-} from './data.example'
+  transformToTopStatisticsData,
+  transformToBottomStatisticsData
+} from './data.utils'
 
 import {
   EventStatCard,
@@ -68,10 +71,35 @@ export default {
     EventStatCard,
     EventStatCardCounter
   },
-  data () {
-    return {
-      topStats,
-      bottomStats
+  computed: {
+    ...mapGetters('data-kasus-total-v2', {
+      dataJabar: 'itemsMap',
+      isLoadingDataJabar: 'isLoading'
+    }),
+    ...mapGetters('covid-cases-national', {
+      dataNational: 'itemsMap',
+      isLoadingDataNational: 'isLoading'
+    }),
+    topStats () {
+      return transformToTopStatisticsData(this.dataJabar, this.dataNational)
+    },
+    bottomStats () {
+      return transformToBottomStatisticsData(this.dataJabar, this.dataNational)
+    },
+    isLoading () {
+      return this.isLoadingDataJabar || this.isLoadingDataNational
+    }
+  },
+  mounted () {
+    this.getCovidCasesNational()
+    this.getDataKasusTotalV2()
+  },
+  methods: {
+    getCovidCasesNational () {
+      this.$store.dispatch('covid-cases-national/getItems')
+    },
+    getDataKasusTotalV2 () {
+      this.$store.dispatch('data-kasus-total-v2/getItems')
     }
   }
 }
