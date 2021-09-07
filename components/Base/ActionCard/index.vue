@@ -67,7 +67,7 @@ export default {
         return
       }
       if (backlink.startsWith('http')) {
-        return window.open(backlink, '_blank')
+        return window.open(backlink, '_blank', 'noopener,noreferrer')
       }
       return this.$router.push(backlink)
     }
