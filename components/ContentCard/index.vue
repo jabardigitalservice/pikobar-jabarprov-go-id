@@ -15,29 +15,31 @@
           <p class="content-card__body text-black-500">
             {{ body }}
           </p>
-          <a
-            :href="backLink"
+          <BaseButton
+            tag="a"
             target="_blank"
-            :class="[buttonType ? 'content-card__btn-link-outline' : 'content-card__btn-link']"
+            :label="prompt"
+            :href="backLink"
+            :outlined="buttonType === 'outline'"
+            class="mt-6"
           >
-            <span>
-              {{ prompt }}
-            </span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5 ml-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </a>
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 ml-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </template>
+          </BaseButton>
         </div>
       </div>
       <div v-if="imagePosition === 'right'" class="flex-1">
@@ -48,7 +50,11 @@
 </template>
 
 <script>
+import BaseButton from '~/components/Base/Button'
 export default {
+  components: {
+    BaseButton
+  },
   props: {
     header: {
       type: String,
