@@ -8,6 +8,7 @@
     }"
     :disabled="disabled"
     v-bind="$attrs"
+    v-on="$listeners"
   >
     <span class="base-button__label">
       <slot>
