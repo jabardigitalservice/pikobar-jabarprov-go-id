@@ -94,22 +94,23 @@ export default {
 
 <style lang="scss" scoped>
   .content-card {
-    @apply max-w-lg;
-
-    @screen lg {
-        @apply max-w-none;
-    }
 
     &__grid {
-      @apply grid grid-cols-1;
+      gap: 16px;
+      @apply grid grid-cols-1
+      items-center;
 
       @screen sm {
         @apply grid-cols-2;
       }
+
+      @screen lg {
+        gap: 32px;
+      }
     }
 
     &__info {
-      @apply flex-1 p-3 flex flex-col justify-between;
+      @apply flex-1 flex flex-col justify-between;
     }
 
     &__content {
