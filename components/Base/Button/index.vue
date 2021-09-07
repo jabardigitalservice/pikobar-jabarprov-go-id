@@ -4,7 +4,7 @@
     :class="{
       'base-button': true,
       'base-button--outlined': outlined,
-      'base-button--shadowed': shadowed
+      'base-button--shadowed': shadowed || outlined
     }"
     :disabled="disabled"
     v-bind="$attrs"
