@@ -111,7 +111,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(2, auto);
-    gap: 1rem;
+    gap: 16px;
   }
 
   &__top-grid-item {
@@ -124,7 +124,7 @@ export default {
 
   @screen md {
     &__grid {
-      gap: 2rem;
+      gap: 16px;
     }
     &__top-grid-item {
       grid-column: auto / span 6;
@@ -132,6 +132,9 @@ export default {
   }
 
   @screen lg {
+    &__grid {
+      gap: 32px;
+    }
     &__top-grid-item {
       grid-column: auto / span 3;
     }
