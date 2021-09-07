@@ -135,27 +135,5 @@ export default {
     &__body {
       @apply mt-3 text-base;
     }
-
-    &__btn-link {
-      @apply inline-flex bg-brand-green-darker
-      text-white text-sm font-bold tracking-wide
-      px-3 py-3
-      rounded-lg
-      mt-6
-      gap-2
-      items-center
-      justify-around;
-
-      &-outline {
-        @apply inline-flex items-center px-3 py-2 border
-        border-green-500
-        shadow-sm
-        mt-6
-        gap-2
-        text-base
-        rounded-md
-        text-green-700
-      }
-    }
   }
 </style>
