@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable vue/valid-v-slot -->
-  <TabLayout :tabs="tabs">
+  <TabLayout v-model="tabLayoutModel" :tabs="tabs">
     <template #content.info>
       <p class="text-gray-900">
         Info yang memuat infografis terkait Covid-19
@@ -34,8 +34,23 @@ export default {
     InfographicCarousel,
     DocumentTable
   },
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
+  props: {
+    /**
+     * Active tab index. Refer to
+     * './components/TabLayoutV2' bound model.
+     */
+    value: {
+      type: Number,
+      default: 0
+    }
+  },
   data () {
     return {
+      mValue: 0,
       tabs: Object.freeze([
         {
           name: 'info',
@@ -46,6 +61,25 @@ export default {
           label: 'Dokumen'
         }
       ])
+    }
+  },
+  computed: {
+    tabLayoutModel: {
+      get () {
+        return this.mValue
+      },
+      set (index) {
+        this.mValue = index
+        this.$emit('change', index)
+      }
+    }
+  },
+  watch: {
+    value: {
+      immediate: true,
+      handler (v) {
+        this.mValue = typeof v === 'number' ? v : 0
+      }
     }
   }
 }
