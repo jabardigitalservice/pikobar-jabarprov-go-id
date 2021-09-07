@@ -2,6 +2,11 @@
   <div class="success-page container md:px-20 md:py-10">
     <img src="~assets/save-success.png" width="350px" height="216px">
     <span class="success-page__title">Data Berhasil Disimpan!</span>
+    <span class="success-page__title">Hatur Nuhun</span>
+    <span class="success-page__name-label">{{ receipt.name || '' }}</span>
+    <p class="success-page__info lg:w-5/12">
+      Anda telah mengisi formulir Pengajuan Vitamin dan Obat untuk kebutuhan Isoman. Berikut data yang telah kami terima:
+    </p>
     <div class="success-page__result w-full lg:w-4/12">
       <div v-for="item in result" :key="item.title" class="flex flex-row">
         <span class="w-6/12 text-sm md:text-base">{{ item.title }}</span>
@@ -9,10 +14,7 @@
       </div>
     </div>
     <p class="success-page__info lg:w-5/12">
-      Pengajuan Vitamin dan Obat Anda berhasil disimpan,
-      Proses verifikasi membutuhkan waktu 1x24 Jam.
-      Selanjutnya Anda akan dihubungi memalui Email atau No. Telp
-      yang telah didaftarkan.
+      Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan permohonan dan melakukan lacak permohonan dengan menggunakan ID Permohonan.
     </p>
     <button
       class="success-page__button sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-3/12 w-full"
@@ -75,6 +77,14 @@ export default {
 
   &__title {
     font-size: 20px;
+    font-weight: 700;
+    color: #4F4F4F;
+  }
+
+  &__name-label {
+    @apply -mt-4;
+
+    font-size: 16px;
     font-weight: 700;
     color: #4F4F4F;
   }
