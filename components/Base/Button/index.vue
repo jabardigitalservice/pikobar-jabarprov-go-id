@@ -51,7 +51,7 @@ export default {
 <style lang="scss" scoped>
 .base-button {
   @apply inline-flex flex-row flex-no-wrap gap-2
-  justify-around items-center
+  justify-center items-center
   px-4 py-3
   border border-solid border-transparent
   rounded-lg
