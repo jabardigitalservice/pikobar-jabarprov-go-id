@@ -13,6 +13,14 @@
         'container': !fluid,
       }"
     >
+      <slot name="header">
+        <SectionHeader
+          v-if="title || subtitle"
+          :title="title"
+          :subtitle="subtitle"
+          :align="alignHeader"
+        />
+      </slot>
       <slot />
     </div>
   </component>
@@ -20,6 +28,9 @@
 
 <script>
 export default {
+  components: {
+    SectionHeader: () => import('./SectionHeader')
+  },
   props: {
     tag: {
       type: String,
@@ -34,7 +45,22 @@ export default {
     },
     noGutters: {
       type: Boolean
+    },
+
+    /* START: SectionHeader props */
+    title: {
+      type: String,
+      default: ''
+    },
+    subtitle: {
+      type: String,
+      default: ''
+    },
+    alignHeader: {
+      type: String,
+      default: 'center'
     }
+    /* END: SectionHeader props */
   }
 }
 </script>
