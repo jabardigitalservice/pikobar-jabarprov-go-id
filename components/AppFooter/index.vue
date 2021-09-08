@@ -1,6 +1,6 @@
 <template>
   <footer class="app-footer">
-    <BaseContainer class="bg-gray-100">
+    <BaseSection class="bg-gray-100">
       <div class="app-footer__body">
         <div class="space-y-8">
           <a href="/">
@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-    </BaseContainer>
+    </BaseSection>
     <div class="app-footer__copyright">
       <p class="app-footer__copyright-text">
         Copyright &copy;Pikobar 2021. All rights reserved
@@ -66,10 +66,10 @@
 </template>
 
 <script>
-import BaseContainer from '~/components/Base/Container'
+import BaseSection from '~/components/Base/Section'
 export default {
   components: {
-    BaseContainer
+    BaseSection
   },
   data () {
     return {

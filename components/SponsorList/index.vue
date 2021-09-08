@@ -1,5 +1,5 @@
 <template>
-  <BaseContainer
+  <BaseSection
     tag="div"
     class="bg-white pt-10 pb-20 md:py-16"
   >
@@ -22,14 +22,14 @@
         </div>
       </div>
     </div>
-  </BaseContainer>
+  </BaseSection>
 </template>
 
 <script>
-import BaseContainer from '~/components/Base/Container'
+import BaseSection from '~/components/Base/Section'
 export default {
   components: {
-    BaseContainer
+    BaseSection
   },
   data () {
     return {
