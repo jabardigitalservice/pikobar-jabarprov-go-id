@@ -2,14 +2,14 @@
   <component
     :is="tag"
     :class="{
-      'base-container': true,
-      'base-container--no-gutters': noGutters,
-      'base-container--centered': centered
+      'section': true,
+      'section--no-gutters': noGutters,
+      'section--centered': centered
     }"
   >
     <div
       :class="{
-        'base-container__content': true,
+        'section__content': true,
         'container': !fluid,
       }"
     >
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.base-container {
+.section {
 
   &__content {
     @apply px-4;
