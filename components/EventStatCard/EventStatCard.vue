@@ -134,7 +134,8 @@ export default {
   @apply relative z-0
   inline-block
   rounded-lg
-  border border-solid border-gray-300;
+  border border-solid border-gray-300
+  bg-white;
 
   > * {
     z-index: 1;
