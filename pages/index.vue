@@ -20,8 +20,10 @@
     <Section class="py-20 bg-white">
       <BannerCarousel />
     </Section>
-    <Section class="py-20 bg-gray-50">
-      <SectionHeader v-bind="header.eventStatistics" />
+    <Section
+      class="py-20 bg-gray-50"
+      v-bind="section.eventStatistics"
+    >
       <EventStatistics />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
         <ContentCardButton v-bind="button.eventStatistics" />
@@ -35,17 +37,19 @@
         class="py-20"
       />
     </Section>
-    <Section class="py-20 bg-gray-50">
-      <SectionHeader v-bind="header.recentNews" />
+    <Section
+      class="py-20 bg-gray-50"
+      v-bind="section.recentNews"
+    >
       <RecentNewsCarousel />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
         <ContentCardButton v-bind="button.recentNews" />
       </div>
     </Section>
-    <Section class="pt-20 bg-white">
-      <SectionHeader v-bind="header.miscInfo" />
-    </Section>
-    <Section class="pb-20 bg-white">
+    <Section
+      class="py-20 bg-white"
+      v-bind="section.miscInfo"
+    >
       <InfographicAndDocument v-model="model.infoAndDocTab" />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
         <ContentCardButton
@@ -70,7 +74,6 @@ import { analytics } from '~/lib/firebase'
 import TopAlert from '~/components/TopAlert'
 import PopupCampaign from '~/components/PopupCampaign'
 import Section from '~/components/Base/Section'
-import SectionHeader from '~/components/Base/SectionHeader'
 import ContentCard from '~/components/ContentCard'
 import ContentCardButton from '~/components/ContentCard/ContentCardButton'
 import BannerCarousel from '~/components/Homepage/BannerCarousel'
@@ -86,7 +89,6 @@ export default {
     Section,
     ContentCard,
     ContentCardButton,
-    SectionHeader,
     BannerCarousel,
     EventStatistics,
     RecentNewsCarousel,
@@ -98,7 +100,7 @@ export default {
       model: {
         infoAndDocTab: 0
       },
-      header: {
+      section: {
         eventStatistics: {
           title: 'Angka Kejadian Di Jawa Barat',
           subtitle: 'Update Terakhir: 8 September 00.00'
@@ -109,7 +111,7 @@ export default {
         },
         miscInfo: {
           title: 'Informasi Lainnya',
-          align: 'left'
+          alignHeader: 'left'
         }
       },
       listContent: [
