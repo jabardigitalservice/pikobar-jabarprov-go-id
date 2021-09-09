@@ -15,10 +15,11 @@
     >
       <slot name="header">
         <SectionHeader
-          v-if="title || subtitle"
+          vif="title || subtitle"
           :title="title"
           :subtitle="subtitle"
           :align="alignHeader"
+          :loading="loading"
         />
       </slot>
       <slot />
@@ -44,6 +45,9 @@ export default {
       default: true
     },
     noGutters: {
+      type: Boolean
+    },
+    loading: {
       type: Boolean
     },
 
