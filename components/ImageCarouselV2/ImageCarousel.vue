@@ -196,12 +196,12 @@ export default {
         .sort((a, b) => a - b)
         .reverse()
 
-      return sorted.find((width, i, coll) => {
+      return sorted.find((width, i) => {
         // first index is widest breakpoint
         if (i === 0) {
           return window.innerWidth >= width
         }
-        const [min, max] = [coll[i + 1], width]
+        const [min, max] = [width, sorted[i - 1]]
         return _inRange(window.innerWidth, min, max)
       })
     },
