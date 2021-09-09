@@ -6,28 +6,24 @@
       'section-header--centered': align === 'center'
     }"
   >
-    <template v-if="loading">
-      <BaseSkeleton class="section-header__title-skeleton" />
-      <BaseSkeleton class="section-header__subtitle-skeleton" />
-    </template>
-    <template v-else>
-      <p
-        v-show="$slots.title || title"
-        class="section-header__title"
-      >
-        <slot name="title">
-          {{ title }}
-        </slot>
-      </p>
-      <p
-        v-show="$slots.subtitle || subtitle"
-        class="section-header__subtitle"
-      >
-        <slot name="subtitle">
-          {{ subtitle }}
-        </slot>
-      </p>
-    </template>
+    <BaseSkeleton v-show="loading" class="section-header__title-skeleton" />
+    <BaseSkeleton v-show="loading" class="section-header__subtitle-skeleton" />
+    <p
+      v-show="!loading && ($slots.title || title)"
+      class="section-header__title"
+    >
+      <slot name="title">
+        {{ title }}
+      </slot>
+    </p>
+    <p
+      v-show="!loading && ($slots.subtitle || subtitle)"
+      class="section-header__subtitle"
+    >
+      <slot name="subtitle">
+        {{ subtitle }}
+      </slot>
+    </p>
   </header>
 </template>
 

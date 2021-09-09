@@ -15,7 +15,7 @@
     >
       <slot name="header">
         <SectionHeader
-          vif="title || subtitle"
+          v-show="title || subtitle"
           :title="title"
           :subtitle="subtitle"
           :align="alignHeader"
