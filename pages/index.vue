@@ -200,11 +200,11 @@ export default {
   },
   methods: {
     onSectionLoad (name, isLoading) {
-      const { lastUpdate } = this.$refs[name] || []
+      const { lastUpdate } = this.$refs[name]
       this.section[name].loading = isLoading
-      this.section[name].subtitle = isLoading
-        ? null
-        : `Update Terakhir: ${lastUpdate}`
+      this.section[name].subtitle = !isLoading && lastUpdate
+        ? `Update Terakhir: ${lastUpdate}`
+        : null
     }
   }
 }
