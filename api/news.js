@@ -47,3 +47,20 @@ export function getById (id) {
       return null
     })
 }
+
+/**
+ * Last update reflects of latest document inserted
+ * into firebase "articles" collections, without regard
+ * to article tag or category.
+ * @returns {Date | undefined} last update date
+ */
+export function getLastUpdate () {
+  return get({
+    perPage: 1,
+    tag: null
+  }).then((news) => {
+    const latest = Array.isArray(news) ? news[0] : null
+    // eslint-disable-next-line camelcase
+    return latest?.published_at
+  })
+}
