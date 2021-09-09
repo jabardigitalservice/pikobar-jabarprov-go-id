@@ -13,7 +13,7 @@ export {
 
 export async function getTrackingResult (params) {
   try {
-    const response = await isomanAPI.post('/track', params)
+    const response = await isomanAPI.post('/tracking', params)
     return response.data
   } catch (e) {
     throw e
