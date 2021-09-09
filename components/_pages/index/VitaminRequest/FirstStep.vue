@@ -13,6 +13,7 @@
           :key="item.name"
           v-slot="{ errors }"
           :rules="item.rules"
+          :name="item.name"
           :class="item.class"
         >
           <SelectInput
