@@ -55,11 +55,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import {
   transformToTopStatisticsData,
   transformToBottomStatisticsData
 } from './data.utils'
+import { formatDateTimeShort } from '~/lib/date'
 
 import {
   EventStatCard,
@@ -72,12 +73,22 @@ export default {
     EventStatCardCounter
   },
   computed: {
-    ...mapGetters('data-kasus-total-v2', {
-      dataJabar: 'itemsMap',
+    ...mapState('data-kasus-total-v2', {
+      /**
+       * @public
+       */
+      lastUpdate: (state) => {
+        // eslint-disable-next-line camelcase
+        const date = state.metadata?.last_update
+        return date
+          ? formatDateTimeShort(new Date(date))
+          : null
+      },
+      dataJabar: 'items',
       isLoadingDataJabar: 'isLoading'
     }),
-    ...mapGetters('covid-cases-national', {
-      dataNational: 'itemsMap',
+    ...mapState('covid-cases-national', {
+      dataNational: 'items',
       isLoadingDataNational: 'isLoading'
     }),
     topStats () {
@@ -91,6 +102,13 @@ export default {
     }
   },
   mounted () {
+    this.$watch(
+      'isLoading',
+      function (v) {
+        this.$emit('loading', v)
+      },
+      { immediate: true }
+    )
     this.getCovidCasesNational()
     this.getDataKasusTotalV2()
   },

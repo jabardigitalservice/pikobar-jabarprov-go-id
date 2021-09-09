@@ -24,7 +24,10 @@
       class="py-20 bg-gray-50"
       v-bind="section.eventStatistics"
     >
-      <EventStatistics />
+      <EventStatistics
+        ref="eventStatistics"
+        @loading="onSectionLoad('eventStatistics', $event)"
+      />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
         <ContentCardButton v-bind="button.eventStatistics" />
       </div>
@@ -41,7 +44,10 @@
       class="py-20 bg-gray-50"
       v-bind="section.recentNews"
     >
-      <RecentNewsCarousel />
+      <RecentNewsCarousel
+        ref="recentNews"
+        @loading="onSectionLoad('recentNews', $event)"
+      />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
         <ContentCardButton v-bind="button.recentNews" />
       </div>
@@ -69,6 +75,7 @@
     </Section>
   </div>
 </template>
+
 <script>
 import { analytics } from '~/lib/firebase'
 import TopAlert from '~/components/TopAlert'
@@ -102,12 +109,14 @@ export default {
       },
       section: {
         eventStatistics: {
+          loading: true,
           title: 'Angka Kejadian Di Jawa Barat',
-          subtitle: 'Update Terakhir: 8 September 00.00'
+          subtitle: null
         },
         recentNews: {
+          loading: true,
           title: 'Berita Terkini',
-          subtitle: 'Update Terakhir: 8 September 00.00'
+          subtitle: null
         },
         miscInfo: {
           title: 'Informasi Lainnya',
@@ -188,6 +197,15 @@ export default {
         analytics.logEvent('homepage_view')
       }
     })
+  },
+  methods: {
+    onSectionLoad (name, isLoading) {
+      const { lastUpdate } = this.$refs[name]
+      this.section[name].loading = isLoading
+      this.section[name].subtitle = !isLoading && lastUpdate
+        ? `Update Terakhir: ${lastUpdate}`
+        : null
+    }
   }
 }
 
