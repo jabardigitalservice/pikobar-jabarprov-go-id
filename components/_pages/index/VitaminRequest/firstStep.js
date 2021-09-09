@@ -12,7 +12,7 @@ export default [
     label: 'Nomor Induk Kependudukan (NIK)',
     required: true,
     model: 'nik',
-    name: 'nik',
+    name: 'NIK',
     placeholder: 'NIK',
     note: 'Diisi dengan Nomor Induk Kependudukan Pemohon',
     rules: 'required|length:16|numeric|nikAvailability',
@@ -22,9 +22,9 @@ export default [
     label: 'Unggah Foto KTP',
     required: true,
     model: 'ktp_photo',
-    name: 'ktp',
+    name: 'KTP',
     note: 'Digunakan untuk petugas memvalidasi identitas pemohon',
-    rules: 'required|image|mimes:png,jpg,jpeg,gif',
+    rules: 'required|image|mimes:png,jpg,jpeg,gif|size:10000',
     accept: '.png,.jpg,.jpeg,.gif',
     class: 'md:block md:w-8/12',
     type: 'file'
@@ -33,7 +33,7 @@ export default [
     label: 'Tanggal Lahir',
     required: true,
     model: 'birth_date',
-    name: 'borndate',
+    name: 'Tanggal Lahir',
     note: 'Digunakan untuk menyesuaikan umur pemohon dengan jenis obat',
     rules: 'required',
     class: 'md:block md:w-8/12',
@@ -43,7 +43,7 @@ export default [
     label: 'Nomor telepon yang dapat dihubungi',
     required: true,
     model: 'phone_primary',
-    name: 'phone_primary',
+    name: 'Nomor Telepon',
     note: 'Diisi dengan nomor telepon yang terhubung WhatsApp',
     rules: 'required|isPhoneNumber',
     class: 'md:inline-block md:w-6/12 md:pr-5'
@@ -52,7 +52,7 @@ export default [
     label: 'Nomor telepon lainnya yang dapat dihubungi',
     required: true,
     model: 'phone_secondary',
-    name: 'phone_secondary',
+    name: 'Nomor Telepon Lainnya',
     note: 'Diisi dengan nomor telepon yang terhubung WhatsApp',
     rules: 'required|isPhoneNumber',
     class: 'md:inline-block md:w-6/12'
@@ -60,7 +60,7 @@ export default [
   {
     label: 'Email',
     model: 'email',
-    name: 'email',
+    name: 'Email',
     placeholder: 'Alamat Email',
     note: 'Dapat diisi dengan email yang aktif (jika ada)',
     rules: 'email',
@@ -70,7 +70,7 @@ export default [
     label: 'Kota/Kabupaten',
     required: true,
     model: 'city_id',
-    name: 'city',
+    name: 'Kota/Kabupaten',
     rules: 'required',
     class: 'md:inline-block md:w-4/12 md:pr-5',
     type: 'select'
@@ -79,7 +79,7 @@ export default [
     label: 'Kecamatan',
     required: true,
     model: 'district_id',
-    name: 'district',
+    name: 'Kecamatan',
     rules: 'required',
     class: 'md:inline-block md:w-4/12 md:pr-5',
     type: 'select'
@@ -88,7 +88,7 @@ export default [
     label: 'Kelurahan',
     required: true,
     model: 'subdistrict_id',
-    name: 'subdistrict',
+    name: 'Kelurahan',
     rules: 'required',
     class: 'md:inline-block md:w-4/12',
     type: 'select'
@@ -97,7 +97,7 @@ export default [
     label: 'RT',
     required: true,
     model: 'rt',
-    name: 'rt',
+    name: 'RT',
     rules: 'required',
     class: 'md:inline-block md:w-4/12 md:pr-5',
     type: 'select'
@@ -106,7 +106,7 @@ export default [
     label: 'RW',
     required: true,
     model: 'rw',
-    name: 'rw',
+    name: 'RW',
     rules: 'required',
     class: 'md:inline-block md:w-4/12 md:pr-5',
     type: 'select'
@@ -115,7 +115,7 @@ export default [
     label: 'Alamat Tempat Tinggal Saat Ini',
     placeholder: 'Alamat domisili saat ini',
     model: 'address',
-    name: 'address',
+    name: 'Alamat',
     note: 'Diisi dengan domisili berada di wilayah Provinsi Jawa Barat',
     class: 'inline-block w-full',
     type: 'area',
@@ -125,7 +125,7 @@ export default [
   {
     label: 'Keterangan lain/Patokan jalan',
     model: 'landmark',
-    name: 'landmark',
+    name: 'Patokan Jalan',
     placeholder: 'Patokan Jalan',
     rules: 'required',
     required: true

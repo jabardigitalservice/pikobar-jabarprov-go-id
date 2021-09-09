@@ -1,4 +1,12 @@
-import { required, email, numeric, length, mimes, image } from 'vee-validate/dist/rules'
+import {
+  required,
+  email,
+  numeric,
+  length,
+  mimes,
+  image,
+  size
+} from 'vee-validate/dist/rules'
 import { extend, setInteractionMode } from 'vee-validate'
 import { isPhoneNumber } from './validate'
 import { checkNikAvailability } from '~/api/isoman'
@@ -7,39 +15,44 @@ setInteractionMode('eager')
 
 extend('required', {
   ...required,
-  message: 'This field is required'
+  message: (_, values) => `${values._field_} harus diisi`
 })
 
 extend('email', {
   ...email,
-  message: 'Please enter an email address'
+  message: 'Email tidak valid'
 })
 
 extend('isPhoneNumber', {
   validate: (val) => {
     return isPhoneNumber(val)
   },
-  message: 'Please enter a phone number'
+  message: 'Nomor telepon tidak valid'
 })
 
 extend('numeric', {
   ...numeric,
-  message: 'This field must be filled with number'
+  message: (_, values) => `${values._field_} harus diisi dengan angka`
 })
 
 extend('length', {
   ...length,
-  message: 'This field must be {length} characters'
+  message: (_, values) => `${values._field_} harus berisi ${values.length} karakter`
 })
 
 extend('mimes', {
   ...mimes,
-  message: 'File type doesn\'t match the requirement'
+  message: (_, values) => `File ${values._field_} tidak sesuai format`
 })
 
 extend('image', {
   ...image,
-  message: 'This field must be filled with image'
+  message: (_, values) => `${values._field_} harus berisi gambar`
+})
+
+extend('size', {
+  ...size,
+  message: (_, values) => `Ukuran file ${values._field_} maksimal ${values.size / 1000}MB`
 })
 
 extend('nikAvailability', {
@@ -57,5 +70,5 @@ extend('nikAvailability', {
       return false
     }
   },
-  message: 'NIK is already registered'
+  message: 'NIK telah terdaftar'
 })
