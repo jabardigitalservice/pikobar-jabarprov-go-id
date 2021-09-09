@@ -1,6 +1,9 @@
 <template>
   <div
-    class="image-carousel"
+    :class="{
+      'image-carousel': true,
+      'image-carousel--bleed': isBleed
+    }"
   >
     <ImageCarouselButtonNav
       v-show="showNavigation"
@@ -10,36 +13,34 @@
       :style="[btnPrevPositionStyles]"
       @click="onNavigate('prev')"
     />
-    <div class="image-carousel__track-outer">
-      <div class="image-carousel__track-inner">
-        <ImageCarouselSkeleton
-          v-show="isLoading"
-        />
-        <client-only>
-          <Swiper
-            v-show="!isLoading"
-            ref="swiper"
-            class="swiper image-carousel__swiper"
-            :options="swiperOptions"
-            @ready="onSwiperReady"
-            @resize="onSwiperResize"
-            @slide-change="onSwiperSlideChange"
+    <div class="image-carousel__track">
+      <ImageCarouselSkeleton
+        v-show="isLoading"
+      />
+      <client-only>
+        <Swiper
+          v-show="!isLoading"
+          ref="swiper"
+          class="swiper image-carousel__swiper"
+          :options="swiperOptions"
+          @ready="onSwiperReady"
+          @resize="onSwiperResize"
+          @slide-change="onSwiperSlideChange"
+        >
+          <SwiperSlide
+            v-for="(item, index) in items"
+            :key="index"
+            class="swiper-slide image-carousel__swiper-slide"
           >
-            <SwiperSlide
-              v-for="(item, index) in items"
-              :key="index"
-              class="swiper-slide image-carousel__swiper-slide"
-            >
-              <slot name="item" v-bind="{ item, index }">
-                <ImageCarouselItem
-                  v-bind="item"
-                  @click="onClickSlide(item, index)"
-                />
-              </slot>
-            </SwiperSlide>
-          </Swiper>
-        </client-only>
-      </div>
+            <slot name="item" v-bind="{ item, index }">
+              <ImageCarouselItem
+                v-bind="item"
+                @click="onClickSlide(item, index)"
+              />
+            </slot>
+          </SwiperSlide>
+        </Swiper>
+      </client-only>
     </div>
     <ImageCarouselButtonNav
       v-show="showNavigation"
@@ -55,6 +56,7 @@
 <script>
 import { Swiper, SwiperSlide, directive as swiper } from 'vue-awesome-swiper'
 import _merge from 'lodash/merge'
+import _inRange from 'lodash/inRange'
 import ImageCarouselSkeleton from './ImageCarouselSkeleton'
 import ImageCarouselItem from './ImageCarouseItem'
 import ImageCarouselButtonNav from './ImageCarouselButtonNav'
@@ -99,28 +101,33 @@ export default {
         slidesPerView: 1.25,
         spaceBetween: 8,
         centeredSlides: true,
-        centeredSlidesBounds: false,
+        centeredSlidesBounds: true,
+        navigation: false,
+        bleed: true,
         breakpoints: {
           480: {
             slidesPerView: 1.25,
             spaceBetween: 16,
             centeredSlides: true,
             centeredSlidesBounds: true,
-            navigation: false
+            navigation: false,
+            bleed: true
           },
           640: {
             slidesPerView: 2,
             spaceBetween: 16,
             centeredSlides: false,
             centeredSlidesBounds: true,
-            navigation: true
+            navigation: false,
+            bleed: true
           },
           1024: {
             slidesPerView: 3,
             spaceBetween: 32,
             centeredSlides: false,
             centeredSlidesBounds: true,
-            navigation: true
+            navigation: true,
+            bleed: false
           }
         }
       })
@@ -133,10 +140,16 @@ export default {
       isServerSide: true,
       isBtnPrevDisabled: true,
       isBtnNextDisabled: false,
+      isBleed: false,
       showNavigation: false
     }
   },
   computed: {
+    swiperBreakpoints () {
+      return Object
+        .keys(this.swiperOptions.breakpoints ?? {})
+        .map(Number)
+    },
     swiperOptions () {
       const defaultProps = this.$options
         .props
@@ -146,7 +159,6 @@ export default {
         autoplay: {
           delay: 4000
         },
-        pagination: false,
         navigation: false,
         allowTouchMove: true,
         loop: false
@@ -176,13 +188,38 @@ export default {
     this.isServerSide = false
   },
   methods: {
+    getMatchedBreakpoint () {
+      // sorted and reversed due to
+      // min-width matching strategy
+      const sorted = [...this.swiperBreakpoints]
+        .sort((a, b) => a - b)
+        .reverse()
+
+      return sorted.find((width, i, coll) => {
+        if (i === 0) {
+          return window.innerWidth >= width
+        }
+        const [min, max] = [coll[i + 1], width]
+        return _inRange(window.innerWidth, min, max)
+      })
+    },
+    handleResponsiveBleed () {
+      const bp = this.getMatchedBreakpoint()
+      let isBleed = this.swiperOptions.breakpoints?.[bp]?.bleed
+      if (typeof isBleed !== 'boolean') {
+        isBleed = this.swiperOptions.bleed
+      }
+      this.isBleed = isBleed
+    },
     onSwiperReady () {
       const { $swiper } = this.$refs.swiper
       this.showNavigation = $swiper.params.navigation
+      this.handleResponsiveBleed()
     },
     onSwiperResize () {
       const { $swiper } = this.$refs.swiper
       this.showNavigation = $swiper.params.navigation
+      this.handleResponsiveBleed()
     },
     onSwiperSlideChange () {
       const { $swiper } = this.$refs.swiper
@@ -212,11 +249,7 @@ export default {
   flex flex-row flex-no-wrap
   justify-start items-center;
 
-  &__track-outer {
-    @apply overflow-hidden flex-1;
-  }
-
-  &__track-inner {
+  &__track {
     @apply w-full;
   }
 
@@ -246,6 +279,12 @@ export default {
       transform: translateY(1rem);
       @apply opacity-0;
     }
+  }
+}
+
+.image-carousel--bleed::v-deep {
+  .swiper-container {
+    overflow: visible;
   }
 }
 </style>
