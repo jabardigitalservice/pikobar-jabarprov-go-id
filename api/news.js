@@ -49,8 +49,8 @@ export function getById (id) {
 }
 
 /**
- * Last update reflects of latest document inserted
- * into firebase "articles" collections, without regard
+ * Last update reflects of the timestamp of the latest inserted
+ * document into firebase "articles" collections, without regard
  * to article tag or category.
  * @returns {Date | undefined} last update date
  */
