@@ -19,7 +19,7 @@
       />
       <client-only>
         <Swiper
-          v-show="!isLoading"
+          v-if="!isLoading"
           ref="swiper"
           class="swiper image-carousel__swiper"
           :options="swiperOptions"
@@ -55,8 +55,9 @@
 
 <script>
 import { Swiper, SwiperSlide, directive as swiper } from 'vue-awesome-swiper'
-import _merge from 'lodash/merge'
 import _inRange from 'lodash/inRange'
+import _get from 'lodash/get'
+import _merge from 'lodash/merge'
 import ImageCarouselSkeleton from './ImageCarouselSkeleton'
 import ImageCarouselItem from './ImageCarouseItem'
 import ImageCarouselButtonNav from './ImageCarouselButtonNav'
@@ -160,7 +161,7 @@ export default {
           delay: 4000
         },
         navigation: false,
-        allowTouchMove: true,
+        allowTouchMove: false,
         loop: false
       }
       return _merge(
@@ -196,6 +197,7 @@ export default {
         .reverse()
 
       return sorted.find((width, i, coll) => {
+        // first index is widest breakpoint
         if (i === 0) {
           return window.innerWidth >= width
         }
@@ -203,22 +205,34 @@ export default {
         return _inRange(window.innerWidth, min, max)
       })
     },
-    handleResponsiveBleed () {
+    getConfigByBreakpoint (name) {
       const bp = this.getMatchedBreakpoint()
-      let isBleed = this.swiperOptions.breakpoints?.[bp]?.bleed
-      if (typeof isBleed !== 'boolean') {
-        isBleed = this.swiperOptions.bleed
+      let value = _get(this.swiperOptions, `breakpoints.${bp}.${name}`)
+      if (typeof value === 'undefined') {
+        value = _get(this.swiperOptions, name)
       }
-      this.isBleed = isBleed
+      return value
     },
-    onSwiperReady () {
+    handleTouchMove () {
+      const { $swiper } = this.$refs.swiper
+      const slidesPerView = this.getConfigByBreakpoint('slidesPerView')
+      $swiper.allowTouchMove = this.items.length > slidesPerView
+    },
+    handleResponsiveBleed () {
+      this.isBleed = this.getConfigByBreakpoint('bleed')
+    },
+    handleNavigation () {
       const { $swiper } = this.$refs.swiper
       this.showNavigation = $swiper.params.navigation
+    },
+    onSwiperReady () {
+      this.handleNavigation()
+      this.handleTouchMove()
       this.handleResponsiveBleed()
     },
     onSwiperResize () {
-      const { $swiper } = this.$refs.swiper
-      this.showNavigation = $swiper.params.navigation
+      this.handleNavigation()
+      this.handleTouchMove()
       this.handleResponsiveBleed()
     },
     onSwiperSlideChange () {
