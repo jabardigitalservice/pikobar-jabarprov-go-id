@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { formatDateIndonesia } from '../../lib/date'
+import { formatDateIndonesia } from '~/lib/date'
 export default {
   name: 'NewsCarouselItem',
   inheritAttrs: false,

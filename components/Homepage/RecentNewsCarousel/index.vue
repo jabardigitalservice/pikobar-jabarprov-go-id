@@ -7,7 +7,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { NewsCarousel } from '~/components/NewsCarousel'
+import { NewsCarousel } from '~/components/Base/NewsCarousel'
 import { formatDateTimeShort } from '~/lib/date'
 
 export default {
