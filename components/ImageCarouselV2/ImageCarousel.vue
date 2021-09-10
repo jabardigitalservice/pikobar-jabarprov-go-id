@@ -193,8 +193,7 @@ export default {
       // sorted and reversed due to
       // min-width matching strategy
       const sorted = [...this.swiperBreakpoints]
-        .sort((a, b) => a - b)
-        .reverse()
+        .sort((a, b) => b - a)
 
       return sorted.find((width, i) => {
         // first index is widest breakpoint
