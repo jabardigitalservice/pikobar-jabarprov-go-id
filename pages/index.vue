@@ -21,6 +21,7 @@
       <BannerCarousel />
     </Section>
     <Section
+      id="eventStatistics"
       class="py-20 bg-gray-50"
       v-bind="section.eventStatistics"
     >
@@ -129,7 +130,7 @@ export default {
           body: 'Media komunikasi dan informasi penanganan Covid-19 satu pintu di Jawa Barat. Hadirkan data dan visualisasi perkembangan kasus terkini Covid-19. Dilengkapi ragam layanan kesehatan digital pendukung kedaruratan pandemi.',
           image: '/img/icon-hero.svg',
           imagePosition: 'right',
-          backLink: '/',
+          backLink: '#eventStatistics',
           prompt: 'Selanjutnya'
         },
         {
@@ -166,25 +167,21 @@ export default {
       button: {
         eventStatistics: {
           backLink: '/data',
-          target: '_self',
           prompt: 'Selengkapnya',
           buttonType: 'outline'
         },
         recentNews: {
           backLink: '/articles?tab=jabar',
-          target: '_self',
           prompt: 'Lihat Berita Selengkapnya',
           buttonType: 'outline'
         },
         infographics: {
-          backLink: '/articles?tab=jabar',
-          target: '_self',
+          backLink: '/info/infographics',
           prompt: 'Lihat Selengkapnya',
           buttonType: 'outline'
         },
         documents: {
           backLink: '/info/documents',
-          target: '_self',
           prompt: 'Lihat Selengkapnya',
           buttonType: 'outline'
         }

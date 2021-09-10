@@ -1,10 +1,10 @@
 <template>
   <BaseButton
     tag="a"
-    target="_blank"
     :label="prompt"
     :href="backLink"
     :outlined="buttonType === 'outline'"
+    @click.prevent="onClick"
   >
     <template #icon>
       <svg
@@ -44,6 +44,49 @@ export default {
     buttonType: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    /**
+     * NOTES:
+     * this function should've provided most common cases of link handling.
+     * might be wise to refactor this function onto "~/lib".
+     */
+    onClick () {
+      const { backLink } = this
+      if (typeof backLink !== 'string' || !backLink.length) {
+        return
+      }
+      // for external link.
+      // will always open in new tab with WindowFeatures "noopener, noreferrer"
+      if (backLink.startsWith('http')) {
+        return window.open(backLink, '_blank', 'noreferrer,noopener')
+      }
+
+      // for internal link
+      if (backLink.startsWith('/')) {
+        return this.$router.push(backLink)
+      }
+
+      // for anchor within page
+      if (backLink.startsWith('#')) {
+        // NOTES:
+        // this won't work if there exists a sticky element outside of appbar
+        const appbar = document.querySelector('header.appbar')
+        const target = document.querySelector(this.backLink)
+        if (!appbar || !target) {
+          return
+        }
+        const { height: appbarHeight } = appbar.getBoundingClientRect()
+        const { top: targetTop } = target.getBoundingClientRect()
+
+        // subtracted by appbarHeight due to appbar's sticky position
+        const position = targetTop - appbarHeight + window.scrollY
+        return window.scrollTo({
+          behavior: 'smooth',
+          top: position
+        })
+      }
     }
   }
 }
