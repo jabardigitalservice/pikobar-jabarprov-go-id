@@ -22,7 +22,7 @@
             :label="item.label"
             :required="item.required"
             :name="item.name"
-            :options="options(item.name)"
+            :options="options(item.model)"
           />
           <RadioButton
             v-else-if="item.type === 'radio'"
@@ -34,7 +34,7 @@
             :accept="item.accept"
             :note="item.note"
             :type="item.type"
-            :options="options(item.name)"
+            :options="options(item.model)"
           />
           <FileInput
             v-else-if="item.type === 'file'"
@@ -142,7 +142,7 @@ export default {
         behavior: 'smooth'
       })
     },
-    options (name) {
+    options (model) {
       const options = {
         test_location_id: [
           { name: 'Pilih Lokasi' },
@@ -161,7 +161,7 @@ export default {
           { name: 'Belum', id: 0 }
         ]
       }
-      return options[name.toLowerCase()] ?? []
+      return options[model.toLowerCase()] ?? []
     }
   }
 }

@@ -22,7 +22,7 @@
             :label="item.label"
             :required="item.required"
             :name="item.name"
-            :options="options(item.name)"
+            :options="options(item.model)"
           />
           <TextArea
             v-else-if="item.type === 'area'"
@@ -197,24 +197,24 @@ export default {
           return []
       }
     },
-    options (name) {
+    options (model) {
       const options = {
-        city: [
+        city_id: [
           { name: 'Pilih Kota' },
           ...this.cities
         ],
-        district: [
+        district_id: [
           { name: 'Pilih Kecamatan' },
           ...this.districts
         ],
-        subdistrict: [
+        subdistrict_id: [
           { name: 'Pilih Kelurahan' },
           ...this.subDistricts
         ],
         rw: this.generateRtRwOptions('rw'),
         rt: this.generateRtRwOptions('rt')
       }
-      return options[name.toLowerCase()] ?? []
+      return options[model.toLowerCase()] ?? []
     }
   }
 }
