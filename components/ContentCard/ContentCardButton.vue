@@ -57,7 +57,8 @@ export default {
       if (typeof backLink !== 'string' || !backLink.length) {
         return
       }
-      // for external link
+      // for external link.
+      // will always open in new tab with WindowFeatures "noopener, noreferrer"
       if (backLink.startsWith('http')) {
         return window.open(backLink, '_blank', 'noreferrer,noopener')
       }
