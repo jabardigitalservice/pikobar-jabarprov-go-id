@@ -11,6 +11,7 @@
       :placeholder="placeholder"
       :type="type"
       :accept="accept"
+      :max="date(new Date(),'yyyy-MM-dd')"
       @input="$emit('input', $event.target.value)"
       @change="$emit('input', $event.target.value)"
       @blur="$emit('blur')"
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 export default {
   $_veeValidate: {
     value () {
@@ -58,6 +60,11 @@ export default {
     type: {
       type: String,
       default: 'text'
+    }
+  },
+  data () {
+    return {
+      date: format
     }
   }
 }
