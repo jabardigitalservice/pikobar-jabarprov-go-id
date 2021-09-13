@@ -10,7 +10,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { ImageCarousel } from '~/components/ImageCarouselV2'
+import { ImageCarousel } from '~/components/Base/ImageCarousel'
 export default {
   name: 'HomepageInfographicCarousel',
   components: {

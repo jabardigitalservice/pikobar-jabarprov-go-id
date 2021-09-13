@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import BaseSkeleton from '~/components/BaseSkeleton'
+import BaseSkeleton from '~/components/Base/Skeleton'
 export default {
   components: {
     BaseSkeleton

@@ -65,7 +65,7 @@ import { formatDateTimeShort } from '~/lib/date'
 import {
   EventStatCard,
   EventStatCardCounter
-} from '~/components/EventStatCard'
+} from '~/components/Base/EventStatCard'
 
 export default {
   components: {

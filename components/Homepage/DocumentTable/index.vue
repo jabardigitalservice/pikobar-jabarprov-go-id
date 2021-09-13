@@ -23,7 +23,7 @@
 <script>
 import { mapState } from 'vuex'
 import { formatDateDayIndonesia } from '~/lib/date'
-import { SimpleTable } from '~/components/SimpleTable'
+import { SimpleTable } from '~/components/Base/SimpleTable'
 export default {
   components: {
     SimpleTable

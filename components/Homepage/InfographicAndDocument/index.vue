@@ -25,7 +25,7 @@
 <script>
 import InfographicCarousel from '../InfographicCarousel'
 import DocumentTable from '../DocumentTable'
-import { TabLayout } from '~/components/TabLayoutV2'
+import { TabLayout } from '~/components/Base/TabLayout'
 
 export default {
   name: 'HomepageInfographicAndDocument',
@@ -41,7 +41,7 @@ export default {
   props: {
     /**
      * Active tab index. Refer to
-     * './components/TabLayoutV2' bound model.
+     * './components/Base/TabLayout' bound model.
      */
     value: {
       type: Number,
