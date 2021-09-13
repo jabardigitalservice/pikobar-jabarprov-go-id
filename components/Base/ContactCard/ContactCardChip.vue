@@ -45,7 +45,7 @@ export default {
   },
   data () {
     return {
-      urlRegexes: Object.freeze([/https?:\/\//, /tel:\/\//])
+      urlRegexes: Object.freeze([/^https?:\/\//, /^tel:\/\//])
     }
   },
   computed: {
