@@ -11,13 +11,53 @@
       </slot>
     </p>
     <div class="contact-card__grid">
-      <slot />
+      <slot>
+        <template v-for="(group, i) in groups">
+          <ContactCardGroupLabel
+            :key="`name:${group.name}`"
+            :label="group.name"
+          />
+          <ContactCardGroupDetails
+            :key="`contacts:${i}`"
+          >
+            <ContactCardChip
+              v-for="(contact, j) in group.contacts"
+              :key="j"
+              :icon="contact.icon"
+              :label="contact.label"
+              :href="contact.href"
+            />
+          </ContactCardGroupDetails>
+        </template>
+      </slot>
     </div>
   </div>
 </template>
 
 <script>
+/**
+ * @typedef  {Object}   ContactGroup
+ * @property {string}   name      - group name
+ * @property {Object[]} contacts  - Array of ContactCardChip's props
+ * @see './ContactCardChip.vue'
+ * @example
+ * ```
+ * const socmed = {
+ *  name: 'Social Media',
+ *  contacts: [
+ *    { icon: 'web', label: '@john.doe', href: 'https://instagram.com/johndoe' },
+ *    { icon: 'phone', label: '911', href: 'tel://911' },
+ *  ]
+ * }
+ * ```
+ */
+
 export default {
+  components: {
+    ContactCardGroupLabel: () => import('./ContactCardGroupLabel'),
+    ContactCardGroupDetails: () => import('./ContactCardGroupDetails'),
+    ContactCardChip: () => import('./ContactCardChip')
+  },
   props: {
     title: {
       type: String,
@@ -26,6 +66,13 @@ export default {
     body: {
       type: String,
       default: ''
+    },
+    /**
+     * @type {ContactGroup[]}
+     */
+    groups: {
+      type: Array,
+      default: () => []
     }
   }
 }
