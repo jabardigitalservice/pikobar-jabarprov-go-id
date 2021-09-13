@@ -84,14 +84,16 @@
       />
     </template>
     <template v-else>
-      <p class="evt-stat__title">
-        {{ title }}
-      </p>
-      <div class="evt-stat__body">
-        <slot />
-      </div>
-      <div class="evt-stat__grid">
-        <slot name="grid" />
+      <div class="p-4">
+        <p class="evt-stat__title">
+          {{ title }}
+        </p>
+        <div class="evt-stat__body">
+          <slot />
+        </div>
+        <div class="evt-stat__grid">
+          <slot name="grid" />
+        </div>
       </div>
     </template>
   </div>
