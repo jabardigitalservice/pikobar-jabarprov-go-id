@@ -1,9 +1,20 @@
 import _uniqBy from 'lodash/uniqBy'
 import _orderBy from 'lodash/orderBy'
-import { get, getById, ORDER_INDEX, ORDER_TYPE } from '~/api/news'
+import {
+  get,
+  getById,
+  getLastUpdate as __getLastUpdate,
+  ORDER_INDEX,
+  ORDER_TYPE
+} from '~/api/news'
 
 export const state = () => ({
-  items: []
+  items: [],
+
+  /**
+   * @type {Date | null}
+   */
+  lastUpdate: null
 })
 
 export const getters = {
@@ -16,6 +27,9 @@ export const getters = {
 }
 
 export const mutations = {
+  setLastUpdate (state, date) {
+    state.lastUpdate = date
+  },
   setItems (state, items) {
     const uniq = _uniqBy([...state.items, ...items], 'id')
     const ordered = _orderBy(uniq, [ORDER_INDEX], [ORDER_TYPE])
@@ -53,5 +67,12 @@ export const actions = {
         commit('setItems', [...state.items, item])
         return getters.itemsMap[id]
       })
+  },
+  async getLastUpdate ({ state, commit }) {
+    if (!state.lastUpdate) {
+      const date = await __getLastUpdate()
+      commit('setLastUpdate', date)
+    }
+    return state.lastUpdate
   }
 }

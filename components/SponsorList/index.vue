@@ -1,30 +1,36 @@
 <template>
-  <div ref="app">
+  <BaseSection
+    tag="div"
+    class="bg-white pt-10 pb-20 md:py-16"
+  >
     <div
-      v-for="(row, indexChunked) in chunkedSponsors"
-      :key="indexChunked"
-      class="grid gap-6 my-6 grid-flow-col auto-cols-max md:auto-cols-min justify-center"
+      class="sponsor-grid flex flex-row flex-wrap justify-center items-stretch"
       target="_blank"
     >
       <div
-        v-for="(val, indexRow) in row"
-        :key="indexRow"
-        :href="val.url || '#'"
-        class="object-center rounded-md bg-gray-50"
+        v-for="(row, i) in sponsors"
+        :key="i"
+        :href="row.url || '#'"
+        class="sponsor-grid__item flex-none w-1/2 md:w-1/3 lg:w-1/6"
       >
-        <img
-          class="mx-auto object-contain object-scale-down h-24"
-          style="width: 10rem"
-          :src="val.logo"
-          :alt="val.alt"
-        >
+        <div class="rounded-md bg-gray-100 flex flex-row justify-center items-center">
+          <img
+            class="object-center object-scale-down w-full h-24"
+            :src="row.logo"
+            :alt="row.alt"
+          >
+        </div>
       </div>
     </div>
-  </div>
+  </BaseSection>
 </template>
 
 <script>
+import BaseSection from '~/components/Base/Section'
 export default {
+  components: {
+    BaseSection
+  },
   data () {
     return {
       sponsors: [
@@ -147,6 +153,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.sponsor-grid {
+  margin: 0 -8px;
 
+  &__item {
+    padding: 8px;
+  }
+
+  @screen lg {
+    margin: 0 -16px;
+
+    &__item {
+      padding: 16px;
+    }
+  }
+}
 </style>

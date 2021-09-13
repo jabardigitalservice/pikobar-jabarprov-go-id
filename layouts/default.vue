@@ -26,8 +26,8 @@
       <nuxt />
     </div>
     <BackToTopButton />
-    <SponsorList class="m-4 md:m-8 p-5 md:p-8" />
-    <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32" />
+    <SponsorList />
+    <AppFooter />
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <footer class="app-footer">
-    <div class="max-w-7xl bg-grey-50">
+    <BaseSection class="bg-gray-100">
       <div class="app-footer__body">
-        <div class="mx-auto space-y-8">
+        <div class="space-y-8">
           <a href="/">
             <img class="h-10" src="/img/pikobar-logo-full.svg" alt="Pikobar Jabar Prov">
           </a>
@@ -19,7 +19,7 @@
               Lainnya
             </h3>
           </div>
-          <div class="md:mt-6 md:grid md:grid-cols-2">
+          <div class="md:mt-6 md:grid md:gap-8 md:grid-cols-2">
             <ul
               v-for="(row, indexChunk) in chunkedList"
               :key="indexChunk"
@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </BaseSection>
     <div class="app-footer__copyright">
       <p class="app-footer__copyright-text">
         Copyright &copy;Pikobar 2021. All rights reserved
@@ -66,7 +66,11 @@
 </template>
 
 <script>
+import BaseSection from '~/components/Base/Section'
 export default {
+  components: {
+    BaseSection
+  },
   data () {
     return {
       listMenuFooter: [
@@ -115,38 +119,38 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    .app-footer {
-        &__body {
-            @apply mx-auto py-12 px-4;
-            @screen sm {
-                @apply px-6;
-            }
-            @screen lg {
-                @apply py-4 px-8;
-            }
-            @screen xl {
-                @apply grid grid-cols-3 gap-8;
-            }
-        }
+.app-footer {
+  &__body {
+    gap: 16px;
+    padding: 42px 0;
+    @apply grid grid-cols-1;
 
-        &__link-header {
-          @apply text-sm font-semibold tracking-wider uppercase;
-          color: #757575;
-        }
-
-        &__link {
-          @apply text-base;
-          font-family: Roboto;
-          font-size: 14px;
-          color: #757575;
-        }
-
-        &__copyright {
-            @apply mt-8 border-t bg-green-800 border-green-200 pt-4;
-
-            &-text {
-                @apply pb-4 text-base text-white text-center;
-            }
-        }
+    @screen md {
+      @apply grid-cols-3;
     }
+    @screen lg {
+      gap: 32px;
+    }
+  }
+
+  &__link-header {
+    @apply text-sm font-semibold tracking-wider uppercase;
+    color: #757575;
+  }
+
+  &__link {
+    @apply text-base;
+    font-family: Roboto;
+    font-size: 14px;
+    color: #757575;
+  }
+
+  &__copyright {
+    @apply border-t bg-green-800 border-green-200 pt-4;
+
+    &-text {
+      @apply pb-4 text-base text-white text-center;
+    }
+  }
+}
 </style>

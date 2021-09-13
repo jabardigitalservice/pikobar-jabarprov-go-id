@@ -1,22 +1,24 @@
 <template>
   <NewsCarousel
     :items="news"
-    :loading="loading"
+    :loading="isLoading"
   />
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { NewsCarousel } from '~/components/NewsCarousel'
+import { formatDateTimeShort } from '~/lib/date'
+
 export default {
   name: 'RecentNewsCarousel',
   components: {
     NewsCarousel
   },
   computed: {
-    ...mapState({
+    ...mapState('news', {
       news: (state) => {
-        const items = state.news?.items || []
+        const items = state.items || []
         return items.map(item => ({
           ...item,
           thumbnail: item.image,
@@ -24,14 +26,31 @@ export default {
           source: item.news_channel,
           url: item.route
         }))
+      },
+      /**
+       * @public
+       */
+      lastUpdate: (state) => {
+        const { lastUpdate } = state
+        return lastUpdate
+          ? formatDateTimeShort(new Date(lastUpdate))
+          : null
       }
     }),
-    loading () {
+    isLoading () {
       return !Array.isArray(this.news) ||
         !this.news.length
     }
   },
   mounted () {
+    this.$watch(
+      'isLoading',
+      function (v) {
+        this.$emit('loading', v)
+      },
+      { immediate: true }
+    )
+    this.$store.dispatch('news/getLastUpdate')
     this.$store.dispatch('news/getItems', {
       perPage: 4
     })

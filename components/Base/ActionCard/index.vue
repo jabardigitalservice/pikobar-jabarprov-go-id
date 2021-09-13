@@ -2,9 +2,8 @@
   <div class="action-card">
     <img
       class="action-card__image"
-      width="80%"
-      :src="image"
       alt="illutrasi chatbot"
+      :src="image"
     >
     <div class="action-card__body">
       <h3 class="action-card__title">
@@ -77,8 +76,7 @@ export default {
 
 <style lang="scss" scoped>
 .action-card {
-  @apply p-4
-  flex flex-col flex-no-wrap
+  @apply p-4 flex flex-col flex-no-wrap
   rounded-md
   bg-gray-100;
 
@@ -86,12 +84,12 @@ export default {
     width: auto;
     height: 128px;
 
-    @apply mx-auto mb-4
+    @apply mx-auto pl-4
     object-center object-contain;
   }
 
   &__body {
-    @apply flex-1
+    @apply flex-1 pr-4
     flex flex-col flex-no-wrap;
   }
 
@@ -123,22 +121,23 @@ export default {
   }
 
   @screen lg {
-    @apply flex-row flex-no-wrap
+    @apply px-0 grid grid-cols-3 gap-8
     items-center;
 
     &__image {
+      flex: 0 0 calc(100% * (1 / 3));
       width: auto;
       max-width: unset;
       max-height: 180px;
-      @apply mx-6 my-4
-      flex-none;
+
+      @apply col-span-1;
     }
 
     &__body {
+      flex: 0 0 calc(100% * (2 / 3));
       align-self: stretch;
 
-      @apply flex-initial
-      my-6 items-start;
+      @apply col-span-2 flex-1 items-start;
     }
 
     &__btn {
