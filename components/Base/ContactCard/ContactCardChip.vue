@@ -25,9 +25,9 @@ export default {
   props: {
     /**
      * NOTES:
-     * Currently supports only phone and web type.
+     * Currently supports only phone and web icon.
      */
-    type: {
+    icon: {
       type: String,
       validator: (v) => {
         return ['phone', 'web'].includes(v)
@@ -54,7 +54,7 @@ export default {
         phone: IconPhone,
         web: IconGlobe
       }
-      return types[this.type]
+      return types[this.icon]
     },
     hasValidURL () {
       const { href } = this
