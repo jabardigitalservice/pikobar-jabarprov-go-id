@@ -68,8 +68,7 @@ export default {
 
   &__subtitle {
     line-height: 1.618;
-    @apply m-0 p-0
-    text-gray-600 text-base font-normal;
+    @apply max-w-3xl m-0 p-0 text-gray-600 text-base font-normal;
   }
 
   &__title-skeleton {
