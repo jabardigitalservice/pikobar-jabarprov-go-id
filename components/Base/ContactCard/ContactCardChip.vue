@@ -1,6 +1,7 @@
 <template>
   <a
     :href="href"
+    :disabled="disabled || !href"
     class="contact-card-chip"
     @click.prevent="onClick"
   >
@@ -41,6 +42,9 @@ export default {
     href: {
       type: String,
       default: null
+    },
+    disabled: {
+      type: Boolean
     }
   },
   data () {
@@ -106,12 +110,19 @@ export default {
     }
   }
 
-  &:hover {
-    @apply bg-gray-300;
+  &:not(:disabled):not([disabled]) {
+    &:hover {
+      @apply bg-gray-300;
+    }
+
+    &:active {
+      @apply bg-gray-200;
+    }
   }
 
-  &:active {
-    @apply bg-gray-200;
+  &:disabled,
+  &[disabled] {
+    @apply cursor-not-allowed;
   }
 }
 </style>
