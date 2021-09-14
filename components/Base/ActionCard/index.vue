@@ -94,7 +94,7 @@ export default {
   }
 
   &__title {
-    @apply flex-1 mb-4
+    @apply flex-1 my-6 mb-4
     font-medium text-base text-left;
   }
 
@@ -138,6 +138,10 @@ export default {
       align-self: stretch;
 
       @apply col-span-2 flex-1 items-start;
+    }
+
+    &__title {
+      @apply my-0;
     }
 
     &__btn {
