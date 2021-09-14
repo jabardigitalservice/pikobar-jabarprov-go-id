@@ -1,4 +1,4 @@
-import { db } from '../lib/firebase'
+import { db } from '~/lib/firebase'
 
 export const state = () => ({
   items: null
@@ -13,9 +13,14 @@ export const mutations = {
 export const actions = {
   getItems ({ state, commit }, options) {
     if (!state.items || !state.items.length) {
-      return db.collection('call_centers')
+      let query = db.collection('call_centers')
         .orderBy('nama_kotkab', 'asc')
-        .get()
+
+      if (options.perPage) {
+        query = query.limit(options.perPage)
+      }
+      // TODO: move to "~/api"
+      return query.get()
         .then((docs) => {
           if (!docs.empty) {
             return docs.docs.map(doc => doc.data())
