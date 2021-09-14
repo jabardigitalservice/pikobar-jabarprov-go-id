@@ -26,7 +26,6 @@
       <nuxt />
     </div>
     <BackToTopButton />
-    <SponsorList />
     <AppFooter />
   </div>
 </template>
@@ -36,15 +35,13 @@ import _throttle from 'lodash/throttle'
 import Appbar from '~/components/Appbar'
 import AppDrawer from '~/components/AppDrawer'
 import AppFooter from '~/components/AppFooter'
-import SponsorList from '~/components/SponsorList'
 import BackToTopButton from '~/components/BackToTopButton'
 export default {
   components: {
     Appbar,
     AppDrawer,
     BackToTopButton,
-    AppFooter,
-    SponsorList
+    AppFooter
   },
   data () {
     return {
