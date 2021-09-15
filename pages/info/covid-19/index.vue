@@ -19,6 +19,24 @@
         :data="listSymptom"
       />
     </Section>
+    <Section class="py-6 md:py-20 bg-white">
+      <Jumbotron>
+        <template #header>
+          Ketahui risiko dari <span class="text-green-600">Covid-19</span>
+        </template>
+        <template>
+          Covid-19 merupakan penyakit yang disebabkan Novel Coronavirus 2019.
+          Meski bergejala mirip dengan flu biasa, Covid-19 sampai saat ini memiliki fatalitas lebih tinggi.
+          Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut tidak menunjukkan gejala. Penting bagi Anda untuk menilai kondisi secara mandiri. Anda bergejala?
+        </template>
+        <template #footer>
+          <ContentCardButton v-bind="button.jumbotron" />
+        </template>
+      </Jumbotron>
+    </Section>
+    <Section class="py-6 md:py-20 bg-gray-100">
+      <HospitalsAndCallCenters />
+    </Section>
     <Section class="bg-white">
       <ContentCard
         v-bind="listContent[1]"
@@ -98,13 +116,17 @@ import Section from '~/components/Base/Section'
 import ContentCard from '~/components/Base/ContentCard'
 import SymptomCard from '~/components/Base/SymptomCard'
 import ContentCardButton from '~/components/Base/ContentCard/ContentCardButton'
+import Jumbotron from '~/components/Base/Jumbotron'
+import { HospitalsAndCallCenters } from '~/components/KenaliCovid/HospitalsAndCallCenters'
 
 export default {
   components: {
     Section,
     ContentCard,
     ContentCardButton,
-    SymptomCard
+    SymptomCard,
+    Jumbotron,
+    HospitalsAndCallCenters
   },
   data () {
     return {
@@ -138,6 +160,12 @@ export default {
           backLink: '/data',
           prompt: 'Selengkapnya',
           buttonType: 'outline'
+        },
+        jumbotron: {
+          prompt: 'Periksa Diri saya',
+          backLink: '',
+          buttonType: 'outline',
+          iconType: 'open-new-tab'
         }
       },
       listContent: [
