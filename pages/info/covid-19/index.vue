@@ -165,8 +165,8 @@ export default {
           buttonType: 'outline'
         },
         jumbotron: {
-          prompt: 'Periksa Diri saya',
-          backLink: '',
+          prompt: 'Periksa Diri Saya',
+          backLink: 'https://covid19.prixa.ai/partner/80b47a20-1353-49e9-af91-a0a5995ca89f/app/52b7d983-3e5d-49cc-9c99-508dc779aad3',
           buttonType: 'outline',
           iconType: 'open-new-tab'
         }
