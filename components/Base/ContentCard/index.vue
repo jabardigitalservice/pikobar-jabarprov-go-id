@@ -85,7 +85,8 @@ export default {
     justify-start
     items-center;
 
-    @screen md {
+    @screen lg {
+      gap: 32px;
       @apply grid grid-cols-2 grid-rows-1;
     }
   }
@@ -130,7 +131,7 @@ export default {
     @apply w-full;
   }
 
-  @screen md {
+  @screen lg {
     &__btn {
       @apply w-auto;
     }
