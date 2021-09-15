@@ -47,7 +47,8 @@ export default {
   @apply w-full p-4
   flex flex-col flex-no-wrap
   rounded-lg
-  border border-solid border-gray-300;
+  border border-solid border-gray-300
+  bg-white;
 
   &__title {
     font-size: 20px;
