@@ -1,22 +1,16 @@
 <template>
-  <div class="grids">
-    <ActionCard
-      v-for="(action, i) in actions"
-      :key="i"
-      v-bind="action"
-    />
-  </div>
+  <ActionCardGrid :cards="cards" />
 </template>
 
 <script>
-import ActionCard from '~/components/Base/ActionCard'
+import ActionCardGrid from '~/components/Base/ActionCardGrid'
 export default {
   components: {
-    ActionCard
+    ActionCardGrid
   },
-  computed: {
-    actions () {
-      return [
+  data () {
+    return {
+      cards: Object.freeze([
         {
           title: 'Tanya kepada sesama wargi Jabar soal penanganan Covid-19 di Forum Pikobar!',
           prompt: 'Tanyakan Sekarang',
@@ -29,7 +23,7 @@ export default {
           image: require('~/assets/illustrations/volunteer.svg'),
           backlink: 'https://indorelawan.org/p/pikobar'
         }
-      ]
+      ])
     }
   }
 }
