@@ -13,11 +13,11 @@
       <span v-else>
         {{ file.name }}
       </span>
-      <span class="file-input__info">PNG, JPG, GIF up to 10MB</span>
+      <span class="file-input__info">PNG, JPG, JPEG up to 10MB</span>
     </div>
     <input
-      ref="inputFile"
       v-show="false"
+      ref="inputFile"
       :name="name"
       :placeholder="placeholder"
       type="file"

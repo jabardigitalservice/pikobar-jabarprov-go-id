@@ -24,8 +24,8 @@ export default [
     model: 'ktp_photo',
     name: 'KTP',
     note: 'Digunakan untuk petugas memvalidasi identitas pemohon',
-    rules: 'required|image|mimes:png,jpg,jpeg,gif|size:10000',
-    accept: '.png,.jpg,.jpeg,.gif',
+    rules: 'required|image|mimes:png,jpg,jpeg|size:10000',
+    accept: '.png,.jpg,.jpeg',
     class: 'md:block md:w-8/12',
     type: 'file'
   },
