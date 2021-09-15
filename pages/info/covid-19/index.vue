@@ -175,19 +175,19 @@ export default {
         {
           title: 'Informasi Covid-19',
           body: 'Covid-19 adalah penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), jenis baru coronavirus yang pada manusia menyebabkan penyakit mulai flu biasa hingga penyakit yang serius.',
-          image: '../img/icon-kenali-covid.svg',
+          image: '/img/icon-kenali-covid.svg',
           imagePosition: 'right',
           backLink: '#eventSymptom',
           prompt: 'Selengkapnya'
         },
         {
           title: 'Tetap waspada dengan menerapkan AKB',
-          image: '../img/icon-penerapan-AKB.svg',
+          image: '/img/icon-penerapan-AKB.svg',
           imagePosition: 'right'
         },
         {
           title: 'Lalu, apa saja yang harus wargi Jabar perhatikan saat mulai beraktivitas kembali?',
-          image: '../img/icon-activity.svg',
+          image: '/img/icon-activity.svg',
           imagePosition: 'left'
         }
       ]
