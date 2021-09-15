@@ -71,8 +71,8 @@ export default {
 
   &__label {
     color: inherit;
-    font-size: inherit;
-    line-height: 1.618;
+    font-size: 14px;
+    line-height: 20px;
 
     @apply flex-none;
   }
