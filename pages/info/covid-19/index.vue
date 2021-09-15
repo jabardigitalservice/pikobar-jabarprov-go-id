@@ -12,7 +12,7 @@
     </Section>
     <Section
       id="eventSymptom"
-      class="py-20 text-center bg-gray-50"
+      class="py-6 md:py-20 text-center bg-gray-50"
       v-bind="section"
     >
       <SymptomCard
