@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Section class="pt-20 px-16 bg-white">
+    <Section class="pt-20 bg-white">
       <ContentCard v-bind="listContent[0]">
         <template #button="props">
           <ContentCardButton
