@@ -41,7 +41,7 @@
     <Section class="bg-white">
       <ContentCard
         v-bind="listContent[1]"
-        class="py-20"
+        class="pt-6 lg:py-20"
       >
         <template #body>
           <div class="text-md mt-8">
@@ -85,7 +85,7 @@
       </ContentCard>
       <ContentCard
         v-bind="listContent[2]"
-        class="py-20"
+        class="pt-10 pb-20 md:py-20"
       >
         <template #body>
           <div class="text-md mt-8">
