@@ -33,6 +33,7 @@
           <ContentCardButton v-bind="button.jumbotron" />
         </template>
       </Jumbotron>
+      <ForumAndRelawan class="pt-4 md:pt-8" />
     </Section>
     <Section class="py-6 md:py-20 bg-gray-100">
       <HospitalsAndCallCenters />
@@ -117,6 +118,7 @@ import ContentCard from '~/components/Base/ContentCard'
 import SymptomCard from '~/components/Base/SymptomCard'
 import ContentCardButton from '~/components/Base/ContentCard/ContentCardButton'
 import Jumbotron from '~/components/Base/Jumbotron'
+import ForumAndRelawan from '~/components/KenaliCovid/ForumAndRelawan'
 import { HospitalsAndCallCenters } from '~/components/KenaliCovid/HospitalsAndCallCenters'
 
 export default {
@@ -126,6 +128,7 @@ export default {
     ContentCardButton,
     SymptomCard,
     Jumbotron,
+    ForumAndRelawan,
     HospitalsAndCallCenters
   },
   data () {
