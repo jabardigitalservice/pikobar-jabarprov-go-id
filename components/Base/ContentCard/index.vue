@@ -86,7 +86,6 @@ export default {
     items-center;
 
     @screen lg {
-      gap: 32px;
       @apply grid grid-cols-2 grid-rows-1;
     }
   }
