@@ -8,7 +8,7 @@
   >
     <div class="content-card__grid">
       <div class="content-card__image-container">
-        <img class="content-card__image h-5/6" :src="image" alt="content-card-image">
+        <img class="content-card__image" :src="image" alt="content-card-image">
       </div>
       <div class="content-card__info">
         <div class="content-card__content">
@@ -81,17 +81,13 @@ export default {
 .content-card {
 
   &__grid {
-    gap: 16px;
+    gap: 32px;
     @apply flex flex-col flex-no-wrap
     justify-start
     items-center;
 
-    @screen md {
-      @apply grid grid-cols-2 grid-rows-1;
-    }
-
     @screen lg {
-      gap: 32px;
+      @apply grid grid-cols-2 grid-rows-1;
     }
   }
 
@@ -110,14 +106,17 @@ export default {
 
   &__image-container {
     grid-row: 1 / span 1;
+    @apply self-stretch;
   }
 
   &__image {
-    @apply object-cover object-center rounded-lg;
+    @apply block w-full h-auto
+    object-cover object-center rounded-lg;
   }
 
   &__header {
-    @apply text-sm text-green-600;
+    @apply text-sm text-green-600
+    font-bold;
   }
 
   &__title {
@@ -132,7 +131,7 @@ export default {
     @apply w-full;
   }
 
-  @screen md {
+  @screen lg {
     &__btn {
       @apply w-auto;
     }

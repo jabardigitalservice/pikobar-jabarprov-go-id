@@ -62,7 +62,7 @@ export default {
 
   &__title {
     line-height: 1.618;
-    @apply m-0 p-0
+    @apply m-0 p-0 mb-2
     text-gray-900 text-xl font-bold;
   }
 

@@ -9,38 +9,20 @@
       <h3 class="action-card__title">
         {{ title }}
       </h3>
-      <a
-        :href="backlink"
-        target="_blank"
-        class="action-card__btn"
-        @click.prevent="onButtonClick"
-      >
-        <span>
-          {{ prompt }}
-        </span>
-        <slot name="button-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="action-card__btn-icon"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </slot>
-      </a>
+      <ContentCardButton
+        :prompt="prompt"
+        :back-link="backlink"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import ContentCardButton from '~/components/Base/ContentCard/ContentCardButton'
 export default {
+  components: {
+    ContentCardButton
+  },
   props: {
     title: {
       type: String,
@@ -57,18 +39,6 @@ export default {
     backlink: {
       type: String,
       default: '#'
-    }
-  },
-  methods: {
-    onButtonClick () {
-      const { backlink } = this
-      if (typeof backlink !== 'string' || !backlink) {
-        return
-      }
-      if (backlink.startsWith('http')) {
-        return window.open(backlink, '_blank', 'noopener,noreferrer')
-      }
-      return this.$router.push(backlink)
     }
   }
 }
@@ -98,28 +68,6 @@ export default {
     font-medium text-base text-left;
   }
 
-  &__btn {
-    padding: 12px 16px;
-    line-height: 1.618;
-    font-size: 14px;
-
-    @apply flex-none
-    flex flex-row gap-3
-    justify-center items-center
-    rounded-lg
-    text-white text-center
-    bg-brand-green-darker;
-
-    &:active,
-    &:focus {
-      @apply outline-none;
-    }
-  }
-
-  &__btn-icon {
-    @apply w-6 h-6;
-  }
-
   @screen lg {
     @apply px-0 grid grid-cols-3 gap-8
     items-center;
@@ -142,11 +90,6 @@ export default {
 
     &__title {
       @apply my-0;
-    }
-
-    &__btn {
-      font-size: 16px;
-      @apply text-left;
     }
   }
 }
