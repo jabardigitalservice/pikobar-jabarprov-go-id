@@ -53,8 +53,8 @@ export default [
     model: 'test_result_photo',
     name: 'Foto Hasil Tes',
     note: 'Digunakan untuk petugas memverifikasi hasil test terkonfirmasi positif',
-    rules: 'required|image|mimes:png,jpg,jpeg,gif|size:10000',
-    accept: '.png,.jpg,.jpeg,.gif',
+    rules: 'required|image|mimes:png,jpg,jpeg|size:10000',
+    accept: '.png,.jpg,.jpeg',
     class: 'md:block md:w-8/12',
     type: 'file'
   },
