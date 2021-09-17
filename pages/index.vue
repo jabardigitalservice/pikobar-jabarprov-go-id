@@ -74,6 +74,7 @@
     <Section class="bg-white">
       <EmergencyNumbers />
     </Section>
+    <SponsorList />
   </div>
 </template>
 
@@ -89,6 +90,7 @@ import EventStatistics from '~/components/Homepage/EventStatistics'
 import RecentNewsCarousel from '~/components/Homepage/RecentNewsCarousel'
 import InfographicAndDocument from '~/components/Homepage/InfographicAndDocument'
 import EmergencyNumbers from '~/components/Homepage/EmergencyNumbers'
+import SponsorList from '~/components/SponsorList'
 
 export default {
   components: {
@@ -101,7 +103,8 @@ export default {
     EventStatistics,
     RecentNewsCarousel,
     InfographicAndDocument,
-    EmergencyNumbers
+    EmergencyNumbers,
+    SponsorList
   },
   data () {
     return {
@@ -149,7 +152,7 @@ export default {
           body: 'Testing, tracing, dan treatment atau melakukan pengetesan, penelusuran kontak, dan perawatan terhadap pasien Covid-19 dapat bantu petakan penularan sedini mungkin, sehingga peluang penyebaran Covid-19 bisa diantisipasi. Ketahui lebih jauh perkembangan upaya 3T di Jawa Barat selengkapnya.',
           image: '/img/icon-isoman.svg',
           imagePosition: 'left',
-          backLink: '/',
+          backLink: '/3t',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },
