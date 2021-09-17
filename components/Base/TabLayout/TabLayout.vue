@@ -18,18 +18,21 @@
       :style="activeMarkerStyles"
     />
     <div class="tablayout__content-wrapper">
-      <TabContentItem
-        v-for="(tab, i) in tabs"
-        v-show="i === mValue"
-        :key="i"
-      >
-        <template>
-          <slot
-            :name="`content.${tab.name}`"
-            v-bind="{ name: tab.name, index: i, tab }"
-          />
-        </template>
-      </TabContentItem>
+      <template v-for="(tab, i) in tabs">
+        <keep-alive
+          :key="tab.name"
+          :max="1"
+        >
+          <TabContentItem v-if="i === mValue">
+            <template>
+              <slot
+                :name="`content.${tab.name}`"
+                v-bind="{ name: tab.name, index: i, tab }"
+              />
+            </template>
+          </TabContentItem>
+        </keep-alive>
+      </template>
     </div>
   </div>
 </template>
