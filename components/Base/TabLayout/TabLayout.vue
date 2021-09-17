@@ -18,21 +18,21 @@
       :style="activeMarkerStyles"
     />
     <div class="tablayout__content-wrapper">
-      <template v-for="(tab, i) in tabs">
-        <keep-alive
-          :key="tab.name"
-          :max="1"
-        >
-          <TabContentItem v-if="i === mValue">
-            <template>
-              <slot
-                :name="`content.${tab.name}`"
-                v-bind="{ name: tab.name, index: i, tab }"
-              />
-            </template>
-          </TabContentItem>
-        </keep-alive>
-      </template>
+      <TabContentItem
+        v-for="(tab, i) in tabs"
+        :key="i"
+        :class="{
+          'tablayout__content-item': true,
+          'tablayout__content-item--visible': i === mValue
+        }"
+      >
+        <template>
+          <slot
+            :name="`content.${tab.name}`"
+            v-bind="{ name: tab.name, index: i, tab }"
+          />
+        </template>
+      </TabContentItem>
     </div>
   </div>
 </template>
@@ -165,7 +165,18 @@ export default {
   }
 
   &__content-wrapper {
-    @apply block;
+    @apply relative block;
+  }
+
+  &__content-item {
+    visibility: hidden;
+    @apply absolute top-0 left-0
+    pointer-events-none;
+
+    &--visible {
+      visibility: visible;
+      @apply relative pointer-events-auto;
+    }
   }
 }
 </style>
