@@ -170,7 +170,7 @@ export default {
 
   &__content-item {
     visibility: hidden;
-    @apply absolute top-0 left-0
+    @apply absolute inset-0
     pointer-events-none;
 
     &--visible {
