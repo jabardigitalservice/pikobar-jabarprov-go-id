@@ -113,6 +113,7 @@
   </div>
 </template>
 <script>
+import { analytics } from '~/lib/firebase'
 import Section from '~/components/Base/Section'
 import ContentCard from '~/components/Base/ContentCard'
 import SymptomCard from '~/components/Base/SymptomCard'
@@ -192,6 +193,10 @@ export default {
         }
       ]
     }
+  },
+  async mounted () {
+    await this.$nextTick()
+    analytics.logEvent('info_covid_view')
   }
 }
 </script>
