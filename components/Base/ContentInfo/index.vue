@@ -29,6 +29,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .content-info-card {
-  @apply grid grid-cols-2 gap-2 mt-8;
+  @apply grid grid-cols-1 gap-2 mt-8;
+
+   @screen lg {
+      @apply grid-cols-2
+   }
 }
 </style>
