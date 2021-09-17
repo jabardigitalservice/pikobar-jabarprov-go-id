@@ -10,7 +10,6 @@
         :name="name"
         :value="value"
         class="select-input__field placeholder-gray-600 focus:shadow-outline"
-        v-on="$listeners"
         :disabled="options.length === 0"
         @input="$emit('input', $event.target.value)"
         @change="$emit('input', $event.target.value)"
