@@ -86,7 +86,8 @@ export default {
 
   @screen md {
     &:not(&--no-gutters) &__content {
-      @apply px-6;
+      padding-left: 4.375rem;
+      padding-right: 4.375rem;
     }
   }
 }

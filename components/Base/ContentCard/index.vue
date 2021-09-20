@@ -120,7 +120,8 @@ export default {
   }
 
   &__title {
-    @apply text-3xl font-semibold;
+    font-size: 37px;
+    @apply font-semibold;
   }
 
   &__body {
