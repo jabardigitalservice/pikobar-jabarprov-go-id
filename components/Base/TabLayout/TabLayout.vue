@@ -20,8 +20,11 @@
     <div class="tablayout__content-wrapper">
       <TabContentItem
         v-for="(tab, i) in tabs"
-        v-show="i === mValue"
         :key="i"
+        :class="{
+          'tablayout__content-item': true,
+          'tablayout__content-item--visible': i === mValue
+        }"
       >
         <template>
           <slot
@@ -162,7 +165,18 @@ export default {
   }
 
   &__content-wrapper {
-    @apply block;
+    @apply relative block;
+  }
+
+  &__content-item {
+    visibility: hidden;
+    @apply absolute inset-0
+    pointer-events-none;
+
+    &--visible {
+      visibility: visible;
+      @apply relative pointer-events-auto;
+    }
   }
 }
 </style>
