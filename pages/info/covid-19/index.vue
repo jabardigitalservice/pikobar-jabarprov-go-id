@@ -41,10 +41,10 @@
     <Section class="bg-white">
       <ContentCard
         v-bind="listContent[1]"
-        class="pt-6 lg:py-20"
+        class="lg:py-20"
       >
         <template #body>
-          <div class="text-md mt-8">
+          <div class="text-md">
             Berdasarkan Peraturan Gubernur No.63 tahun 2020, penentuan risiko kesehatan masyarakat di Daerah Kabupaten/Kota yang dikeluarkan oleh Satuan Tugas Penanganan Covid-19 Nasional secara berkala setiap minggu, diatur meliputi 4 ZONA RISIKO, yaitu:
             <ul class="list-none mt-8">
               <li>
@@ -52,7 +52,9 @@
                   <div class="col-end-1 text-green-600">
                     Level 1
                   </div>
-                  terdampak/tidak ada kasus (Hijau)
+                  <div class="col-span-2">
+                    Tidak terdampak/tidak ada kasus (Hijau)
+                  </div>
                 </div>
               </li>
               <li>
@@ -60,7 +62,9 @@
                   <div class="col-end-1 text-yellow-600">
                     Level 2
                   </div>
-                  Risiko rendah (Kuning)
+                  <div class="col-span-2">
+                    Risiko rendah (Kuning)
+                  </div>
                 </div>
               </li>
               <li>
@@ -68,7 +72,9 @@
                   <div class="col-end-1 text-orange-600">
                     Level 3
                   </div>
-                  Risiko sedang (Oranye)
+                  <div class="col-span-2">
+                    Risiko sedang (Oranye)
+                  </div>
                 </div>
               </li>
               <li>
@@ -76,7 +82,9 @@
                   <div class="col-end-1 text-red-600">
                     Level 4
                   </div>
-                  Risiko tinggi (Merah)
+                  <div class="col-span-2">
+                    Risiko tinggi (Merah)
+                  </div>
                 </div>
               </li>
             </ul>
@@ -85,10 +93,10 @@
       </ContentCard>
       <ContentCard
         v-bind="listContent[2]"
-        class="pt-10 pb-20 md:py-20"
+        class="pb-20 md:py-20"
       >
         <template #body>
-          <div class="text-md mt-8">
+          <div class="text-md">
             <p>Hal mendasar yang perlu wargi terapkan adalah protokol kesehatan dalam setiap akan melakukan kegiatan seperti:</p>
 
             <ul class="list-disc ml-8 mt-5">

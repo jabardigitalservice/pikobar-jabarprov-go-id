@@ -142,7 +142,7 @@ export default {
           body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
           image: '/img/icon-kenali-covid.svg',
           imagePosition: 'right',
-          backLink: '/',
+          backLink: '/info/covid-19',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },
