@@ -76,7 +76,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'currentColot'
+      default: 'currentColor'
     }
   }
 }
