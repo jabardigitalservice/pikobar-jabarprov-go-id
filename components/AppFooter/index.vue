@@ -2,15 +2,15 @@
   <footer class="app-footer">
     <BaseSection class="bg-gray-100">
       <div class="app-footer__body">
-        <div class="space-y-8">
+        <div>
           <a href="/">
             <img class="h-10" src="/img/pikobar-logo-full.svg" alt="Pikobar Jabar Prov">
           </a>
-          <a :href="footerLink.gplayStore" target="_blank" rel="noopener noreferrer" class="flow-root">
-            <img class="h-10" src="/img/gplay-app-store-badge.svg" alt="Google Play Badge">
+          <a :href="footerLink.gplayStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-10">
+            <img src="/img/gplay-app-store-badge.svg" alt="Google Play Badge">
           </a>
-          <a :href="footerLink.appleStore" target="_blank" rel="noopener noreferrer" class="flow-root">
-            <img class="h-10" src="/img/apple-app-store-badge.svg" alt="Apple Store Badge">
+          <a :href="footerLink.appleStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-4">
+            <img src="/img/apple-app-store-badge.svg" alt="Apple Store Badge">
           </a>
         </div>
         <div>
