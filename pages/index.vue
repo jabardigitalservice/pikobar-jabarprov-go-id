@@ -74,6 +74,7 @@
     <Section class="bg-white">
       <EmergencyNumbers />
     </Section>
+    <SponsorList />
   </div>
 </template>
 
@@ -89,6 +90,7 @@ import EventStatistics from '~/components/Homepage/EventStatistics'
 import RecentNewsCarousel from '~/components/Homepage/RecentNewsCarousel'
 import InfographicAndDocument from '~/components/Homepage/InfographicAndDocument'
 import EmergencyNumbers from '~/components/Homepage/EmergencyNumbers'
+import SponsorList from '~/components/SponsorList'
 
 export default {
   components: {
@@ -101,7 +103,8 @@ export default {
     EventStatistics,
     RecentNewsCarousel,
     InfographicAndDocument,
-    EmergencyNumbers
+    EmergencyNumbers,
+    SponsorList
   },
   data () {
     return {
@@ -139,7 +142,7 @@ export default {
           body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
           image: '/img/icon-kenali-covid.svg',
           imagePosition: 'right',
-          backLink: '/',
+          backLink: '/info/covid-19',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },

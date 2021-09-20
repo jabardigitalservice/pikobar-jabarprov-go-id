@@ -18,10 +18,11 @@
           <p class="content-card__title">
             {{ title }}
           </p>
-          <p class="content-card__body text-black-500">
+
+          <slot name="body" class="content-card__body text-black-500">
             {{ body }}
-          </p>
-          <slot name="button" v-bind="$props">
+          </slot>
+          <slot v-if="prompt" name="button" v-bind="$props">
             <ContentCardButton
               v-bind="{ prompt, backLink, buttonType }"
               class="content-card__btn mt-6"
@@ -50,7 +51,7 @@ export default {
     },
     body: {
       type: String,
-      default: '-'
+      default: ''
     },
     imagePosition: {
       type: String,

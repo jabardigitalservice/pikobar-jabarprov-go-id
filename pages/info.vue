@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="isInfographicOrDocumentRoute"
     class="container mx-auto"
   >
     <section class="m-4 md:m-8">
@@ -16,6 +17,7 @@
       </div>
     </section>
   </div>
+  <nuxt-child v-else />
 </template>
 
 <script>
@@ -25,8 +27,18 @@ export default {
   components: {
     TabLayout
   },
+  asyncData ({ route }) {
+    const isInfographicOrDocumentRoute = [
+      '/info/documents',
+      '/info/infographics'
+    ].some(path => route.path.startsWith(path))
+    return {
+      isInfographicOrDocumentRoute
+    }
+  },
   data () {
     return {
+      isInfographicOrDocumentRoute: false,
       tabs: [
         {
           id: 'infographic',
