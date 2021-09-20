@@ -4,9 +4,9 @@
       <CardAccentSquares
         v-for="(val, i) in data"
         :key="i"
-        class="card-symptom__grid-item"
-        :color="val.color"
         bordered
+        :accent-color="val.color"
+        class="card-symptom__grid-item"
       >
         <div class="text-black">
           <img :src="val.image" alt="Symptom Image">
