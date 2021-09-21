@@ -6,7 +6,7 @@
     }"
   >
     <PWAPopupBar />
-    <div class="container mx-auto px-12 py-3">
+    <div class="container mx-auto p-3">
       <MobileAppBar :toggle-drawer="drawerActive" @toggle:drawer="$emit('toggle:drawer', $event)" />
       <DesktopAppBar />
     </div>
