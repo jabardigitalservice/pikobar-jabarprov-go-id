@@ -6,7 +6,7 @@
           <div class="mt-3">
             Laman ini berguna untuk mengetahui tata cara mengakses data penerima bantuan sosial yang telah disalurkan atau masih dalam proses penyaluran melalui Website Kemensos.
           </div>
-          <div class="text-gray-500 mt-5">
+          <div class="text-gray-500 mt-6">
             *Laman ini tidak ditujukan untuk melakukan pengajuan bantuan sosial
           </div>
         </template>
