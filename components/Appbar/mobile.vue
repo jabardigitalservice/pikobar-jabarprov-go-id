@@ -13,12 +13,15 @@
         >
           <FontAwesomeIcon :icon="icon.faBars" size="lg" class="text-gray-600 hover:text-green-700" />
         </a>
-        <nuxt-link tag="img" to="/" class="flex-none block h-8 sm:h-10 mx-auto mr-4" src="/logo.jpg" alt />
+        <nuxt-link tag="img" to="/" class="flex-none block h-16 sm:h-10 mx-auto mr-3" src="/logo.jpg" alt />
         <nuxt-link to="/" tag="div" class="text-left">
-          <p class="text-base">
-            Pusat Informasi &amp; Koordinasi COVID-19
+          <p class="text-2xl font-bold">
+            PIKOBAR
           </p>
-          <p class="text-sm text-gray-700">
+          <p class="text-xs text-gray-700 font-bold">
+            Pusat Informasi &amp; Koordinasi
+          </p>
+          <p class="text-xs text-gray-700 font-bold -mt-1">
             Provinsi Jawa Barat
           </p>
         </nuxt-link>
