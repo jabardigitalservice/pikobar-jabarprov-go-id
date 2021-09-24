@@ -1,7 +1,7 @@
 import { get } from '../api/vaksin'
 
 export const state = () => ({
-  items: []
+  items: null
 })
 
 export const mutations = {
