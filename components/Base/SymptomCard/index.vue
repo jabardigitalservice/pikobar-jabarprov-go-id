@@ -1,33 +1,32 @@
 <template>
   <div class="card-symptom">
     <div class="card-symptom__grid">
-      <EventStatCard
+      <CardAccentSquares
         v-for="(val, i) in data"
         :key="i"
+        bordered
+        :accent-color="val.color"
         class="card-symptom__grid-item"
-        :color="val.color"
       >
         <div class="text-black">
           <img :src="val.image" alt="Symptom Image">
           <div class="card-symptom__title">
             {{ val.title }}
           </div>
-          <div class="mb-4 text-left">
+          <div class="text-left">
             {{ val.body }}
           </div>
         </div>
-      </EventStatCard>
+      </CardAccentSquares>
     </div>
   </div>
 </template>
 <script>
-import {
-  EventStatCard
-} from '../EventStatCard'
+import { CardAccentSquares } from '~/components/Base/Card'
 
 export default {
   components: {
-    EventStatCard
+    CardAccentSquares
   },
   props: {
     data: {
