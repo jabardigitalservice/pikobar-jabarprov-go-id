@@ -13,8 +13,10 @@
           :key="i"
           class="vax-table-skeleton__inner"
         >
-          <BaseSkeleton class="vax-table-skeleton__title" />
-          <BaseSkeleton class="vax-table-skeleton__detail" />
+          <div class="p-2">
+            <BaseSkeleton class="vax-table-skeleton__title" />
+            <BaseSkeleton class="vax-table-skeleton__detail" />
+          </div>
           <BaseSkeleton class="vax-table-skeleton__img" />
         </div>
       </div>
@@ -50,7 +52,7 @@ export default {
 .vax-table-skeleton {
   &,
   &__inner {
-    @apply relative overflow-hidden
+    @apply overflow-hidden
     rounded
     border border-solid border-gray-300;
   }
@@ -71,27 +73,25 @@ export default {
   }
 
   &__inner {
-    @apply flex flex-col justify-evenly
-    h-20 mb-2 p-2
+    @apply relative flex flex-row flex-no-wrap
+    justify-between
+    w-full h-20 mb-2
     bg-white;
   }
 
   &__title {
-    max-width: 50%;
-    @apply w-24 h-2
+    @apply w-24 h-2 mt-4
     rounded-full;
   }
 
   &__detail {
-    max-width: 50%;
     @apply inline-block
-    w-48 h-2 mr-4
+    w-48 h-2 mr-4 my-4
     rounded-full;
   }
 
   &__img {
-    @apply absolute top-0 right-0
-    w-20 h-20;
+    @apply w-20 h-20;
   }
 }
 </style>
