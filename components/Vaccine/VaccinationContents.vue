@@ -4,7 +4,7 @@
     <ContentCard
       v-for="(content, index) in contents"
       :key="content.id"
-      v-bind="content"
+      v-bind="getContentCardProps(content, index)"
       :class="{
         'pt-10 md:pt-40': index > 0
       }"
@@ -12,7 +12,7 @@
       <template #body>
         <div
           class="text-gray-600"
-          v-html="content.html"
+          v-html="getContentHTML(content)"
         />
       </template>
     </ContentCard>
@@ -27,8 +27,7 @@ export default {
   },
   computed: {
     contents () {
-      const items = this.$store.state.vaksin.items ?? []
-      return items.map(this.mapContent)
+      return this.$store.state.vaksin.items ?? []
     },
     isLoading () {
       return !Array.isArray(this.contents) ||
@@ -39,26 +38,15 @@ export default {
     this.$store.dispatch('vaksin/getItems')
   },
   methods: {
-    mapContent (item, index) {
-      const { title, body, image, footer } = item
+    getContentCardProps (item, index) {
+      const { title, image, footer } = item
       const content = {
         title,
-        html: body,
         image,
         imagePosition: (index + 1) % 2 ? 'left' : 'right'
       }
 
-      if (footer?.type === 'text') {
-        Object.assign(content, {
-          // double row-breaks are used due to footer slot is
-          // not currently supported
-          html: `
-            ${content.html}
-            <br><br>
-            ${footer.value}
-          `
-        })
-      } else if (footer?.type === 'button') {
+      if (footer?.type === 'button') {
         Object.assign(content, {
           prompt: footer.value,
           buttonType: 'outline',
@@ -66,6 +54,21 @@ export default {
         })
       }
       return content
+    },
+    getContentHTML (item) {
+      const { body, footer } = item
+
+      let html = body
+      if (footer?.type === 'text') {
+        // double row-breaks are used due to footer slot is
+        // not currently supported
+        html = `
+          ${body}
+          <br><br>
+          ${footer.value}
+        `
+      }
+      return html
     }
   }
 }
