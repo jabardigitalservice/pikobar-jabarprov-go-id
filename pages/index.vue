@@ -129,6 +129,7 @@ export default {
       },
       listContent: [
         {
+          headerSize: 'large',
           title: 'Pusat Informasi & Koordinasi Covid-19 Jawa Barat',
           body: 'Media komunikasi dan informasi penanganan Covid-19 satu pintu di Jawa Barat. Hadirkan data dan visualisasi perkembangan kasus terkini Covid-19. Dilengkapi ragam layanan kesehatan digital pendukung kedaruratan pandemi.',
           image: '/img/icon-hero.svg',
