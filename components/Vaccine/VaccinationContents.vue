@@ -49,11 +49,15 @@ export default {
       }
 
       if (footer?.type === 'text') {
-        content.html = `
-          ${content.html}
-          <br><br>
-          ${footer.value}
-        `
+        Object.assign(content, {
+          // double row-breaks are used due to footer slot is
+          // not currently supported
+          html: `
+            ${content.html}
+            <br><br>
+            ${footer.value}
+          `
+        })
       } else if (footer?.type === 'button') {
         Object.assign(content, {
           prompt: footer.value,
