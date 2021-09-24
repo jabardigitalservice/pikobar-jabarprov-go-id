@@ -1,12 +1,19 @@
-import { get } from '../api/vaksin'
+import {
+  get,
+  getVaccinationSchedule as __getSchedule
+} from '../api/vaksin'
 
 export const state = () => ({
-  items: []
+  items: [],
+  schedule: null
 })
 
 export const mutations = {
   setItems (state, items) {
     state.items = items
+  },
+  setSchedule (state, schedule) {
+    state.schedule = schedule
   }
 }
 
@@ -21,5 +28,12 @@ export const actions = {
       commit('setItems', items)
     }
     return state.items
+  },
+  async getSchedule ({ state, commit }) {
+    if (!state.schedule) {
+      const schedule = await __getSchedule()
+      commit('setSchedule', schedule)
+    }
+    return state.schedule
   }
 }
