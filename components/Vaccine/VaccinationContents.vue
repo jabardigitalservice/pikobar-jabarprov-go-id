@@ -10,7 +10,10 @@
       }"
     >
       <template #body>
-        <div v-html="content.html" />
+        <div
+          class="text-gray-600"
+          v-html="content.html"
+        />
       </template>
     </ContentCard>
   </div>
