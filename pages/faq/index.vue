@@ -10,40 +10,24 @@
         </p>
       </div>
       <div class="py-10">
-        <div class="relative text-gray-600 border rounded-md">
-          <span class="absolute left-0 top-0 mt-3 ml-4">
-            <svg
-              id="Capa_1"
-              class="h-4 w-4 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              version="1.1"
-              x="0px"
-              y="0px"
-              viewBox="0 0 56.966 56.966"
-              style="enable-background:new 0 0 56.966 56.966;"
-              xml:space="preserve"
-              width="512px"
-              height="512px"
-            >
-              <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-            </svg>
-          </span>
-          <input type="search" name="serch" placeholder="Search" class="w-11/12 bg-white ml-4 h-10 px-5 pr-10 rounded-full text-base focus:outline-none">
-          <button
-            type="button"
-            class="absolute right-0 top-0 mb-1 justify-around mb-1 md:mr-1 px-6 py-2 text-white rounded-md bg-brand-green hover:bg-brand-green-lighter"
-          >
-            Cari
-          </button>
-        </div>
+        <SearchFAQ
+          :value="searchString"
+          :search.sync="searchString"
+          :on-search="onSearchFAQ"
+        />
       </div>
       <div>
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
-          <div class="rounded border">
-            <CardSide
-              :data="data"
-            />
+          <div>
+            <div class="rounded border">
+              <CategoryTabFAQ
+                :data="data"
+                :selected="selected"
+                :tab-selected.sync="selected"
+                :is-disable="isDisableSelected"
+                :disable.sync="isDisableSelected"
+              />
+            </div>
           </div>
           <div class="mt-12 lg:mt-0 lg:col-span-3">
             <div v-show="!items">
@@ -71,8 +55,11 @@
               </div>
             </div>
             <div class="space-y-4">
+              <div v-if="!filteredItems.length" class="flex justify-center">
+                <img src="~/static/img/icon-empty-state.svg" alt="img-faq-empty">
+              </div>
               <ExpandableContent
-                v-for="(faq, index) in items"
+                v-for="(faq, index) in filteredItems"
                 :key="index"
                 :header-size="'md'"
                 :icon-color="'gray'"
@@ -102,7 +89,8 @@ import ExpandableContent from '~/components/_pages/index/IsolasiMandiri/Expandab
 export default {
   components: {
     Section,
-    CardSide: () => import('./CardSide'),
+    CategoryTabFAQ: () => import('~/components/FAQ/CategoryTabFaq'),
+    SearchFAQ: () => import('~/components/FAQ/SearchFaq'),
     ExpandableContent,
     ContentLoader
   },
@@ -110,6 +98,8 @@ export default {
     return {
       data: [],
       filteredItems: null,
+      selected: undefined,
+      isDisableSelected: false,
       searchString: ''
     }
   },
@@ -119,19 +109,42 @@ export default {
       categories: state => state.categories
     })
   },
+  watch: {
+    items: {
+      immediate: true,
+      deep: true,
+      handler (arr) {
+        this.onSearchFAQ()
+      }
+    },
+    searchString: {
+      handler (val) {
+        this.isDisableSelected = false
+        if (val) {
+          this.isDisableSelected = true
+        }
+        this.onSearchFAQ(val)
+      }
+    },
+    selected: {
+      handler (val) {
+        this.filteringFAQByCategory(val)
+      }
+    }
+  },
   async mounted () {
     if (process.browser) {
       analytics.logEvent('faqs_view')
     }
     await Promise.all([this.getItems(), this.getItemsCategories()])
-    await this.filtered()
+    await this.filteringCategory()
   },
   methods: {
     ...mapActions('faqs', {
       getItems: 'getItems',
       getItemsCategories: 'getItemsCategories'
     }),
-    filtered () {
+    filteringCategory () {
       const filteredCategory = []
       if (this.categories) {
         this.categories.map((x) => {
@@ -150,6 +163,35 @@ export default {
           })
         })
       }
+    },
+    filteringFAQByCategory (category) {
+      if (!this.items || !this.items.length) {
+        this.filteredItems = []
+        return
+      }
+      this.filteredItems = this.items.filter((faq) => {
+        if (!category) {
+          return true
+        }
+        return [faq.category_id].some((str) => {
+          return `${str}`.includes(category)
+        })
+      })
+    },
+    onSearchFAQ (search) {
+      if (!this.items || !this.items.length) {
+        this.filteredItems = []
+        return
+      }
+      this.selected = undefined
+      this.filteredItems = this.items.filter((faq) => {
+        if (!search) {
+          return true
+        }
+        return [faq.title, faq.content].some((str) => {
+          return `${str}`.toLowerCase().includes(search.toLowerCase())
+        })
+      })
     }
   }
 }

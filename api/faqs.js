@@ -1,9 +1,8 @@
 import { db } from '../lib/firebase'
 
-export function get (options = { perPage: 10 }) {
+export function get (options) {
   return db.collection('faqs')
     .orderBy('sequence_number', 'asc')
-    .limit(options.perPage)
     .get()
     .then((docs) => {
       if (!docs.empty) {
