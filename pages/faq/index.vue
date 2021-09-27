@@ -11,8 +11,8 @@
       </div>
       <div class="py-10">
         <SearchFAQ
-          :value="searchString"
-          :search.sync="searchString"
+          :value="query.search"
+          :search.sync="query.search"
           :on-search="onSearchFAQ"
         />
       </div>
@@ -22,8 +22,8 @@
             <div class="rounded border">
               <CategoryTabFAQ
                 :data="data"
-                :selected="selected"
-                :tab-selected.sync="selected"
+                :selected="query.category"
+                :tab-selected.sync="query.category"
                 :is-disable="isDisableSelected"
                 :disable.sync="isDisableSelected"
               />
@@ -97,10 +97,12 @@ export default {
   data () {
     return {
       data: [],
-      filteredItems: null,
-      selected: undefined,
+      filteredItems: [],
       isDisableSelected: false,
-      searchString: ''
+      query: {
+        category: undefined,
+        search: ''
+      }
     }
   },
   computed: {
@@ -114,21 +116,19 @@ export default {
       immediate: true,
       deep: true,
       handler (arr) {
-        this.onSearchFAQ()
+        this.onSearchFAQ(this.query)
       }
     },
-    searchString: {
+    query: {
+      immediate: true,
+      deep: true,
       handler (val) {
         this.isDisableSelected = false
-        if (val) {
+        if (val.search.length) {
+          this.query.category = undefined
           this.isDisableSelected = true
         }
         this.onSearchFAQ(val)
-      }
-    },
-    selected: {
-      handler (val) {
-        this.filteringFAQByCategory(val)
       }
     }
   },
@@ -164,32 +164,26 @@ export default {
         })
       }
     },
-    filteringFAQByCategory (category) {
+    onSearchFAQ (query) {
       if (!this.items || !this.items.length) {
         this.filteredItems = []
         return
       }
+
       this.filteredItems = this.items.filter((faq) => {
-        if (!category) {
+        if (query?.category) {
+          return [faq.category_id].some((str) => {
+            return `${str}`.includes(query.category)
+          })
+        }
+
+        if (!query.search) {
+          this.query.category = undefined
           return true
         }
-        return [faq.category_id].some((str) => {
-          return `${str}`.includes(category)
-        })
-      })
-    },
-    onSearchFAQ (search) {
-      if (!this.items || !this.items.length) {
-        this.filteredItems = []
-        return
-      }
-      this.selected = undefined
-      this.filteredItems = this.items.filter((faq) => {
-        if (!search) {
-          return true
-        }
+
         return [faq.title, faq.content].some((str) => {
-          return `${str}`.toLowerCase().includes(search.toLowerCase())
+          return `${str}`.toLowerCase().includes(query.search.toLowerCase())
         })
       })
     }

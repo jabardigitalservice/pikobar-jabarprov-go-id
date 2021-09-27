@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     onSearchEnter () {
-      this.onSearch(this.mValue)
+      this.onSearch({ search: this.mValue })
     }
   }
 }
