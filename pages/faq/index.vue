@@ -132,12 +132,16 @@ export default {
       }
     }
   },
-  async mounted () {
+  mounted () {
     if (process.browser) {
       analytics.logEvent('faqs_view')
     }
-    await Promise.all([this.getItems(), this.getItemsCategories()])
-    await this.filteringCategory()
+    Promise.all([
+      this.getItems(),
+      this.getItemsCategories().then(() => {
+        this.filteringCategory()
+      })
+    ])
   },
   methods: {
     ...mapActions('faqs', {
