@@ -155,7 +155,7 @@ export default {
             { to: '/articles?tab=jabar', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
             { to: '/contact', label: 'Kontak' },
-            { to: '/info/bansos', label: 'Bantuan Sosial' }
+            { to: '/cekbansos', label: 'Bantuan Sosial' }
           ]
         }
       ]
