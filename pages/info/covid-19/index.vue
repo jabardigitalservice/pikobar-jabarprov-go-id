@@ -182,6 +182,7 @@ export default {
       },
       listContent: [
         {
+          headerSize: 'large',
           title: 'Informasi Covid-19',
           body: 'Covid-19 adalah penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), jenis baru coronavirus yang pada manusia menyebabkan penyakit mulai flu biasa hingga penyakit yang serius.',
           image: '/img/icon-kenali-covid.svg',
