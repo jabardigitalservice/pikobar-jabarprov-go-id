@@ -43,6 +43,7 @@
 
 <script>
 import { data } from './data.utils'
+import { analytics } from '~/lib/firebase'
 import Section from '~/components/Base/Section'
 import ContentCard from '~/components/Base/ContentCard'
 import ContentCardButton from '~/components/Base/ContentCard/ContentCardButton'
@@ -60,6 +61,11 @@ export default {
   data () {
     return {
       ...data
+    }
+  },
+  mounted () {
+    if (process.browser) {
+      analytics.logEvent('3T_view')
     }
   }
 }
