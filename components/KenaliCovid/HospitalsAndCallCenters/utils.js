@@ -51,15 +51,3 @@ export function toArray (value) {
   // if an array, return itself
   return value
 }
-
-/**
- * @param   {Array} arr
- * @param   {any} values
- * @returns {Array} mutated array
- */
-export function fillArrayIfEmpty (arr, ...values) {
-  if (Array.isArray(arr) && !arr.length) {
-    arr.push(...values)
-  }
-  return arr
-}
