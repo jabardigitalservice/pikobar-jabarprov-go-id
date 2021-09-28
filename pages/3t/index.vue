@@ -65,7 +65,7 @@ export default {
   },
   mounted () {
     if (process.browser) {
-      analytics.logEvent('page_3T_view')
+      analytics.logEvent('3T_view')
     }
   }
 }
