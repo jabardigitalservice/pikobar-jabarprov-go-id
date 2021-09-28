@@ -12,50 +12,21 @@
     </p>
     <div class="contact-card__grid">
       <slot>
-        <template v-for="(group, i) in groups">
-          <ContactCardGroupLabel
-            :key="`name:${group.name}`"
-            :label="group.name"
-          />
-          <ContactCardGroupDetails
-            :key="`contacts:${i}`"
-          >
-            <ContactCardChip
-              v-for="(contact, j) in group.contacts"
-              :key="j"
-              :icon="contact.icon"
-              :label="contact.label"
-              :href="contact.href"
-            />
-          </ContactCardGroupDetails>
-        </template>
+        <ContactCardChip
+          v-for="(contact, i) in contacts"
+          :key="i"
+          :icon="contact.icon"
+          :label="contact.label"
+          :href="contact.href"
+        />
       </slot>
     </div>
   </div>
 </template>
 
 <script>
-/**
- * @typedef  {Object}   ContactGroup
- * @property {string}   name      - group name
- * @property {Object[]} contacts  - Array of ContactCardChip's props
- * @see './ContactCardChip.vue'
- * @example
- * ```
- * const socmed = {
- *  name: 'Social Media',
- *  contacts: [
- *    { icon: 'web', label: '@john.doe', href: 'https://instagram.com/johndoe' },
- *    { icon: 'phone', label: '911', href: 'tel://911' },
- *  ]
- * }
- * ```
- */
-
 export default {
   components: {
-    ContactCardGroupLabel: () => import('./ContactCardGroupLabel'),
-    ContactCardGroupDetails: () => import('./ContactCardGroupDetails'),
     ContactCardChip: () => import('./ContactCardChip')
   },
   props: {
@@ -68,9 +39,10 @@ export default {
       default: ''
     },
     /**
-     * @type {ContactGroup[]}
+     * Array of ContactCardChip's props
+     * @type {ContactCardChip[]}
      */
-    groups: {
+    contacts: {
       type: Array,
       default: () => []
     }
@@ -81,12 +53,13 @@ export default {
 <style lang="scss" scoped>
 .contact-card {
   line-height: 1.618;
+  font-size: 16px;
 
   @apply overflow-hidden
   block p-6
   rounded-lg
   bg-gray-100
-  text-base text-gray-600;
+  text-gray-600;
 
   &__title {
     @apply block
@@ -102,10 +75,17 @@ export default {
   }
 
   &__grid {
-    grid-template-columns: auto minmax(0, 1fr);
-    @apply overflow-hidden
-    grid gap-4
-    mt-6;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  @screen lg {
+    &__title {
+      font-size: 21px;
+    }
   }
 }
 </style>
