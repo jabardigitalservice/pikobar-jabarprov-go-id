@@ -8,17 +8,32 @@
   >
     <BaseSkeleton v-show="loading" class="section-header__title-skeleton" />
     <BaseSkeleton v-show="loading" class="section-header__subtitle-skeleton" />
-    <p
-      v-show="!loading && ($slots.title || title)"
-      class="section-header__title"
-    >
-      <slot name="title">
-        {{ title }}
+    <div class="flex">
+      <slot name="icon">
+        {{ icon }}
       </slot>
-    </p>
+      <p
+        v-show="!loading && ($slots.title || title)"
+        :class="{
+          'section-header__title': true,
+          'section-header__title--sm': titleSize === 'sm',
+          'section-header__title--md': titleSize === 'md',
+          'section-header__title--lg': titleSize === 'lg',
+          'section-header__title--xl': titleSize === 'xl',
+        }"
+      >
+        <slot name="title">
+          {{ title }}
+        </slot>
+      </p>
+    </div>
     <p
       v-show="!loading && ($slots.subtitle || subtitle)"
-      class="section-header__subtitle"
+      :class="{
+        'section-header__subtitle': true,
+        'section-header__subtitle--grey': subtitleColor === 'grey',
+        'section-header__subtitle--black': subtitleColor === 'black',
+      }"
     >
       <slot name="subtitle">
         {{ subtitle }}
@@ -43,6 +58,16 @@ export default {
       },
       default: 'center'
     },
+    titleSize: {
+      validator: (v) => {
+        return ['sm', 'md', 'lg', 'xl'].includes(v)
+      },
+      default: 'xl'
+    },
+    icon: {
+      type: String,
+      default: null
+    },
     title: {
       type: String,
       default: ''
@@ -50,6 +75,12 @@ export default {
     subtitle: {
       type: String,
       default: ''
+    },
+    subtitleColor: {
+      validator: (v) => {
+        return ['grey', 'black'].includes(v)
+      },
+      default: 'grey'
     }
   }
 }
@@ -62,13 +93,36 @@ export default {
 
   &__title {
     line-height: 1.618;
-    @apply m-0 p-0 mb-2
-    text-gray-900 text-xl font-bold;
+    @apply pt-2 mb-2
+    text-gray-900 font-bold;
+
+    &--sm {
+      @apply text-sm;
+    }
+
+    &--md {
+      @apply text-base;
+    }
+
+    &--lg {
+      @apply text-lg;
+    }
+
+    &--xl {
+      @apply text-3xl;
+    }
   }
 
   &__subtitle {
     line-height: 1.618;
-    @apply max-w-3xl m-0 p-0 text-gray-600 text-base font-normal;
+    @apply m-0 p-0 text-base font-normal;
+
+    &--grey {
+      @apply text-gray-600;
+    }
+    &--black {
+      @apply text-gray-800;
+    }
   }
 
   &__title-skeleton {
@@ -94,10 +148,6 @@ export default {
 
     &--left {
       padding-bottom: 24px;
-    }
-
-    &__title {
-      font-size: 28px;
     }
   }
 }

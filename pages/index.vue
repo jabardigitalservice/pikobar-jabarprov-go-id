@@ -153,7 +153,7 @@ export default {
           body: 'Testing, tracing, dan treatment atau melakukan pengetesan, penelusuran kontak, dan perawatan terhadap pasien Covid-19 dapat bantu petakan penularan sedini mungkin, sehingga peluang penyebaran Covid-19 bisa diantisipasi. Ketahui lebih jauh perkembangan upaya 3T di Jawa Barat selengkapnya.',
           image: '/img/icon-isoman.svg',
           imagePosition: 'left',
-          backLink: '/',
+          backLink: '/3t',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },

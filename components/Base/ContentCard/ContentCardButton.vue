@@ -74,7 +74,7 @@ export default {
       }
       // for external link.
       // will always open in new tab with WindowFeatures "noopener, noreferrer"
-      if (backLink.startsWith('http')) {
+      if (backLink.startsWith('http') || backLink.startsWith('tel')) {
         return window.open(backLink, '_blank', 'noreferrer,noopener')
       }
 
