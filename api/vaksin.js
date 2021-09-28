@@ -4,14 +4,13 @@ function convertToJSON (documentSnapshot) {
   const data = documentSnapshot.data()
   return {
     ...data,
-    published_at: data.published_at.toDate(),
     id: documentSnapshot.id
   }
 }
 
 export async function get () {
   const snapshots = await db
-    .collection('vaccination_content')
+    .collection('vaccination_content_v2')
     .orderBy('order', 'asc')
     .get()
 

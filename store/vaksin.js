@@ -4,7 +4,7 @@ import {
 } from '../api/vaksin'
 
 export const state = () => ({
-  items: [],
+  items: null,
   schedule: null
 })
 
