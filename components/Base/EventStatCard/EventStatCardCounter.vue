@@ -52,8 +52,6 @@ export default {
 
 <style lang="scss" scoped>
 .evt-stat-counter {
-  @apply mb-4;
-
   &__name {
     @apply
     text-base text-gray-600
@@ -85,8 +83,6 @@ export default {
   }
 
   @screen md {
-    @apply mb-6;
-
     &--small & {
       &__count {
         @apply text-3xl;

@@ -129,6 +129,7 @@ export default {
       },
       listContent: [
         {
+          headerSize: 'large',
           title: 'Pusat Informasi & Koordinasi Covid-19 Jawa Barat',
           body: 'Media komunikasi dan informasi penanganan Covid-19 satu pintu di Jawa Barat. Hadirkan data dan visualisasi perkembangan kasus terkini Covid-19. Dilengkapi ragam layanan kesehatan digital pendukung kedaruratan pandemi.',
           image: '/img/icon-hero.svg',
@@ -142,7 +143,7 @@ export default {
           body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
           image: '/img/icon-kenali-covid.svg',
           imagePosition: 'right',
-          backLink: '/',
+          backLink: '/info/covid-19',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },

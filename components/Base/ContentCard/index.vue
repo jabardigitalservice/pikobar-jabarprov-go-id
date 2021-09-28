@@ -2,6 +2,7 @@
   <div
     :class="{
       'content-card': true,
+      'content-card--header-large': headerSize === 'large',
       'content-card--image-left': imagePosition === 'left',
       'content-card--image-right': imagePosition === 'right'
     }"
@@ -18,10 +19,12 @@
           <p class="content-card__title">
             {{ title }}
           </p>
-          <p class="content-card__body text-black-500">
-            {{ body }}
-          </p>
-          <slot name="button" v-bind="$props">
+          <div class="content-card__body text-gray-600">
+            <slot name="body">
+              {{ body }}
+            </slot>
+          </div>
+          <slot v-if="prompt" name="button" v-bind="$props">
             <ContentCardButton
               v-bind="{ prompt, backLink, buttonType }"
               class="content-card__btn mt-6"
@@ -40,6 +43,10 @@ export default {
     ContentCardButton
   },
   props: {
+    headerSize: {
+      type: String,
+      default: ''
+    },
     header: {
       type: String,
       default: ''
@@ -50,7 +57,7 @@ export default {
     },
     body: {
       type: String,
-      default: '-'
+      default: ''
     },
     imagePosition: {
       type: String,
@@ -119,8 +126,8 @@ export default {
   }
 
   &__title {
-    font-size: 37px;
-    @apply font-semibold;
+    font-size: 20px;
+    @apply mb-4 font-semibold;
   }
 
   &__body {
@@ -131,9 +138,25 @@ export default {
     @apply w-full;
   }
 
+  &--header-large & {
+    &__title {
+      font-size: 24px;
+    }
+  }
+
   @screen lg {
     &__btn {
       @apply w-auto;
+    }
+
+    &__title {
+      font-size: 28px;
+    }
+
+    &--header-large & {
+      &__title {
+        font-size: 37px;
+      }
     }
 
     &--image-left & {
