@@ -12,7 +12,7 @@
     <template #content.antiHoax>
       <p class="text-gray-900">
         <!-- TODO: DEFINE TITLE -->
-        Info yang memuat berita seputar vaksinasi di Jawa Barat.
+        Artikel Jabar Saber Hoaks seputar vaksin dan vaksinasi
       </p>
       <div class="mt-10">
         <HoaxNews key="antiHoaxNewsCarousel" />
