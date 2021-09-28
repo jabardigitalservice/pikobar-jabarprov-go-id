@@ -6,7 +6,9 @@ export default [
         type: 'paragraph',
         value: `
           Vaksinasi tahap pertama diprioritaskan untuk tenaga kesehatan,
-          asisten tenaga kesehatan, tenaga penunjang, serta maha...
+          asisten tenaga kesehatan, tenaga penunjang, serta mahasiswa yang
+          sedang menjalani pendidikan profesi kedokteran yang bekerja pada
+          Fasilitas Pelayanan Kesehatan
         `
       }
     ]
