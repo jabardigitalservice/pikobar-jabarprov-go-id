@@ -24,3 +24,18 @@ export async function get () {
      */
     .map(convertToJSON)
 }
+
+export async function getVaccinationSchedule () {
+  const document = await db.collection('iframes')
+    .doc('airtable-jadwal-vaksinasi-jabar')
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return {
+          id: doc.id,
+          ...doc.data()
+        }
+      }
+    })
+  return document
+}
