@@ -2,7 +2,11 @@
   <a
     :href="href"
     :disabled="disabled || !href"
-    class="contact-card-chip"
+    :class="{
+      'contact-card-chip': true,
+      'contact-card-chip--phone': icon === 'phone',
+      'contact-card-chip--web': icon === 'web'
+    }"
     @click.prevent="onClick"
   >
     <i class="contact-card-chip__icon">
@@ -92,14 +96,15 @@ export default {
   text-gray-900;
 
   &__label {
-    color: inherit;
+    font-size: 14px;
+    color: white;
 
     @apply truncate inline-block
     font-bold;
   }
 
   &__icon {
-    color: inherit;
+    color: white;
     margin-right: 10px;
 
     @apply flex-none
@@ -110,13 +115,21 @@ export default {
     }
   }
 
+  &--phone {
+    background-color: #069550;
+  }
+
+  &--web {
+    background-color: #1E88E5;
+  }
+
   &:not(:disabled):not([disabled]) {
     &:hover {
-      @apply bg-gray-300;
+      @apply opacity-75;
     }
 
     &:active {
-      @apply bg-gray-200;
+      @apply opacity-100;
     }
   }
 
