@@ -71,6 +71,7 @@ export default {
     &__carousel {
       .VueCarousel-inner {
         display: contents;
+        visibility: visible !important;
         @apply overflow-hidden;
       }
       .VueCarousel-dot {
