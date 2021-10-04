@@ -152,7 +152,7 @@ export default {
           to: '#',
           label: 'Informasi',
           children: [
-            { to: '/articles?tab=jabar', label: 'Berita' },
+            { to: '/articles', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
             { to: '/contact', label: 'Kontak' },
             { href: process.env.NUXT_ENV_BANSOS_URL, label: 'Bantuan Sosial' }
