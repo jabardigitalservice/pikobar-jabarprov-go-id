@@ -294,12 +294,6 @@ export default {
     }
   }
 }
-
-.image-carousel--bleed::v-deep {
-  .swiper-container {
-    overflow: visible;
-  }
-}
 </style>
 
 <style lang="scss">
