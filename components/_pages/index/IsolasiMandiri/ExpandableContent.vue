@@ -5,7 +5,14 @@
       'exp-content--open': mOpen,
     }"
   >
-    <h3 class="exp-content__header">
+    <h3
+      :class="{
+        'exp-content__header': true,
+        'exp-content__header-sm': headerSize === 'sm',
+        'exp-content__header-md': headerSize === 'md',
+        'exp-content__header-xl': headerSize === 'xl'
+      }"
+    >
       <strong>
         <slot name="title" />
       </strong>
@@ -18,7 +25,11 @@
           x="0px"
           y="0px"
           viewBox="0 0 256 256"
-          class="exp-content__trigger"
+          :class="{
+            'exp-content__trigger': true,
+            'exp-content__trigger-green': iconColor === 'green',
+            'exp-content__trigger-gray': iconColor === 'gray',
+          }"
           style="enable-background:new 0 0 256 256;"
           xml:space="preserve"
         >
@@ -44,6 +55,17 @@ export default {
   props: {
     open: {
       type: Boolean
+    },
+    headerSize: {
+      type: String,
+      validator: (v) => {
+        return ['sm', 'md', 'xl'].includes(v)
+      },
+      default: 'xl'
+    },
+    iconColor: {
+      type: String,
+      default: 'green'
     }
   },
   data: () => ({
@@ -89,16 +111,29 @@ export default {
 
   &__header {
     @apply flex justify-between items-center
-    px-6 py-4
-    text-xl
+    px-6 py-3;
+    &-sm {
+      @apply text-sm;
+    }
+    &-md {
+      @apply text-base;
+    }
+    &-xl {
+      @apply text-xl;
+    }
   }
 
   &__trigger {
     transition: transform 0.15s ease-out;
     @apply flex-none w-4 h-4
-    text-green-500
     cursor-pointer
     fill-current;
+    &-green {
+     @apply text-green-500;
+    }
+    &-gray {
+     @apply text-gray-500;
+    }
   }
 
   &__body {
