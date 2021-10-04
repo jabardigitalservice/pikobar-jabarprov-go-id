@@ -28,7 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 .grids {
-  @apply grid grid-cols-1 gap-4;
+  @apply grid grid-cols-1 gap-5;
 
   @screen md {
     @apply grid-cols-2

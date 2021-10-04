@@ -102,7 +102,7 @@
           tag="li"
           to="/notifications"
           :exact="true"
-          class="cursor-pointer w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-200 box-content"
+          class="appbar-menu-item cursor-pointer w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-200 box-content"
         >
           <a class="text-gray-500">
             <FontAwesomeIcon

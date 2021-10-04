@@ -74,7 +74,7 @@ export default {
       }
       // for external link.
       // will always open in new tab with WindowFeatures "noopener, noreferrer"
-      if (backLink.startsWith('http') || backLink.startsWith('mailto')) {
+      if (backLink.startsWith('http') || backLink.startsWith('tel') || backLink.startsWith('mailto')) {
         return window.open(backLink, '_blank', 'noreferrer,noopener')
       }
 
