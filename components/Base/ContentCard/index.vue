@@ -126,8 +126,8 @@ export default {
   }
 
   &__title {
-    font-size: 20px;
-    @apply mb-4 font-semibold;
+    font-size: 37px;
+    @apply font-semibold;
   }
 
   &__body {

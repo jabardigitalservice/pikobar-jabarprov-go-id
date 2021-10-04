@@ -38,7 +38,7 @@
           </div>
         </div>
         <div>
-          <div class="grid grid-rows-2 mt-12 md:mt-0">
+          <div class="grid grid-rows-2 mt-12 md:mt-0 lg:ml-10">
             <h3 class="app-footer__link-header">
               Temukan Kami
             </h3>

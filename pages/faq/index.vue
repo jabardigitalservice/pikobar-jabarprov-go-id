@@ -1,133 +1,114 @@
 <template>
-  <div class="container mx-auto">
-    <div class="container mx-4 p-5 max-w-3xl mx-auto">
-      <br>
-      <h3 class="text-3xl text-gray-900 font-bold text-left leading-none">
-        Pertanyaan yang Sering Ditanyakan
-      </h3>
-      <br>
-      <div class="flex flex-wrap justify-start items-stretch">
-        <input
-          v-model="searchString"
-          list="faqList"
-          class="w-full md:w-0 md:flex-1 inline-block p-4 mb-4 md:mr-0 min-w-0"
-          type="text"
-          placeholder="Cari pertanyaan di sini..."
-          @keyup.enter="performFiltering"
-        >
-        <i class="flex-1 md:hidden" />
-        <button
-          class="flex-none inline-flex items-center justify-around mr-4 mb-4 md:mr-0 px-6 py-2 text-white bg-brand-blue hover:bg-brand-blue-lighter"
-          @click="performFiltering"
-        >
-          <FontAwesomeIcon :icon="icon.faSearch" class="mr-4" />
-          <span>
-            Cari
-          </span>
-        </button>
-        <button
-          class="flex-none inline-flex items-center justify-around mr-4 mb-4 md:mr-0 px-6 py-2 text-gray-700 bg-gray-400 hover:bg-gray-500"
-          @click="resetFilter"
-        >
-          <FontAwesomeIcon :icon="icon.faTimes" class="mr-4" />
-          <span>
-            Reset
-          </span>
-        </button>
+  <div>
+    <Section class="bg-white pb-24">
+      <div class="space-y-3 pt-2 lg:pt-8">
+        <h3 class="text-3xl text-gray-900 font-bold">
+          Frequently Asked Questions
+        </h3>
+        <p class="text-gray-500">
+          Pertanyaan yang sering ditanyakan terkait Covid-19 dan lainnya.
+        </p>
       </div>
-      <br>
-      <div v-show="!filteredItems">
-        <div
-          v-for="i in 6"
-          :key="i"
-          class="mb-4 rounded-lg p-4 bg-white"
-        >
-          <ContentLoader
-            :width="320"
-            :height="16"
-            :speed="3"
-            primary-color="#eee"
-            secondary-color="#fafafa"
-          >
-            <rect
-              x="0"
-              y="0"
-              width="100%"
-              height="100%"
-              rx="4"
-              ry="4"
-            />
-          </ContentLoader>
+      <div class="py-10">
+        <SearchFAQ
+          :value="query.search"
+          :search.sync="query.search"
+          :on-search="onSearchFAQ"
+        />
+      </div>
+      <div>
+        <div class="lg:grid lg:grid-cols-4 lg:gap-8">
+          <div>
+            <div class="rounded border">
+              <CategoryTabFAQ
+                :data="data"
+                :selected="query.category"
+                :tab-selected.sync="query.category"
+                :is-disable="isDisableSelected"
+                :disable.sync="isDisableSelected"
+              />
+            </div>
+          </div>
+          <div class="mt-12 lg:mt-0 lg:col-span-3">
+            <div v-show="!items">
+              <div
+                v-for="i in 6"
+                :key="i"
+                class="mb-4 rounded-lg p-4 bg-white"
+              >
+                <ContentLoader
+                  :width="320"
+                  :height="16"
+                  :speed="3"
+                  primary-color="#eee"
+                  secondary-color="#fafafa"
+                >
+                  <rect
+                    x="0"
+                    y="0"
+                    width="100%"
+                    height="100%"
+                    rx="4"
+                    ry="4"
+                  />
+                </ContentLoader>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div v-if="!filteredItems.length" class="flex justify-center">
+                <img src="~/static/img/icon-empty-state.svg" alt="img-faq-empty">
+              </div>
+              <ExpandableContent
+                v-for="(faq, index) in filteredItems"
+                :key="index"
+                :header-size="'md'"
+                :icon-color="'gray'"
+              >
+                <template #title>
+                  {{ faq.title }}
+                </template>
+                <p
+                  v-html="faq.content"
+                />
+              </ExpandableContent>
+            </div>
+          </div>
         </div>
       </div>
-      <div v-show="filteredItems && filteredItems.length > 0">
-        <ul class="faq-list my-4">
-          <li
-            v-for="(faq, index) in filteredItems"
-            :key="index"
-            class="faq-list__item mb-4 bg-white hover:bg-gray-200 rounded-lg shadow-lg"
-          >
-            <header
-              class="cursor-pointer relative flex justify-start items-center p-4 pr-16 text-gray-900 text-lg font-bold clearfix"
-              @click.capture="toggleItem(index)"
-            >
-              <span>
-                {{ faq.title }}
-              </span>
-              <button
-                class="appearance-none text-white absolute"
-                style="right: 2rem;"
-              >
-                <FontAwesomeIcon :icon="isItemOpen(index) ? icon.faChevronUp : icon.faChevronDown" />
-              </button>
-            </header>
-            <main
-              v-show="isItemOpen(index)"
-              class="html-content p-4 md:p-8 md:pt-4 text-base border-t border-solid border-gray-300"
-              v-html="faq.content"
-            />
-          </li>
-        </ul>
-      </div>
-    </div>
+    </Section>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import { ContentLoader } from 'vue-content-loader'
-import { faChevronUp, faChevronDown, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { analytics } from '~/lib/firebase'
+import Section from '~/components/Base/Section'
+import ExpandableContent from '~/components/_pages/index/IsolasiMandiri/ExpandableContent'
 
 export default {
   components: {
+    Section,
+    CategoryTabFAQ: () => import('~/components/FAQ/CategoryTabFaq'),
+    SearchFAQ: () => import('~/components/FAQ/SearchFaq'),
+    ExpandableContent,
     ContentLoader
-  },
-  async fetch () {
-    await new Promise((resolve) => {
-      this.getItems()
-        .then(() => {
-          this.performFiltering()
-          resolve()
-        })
-    })
   },
   data () {
     return {
-      openedItems: [],
-      filteredItems: null,
-      icon: {
-        faChevronUp,
-        faChevronDown,
-        faSearch,
-        faTimes
-      },
-      searchString: ''
+      data: [],
+      filteredItems: [],
+      isDisableSelected: false,
+      query: {
+        category: undefined,
+        search: ''
+      }
     }
   },
   computed: {
     ...mapState('faqs', {
-      items: 'items'
+      items: state => state.items,
+      categories: state => state.categories
     })
   },
   watch: {
@@ -135,7 +116,19 @@ export default {
       immediate: true,
       deep: true,
       handler (arr) {
-        this.performFiltering()
+        this.onSearchFAQ(this.query)
+      }
+    },
+    query: {
+      immediate: true,
+      deep: true,
+      handler (val) {
+        this.isDisableSelected = false
+        if (val.search.length) {
+          this.query.category = undefined
+          this.isDisableSelected = true
+        }
+        this.onSearchFAQ(val)
       }
     }
   },
@@ -143,77 +136,61 @@ export default {
     if (process.browser) {
       analytics.logEvent('faqs_view')
     }
+    Promise.all([
+      this.getItems(),
+      this.getItemsCategories().then(() => {
+        this.filteringCategory()
+      })
+    ])
   },
   methods: {
     ...mapActions('faqs', {
-      getItems: 'getItems'
+      getItems: 'getItems',
+      getItemsCategories: 'getItemsCategories'
     }),
-    isItemOpen (index) {
-      return this.openedItems.includes(index)
-    },
-    openItem (index) {
-      this.openedItems.push(index)
-    },
-    closeItem (index) {
-      this.openedItems = this.openedItems.filter(x => x !== index)
-    },
-    toggleItem (index) {
-      if (this.isItemOpen(index)) {
-        this.closeItem(index)
-      } else {
-        this.openItem(index)
+    filteringCategory () {
+      const filteredCategory = []
+      if (this.categories) {
+        this.categories.map((x) => {
+          if (!filteredCategory.includes(x.category)) { filteredCategory.push(x.category) }
+        })
+        filteredCategory.map((data) => {
+          const list = this.categories.filter((item, index) => {
+            if (item.category === data) {
+              return data
+            }
+          })
+
+          this.data.push({
+            category: data,
+            list
+          })
+        })
       }
     },
-    performFiltering () {
+    onSearchFAQ (query) {
       if (!this.items || !this.items.length) {
         this.filteredItems = []
         return
       }
+
       this.filteredItems = this.items.filter((faq) => {
-        if (!this.searchString) {
+        if (query?.category) {
+          return [faq.category_id].some((str) => {
+            return `${str}`.includes(query.category)
+          })
+        }
+
+        if (!query.search) {
+          this.query.category = undefined
           return true
         }
+
         return [faq.title, faq.content].some((str) => {
-          return `${str}`.toLowerCase().includes(this.searchString.toLowerCase())
+          return `${str}`.toLowerCase().includes(query.search.toLowerCase())
         })
       })
-    },
-    resetFilter () {
-      this.searchString = ''
-      this.performFiltering()
-    }
-  },
-  head () {
-    const title = 'FAQ - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
-    return {
-      title,
-      meta: [
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: title
-        },
-        {
-          hid: 'og:type',
-          property: 'og:type',
-          content: 'article'
-        }
-      ]
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.faq-list {
-  counter-reset: faq-number 0;
-  &__item {
-    counter-increment: faq-number 1;
-    > header::before {
-      align-self: flex-start;
-      content: counter(faq-number) '.';
-      @apply mr-4;
-    }
-  }
-}
-</style>
