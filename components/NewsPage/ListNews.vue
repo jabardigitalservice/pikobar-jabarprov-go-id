@@ -25,7 +25,7 @@
         />
       </ul>
     </template>
-    <template v-if="!loading && !hasReachedEnd">
+    <template v-if="!loading && items.length && !hasReachedEnd">
       <div class="text-center">
         <button
           type="button"
@@ -36,14 +36,10 @@
         </button>
       </div>
     </template>
-    <template v-if="!loading && hasReachedEnd">
-      <button
-        class="cursor-not-allowed w-full px-6 py-2 rounded-lg bg-gray-400 text-white font-bold uppercase tracking-wider"
-        disabled
-        @click="onLoadMore"
-      >
-        Tidak ada berita lainnya
-      </button>
+    <template v-if="!loading && !items.length && hasReachedEnd">
+      <div class="flex justify-center">
+        <img src="~/static/img/icon-empty-state.svg" alt="img-faq-empty">
+      </div>
     </template>
   </div>
 </template>
@@ -82,11 +78,7 @@ export default {
 <style lang="scss" scoped>
   .news-list {
     &__grid {
-      @apply grid grid-cols-1 gap-6 grid-cols-2 pb-10;
-
-      @screen md {
-        @apply grid-cols-3;
-      }
+      @apply grid grid-cols-1 gap-6 grid-cols-1 pb-10;
 
       @screen lg {
         @apply grid-cols-4;

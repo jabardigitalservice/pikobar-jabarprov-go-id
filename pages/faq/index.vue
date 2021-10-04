@@ -10,10 +10,9 @@
         </p>
       </div>
       <div class="py-10">
-        <SearchFAQ
+        <StringSearchQuery
           :value="query.search"
-          :search.sync="query.search"
-          :on-search="onSearchFAQ"
+          @search="onSearchStringChanged"
         />
       </div>
       <div>
@@ -90,7 +89,7 @@ export default {
   components: {
     Section,
     CategoryTabFAQ: () => import('~/components/FAQ/CategoryTabFaq'),
-    SearchFAQ: () => import('~/components/FAQ/SearchFaq'),
+    StringSearchQuery: () => import('~/components/StringSearchQuery'),
     ExpandableContent,
     ContentLoader
   },
@@ -148,6 +147,9 @@ export default {
       getItems: 'getItems',
       getItemsCategories: 'getItemsCategories'
     }),
+    onSearchStringChanged (str) {
+      this.query.search = str
+    },
     filteringCategory () {
       const filteredCategory = []
       if (this.categories) {
