@@ -18,9 +18,10 @@
     <TabLayout v-model="tabLayoutModel" :tabs="tabs">
       <template #content.news>
         <div class="mt-10">
-          <ListNews
+          <ListArticles
             :items="items"
             :loading="isLoadingMore"
+            :is-search="isSearch"
             :has-reached-end="hasReachedEnd"
             :on-load-more="onLoadMore"
           />
@@ -31,19 +32,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { db, analytics } from '~/lib/firebase'
 import { slugifyArticleRoute } from '~/lib/slugify'
-import { Section } from '~/components/Base/Section'
-import ListNews from '~/components/NewsPage/ListNews'
-import { TabLayout } from '~/components/Base/TabLayout'
-
 export default {
   name: 'NewsTabPage',
   components: {
-    TabLayout,
+    TabLayout: () => import('~/components/Base/TabLayout'),
+    Section: () => import('~/components/Base/Section'),
     StringSearchQuery: () => import('~/components/StringSearchQuery'),
-    ListNews,
-    Section
+    ListArticles: () => import('~/components/ArticlesPage/ListArticles')
   },
   data () {
     return {
@@ -71,6 +69,7 @@ export default {
       },
       collectionName: 'articles',
       isLoadingMore: false,
+      isSearch: false,
       hasReachedEnd: false,
       lastDocumentSnapshot: null,
       section: {
@@ -83,6 +82,11 @@ export default {
     }
   },
   computed: {
+    ...mapState('news', {
+      articles: state => state.items,
+      articles_national: state => state.item_articles_national,
+      articles_world: state => state.item_articles_world
+    }),
     tabLayoutModel: {
       get () {
         return 0
@@ -113,8 +117,10 @@ export default {
   },
   methods: {
     onSearchStringChanged (str) {
+      this.isLoadingMore = true
       this.query.search = str
       this.fetchItems(false)
+      this.isLoadingMore = false
     },
     onLoadMore () {
       this.isLoadingMore = true
@@ -130,20 +136,35 @@ export default {
       if (!this.collectionName) {
         this.items = []
       }
-      let querySnapshot
       if (this.query.search.length) {
-        const search = this.query.search.toLowerCase()
-        querySnapshot = db
-          .collection(this.collectionName)
-          .orderBy('title')
-          .startAt(search).endAt(search + '\uF8FF')
-          .limit(this.query.perPage)
-      } else {
-        querySnapshot = db
-          .collection(this.collectionName)
-          .orderBy('published_at', 'desc')
-          .limit(this.query.perPage)
+        this.isSearch = true
+        this.lastDocumentSnapshot = null
+        switch (this.collectionName) {
+          case 'articles_national':
+            this.$store.dispatch('news/getArticleNationals', {
+              perPage: 500
+            })
+            this.items = this.arrayFilter(this.articles_national)
+            return this.items
+          case 'articles_world':
+            this.$store.dispatch('news/getArticleWorlds', {
+              perPage: 500
+            })
+            this.items = this.arrayFilter(this.articles_world)
+            return this.items
+          default:
+            this.$store.dispatch('news/getItems', {
+              perPage: 500
+            })
+            this.items = this.arrayFilter(this.articles)
+            return this.items
+        }
       }
+      this.isSearch = false
+      let querySnapshot = db
+        .collection(this.collectionName)
+        .orderBy('published_at', 'desc')
+        .limit(this.query.perPage)
       if (this.lastDocumentSnapshot) {
         querySnapshot = querySnapshot.startAfter(this.lastDocumentSnapshot)
       }
@@ -182,6 +203,14 @@ export default {
             analytics.logEvent(this.eventName)
           }
         })
+    },
+    arrayFilter (array) {
+      array = array.filter((data) => {
+        return [data.title, data.content].some((str) => {
+          return `${str}`.toLowerCase().includes(this.query.search.toLowerCase())
+        })
+      })
+      return array
     }
   }
 }

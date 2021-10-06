@@ -25,8 +25,8 @@
         />
       </ul>
     </template>
-    <template v-if="!loading && items.length && !hasReachedEnd">
-      <div class="text-center">
+    <template v-if="!loading && !isSearch && !hasReachedEnd">
+      <div class="flex justify-center">
         <button
           type="button"
           class="news-list__button"
@@ -36,7 +36,7 @@
         </button>
       </div>
     </template>
-    <template v-if="!loading && !items.length && hasReachedEnd">
+    <template v-if="!loading && !items.length || hasReachedEnd">
       <div class="flex justify-center">
         <img src="~/static/img/icon-empty-state.svg" alt="img-faq-empty">
       </div>
@@ -59,6 +59,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    isSearch: {
+      type: Boolean,
+      default: false
     },
     onLoadMore: {
       type: Function,
@@ -94,9 +98,13 @@ export default {
     }
 
     &__button {
-        @apply inline-flex items-center px-16 py-3 font-bold
-        border border-transparent text-sm leading-4 font-medium
-        rounded-md shadow-sm text-white bg-green-600;
+        @apply w-full mt-6 bg-green-600 border border-transparent
+        rounded-md py-3 px-8 flex items-center justify-center
+        text-base font-medium text-white;
+
+        @screen lg {
+          @apply w-1/4 ;
+        }
     }
   }
 </style>
