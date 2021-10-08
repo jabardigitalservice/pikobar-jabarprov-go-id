@@ -1,66 +1,66 @@
 <template>
-  <div class="">
-    <div class="container mx-auto lg:max-w-4xl">
-      <div class="m-4 p-5 rounded-lg bg-white shadow">
-        <template v-if="!isLoading && item">
-          <div class="">
-            <p class="text-2xl font-bold leading-normal">
-              {{ item['title'] }}
-            </p>
-            <p class="text-base text-gray-700">
-              {{ formatDateTimeShort(item['published_at']) }}
-            </p>
-          </div>
-          <br>
-          <img
-            v-if="item.image"
-            :src="item.image"
-            class="block mb-8 rounded-lg shadow-lg"
-          >
-          <!-- eslint-disable-next-line -->
-          <div 
-            class="mt-5 html-content"
-            v-html="formatContent(item['content'])"
-          />
-          <template v-if="item['action_url']">
-            <div class="my-2">
-              <a
-                :href="item['action_url']"
-                class="w-full text-center shadow block bg-brand-blue text-white font-bold py-2 px-4 rounded"
-                @click.prevent="clickAction"
-              >
-                Baca Selengkapnya
-              </a>
-            </div>
-          </template>
-        </template>
-
-        <template v-else>
-          <content-loader
-            :speed="2"
-            primary-color="#f3f3f3"
-            secondary-color="#ecebeb"
-          >
-            <rect
-              x="0"
-              y="15"
-              rx="0"
-              ry="0"
-              width="100%"
-              height="15"
-            />
-            <rect
-              x="0"
-              y="45"
-              rx="0"
-              ry="0"
-              width="100%"
-              height="75"
-            />
-          </content-loader>
-        </template>
+  <div class="bg-white">
+    <template v-if="!isLoading && item">
+      <Section class="py-16">
+        <div class="mx-4 lg:mx-48">
+          <p class="text-3xl font-bold leading-normal">
+            {{ item['title'] }}
+          </p>
+          <p class="text-base text-gray-700 mt-2">
+            {{ formatDateTimeShort(item['published_at']) }}
+          </p>
+        </div>
+      </Section>
+      <div class="mx-0 lg:mx-40">
+        <img
+          v-if="item.image"
+          :src="item.image"
+          class="w-full block rounded-lg shadow-lg"
+        >
       </div>
-    </div>
+      <!-- eslint-disable-next-line -->
+      <Section class="py-16">
+        <div
+          class="mt-5 html-content mx-4 lg:mx-48"
+          v-html="formatContent(item['content'])"
+        />
+        <template v-if="item['action_url']">
+          <div class="my-2">
+            <a
+              :href="item['action_url']"
+              class="w-full text-center shadow block bg-brand-blue text-white font-bold py-2 px-4 rounded"
+              @click.prevent="clickAction"
+            >
+              Baca Selengkapnya
+            </a>
+          </div>
+        </template>
+      </Section>
+    </template>
+    <template>
+      <content-loader
+        :speed="2"
+        primary-color="#f3f3f3"
+        secondary-color="#ecebeb"
+      >
+        <rect
+          x="0"
+          y="15"
+          rx="0"
+          ry="0"
+          width="100%"
+          height="15"
+        />
+        <rect
+          x="0"
+          y="45"
+          rx="0"
+          ry="0"
+          width="100%"
+          height="75"
+        />
+      </content-loader>
+    </template>
   </div>
 </template>
 
@@ -73,6 +73,7 @@ import { useArticleMetaInfo } from '~/lib/metainfo'
 const regex = /(?:(-artcl\.))(.*)$/
 export default {
   components: {
+    Section: () => import('~/components/Base/Section'),
     ContentLoader
   },
   validate ({ redirect, params }) {
