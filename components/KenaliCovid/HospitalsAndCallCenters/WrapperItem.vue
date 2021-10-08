@@ -51,7 +51,7 @@ export default {
   bg-white;
 
   &__title {
-    font-size: 20px;
+    font-size: 16px;
 
     @apply block m-0 mb-4 p-0
     text-gray-900
@@ -69,11 +69,11 @@ export default {
     @apply mt-6;
   }
 
-  @screen lg {
+  @screen md {
     @apply px-8 py-6;
 
     &__title {
-      @apply text-2xl;
+      font-size: 21px;
     }
   }
 }

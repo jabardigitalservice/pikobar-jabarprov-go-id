@@ -12,7 +12,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { toPhoneURL, toArray, fillArrayIfEmpty } from './utils'
+import { toPhoneURL, toArray } from './utils'
 import WrapperItem from './WrapperItem'
 import { ContactCard } from '~/components/Base/ContactCard'
 
@@ -51,37 +51,23 @@ export default {
   },
   methods: {
     mapHospitalItem (item) {
-      const phones = {
-        name: 'Telepon',
-        contacts: []
-      }
-      const websites = {
-        name: 'Website',
-        contacts: []
-      }
-      try {
-        phones.contacts = toArray(item.phones)
-          .map(p => ({
-            icon: 'phone',
-            label: p,
-            href: toPhoneURL(p)
-          }))
-        websites.contacts = toArray(item.web)
-          .map(w => ({
-            icon: 'web',
-            label: w,
-            href: w
-          }))
-        fillArrayIfEmpty(phones.contacts, { icon: 'phone' })
-        fillArrayIfEmpty(websites.contacts, { icon: 'web' })
-      } catch (e) {
-        console.error(e)
-      }
+      const phones = toArray(item.phones)
+        .map(p => ({
+          icon: 'phone',
+          label: p,
+          href: toPhoneURL(p)
+        }))
+      const websites = toArray(item.web)
+        .map(w => ({
+          icon: 'web',
+          label: w,
+          href: w
+        }))
 
       return {
         title: item.name,
         body: `${item.address}, ${item.city}`,
-        groups: [phones, websites]
+        contacts: [...phones, ...websites]
       }
     }
   }
