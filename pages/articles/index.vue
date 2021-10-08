@@ -20,7 +20,7 @@
         <div class="mt-10">
           <ListArticles
             :items="items"
-            :loading="isLoadingMore"
+            :loading="isLoading"
             :is-search="isSearch"
             :has-reached-end="hasReachedEnd"
             :on-load-more="onLoadMore"
@@ -68,7 +68,7 @@ export default {
         search: ''
       },
       collectionName: 'articles',
-      isLoadingMore: false,
+      isLoading: false,
       isSearch: false,
       hasReachedEnd: false,
       lastDocumentSnapshot: null,
@@ -117,19 +117,14 @@ export default {
   },
   methods: {
     onSearchStringChanged (str) {
-      this.isLoadingMore = true
       this.query.search = str
       this.fetchItems(false)
-      this.isLoadingMore = false
     },
     onLoadMore () {
-      this.isLoadingMore = true
       this.fetchItems(true)
-        .then(() => {
-          this.isLoadingMore = false
-        })
     },
     fetchItems (append = true) {
+      this.isLoading = true
       if (!append) {
         this.items = []
       }
@@ -201,6 +196,7 @@ export default {
         }).finally(() => {
           if ((process.client || process.browser) && this.eventName) {
             analytics.logEvent(this.eventName)
+            this.isLoading = false
           }
         })
     },
@@ -210,6 +206,7 @@ export default {
           return `${str}`.toLowerCase().includes(this.query.search.toLowerCase())
         })
       })
+      this.isLoading = false
       return array
     }
   }
