@@ -191,12 +191,12 @@ export default {
           if (!docs.length) {
             this.hasReachedEnd = true
           }
+          this.isLoading = false
         }).catch((e) => {
           return null
         }).finally(() => {
           if ((process.client || process.browser) && this.eventName) {
             analytics.logEvent(this.eventName)
-            this.isLoading = false
           }
         })
     },
