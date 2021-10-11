@@ -37,7 +37,7 @@
         </template>
       </Section>
     </template>
-    <template>
+    <template v-else>
       <content-loader
         :speed="2"
         primary-color="#f3f3f3"
