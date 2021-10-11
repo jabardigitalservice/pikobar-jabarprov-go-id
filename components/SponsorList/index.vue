@@ -111,12 +111,12 @@ export default {
         {
           logo: 'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2FIPSPI.jpg?alt=media&token=b6c0f025-8586-42f8-b2ca-5cdf6646b394',
           alt: 'IPSPI',
-          url: 'http://ipspi-indonesia.com/dpd/wilayah/32'
+          url: 'https://www.ipspi.org/'
         },
         {
           logo: '/img/logo-ismki.png',
           alt: 'Ikatan Senat Mahasiswa Kedokteran Indonesia',
-          url: 'http://ismki.org',
+          url: 'https://ismki.or.id/',
           height: '10em'
         },
         {
