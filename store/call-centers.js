@@ -16,7 +16,7 @@ export const actions = {
       let query = db.collection('call_centers')
         .orderBy('nama_kotkab', 'asc')
 
-      if (options.perPage) {
+      if (options) {
         query = query.limit(options.perPage)
       }
       // TODO: move to "~/api"

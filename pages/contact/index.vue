@@ -1,27 +1,73 @@
 <template>
   <div class="">
-    <div class="bg-brand-green-dark">
-      <div class="container mx-auto p-8 lg:p-16 text-white">
-        <h2 class="text-2xl font-bold leading-tight">
+    <Section class="py-6 md:py-16 bg-white">
+      <div class="space-y-3 mb-10">
+        <h3 class="text-3xl text-gray-900 font-bold">
           Kontak Rumah Sakit dan Call Center
-        </h2>
-        <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
-          Informasi dan nomor alamat rumah sakit yang menjadi rujukan pemeriksaan gejala COVID-19
+        </h3>
+        <p class="text-gray-500">
+          Informasi dan nomor alamat rumah sakit yang menjadi rujukan pemeriksaan gejala COVID-19.
         </p>
       </div>
-    </div>
-    <br>
-    <div class="container mx-auto">
-      <ContactsAccordion />
-    </div>
+      <!-- eslint-disable vue/valid-v-slot -->
+      <TabLayout v-model="tabLayoutModel" :tabs="tabs">
+        <template #content.info>
+          <div class="mt-10">
+            <Hospitals />
+          </div>
+        </template>
+        <template #content.document_0>
+          <div class="mt-10">
+            <CallCenters />
+          </div>
+        </template>
+      </TabLayout>
+    </Section>
   </div>
 </template>
 
 <script>
 import { analytics } from '~/lib/firebase'
+import { TabLayout } from '~/components/Base/TabLayout'
+import Section from '~/components/Base/Section'
+import { Hospitals, CallCenters } from '~/components/KenaliCovid/HospitalsAndCallCenters'
+
 export default {
   components: {
-    ContactsAccordion: () => import('~/components/ContactsAccordion')
+    TabLayout,
+    Section,
+    Hospitals,
+    CallCenters
+  },
+  data () {
+    return {
+      mValue: 0,
+      tabs: Object.freeze([
+        {
+          name: 'info',
+          label: 'Rumah Sakit Rujukan'
+        },
+        {
+          name: 'document_0',
+          label: 'Call Center'
+        },
+        {
+          name: 'document_1',
+          label: 'Website Gugus Tugas Kota/Kabupaten Jawa Barat'
+        }
+      ])
+    }
+  },
+  computed: {
+    tabLayoutModel: {
+      get () {
+        return this.mValue
+      },
+      set (index) {
+        this.mValue = index
+        this.$emit('change', index)
+      }
+    }
   },
   mounted () {
     this.$store.dispatch('hospitals/getItems')
