@@ -9,14 +9,20 @@
           Informasi dan nomor alamat rumah sakit yang menjadi rujukan pemeriksaan gejala COVID-19.
         </p>
       </div>
+      <StringSearchQuery :value="mSearchString" @search="onLocalSearchStringChanged" />
       <!-- eslint-disable vue/valid-v-slot -->
-      <TabLayout v-model="tabLayoutModel" :tabs="tabs">
+      <TabLayout v-model="tabLayoutModel" :tabs="tabs" class="pt-8">
         <template #content.info>
           <div class="mt-10">
             <Hospitals />
           </div>
         </template>
         <template #content.document_0>
+          <div class="mt-10">
+            <CallCenters />
+          </div>
+        </template>
+        <template #content.document_1>
           <div class="mt-10">
             <CallCenters />
           </div>
@@ -30,10 +36,11 @@
 import { analytics } from '~/lib/firebase'
 import { TabLayout } from '~/components/Base/TabLayout'
 import Section from '~/components/Base/Section'
-import { Hospitals, CallCenters } from '~/components/KenaliCovid/HospitalsAndCallCenters'
+import { Hospitals, CallCenters } from '~/components/ContactPage'
 
 export default {
   components: {
+    StringSearchQuery: () => import('~/components/StringSearchQuery'),
     TabLayout,
     Section,
     Hospitals,
@@ -42,6 +49,7 @@ export default {
   data () {
     return {
       mValue: 0,
+      mSearchString: '',
       tabs: Object.freeze([
         {
           name: 'info',
@@ -70,29 +78,16 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('hospitals/getItems')
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('contacts_view')
       }
     })
   },
-  head () {
-    const title = 'Kontak - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
-    return {
-      title,
-      meta: [
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: title
-        },
-        {
-          hid: 'og:type',
-          property: 'og:type',
-          content: 'article'
-        }
-      ]
+  methods: {
+    onLocalSearchStringChanged (str) {
+      this.$emit('update:searchString')
+      this.mSearchString = str
     }
   }
 }
