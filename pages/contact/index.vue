@@ -12,19 +12,12 @@
       <StringSearchQuery :value="mSearchString" @search="onLocalSearchStringChanged" />
       <!-- eslint-disable vue/valid-v-slot -->
       <TabLayout v-model="tabLayoutModel" :tabs="tabs" class="pt-8">
-        <template #content.info>
+        <template #content.contact>
           <div class="mt-10">
-            <Hospitals />
-          </div>
-        </template>
-        <template #content.document_0>
-          <div class="mt-10">
-            <CallCenters />
-          </div>
-        </template>
-        <template #content.document_1>
-          <div class="mt-10">
-            <CallCenters />
+            <ListContact
+              :items="items"
+              :type="contact_type"
+            />
           </div>
         </template>
       </TabLayout>
@@ -33,18 +26,18 @@
 </template>
 
 <script>
+// import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import { TabLayout } from '~/components/Base/TabLayout'
 import Section from '~/components/Base/Section'
-import { Hospitals, CallCenters } from '~/components/ContactPage'
+import { ListContact } from '~/components/ContactPage'
 
 export default {
   components: {
     StringSearchQuery: () => import('~/components/StringSearchQuery'),
     TabLayout,
     Section,
-    Hospitals,
-    CallCenters
+    ListContact
   },
   data () {
     return {
@@ -52,18 +45,23 @@ export default {
       mSearchString: '',
       tabs: Object.freeze([
         {
-          name: 'info',
+          name: 'contact',
+          type: 'hospital',
           label: 'Rumah Sakit Rujukan'
         },
         {
-          name: 'document_0',
+          name: 'contact',
+          type: 'call_center',
           label: 'Call Center'
         },
         {
-          name: 'document_1',
+          name: 'contact',
+          type: 'website',
           label: 'Website Gugus Tugas Kota/Kabupaten Jawa Barat'
         }
-      ])
+      ]),
+      items: [],
+      contact_type: ''
     }
   },
   computed: {
@@ -73,11 +71,14 @@ export default {
       },
       set (index) {
         this.mValue = index
+        this.contact_type = this.tabs[index].type
         this.$emit('change', index)
+        this.getData()
       }
     }
   },
   mounted () {
+    this.getData()
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('contacts_view')
@@ -85,6 +86,21 @@ export default {
     })
   },
   methods: {
+    async getData () {
+      console.log(this.contact_type)
+      switch (this.contact_type) {
+        case 'call_center':
+          // eslint-disable-next-line no-case-declarations
+          const callCenter = await this.$store.dispatch('call-centers/getItems', { perPage: 27 })
+          this.items = callCenter
+          return this.items
+        default:
+          // eslint-disable-next-line no-case-declarations
+          const hospitals = await this.$store.dispatch('hospitals/getItems', { perPage: 999 })
+          this.items = hospitals
+          return this.items
+      }
+    },
     onLocalSearchStringChanged (str) {
       this.$emit('update:searchString')
       this.mSearchString = str

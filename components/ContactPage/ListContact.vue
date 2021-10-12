@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { toPhoneURL, toArray } from '../KenaliCovid/HospitalsAndCallCenters/utils'
 import { ContactCard } from '~/components/Base/ContactCard'
 
@@ -19,29 +18,47 @@ export default {
   components: {
     ContactCard
   },
-  data () {
-    return Object.freeze({})
-  },
-  computed: {
-    ...mapState('hospitals', {
-      isLoading: (state) => {
-        return !Array.isArray(state.items) ||
-          !state.items.length
-      }
-    }),
-    list () {
-      if (this.isLoading) {
-        return []
-      }
-      const { items } = this.$store.state.hospitals
-      return items.map(this.mapHospitalItem)
+  props: {
+    items: {
+      type: Array,
+      default: () => []
+    },
+    type: {
+      type: String,
+      default: 'hospital'
     }
   },
-  mounted () {
-    this.$store.dispatch('hospitals/getItems', { perPage: 27 })
+  computed: {
+    list: {
+      get () {
+        return this.items.map(this.mapItem)
+      },
+      set (value) {
+        return value.map(this.mapItem)
+      }
+    }
   },
   methods: {
-    mapHospitalItem (item) {
+    mapItem (item) {
+      if (this.type === 'call_center') {
+        const callCenters = toArray(item.call_center)
+          .map(cc => ({
+            icon: 'phone',
+            label: cc,
+            href: toPhoneURL(cc)
+          }))
+        const hotlines = toArray(item.hotline)
+          .map(h => ({
+            icon: 'phone',
+            label: h,
+            href: h
+          }))
+
+        return {
+          title: item.nama_kotkab,
+          contacts: [...callCenters, ...hotlines]
+        }
+      }
       const phones = toArray(item.phones)
         .map(p => ({
           icon: 'phone',

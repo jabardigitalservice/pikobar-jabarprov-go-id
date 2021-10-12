@@ -1,4 +1,3 @@
-import Hospitals from './Hospitals'
-import CallCenters from './CallCenters'
+import ListContact from './ListContact'
 
-export { Hospitals, CallCenters }
+export { ListContact }
