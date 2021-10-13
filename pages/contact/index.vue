@@ -9,7 +9,11 @@
           Informasi dan nomor alamat rumah sakit yang menjadi rujukan pemeriksaan gejala COVID-19.
         </p>
       </div>
-      <StringSearchQuery :value="mSearchString" @search="onLocalSearchStringChanged" />
+      <StringSearchQuery
+        :placeholder="'Cari Kabupaten atau Kota'"
+        :value="mSearchString"
+        @search="onLocalSearchStringChanged"
+      />
       <!-- eslint-disable vue/valid-v-slot -->
       <TabLayout v-model="tabLayoutModel" :tabs="tabs" class="pt-8">
         <template #content.contact>
@@ -138,7 +142,7 @@ export default {
             return this.list
           }
           this.list = this.list.filter((data) => {
-            return [data.name, data.websites].some((str) => {
+            return [data.name].some((str) => {
               return `${str}`.toLowerCase().includes(search.toLowerCase())
             })
           })
