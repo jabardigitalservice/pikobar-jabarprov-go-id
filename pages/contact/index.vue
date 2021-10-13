@@ -15,7 +15,7 @@
         <template #content.contact>
           <div class="mt-10">
             <ListContact
-              :items="items"
+              :items="list"
               :type="contact_type"
             />
           </div>
@@ -60,7 +60,7 @@ export default {
           label: 'Website Gugus Tugas Kota/Kabupaten Jawa Barat'
         }
       ]),
-      items: [],
+      list: [],
       contact_type: ''
     }
   },
@@ -87,27 +87,67 @@ export default {
   },
   methods: {
     async getData () {
-      console.log(this.contact_type)
       switch (this.contact_type) {
         case 'call_center':
           // eslint-disable-next-line no-case-declarations
           const callCenter = await this.$store.dispatch('call-centers/getItems', { perPage: 27 })
-          this.items = callCenter
-          return this.items
+          this.list = callCenter
+          return this.list
+        case 'website':
+          // eslint-disable-next-line no-case-declarations
+          const websites = await this.$store.dispatch('task-forces/getItems', { perPage: 27 })
+          this.list = websites
+          return this.list
         default:
           // eslint-disable-next-line no-case-declarations
           const hospitals = await this.$store.dispatch('hospitals/getItems', { perPage: 999 })
-          this.items = hospitals
-          return this.items
+          this.list = hospitals
+          return this.list
       }
     },
     onLocalSearchStringChanged (str) {
       this.$emit('update:searchString')
       this.mSearchString = str
+      this.searchData(str)
+    },
+    searchData (search) {
+      if (!search) {
+        switch (this.contact_type) {
+          case 'call_center':
+            this.list = this.$store.state['call-centers'].items
+            return this.list
+          case 'website':
+            this.list = this.$store.state['task-forces'].items
+            return this.list
+          default:
+            this.list = this.$store.state.hospitals.items
+            return this.list
+        }
+      }
+      switch (this.contact_type) {
+        case 'call_center':
+          this.list = this.list.filter((data) => {
+            return [data.nama_kotkab].some((str) => {
+              return `${str}`.toLowerCase().includes(search.toLowerCase())
+            })
+          })
+          return this.list
+        case 'website':
+          this.list = this.list.filter((data) => {
+            return [data.name, data.websites].some((str) => {
+              return `${str}`.toLowerCase().includes(search.toLowerCase())
+            })
+          })
+          return this.list
+        default:
+          this.list = this.list.filter((data) => {
+            return [data.name, data.address, data.city].some((str) => {
+              return `${str}`.toLowerCase().includes(search.toLowerCase())
+            })
+          })
+          return this.list
+      }
     }
   }
 }
 </script>
-
-<style scoped>
-</style>

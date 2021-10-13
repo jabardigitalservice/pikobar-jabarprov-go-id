@@ -40,42 +40,61 @@ export default {
   },
   methods: {
     mapItem (item) {
-      if (this.type === 'call_center') {
-        const callCenters = toArray(item.call_center)
-          .map(cc => ({
-            icon: 'phone',
-            label: cc,
-            href: toPhoneURL(cc)
-          }))
-        const hotlines = toArray(item.hotline)
-          .map(h => ({
-            icon: 'phone',
-            label: h,
-            href: h
-          }))
+      switch (this.type) {
+        case 'call_center':
+          // eslint-disable-next-line no-case-declarations
+          const callCenters = toArray(item.call_center)
+            .map(cc => ({
+              icon: 'phone',
+              label: cc,
+              href: toPhoneURL(cc)
+            }))
 
-        return {
-          title: item.nama_kotkab,
-          contacts: [...callCenters, ...hotlines]
-        }
-      }
-      const phones = toArray(item.phones)
-        .map(p => ({
-          icon: 'phone',
-          label: p,
-          href: toPhoneURL(p)
-        }))
-      const websites = toArray(item.web)
-        .map(w => ({
-          icon: 'web',
-          label: w,
-          href: w
-        }))
+          // eslint-disable-next-line no-case-declarations
+          const hotlines = toArray(item.hotline)
+            .map(h => ({
+              icon: 'phone',
+              label: h,
+              href: h
+            }))
 
-      return {
-        title: item.name,
-        body: `${item.address}, ${item.city}`,
-        contacts: [...phones, ...websites]
+          return {
+            title: item.nama_kotkab,
+            contacts: [...callCenters, ...hotlines]
+          }
+        case 'website':
+          // eslint-disable-next-line no-case-declarations
+          const websites = toArray(item.website)
+            .map(w => ({
+              icon: 'web',
+              label: w,
+              href: w
+            }))
+          return {
+            title: item.name,
+            contacts: [...websites]
+          }
+        default:
+          // eslint-disable-next-line no-case-declarations
+          const phones = toArray(item.phones)
+            .map(p => ({
+              icon: 'phone',
+              label: p,
+              href: toPhoneURL(p)
+            }))
+          // eslint-disable-next-line no-case-declarations
+          const hospitalWebsites = toArray(item.web)
+            .map(w => ({
+              icon: 'web',
+              label: w,
+              href: w
+            }))
+
+          return {
+            title: item.name,
+            body: `${item.address}, ${item.city}`,
+            contacts: [...phones, ...hospitalWebsites]
+          }
       }
     }
   }
