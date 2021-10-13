@@ -11,6 +11,7 @@
       </div>
       <div class="py-10">
         <StringSearchQuery
+          :placeholder="'Cari pertanyaan di sini.'"
           :value="query.search"
           @search="onSearchStringChanged"
         />

@@ -8,7 +8,7 @@
       v-model="mValue"
       type="search"
       name="serch"
-      placeholder="Search"
+      :placeholder="placeholder"
       class="search__input"
       @keyup.enter="onSearchEnter"
     >
@@ -29,6 +29,10 @@ export default {
     event: 'search'
   },
   props: {
+    placeholder: {
+      type: String,
+      default: 'Search'
+    },
     value: {
       type: String,
       default: null
