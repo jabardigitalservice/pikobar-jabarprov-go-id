@@ -766,7 +766,7 @@ export default {
         },
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 180
         },
         isStacked: true,
         seriesType: 'bars',
@@ -788,7 +788,7 @@ export default {
         // seriesType: 'bars',
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 180
         },
         vAxis: {
           viewWindow: {
@@ -886,6 +886,19 @@ export default {
             const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
             return {
               label: '1 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          },
+          triwulan () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 90, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '3 Bulan Terakhir',
               active: false,
               dateRange: {
                 start: tanggalmulai,
@@ -1132,7 +1145,9 @@ export default {
     }
   },
   mounted () {
-    this.selectedDate.start = new Date('2020-03-01')
+    const n = new Date()
+
+    this.selectedDate.start = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 90, 0, 0)
     this.selectedDate.end = new Date()
     this.checkIsMobile()
   },
@@ -1329,6 +1344,8 @@ export default {
       // get data
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
+        const showAnnotation = i % (Math.floor((endNum - startNum) / 13))
+
         // by Harian
         let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
         tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
@@ -1338,7 +1355,7 @@ export default {
         self.ChartHarianData.push([
           self.formatDateNoYear(date),
           self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value, tooltipHarian,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value,
+          !showAnnotation ? self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value : null,
           self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value, tooltipHarian
         ])
       }
@@ -1415,6 +1432,8 @@ export default {
       let stop = false
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(data[i].tanggal)
+        const showAnnotation = i % (Math.floor((endNum - startNum) / 13))
+
         if (stop === false) {
           let tooltipDate = self.formatDate(date)
           let xAxisLabel = self.formatDateNoYear(date)
@@ -1424,7 +1443,7 @@ export default {
             xAxisLabel = self.formatDateNoYear(date) + ' - ' + self.formatDateNoYear(dateNextWeek)
           }
 
-          this.generateChartSatuan(data[i], tooltipDate, xAxisLabel)
+          this.generateChartSatuan(data[i], tooltipDate, xAxisLabel, showAnnotation)
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -1521,6 +1540,8 @@ export default {
       for (let i = startNum; i <= endNum; i++) {
         const data = self.jsonDataKasus.kota[indexKota].satuan[groupWaktu]
         const date = new Date(data[i].tanggal)
+        const showAnnotation = i % (Math.floor((endNum - startNum) / 13))
+
         if (stop === false) {
           let tooltipDate = self.formatDate(date)
           let xAxisLabel = self.formatDateNoYear(date)
@@ -1529,7 +1550,7 @@ export default {
             tooltipDate = self.formatDate(date) + ' - ' + self.formatDate(dateNextWeek)
             xAxisLabel = self.formatDateNoYear(date) + ' - ' + self.formatDateNoYear(dateNextWeek)
           }
-          this.generateChartSatuan(data[i], tooltipDate, xAxisLabel)
+          this.generateChartSatuan(data[i], tooltipDate, xAxisLabel, showAnnotation)
         }
         if (self.formatDate(date) === strToday) {
           stop = true
@@ -1612,7 +1633,7 @@ export default {
         this.isMobile = false
       }
     },
-    generateChartSatuan (data, tooltipDate, xAxisLabel) {
+    generateChartSatuan (data, tooltipDate, xAxisLabel, showAnnotation) {
       const self = this
       let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
       tooltipHarian += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
@@ -1622,7 +1643,7 @@ export default {
       self.ChartHarianData.push([
         xAxisLabel,
         data.confirmation_total, tooltipHarian,
-        data.confirmation_total,
+        !showAnnotation ? data.confirmation_total : null,
         data.confirmation_ratarata, tooltipHarian
       ])
     },

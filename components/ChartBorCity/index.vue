@@ -3,7 +3,7 @@
     <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg shadow-lg' : 'hidden'">
       <div class="flex flex-col md:flex-row items-center border-b-2 p-4">
         <h4 class="font-bold text-lg mb-2">
-          Ketersediaan Tempat Tidur (TT) RS Menangani Covid-19 di Jawa Barat
+          Ketersediaan Tempat Tidur RS Menangani Covid-19 di Jawa Barat
         </h4>
         <div class="md:ml-auto flex flex-col w-full md:w-56">
           <client-only>
