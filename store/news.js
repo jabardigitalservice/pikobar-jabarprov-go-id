@@ -2,6 +2,8 @@ import _uniqBy from 'lodash/uniqBy'
 import _orderBy from 'lodash/orderBy'
 import {
   get,
+  getArticleNational,
+  getArticleWorld,
   getById,
   getLastUpdate as __getLastUpdate,
   ORDER_INDEX,
@@ -10,6 +12,8 @@ import {
 
 export const state = () => ({
   items: [],
+  item_articles_national: [],
+  item_articles_world: [],
 
   /**
    * @type {Date | null}
@@ -35,11 +39,18 @@ export const mutations = {
     const ordered = _orderBy(uniq, [ORDER_INDEX], [ORDER_TYPE])
     state.items = ordered
   },
+  setItemNationals (state, items) {
+    state.item_articles_national = items
+  },
+  setItemWorlds (state, items) {
+    state.item_articles_world = items
+  },
   clearItems (state) {
     state.items = []
   },
   appendItems (state, items) {
     state.items = [...state.items, ...items]
+    console.log(state.items)
   },
   prependItems (state, items) {
     state.items = [...items, ...state.items]
@@ -56,6 +67,27 @@ export const actions = {
         })
     }
     return state.items
+  },
+  getArticleNationals ({ state, commit }, options) {
+    if (!state.item_articles_national || !state.item_articles_national.length) {
+      return getArticleNational(options)
+        .then((arr) => {
+          commit('setItemNationals', arr)
+          return state.item_articles_national
+        })
+    }
+    return state.item_articles_national
+  },
+  getArticleWorlds ({ state, commit }, options) {
+    if (!state.item_articles_world || !state.item_articles_world.length) {
+      return getArticleWorld(options)
+        .then((arr) => {
+          console.log(arr)
+          commit('setItemWorlds', arr)
+          return state.item_articles_world
+        })
+    }
+    return state.item_articles_world
   },
   getItemById ({ state, commit, getters }, id) {
     const existing = state.items.find(item => item.id === id)

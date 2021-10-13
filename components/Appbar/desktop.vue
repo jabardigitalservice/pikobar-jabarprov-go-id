@@ -152,7 +152,7 @@ export default {
           to: '#',
           label: 'Informasi',
           children: [
-            { to: '/articles?tab=jabar', label: 'Berita' },
+            { to: '/articles', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
             { to: '/contact', label: 'Kontak' },
             { to: '/cekbansos', label: 'Bantuan Sosial' }
