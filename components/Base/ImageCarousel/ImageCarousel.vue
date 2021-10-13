@@ -55,6 +55,7 @@
 
 <script>
 import { Swiper, SwiperSlide, directive as swiper } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 import _inRange from 'lodash/inRange'
 import _get from 'lodash/get'
 import _merge from 'lodash/merge'
@@ -297,13 +298,7 @@ export default {
 
 .image-carousel--bleed::v-deep {
   .swiper-container {
-    overflow: visible;
+    overflow: hidden;
   }
 }
-</style>
-
-<style lang="scss">
-/* purgecss start ignore */
-@import 'swiper/css/swiper.css';
-/* purgecss end ignore */
 </style>

@@ -1,42 +1,38 @@
 <template>
-  <div class="flex flex-row flex-wrap md:flex-no-wrap items-stretch rounded-none sm:rounded overflow-hidden">
+  <div class="search">
+    <FontAwesomeIcon
+      :icon="icon.faSearch"
+      class="search__icon"
+    />
     <input
       v-model="mValue"
-      class="min-w-0 inline-block w-full flex-none sm:flex-1 bg-gray-200 p-4"
-      placeholder="Cari kabupaten atau kota..."
+      type="search"
+      name="serch"
+      :placeholder="placeholder"
+      class="search__input"
       @keyup.enter="onSearchEnter"
     >
-    <div class="flex-1 w-full mt-2 sm:mt-0 sm:flex-none sm:w-auto flex justify-end items-stretch">
-      <button
-        class="mr-2 sm:mr-0 px-4 py-2 bg-brand-blue hover:bg-brand-blue-lighter text-white flex justify-center items-center"
-        @click="onSearchEnter"
-      >
-        <FontAwesomeIcon :icon="icon.faSearch" class="mr-2" />
-        <span>
-          Cari
-        </span>
-      </button>
-      <button
-        class="px-4 py-2 bg-gray-300 hover:bg-gray-200 text-gray-800 flex justify-center items-center"
-        @click="onSearchReset"
-      >
-        <FontAwesomeIcon :icon="icon.faTimes" class="mr-2" />
-        <span>
-          Reset
-        </span>
-      </button>
-    </div>
+    <button
+      type="button"
+      class="search__button"
+      @click="onSearchEnter"
+    >
+      Cari
+    </button>
   </div>
 </template>
-
 <script>
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 export default {
   model: {
     prop: 'value',
     event: 'search'
   },
   props: {
+    placeholder: {
+      type: String,
+      default: 'Search'
+    },
     value: {
       type: String,
       default: null
@@ -44,18 +40,19 @@ export default {
   },
   data () {
     return {
-      mValue: '',
       icon: {
-        faSearch,
-        faTimes
+        faSearch
       }
     }
   },
-  watch: {
-    value: {
-      immediate: true,
-      handler (v) {
-        this.mValue = v
+  computed: {
+    mValue: {
+      get () {
+        return this.value
+      },
+      set (value) {
+        this.$emit('search', value)
+        return value
       }
     }
   },
@@ -69,3 +66,31 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.search {
+  @apply relative text-gray-600 border rounded-md;
+  &__icon {
+    @apply absolute left-0 top-0 mt-3 ml-4;
+  }
+  &__input {
+    width: 85%;
+    @apply bg-white ml-4 h-10 px-5 pr-10 rounded-full text-base;
+    &:focus {
+      @apply outline-none;
+    }
+    @screen md {
+      width: 95%;
+    }
+  }
+  &__button {
+    @apply absolute right-0 top-0 mb-1 justify-around mb-1 px-6 py-2 text-white rounded-md bg-brand-green;
+    @screen md {
+      @apply mr-1;
+    }
+
+    &:hover {
+      @apply bg-brand-green-lighter;
+    }
+  }
+}
+</style>
