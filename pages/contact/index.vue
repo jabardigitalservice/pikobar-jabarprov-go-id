@@ -26,7 +26,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import { TabLayout } from '~/components/Base/TabLayout'
 import Section from '~/components/Base/Section'
@@ -65,6 +65,15 @@ export default {
     }
   },
   computed: {
+    ...mapState('call-centers', {
+      list_call_centers: state => state.items
+    }),
+    ...mapState('task-forces', {
+      list_websites: state => state.items
+    }),
+    ...mapState('hospitals', {
+      list_hospitals: state => state.items
+    }),
     tabLayoutModel: {
       get () {
         return this.mValue
@@ -108,24 +117,15 @@ export default {
     onLocalSearchStringChanged (str) {
       this.$emit('update:searchString')
       this.mSearchString = str
-      this.searchData(str)
+      this.onSearchData(str)
     },
-    searchData (search) {
-      if (!search) {
-        switch (this.contact_type) {
-          case 'call_center':
-            this.list = this.$store.state['call-centers'].items
-            return this.list
-          case 'website':
-            this.list = this.$store.state['task-forces'].items
-            return this.list
-          default:
-            this.list = this.$store.state.hospitals.items
-            return this.list
-        }
-      }
+    onSearchData (search) {
       switch (this.contact_type) {
         case 'call_center':
+          if (!search) {
+            this.list = this.list_call_centers
+            return this.list
+          }
           this.list = this.list.filter((data) => {
             return [data.nama_kotkab].some((str) => {
               return `${str}`.toLowerCase().includes(search.toLowerCase())
@@ -133,6 +133,10 @@ export default {
           })
           return this.list
         case 'website':
+          if (!search) {
+            this.list = this.list_websites
+            return this.list
+          }
           this.list = this.list.filter((data) => {
             return [data.name, data.websites].some((str) => {
               return `${str}`.toLowerCase().includes(search.toLowerCase())
@@ -140,6 +144,10 @@ export default {
           })
           return this.list
         default:
+          if (!search) {
+            this.list = this.list_hospitals
+            return this.list
+          }
           this.list = this.list.filter((data) => {
             return [data.name, data.address, data.city].some((str) => {
               return `${str}`.toLowerCase().includes(search.toLowerCase())
