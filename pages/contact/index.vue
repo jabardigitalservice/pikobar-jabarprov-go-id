@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <Section class="py-6 md:py-16 bg-white">
+    <Section class="py-6 md:py-12 bg-white">
       <div class="space-y-3 mb-10">
         <h3 class="text-4xl text-gray-900 font-bold">
           Kontak Rumah Sakit dan Call Center
