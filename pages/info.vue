@@ -1,31 +1,37 @@
 <template>
   <div
     v-if="isInfographicOrDocumentRoute"
-    class="container mx-auto"
   >
-    <section class="m-4 md:m-8">
-      <header>
-        <TabLayout
-          :tabs="tabs"
-          :active-tab-id="activeTabId"
-          @change="onTabChanged"
-        />
-      </header>
-      <br>
-      <div class="p-5 md:p-8 bg-white rounded-lg shadow-md border-solid border-gray-300">
-        <nuxt-child />
+    <Section class="bg-white">
+      <div class="space-y-3 pt-2 lg:pt-8">
+        <h3 class="text-3xl text-gray-900 font-bold">
+          Informasi Lainnya
+        </h3>
+        <p class="text-gray-500">
+          Informasi terkait infografis, dokumen dan rilis pers seputar Covid-19 di Jawa Barat.
+        </p>
       </div>
-    </section>
+      <TabLayout
+        class="py-6"
+        :tabs="tabs"
+        :active-tab-id="activeTabId"
+        @change="onTabChanged"
+      />
+      <nuxt-child />
+    </Section>
   </div>
   <nuxt-child v-else />
 </template>
 
 <script>
 import TabLayout from '~/components/TabLayout'
+import Section from '~/components/Base/Section'
+
 export default {
   scrollToTop: true,
   components: {
-    TabLayout
+    TabLayout,
+    Section
   },
   asyncData ({ route }) {
     const isInfographicOrDocumentRoute = [

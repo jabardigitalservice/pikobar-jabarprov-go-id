@@ -1,13 +1,13 @@
 <template>
   <div>
     <slot>
-      <table class="w-full">
+      <table class="w-full rounded-t-lg">
         <thead class="hidden sm:table-header-group">
-          <tr class="bg-gray-200 border-b-2 border-t-2 border-solid border-gray-300">
+          <tr class="bg-green-500 border-b-2 border-t-2 border-solid border-gray-300">
             <th
               v-for="(col, index) in columns"
               :key="index"
-              class="p-2 opacity-50 text-left"
+              class="p-2 text-left text-white"
             >
               {{ col.label }}
             </th>
