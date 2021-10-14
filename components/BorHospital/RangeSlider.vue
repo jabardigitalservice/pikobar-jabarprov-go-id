@@ -38,9 +38,10 @@
       </div>
       <div class="flex flex-col w-full">
         <div class="range-slider mb-3">
+          <div class="range-slider-track" />
+          <div class="range-slider-fill" :style="{left: fillLeft+'%', width: fillWidth+'%'}" />
           <input v-model="sliderMin" type="range" min="0" :max="maxRangeValue" step="1">
           <input v-model="sliderMax" type="range" min="0" :max="maxRangeValue" step="1">
-          <div class="range-slider-fill" :style="{left: fillLeft+'%', width: fillWidth+'%'}" />
         </div>
         <div class="text-right">
           <a href="javascript:void(0);" class="text-blue-500" @click="resetValues">Reset Filter</a>
@@ -210,9 +211,15 @@ export default {
 }
 
 .range-slider input[type=range] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   position: absolute;
   left: 0;
   top: 50%;
+  width: 100%;
+  background: none;
+  pointer-events: none;
 }
 
 .range-slider-fill {
@@ -226,22 +233,31 @@ export default {
   z-index: 1;
 }
 
+.range-slider-track {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 5px;
+  background: #C3E9D0;
+  border-radius: 5px;
+  box-shadow: none;
+  border: 0;
+  z-index: 1;
+}
+
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-input[type=range] {
-  -webkit-appearance: none;
-  width: 100%;
-}
-
+input[type=range]:active,
 input[type=range]:focus {
   outline: none;
 }
 
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #C3E9D0;
+input[type=range]::-moz-focus-outer {
+  border: 0;
 }
 
 input[type=range]:focus::-ms-fill-lower {
@@ -252,19 +268,8 @@ input[type=range]:focus::-ms-fill-upper {
   background: #16A75C;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 5px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: #C3E9D0;
-  border-radius: 5px;
-  box-shadow: none;
-  border: 0;
-}
-
 input[type=range]::-webkit-slider-thumb {
-  z-index: 2;
+  z-index: 3;
   position: relative;
   box-shadow: 0px 0px 0px #000;
   border: 1px solid #16A75C;
@@ -275,34 +280,31 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -7px;
+  pointer-events: all;
 }
 
 /* MOZILLA INPUT RANGE */
-input[type=range]:focus::-moz-range-track {
-  background: #C3E9D0;
+@-moz-document url-prefix() {
+  .range-slider-fill {
+    top: 65%;
+  }
+
+  .range-slider-track {
+    top: 65%;
+  }
+
+  input[type=range] {
+    position: relative;
+    z-index: 1;
+  }
 }
 
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 5px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: #C3E9D0;
-  border-radius: 5px;
-  box-shadow: none;
-  border: 0;
-}
-
-input[type=range]::-moz-range-progress {
-  background: #16A75C;
-  width: 100%;
-  height: 5px;
-  border-radius: 5px;
-  border: 0;
+input[type=range]:nth-child(1)::-moz-range-track {
+  background-color: transparent;
 }
 
 input[type=range]::-moz-range-thumb {
-  z-index: 2;
+  z-index: 3;
   position: relative;
   box-shadow: 0px 0px 0px #000;
   border: 1px solid #16A75C;
@@ -311,8 +313,9 @@ input[type=range]::-moz-range-thumb {
   border-radius: 25px;
   background: #16A75C;
   cursor: pointer;
-  -webkit-appearance: none;
+  -moz-appearance: none;
   margin-top: -7px;
+  pointer-events: all;
 }
 /* END MOZILLA INPUT RANGE */
 
