@@ -766,16 +766,22 @@ export default {
         },
         hAxis: {
           slantedText: true,
-          slantedTextAngle: 180
+          slantedTextAngle: 45
         },
         isStacked: true,
         seriesType: 'bars',
-        series: { 1: { type: 'line' } },
+        series: {
+          1: {
+            type: 'line'
+          }
+        },
         chartArea: {
           width: '85%',
           bottom: 100
         },
-        tooltip: { isHtml: true }
+        tooltip: {
+          isHtml: true
+        }
       },
       ChartKumulatifOptions: {
         height: 500,
@@ -788,7 +794,7 @@ export default {
         // seriesType: 'bars',
         hAxis: {
           slantedText: true,
-          slantedTextAngle: 180
+          slantedTextAngle: 45
         },
         vAxis: {
           viewWindow: {
@@ -1257,6 +1263,7 @@ export default {
       if (this.selectedListGroupWaktu !== 'harian') {
         const hAxisOptions = {
           slantedText: true,
+          slantedTextAngle: 45,
           textStyle: {
             fontSize: 12
           }
@@ -1267,7 +1274,7 @@ export default {
       } else {
         const hAxisOptions = {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         }
         this.ChartHarianOptions.hAxis = hAxisOptions
         this.ChartKumulatifOptions.hAxis = hAxisOptions
@@ -1322,7 +1329,7 @@ export default {
     fetchDataNasionalHarian () {
       this.ChartHarianOptions.hAxis = {
         slantedText: true,
-        slantedTextAngle: -90
+        slantedTextAngle: 45
       }
       const self = this
       let startNum = 0
@@ -1343,8 +1350,9 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
+        const data = self.jsonDataNasionalHarianKumulatif
         const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
-        const showAnnotation = i % (Math.floor((endNum - startNum) / 13))
+        const showAnnotation = this.getShowAnnotation(data, i, startNum, endNum, 'nasional')
 
         // by Harian
         let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
@@ -1432,7 +1440,7 @@ export default {
       let stop = false
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(data[i].tanggal)
-        const showAnnotation = i % (Math.floor((endNum - startNum) / 13))
+        const showAnnotation = this.getShowAnnotation(data, i, startNum, endNum)
 
         if (stop === false) {
           let tooltipDate = self.formatDate(date)
@@ -1540,7 +1548,7 @@ export default {
       for (let i = startNum; i <= endNum; i++) {
         const data = self.jsonDataKasus.kota[indexKota].satuan[groupWaktu]
         const date = new Date(data[i].tanggal)
-        const showAnnotation = i % (Math.floor((endNum - startNum) / 13))
+        const showAnnotation = this.getShowAnnotation(data, i, startNum, endNum)
 
         if (stop === false) {
           let tooltipDate = self.formatDate(date)
@@ -1626,6 +1634,31 @@ export default {
       this.selectedDate = daterange
       this.changeData()
     },
+    isHighestBar (previousValue, currentValue, nextValue, type = '') {
+      if (type === 'nasional') {
+        return (currentValue.jumlah_positif.value - nextValue.jumlah_positif.value) > 0 && (previousValue.jumlah_positif.value - currentValue.jumlah_positif.value) < 0
+      } else {
+        return (currentValue.confirmation_total - nextValue.confirmation_total) > 0 && (previousValue.confirmation_total - currentValue.confirmation_total) < 0
+      }
+    },
+    isLowestBar (previousValue, currentValue, nextValue) {
+      return (currentValue.confirmation_total - nextValue.confirmation_total) < 0 && (previousValue.confirmation_total - currentValue.confirmation_total) > 0
+    },
+    getShowAnnotation (data, i, startNum, endNum, type = '') {
+      const prev = data[i - 1] ? data[i - 1] : data[i]
+      const next = data[i + 1] ? data[i + 1] : data[i]
+      const isHighest = this.isHighestBar(prev, data[i], next, type)
+      const isLowest = this.isLowestBar(prev, data[i], next, type)
+      let showAnnotation = false
+
+      if ((endNum - startNum) <= 100) {
+        showAnnotation = (i === startNum) || (i === (endNum - 1)) || isHighest || isLowest
+      } else {
+        showAnnotation = (i === startNum) || (i === (endNum - 1)) || (i % (Math.floor((endNum - startNum) / 13)) === 0)
+      }
+
+      return showAnnotation
+    },
     checkIsMobile () {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         this.isMobile = true
@@ -1643,7 +1676,7 @@ export default {
       self.ChartHarianData.push([
         xAxisLabel,
         data.confirmation_total, tooltipHarian,
-        !showAnnotation ? data.confirmation_total : null,
+        showAnnotation ? data.confirmation_total : null,
         data.confirmation_ratarata, tooltipHarian
       ])
     },
