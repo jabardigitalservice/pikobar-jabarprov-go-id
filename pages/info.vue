@@ -78,24 +78,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.infographic-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  column-gap: 1.5rem;
-  row-gap: 3rem;
-
-  &__item-image {
-    height: 256px;
-  }
-
-  @screen md {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @screen lg {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-</style>
