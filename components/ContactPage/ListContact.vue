@@ -1,27 +1,68 @@
 <template>
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-    <template v-for="(item, i) in list">
-      <ContactCard
-        :key="i"
-        v-bind="item"
-        class="mt-6"
-      />
+  <div>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <template v-for="(item, i) in list">
+        <ContactCard
+          :key="i"
+          v-bind="item"
+          class="mt-6"
+        />
+      </template>
+    </div>
+    <template v-if="loading">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ContentLoader
+          v-for="index in 4"
+          :key="index"
+          class="w-full hidden lg:block"
+          :speed="3"
+          :width="400"
+          :height="200"
+          primary-color="#eee"
+          secondary-color="#fff"
+        >
+          <rect
+            :key="1"
+            x="0"
+            :y="4"
+            width="100%"
+            height="200"
+            rx="3"
+            ry="3"
+          />
+        </ContentLoader>
+      </div>
+    </template>
+    <template v-if="isEmpty">
+      <div class="flex justify-center">
+        <img src="~/static/img/icon-empty-state.svg" alt="img-faq-empty">
+      </div>
     </template>
   </div>
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
 import { toPhoneURL, toArray } from '../KenaliCovid/HospitalsAndCallCenters/utils'
 import { ContactCard } from '~/components/Base/ContactCard'
 
 export default {
   components: {
-    ContactCard
+    ContactCard,
+    ContentLoader
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
     items: {
       type: Array,
-      default: () => []
+      default: null
+    },
+    isEmpty: {
+      type: Boolean,
+      default: false
     },
     type: {
       type: String,

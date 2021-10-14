@@ -20,6 +20,8 @@
           <div class="mt-10">
             <ListContact
               :items="list"
+              :loading="loading"
+              :is-empty="isEmpty"
               :type="contact_type"
             />
           </div>
@@ -65,7 +67,9 @@ export default {
         }
       ]),
       list: [],
-      contact_type: ''
+      contact_type: '',
+      loading: false,
+      isEmpty: false
     }
   },
   computed: {
@@ -100,28 +104,35 @@ export default {
   },
   methods: {
     async getData () {
+      this.loading = true
       switch (this.contact_type) {
         case 'call_center':
           // eslint-disable-next-line no-case-declarations
           const callCenter = await this.$store.dispatch('call-centers/getItems', { perPage: 27 })
           this.list = callCenter
+          this.loading = false
           return this.list
         case 'website':
           // eslint-disable-next-line no-case-declarations
           const websites = await this.$store.dispatch('task-forces/getItems', { perPage: 27 })
           this.list = websites
+          this.loading = false
           return this.list
         default:
           // eslint-disable-next-line no-case-declarations
           const hospitals = await this.$store.dispatch('hospitals/getItems', { perPage: 999 })
           this.list = hospitals
+          this.loading = false
           return this.list
       }
     },
     onLocalSearchStringChanged (str) {
       this.$emit('update:searchString')
+      this.loading = true
       this.mSearchString = str
       this.onSearchData(str)
+      this.loading = false
+      if (!this.list.lenght) { this.isEmpty = true }
     },
     onSearchData (search) {
       switch (this.contact_type) {
