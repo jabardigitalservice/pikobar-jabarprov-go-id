@@ -11,6 +11,7 @@
         v-for="(item, index) in infographics"
         :key="index"
         class="relative w-full bg-white rounded-lg shadow divide-y divide-gray-200"
+        @click="onClickSlide(item.route)"
       >
         <div class="img-container relative overflow-hidden">
           <img
@@ -18,35 +19,10 @@
             class="cursor-pointer infographic-list__item-image w-full object-cover object-left-top rounded-lg shadow-lg"
             @click.prevent="$router.push(item.route)"
           >
-          <div
-            class="action-overlay rounded-lg absolute inset-0 hidden lg:flex flex-row justify-center items-center text-white"
-            style="background-color: rgba(0,0,0,0.75)"
-          >
-            <button
-              class="px-2 py-2 mr-1 rounded-md hover:bg-gray-800"
-              @click="beforeDownload(item)"
-            >
-              <FontAwesomeIcon :icon="icon.faDownload" class="mr-1" />
-              <span>
-                Unduh
-              </span>
-            </button>
-            <button
-              class="px-2 py-2 rounded-md hover:bg-gray-800"
-              @click="beforeShare(item)"
-            >
-              <FontAwesomeIcon :icon="icon.faShare" class="mr-1" />
-              <span>
-                Bagikan
-              </span>
-            </button>
-          </div>
         </div>
-        <caption class="px-4 py-2 overflow-ellipsis text-left block w-full font-bold opacity-75 hover:underline">
-          <nuxt-link :to="item.route">
-            {{ item.title }}
-          </nuxt-link>
-        </caption>
+        <div class="cursor-pointer px-4 py-2 overflow-ellipsis text-left block w-full font-bold opacity-75 hover:underline">
+          {{ item.title }}
+        </div>
       </figure>
     </div>
     <br>
@@ -105,6 +81,17 @@ export default {
     },
     beforeShare (item) {
       onShare(item.shareText)
+    },
+    onClickSlide (slide) {
+      const { route } = slide
+      if (typeof route !== 'string' || !route.length) {
+        return
+      }
+      if (route.startsWith('http')) {
+        return window.open(route, '_blank')
+      } else {
+        return this.$router.push(route)
+      }
     }
   },
   head () {
