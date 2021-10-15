@@ -61,7 +61,6 @@
 <script>
 import { faArrowLeft, faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
-// import { toArray } from '~/components/KenaliCovid/HospitalsAndCallCenters/utils'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
 import { useArticleMetaInfo } from '~/lib/metainfo'
