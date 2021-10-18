@@ -21,7 +21,7 @@
           v-model="sliderMin"
           class="focus:outline-none inline-block p-2 sm:text-sm border rounded-md w-1/2 mr-3"
           type="number"
-          :min="minRange"
+          :min="minRangeValue"
           :max="sliderMax"
           placeholder="0"
           @keyup="onKeyup('min', $event)"
@@ -40,8 +40,8 @@
         <div class="range-slider mb-3">
           <div class="range-slider-track" />
           <div class="range-slider-fill" :style="{left: fillLeft+'%', width: fillWidth+'%'}" />
-          <input v-model="sliderMin" type="range" min="0" :max="maxRangeValue" step="1">
-          <input v-model="sliderMax" type="range" min="0" :max="maxRangeValue" step="1">
+          <input v-model="sliderMin" type="range" :min="minRangeValue" :max="maxRangeValue" step="1">
+          <input v-model="sliderMax" type="range" :min="minRangeValue" :max="maxRangeValue" step="1">
         </div>
         <div class="text-right">
           <a href="javascript:void(0);" class="text-blue-500" @click="resetValues">Reset Filter</a>
@@ -91,16 +91,19 @@ export default {
     }
   },
   computed: {
+    minRangeValue: {
+      get () {
+        return parseInt(this.minRange)
+      }
+    },
     maxRangeValue: {
       get () {
-        const val = parseInt(this.maxRange)
-        return val
+        return parseInt(this.maxRange)
       }
     },
     sliderMin: {
       get () {
-        const val = parseInt(this.min)
-        return val
+        return parseInt(this.min)
       },
       set (val) {
         val = parseInt(val)
@@ -113,8 +116,7 @@ export default {
     },
     sliderMax: {
       get () {
-        const val = parseInt(this.max)
-        return val
+        return parseInt(this.max)
       },
       set (val) {
         val = parseInt(val)
