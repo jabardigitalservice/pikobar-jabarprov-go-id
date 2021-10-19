@@ -57,27 +57,27 @@ export default {
   props: {
     label: {
       type: String,
-      default: () => 'Value'
+      default: ''
     },
     affix: {
       type: String,
-      default: () => ''
+      default: ''
     },
     minValue: {
       type: [String, Number],
-      default: () => '0'
+      default: '0'
     },
     maxValue: {
       type: [String, Number],
-      default: () => '100'
+      default: '100'
     },
     minRange: {
       type: [String, Number],
-      default: () => '0'
+      default: '0'
     },
     maxRange: {
       type: [String, Number],
-      default: () => '100'
+      default: '100'
     }
   },
   data () {
@@ -106,9 +106,15 @@ export default {
         return parseInt(this.min)
       },
       set (val) {
-        val = parseInt(val)
+        val = val ? parseInt(val) : 0
         if (val > this.max) {
           this.max = val
+        }
+        if (val > this.maxRangeValue) {
+          val = this.maxRangeValue
+        }
+        if (val < this.minRangeValue) {
+          val = this.minRangeValue
         }
         this.min = val
         this.updateValues()
@@ -119,9 +125,15 @@ export default {
         return parseInt(this.max)
       },
       set (val) {
-        val = parseInt(val)
+        val = val ? parseInt(val) : 0
         if (val < this.min) {
           this.min = val
+        }
+        if (val > this.maxRangeValue) {
+          val = this.maxRangeValue
+        }
+        if (val < this.minRangeValue) {
+          val = this.minRangeValue
         }
         this.max = val
         this.updateValues()

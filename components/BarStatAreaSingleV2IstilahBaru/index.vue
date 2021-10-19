@@ -874,41 +874,41 @@ export default {
             }
           },
           seminggu () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const currentDate = new Date()
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 8, 0, 0)
+            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59)
             return {
               label: '1 Minggu Terakhir',
               active: false,
               dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
+                start: startDate,
+                end: endDate
               }
             }
           },
           sebulan () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const currentDate = new Date()
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 31, 0, 0)
+            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59)
             return {
               label: '1 Bulan Terakhir',
               active: false,
               dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
+                start: startDate,
+                end: endDate
               }
             }
           },
           triwulan () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 90, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const currentDate = new Date()
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 90, 0, 0)
+            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59)
             return {
               label: '3 Bulan Terakhir',
               active: false,
               dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
+                start: startDate,
+                end: endDate
               }
             }
           }
@@ -1151,9 +1151,9 @@ export default {
     }
   },
   mounted () {
-    const n = new Date()
+    const currentDate = new Date()
 
-    this.selectedDate.start = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 90, 0, 0)
+    this.selectedDate.start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 90, 0, 0)
     this.selectedDate.end = new Date()
     this.checkIsMobile()
   },
