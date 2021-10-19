@@ -1,7 +1,7 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <span class="step-info">
-      Cek kembali data yang sudah Anda inputkan, jika terdapat kesalah, silahkan kembali untuk memperbaiki
+      Cek kembali data yang sudah Anda inputkan, jika terdapat kesalahan, silahkan kembali untuk memperbaiki
     </span>
     <ConfirmationDetail
       v-for="content in contentList"
