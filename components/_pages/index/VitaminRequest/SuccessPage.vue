@@ -5,7 +5,7 @@
     <span class="success-page__title">Hatur Nuhun</span>
     <span class="success-page__name-label">{{ receipt.name || '' }}</span>
     <p class="success-page__info lg:w-5/12">
-      Anda telah mengisi formulir Pengajuan Vitamin dan Obat untuk kebutuhan Isoman. Berikut data yang telah kami terima:
+      Anda telah mengisi Formulir Pengajuan Vitamin untuk kebutuhan Isoman. Berikut data yang telah kami terima:
     </p>
     <div class="success-page__result w-full lg:w-4/12">
       <div v-for="item in result" :key="item.title" class="flex flex-row">
