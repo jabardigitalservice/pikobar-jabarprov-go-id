@@ -100,7 +100,7 @@
         </CounterCardLoader>
       </section>
 
-      <section class="flex flex-col xl:flex-row xl:flex-no-wrap">
+      <section class="flex flex-col xl:flex-row xl:flex-nowrap">
         <!-- ODP -->
         <StatisticLoader
           class="w-full xl:w-auto xl:mr-8"

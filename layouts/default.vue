@@ -6,7 +6,7 @@
           <div class="text-sm w-full">
             Ada update versi terbaru.
             <button
-              class="ml-2 bg-brand-blue text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="ml-2 bg-brand-blue text-white font-bold py-1 px-4 rounded focus:outline-none focus:ring"
               type="button"
               @click="refreshApp"
             >

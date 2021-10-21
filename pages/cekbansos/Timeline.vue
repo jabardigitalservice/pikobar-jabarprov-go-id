@@ -174,7 +174,7 @@ export default {
     }
 
     &--color {
-        @apply h-full w-1 bg-gray-500 pointer-events-none;
+        @apply h-full w-1 bg-gray-300 pointer-events-none;
     }
 
     @screen md {

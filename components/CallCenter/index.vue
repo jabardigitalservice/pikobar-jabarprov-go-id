@@ -11,7 +11,7 @@
           <th class="p-3">
             Kota/Kab
           </th>
-          <th class="whitespace-no-wrap p-3">
+          <th class="whitespace-nowrap p-3">
             CALL CENTER
           </th>
           <th class="p-3">
@@ -189,7 +189,7 @@ export default {
 
   .title-cell::before {
     content: '';
-    @apply absolute top-0 left-0 bottom-0 block w-1 bg-orange-300;
+    @apply absolute top-0 left-0 bottom-0 block w-1 bg-yellow-300;
     @screen md {
       @apply hidden;
     }

@@ -2,12 +2,12 @@
   <div>
     <div>
       <ul
-        class="overflow-x-auto md:overflow-x-hidden flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
+        class="overflow-x-auto md:overflow-x-hidden flex flex-row flex-nowrap items-stretch border-b-2 border-solid border-gray-300"
       >
         <li
           v-for="(tab, index) in tabs"
           :key="index"
-          :class="['relative cursor-pointer px-4 py-4 sm:px-6 whitespace-no-wrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
+          :class="['relative cursor-pointer px-4 py-4 sm:px-6 whitespace-nowrap select-none hover:bg-gray-200', tab.id === activeTabId && 'border-b-4 border-solid border-brand-green']"
           @click="activeTabId = tab.id"
         >
           <a :class="['text-lg', tab.id === activeTabId && 'font-bold text-brand-green']">

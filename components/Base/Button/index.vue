@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .base-button {
-  @apply inline-flex flex-row flex-no-wrap gap-2
+  @apply inline-flex flex-row flex-nowrap gap-2
   justify-center items-center
   px-4 py-3
   border border-solid border-transparent
@@ -80,7 +80,7 @@ export default {
   &__icon {
     line-height: 0;
     @apply flex-none
-    inline-flex flex-row flex-no-wrap
+    inline-flex flex-row flex-nowrap
     justify-center items-center;
   }
 

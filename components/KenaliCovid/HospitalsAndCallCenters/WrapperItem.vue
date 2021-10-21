@@ -45,7 +45,7 @@ export default {
   line-height: 1.618;
 
   @apply w-full p-4
-  flex flex-col flex-no-wrap
+  flex flex-col flex-nowrap
   rounded-lg
   border border-solid border-gray-300
   bg-white;

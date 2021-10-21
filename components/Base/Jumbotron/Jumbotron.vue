@@ -52,7 +52,7 @@ $--bubble-gap: 16px;
   line-height: 1.618;
 
   @apply relative
-  flex flex-col flex-no-wrap
+  flex flex-col flex-nowrap
   p-4
   justify-start items-center
   rounded-lg

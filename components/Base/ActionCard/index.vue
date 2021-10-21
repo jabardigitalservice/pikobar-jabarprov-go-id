@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 .action-card {
-  @apply p-4 flex flex-col flex-no-wrap
+  @apply p-4 flex flex-col flex-nowrap
   rounded-md
   bg-gray-100;
 
@@ -60,7 +60,7 @@ export default {
 
   &__body {
     @apply flex-1 pr-4
-    flex flex-col flex-no-wrap;
+    flex flex-col flex-nowrap;
   }
 
   &__title {

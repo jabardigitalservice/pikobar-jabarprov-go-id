@@ -88,7 +88,7 @@ export default {
 
   &__grid {
     gap: 32px;
-    @apply flex flex-col flex-no-wrap
+    @apply flex flex-col flex-nowrap
     justify-start
     items-center;
 

@@ -89,7 +89,7 @@ export default {
 <style lang="scss" scoped>
 .section-header {
   padding-bottom: 24px;
-  @apply flex flex-col flex-no-wrap;
+  @apply flex flex-col flex-nowrap;
 
   &__title {
     line-height: 1.618;

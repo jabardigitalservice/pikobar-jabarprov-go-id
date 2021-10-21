@@ -62,7 +62,7 @@
         :backlink="pemberiOksigenJotform"
       />
     </div>
-    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6">
+    <div class="flex flex-col flex-nowrap sm:flex-row gap-4 mt-4 lg:mt-6">
       <ActionCard
         class="w-full"
         title="Lacak Permohonan Vitamin/Obat Anda"

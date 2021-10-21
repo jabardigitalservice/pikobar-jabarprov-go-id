@@ -66,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 .news-carousel::v-deep {
   .swiper-wrapper {
-    @apply flex-row flex-no-wrap items-stretch;
+    @apply flex-row flex-nowrap items-stretch;
   }
   .swiper-slide {
     @apply h-auto;

@@ -89,7 +89,7 @@ export default {
 
   @apply cursor-pointer
   overflow-hidden
-  inline-flex flex-row flex-no-wrap
+  inline-flex flex-row flex-nowrap
   justify-center items-center
   py-1 px-4
   bg-gray-200 rounded-full
