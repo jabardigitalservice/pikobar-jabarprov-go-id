@@ -20,12 +20,11 @@
             @click.prevent="$router.push(item.route)"
           >
         </div>
-        <div
-          class="cursor-pointer px-4 py-2 overflow-ellipsis text-left block w-full font-bold opacity-75 hover:underline"
-          @click="onClickSlide(item.route)"
-        >
-          {{ item.title }}
-        </div>
+        <caption class="px-4 py-2 overflow-ellipsis text-left block w-full font-bold opacity-75 hover:underline">
+          <nuxt-link :to="item.route">
+            {{ item.title }}
+          </nuxt-link>
+        </caption>
       </figure>
     </div>
     <br>
