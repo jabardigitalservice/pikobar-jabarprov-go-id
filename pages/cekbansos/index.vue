@@ -21,8 +21,8 @@
         </div>
       </Jumbotron>
     </Section>
-    <Section class="py-6 md:py-16 bg-white">
-      <img class="md:w-full" :src="imgFlowBansos" alt="content-image-flow-bansos">
+    <Section class="py-6 md:py-16 bg-white mx-auto w-full h-full">
+      <Timeline />
     </Section>
     <Section class="py-6 md:py-16 bg-white">
       <SocialAssistanceCard />
@@ -41,6 +41,7 @@ export default {
     Section,
     ContentCard,
     Jumbotron,
+    Timeline: () => import('./Timeline'),
     SocialAssistanceCard
   },
   data () {
