@@ -54,7 +54,7 @@
           <div class="hidden md:inline-block px-4 py-3 mr-4 text-red-600 rounded-lg border border-solid border-gray-300">
             <FontAwesomeIcon :icon="icon.faFilePdf" style="font-size: 5rem;" />
           </div>
-          <div style="display: grid; grid-template-columns: auto auto 1fr; gap: 1rem 0.5rem">
+          <div class="grid gap-3" style="grid-template-columns: auto auto 1fr;">
             <span>
               Tanggal Rilis
             </span>
