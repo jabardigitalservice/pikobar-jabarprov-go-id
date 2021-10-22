@@ -260,7 +260,7 @@ export default {
 <style lang="scss" scoped>
 .image-carousel {
   @apply relative w-full
-  flex flex-row flex-nowrap
+  flex flex-row flex-no-wrap
   justify-start items-center;
 
   &__track {

@@ -11,7 +11,7 @@
           <th class="p-3">
             Kota/Kab
           </th>
-          <th class="whitespace-nowrap p-3">
+          <th class="whitespace-no-wrap p-3">
             CALL CENTER
           </th>
           <th class="p-3">

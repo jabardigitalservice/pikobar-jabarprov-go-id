@@ -11,7 +11,7 @@
           <th class="p-4">
             Kota/Kab
           </th>
-          <th class="whitespace-nowrap p-4">
+          <th class="whitespace-no-wrap p-4">
             WEBSITE
           </th>
         </tr>

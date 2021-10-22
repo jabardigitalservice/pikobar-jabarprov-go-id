@@ -124,7 +124,7 @@ html {
 
   &__menu-item {
     @apply hidden cursor-pointer mx-2 px-2 py-2
-    whitespace-nowrap;
+    whitespace-no-wrap;
 
     @screen lg {
       @apply flex;

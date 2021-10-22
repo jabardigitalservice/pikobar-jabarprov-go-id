@@ -3,7 +3,7 @@
     class="call-card cursor-pointer px-4 p-5
     flex flex-row flex-wrap justify-start items-center
     rounded-lg
-    lg:flex-col lg:flex-nowrap lg:items-start lg:p-6 bg-white
+    lg:flex-col lg:flex-no-wrap lg:items-start lg:p-6 bg-white
     hover:bg-green-200"
     style="box-shadow: 0 0 4px 0px rgba(0,0,0,0.05), 0 4px 24px 0 rgba(0,0,0,0.1);"
     @click.capture="onClick"

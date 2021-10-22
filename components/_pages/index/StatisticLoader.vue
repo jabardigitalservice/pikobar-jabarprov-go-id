@@ -57,7 +57,7 @@ export default {
                   { formatNumber(context.props.total) }
                 </span>
                 <p
-                  class="mt-2 ml-2 text-base whitespace-nowrap"
+                  class="mt-2 ml-2 text-base whitespace-no-wrap"
                   style="color: #8A8A8A;">
                   { context.props.totalLabel }
                 </p>
@@ -78,7 +78,7 @@ export default {
                 { `(${formatNumber(context.props.processedPercentage)}%)` }
               </span>
               <p
-                class="mt-2 text-base whitespace-nowrap"
+                class="mt-2 text-base whitespace-no-wrap"
                 style="color: #8A8A8A;">
                 { context.props.processedLabel }
               </p>
@@ -95,7 +95,7 @@ export default {
                 { `(${formatNumber(context.props.finishedPercentage)}%)` }
               </span>
               <p
-                class="mt-2 text-base whitespace-nowrap "
+                class="mt-2 text-base whitespace-no-wrap "
                 style="color: #8A8A8A;">
                 { context.props.finishedLabel }
               </p>
@@ -112,7 +112,7 @@ export default {
                 { `(${formatNumber(context.props.diedPercentage)}%)` }
               </span>
               <p
-                class="mt-2 text-base whitespace-nowrap "
+                class="mt-2 text-base whitespace-no-wrap "
                 style="color: #8A8A8A;">
                 { context.props.diedLabel }
               </p>

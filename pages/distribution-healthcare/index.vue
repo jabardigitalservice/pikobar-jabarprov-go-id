@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="m-4 mb-8 md:my-4 md:mx-8">
-      <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm">
+      <div class="disclaimer flex flex-no-wrap lg:flex-row items-start rounded p-3 text-sm">
         <FontAwesomeIcon
           class="inline-block mr-2 cursor-pointer mt-1"
           :icon="icons.faInfoCircle"

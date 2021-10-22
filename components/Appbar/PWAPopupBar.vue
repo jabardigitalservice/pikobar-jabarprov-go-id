@@ -84,7 +84,7 @@ export default {
   @apply ml-2 bg-brand-blue text-white font-bold py-1 px-4 rounded;
 
   &:focus {
-    @apply outline-none ring;
+    @apply outline-none shadow-outline;
   }
 }
 </style>

@@ -50,14 +50,14 @@ export default {
 <style lang="scss" scoped>
 .tablayout-item {
   @apply cursor-pointer
-  inline-flex flex-row flex-nowrap
+  inline-flex flex-row flex-no-wrap
   justify-center items-center;
 
   &__label {
     line-height: 1.618;
     @apply py-2 px-4
     text-gray-500 font-medium
-    whitespace-nowrap;
+    whitespace-no-wrap;
   }
 
   &--active & {

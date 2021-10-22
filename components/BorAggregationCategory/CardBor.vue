@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-nowrap">
+      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-no-wrap">
         <div class="set-size pie-wrapper style-2">
           <div class="label">
             <div class="text-3xl">

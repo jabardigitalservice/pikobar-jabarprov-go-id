@@ -67,15 +67,12 @@
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/fontawesome": "^1.1.1",
-    "@nuxtjs/tailwindcss": "^2.1.1",
-    "autoprefixer": "^10.3.7",
+    "@nuxtjs/tailwindcss": "^1.0.0",
     "babel-eslint": "^10.0.1",
     "core-js": "^2.6.11",
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": "^0.5.2",
     "html-loader": "^1.1.0",
-    "node-firestore-import-export": "^0.14.1",
-    "postcss": "^8.3.10",
-    "tailwindcss": "^2.2.17"
+    "node-firestore-import-export": "^0.14.1"
   }
 }

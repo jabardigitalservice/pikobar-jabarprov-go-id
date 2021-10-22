@@ -1,13 +1,13 @@
 <template>
   <div class="tab-container">
     <ul
-      class="overflow-x-auto md:overflow-x-hidden flex flex-row flex-nowrap items-stretch border-b-2 border-solid border-gray-300"
+      class="overflow-x-auto md:overflow-x-hidden flex flex-row flex-no-wrap items-stretch border-b-2 border-solid border-gray-300"
     >
       <li
         v-for="(tab, index) in tabs"
         :key="index"
         :class="[
-          'relative px-4 py-4 sm:px-6 whitespace-nowrap select-none',
+          'relative px-4 py-4 sm:px-6 whitespace-no-wrap select-none',
           tab.id === mActiveTabId && 'border-b-4 border-solid border-brand-green',
           !fixed && 'hover:bg-gray-200 cursor-pointer'
         ]"

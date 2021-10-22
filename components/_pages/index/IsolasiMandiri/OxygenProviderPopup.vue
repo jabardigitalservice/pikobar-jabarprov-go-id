@@ -171,7 +171,7 @@ export default {
     @apply overflow-y-auto
     w-full  p-4 pt-12
     rounded-lg
-    flex flex-col flex-nowrap
+    flex flex-col flex-no-wrap
     bg-white shadow-xl;
     max-height: 80vh;
     gap: 24px;
@@ -212,7 +212,7 @@ export default {
     @apply cursor-pointer
     relative
     w-full p-4
-    flex flex-col flex-nowrap
+    flex flex-col flex-no-wrap
     items-center
     rounded-lg
     border border-solid border-gray-200

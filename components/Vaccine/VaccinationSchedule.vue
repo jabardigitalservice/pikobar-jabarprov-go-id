@@ -73,7 +73,7 @@ export default {
   }
 
   &__inner {
-    @apply relative flex flex-row flex-nowrap
+    @apply relative flex flex-row flex-no-wrap
     justify-between
     w-full h-20 mb-2
     bg-white;

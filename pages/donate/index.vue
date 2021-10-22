@@ -73,7 +73,7 @@ export default {
   @apply flex flex-col;
 
   @screen lg {
-    @apply -mx-4 flex-row flex-nowrap items-stretch;
+    @apply -mx-4 flex-row flex-no-wrap items-stretch;
   }
 }
 

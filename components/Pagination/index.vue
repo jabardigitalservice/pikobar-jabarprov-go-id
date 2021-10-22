@@ -21,7 +21,7 @@ export default {
 
 <style lang="scss">
 .app_pagination {
-  @apply flex flex-row flex-nowrap items-stretch;
+  @apply flex flex-row flex-no-wrap items-stretch;
 
   li {
     @apply inline-flex items-stretch border border-solid border-gray-500;

@@ -1,5 +1,5 @@
 <template>
-  <div class="md:flex md:flex-row flex-nowrap mx-1">
+  <div class="md:flex md:flex-row flex-no-wrap mx-1">
     <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
       <ContentLoader
         :speed="2"

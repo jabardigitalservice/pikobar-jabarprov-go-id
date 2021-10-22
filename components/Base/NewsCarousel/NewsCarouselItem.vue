@@ -82,7 +82,7 @@ export default {
   line-height: 1.618;
 
   @apply overflow-hidden h-full
-  flex flex-col flex-nowrap
+  flex flex-col flex-no-wrap
   justify-start items-stretch
   rounded-lg
   border border-solid border-gray-200

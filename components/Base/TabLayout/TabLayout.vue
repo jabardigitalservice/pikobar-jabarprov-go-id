@@ -152,7 +152,7 @@ export default {
   @apply relative;
 
   &__item-track {
-    @apply flex flex-row flex-nowrap
+    @apply flex flex-row flex-no-wrap
     justify-start items-stretch;
   }
 

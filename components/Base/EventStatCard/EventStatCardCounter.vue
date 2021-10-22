@@ -55,7 +55,7 @@ export default {
   &__name {
     @apply
     text-base text-gray-600
-    whitespace-nowrap;
+    whitespace-no-wrap;
   }
   &__count {
     color: inherit;
