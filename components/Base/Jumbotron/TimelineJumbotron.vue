@@ -48,7 +48,7 @@ $--bubble-gap: 16px;
   @apply relative
   flex flex-col flex-no-wrap
   p-4
-  justify-start items-center
+  justify-start
   rounded-lg
   bg-gray-100;
 
@@ -71,7 +71,7 @@ $--bubble-gap: 16px;
 
   &__body {
     z-index: 1;
-    @apply mx-6 relative inline-block text-lg font-medium text-gray-700;
+    @apply mx-8 relative inline-block text-lg font-semibold text-gray-700;
   }
 
   @screen sm {

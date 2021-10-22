@@ -21,6 +21,12 @@
         </div>
       </Jumbotron>
     </Section>
+    <div class="bg-white text-3xl text-center font-bold overflow-x-auto">
+      Bagaimana Cara Mengakses Data
+      <div>
+        <span class="px-2">Penerima</span><span class="text-green-600">Bansos Kemensos?</span>
+      </div>
+    </div>
     <Section class="py-6 md:py-16 bg-white mx-auto w-full h-full">
       <Timeline />
     </Section>
