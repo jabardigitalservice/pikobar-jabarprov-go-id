@@ -19,7 +19,7 @@
               </div>
             </div>
           </div>
-          <span class="text-sm">{{ formatThousandSeparator(dataIsolateTotal.total_terisi) }} dari {{ formatThousandSeparator(dataIsolateTotal.total_tersedia) }} TT Terisi</span>
+          <span class="text-sm">{{ formatThousandSeparator(dataIsolateTotal.total_terisi) }} dari {{ formatThousandSeparator(dataIsolateTotal.total_tersedia) }} Tempat Tidur Terisi</span>
         </div>
       </div>
       <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
