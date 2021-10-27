@@ -1,73 +1,78 @@
 <template>
-  <div
-    class="container mx-auto"
-  >
-    <div class="m-4 md:m-8 p-5 bg-white rounded-lg shadow-md">
-      <section>
-        <template v-if="isPending">
-          <ContentLoader
-            :speed="2"
-            width="400"
-            height="200"
-          >
-            <rect
-              x="0"
-              y="0"
-              rx="0"
-              ry="0"
-              width="100%"
-              height="100%"
+  <div>
+    <Section
+      class="bg-white py-6 md:py-16"
+    >
+      <div class="text-green-500 space-x-2 pb-8 cursor-pointer" @click="$router.go(-1)">
+        <FontAwesomeIcon :icon="icon.faArrowLeft" class="mr-3" />
+        Kembali
+      </div>
+      <template v-if="isPending">
+        <ContentLoader
+          :speed="2"
+          width="400"
+          height="200"
+        >
+          <rect
+            x="0"
+            y="0"
+            rx="0"
+            ry="0"
+            width="100%"
+            height="100%"
+          />
+        </ContentLoader>
+      </template>
+      <template v-else-if="item">
+        <div class="flex flex-col justify-start items-start lg:flex-row lg:justify-between lg:items-center pb-10">
+          <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-3 lg:mb-0">
+            {{ item.title }}
+          </h2>
+        </div>
+        <Section
+          class="bg-white"
+        >
+          <div class="relative container-with-ratio rounded-lg overflow-hidden">
+            <ImageCarousel
+              class="absolute inset-0 w-full h-full"
+              :items="imagesMap(item.images)"
+              :carousel-props="carouselProps"
             />
-          </ContentLoader>
-        </template>
-        <template v-else-if="item">
-          <div class="flex flex-col justify-start items-start lg:flex-row lg:justify-between lg:items-center">
-            <h2 class="text-xl font-bold leading-tight mb-3 lg:mb-0">
-              {{ item.title }}
-            </h2>
-            <p class="flex-none text-sm text-gray-600">
-              <button
-                class="px-2 py-2 mr-1 rounded-md hover:bg-gray-300"
-                @click="beforeDownload"
-              >
-                <FontAwesomeIcon :icon="icon.faDownload" class="mr-1" />
-                <span>
-                  Unduh
-                </span>
-              </button>
-              <button
-                class="px-2 py-2 rounded-md hover:bg-gray-300"
-                @click="beforeShare"
-              >
-                <FontAwesomeIcon :icon="icon.faShare" class="mr-1" />
-                <span>
-                  Bagikan
-                </span>
-              </button>
-            </p>
           </div>
-          <br>
-          <img
-            :src="item.images[0] || null"
-            class="cursor-pointer w-full lg:max-w-2xl mx-auto h-full object-contain object-center"
-          >
-        </template>
-      </section>
-    </div>
+        </Section>
+        <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center sm:mt-8 sm:space-x-2 space-y-2 sm:space-y-0">
+          <Button
+            class="w-full flex"
+            :label="'Unduh'"
+            @click="beforeDownload"
+          />
+          <Button
+            class="w-full flex"
+            :label="'Bagikan'"
+            :outlined="true"
+            @click="beforeShare"
+          />
+        </div>
+      </template>
+    </Section>
   </div>
 </template>
 
 <script>
-import { faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
 import { ContentLoader } from 'vue-content-loader'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
 import { useArticleMetaInfo } from '~/lib/metainfo'
+import Section from '~/components/Base/Section'
 
 const regex = /(?:(-inf\.))(.*)$/
 export default {
   components: {
-    ContentLoader
+    ContentLoader,
+    ImageCarousel: () => import('~/components/ImageCarousel'),
+    Button: () => import('~/components/Base/Button'),
+    Section
   },
   validate ({ redirect, params }) {
     const { slug } = params
@@ -85,8 +90,12 @@ export default {
   },
   data () {
     return {
+      carouselProps: {
+        paginationEnabled: true
+      },
       icon: {
         faDownload,
+        faArrowLeft,
         faShare
       },
       isPending: true
@@ -124,6 +133,14 @@ export default {
     },
     beforeDownload () {
       onDownload(this.item.downloadURL, this.item.title)
+    },
+    imagesMap (item) {
+      const array = item
+        .map((cc, index) => ({
+          id: index,
+          url: cc
+        }))
+      return array
     }
   },
   head () {
@@ -144,4 +161,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container-with-ratio {
+  padding-top: (900 * 100/ 900) * 1%;
+  @screen lg {
+    padding-top: (500 * 100/ 900) * 1%;
+  }
+}
 </style>

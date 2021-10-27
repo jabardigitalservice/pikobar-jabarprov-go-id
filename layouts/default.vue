@@ -21,7 +21,7 @@
     <AppDrawer ref="drawer" :show.sync="isDrawerOpen" class="lg:hidden" />
     <div
       class="w-full"
-      style="min-height: 75vh;"
+      style="min-height: 60vh;"
     >
       <nuxt />
     </div>
