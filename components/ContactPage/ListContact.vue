@@ -81,7 +81,6 @@ export default {
   },
   methods: {
     mapItem (item) {
-      // console.log(item)
       switch (this.type) {
         case 'call_center':
           // eslint-disable-next-line no-case-declarations
