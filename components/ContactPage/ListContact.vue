@@ -81,6 +81,7 @@ export default {
   },
   methods: {
     mapItem (item) {
+      // console.log(item)
       switch (this.type) {
         case 'call_center':
           // eslint-disable-next-line no-case-declarations
@@ -96,7 +97,7 @@ export default {
             .map(h => ({
               icon: 'phone',
               label: h,
-              href: h
+              href: toPhoneURL(h)
             }))
 
           return {

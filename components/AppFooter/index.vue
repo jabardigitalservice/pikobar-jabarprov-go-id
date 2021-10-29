@@ -6,15 +6,17 @@
           <a href="/">
             <img class="h-10" src="/img/pikobar-logo-full.svg" alt="Pikobar Jabar Prov">
           </a>
-          <a :href="footerLink.gplayStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-10">
-            <img src="/img/gplay-app-store-badge.svg" alt="Google Play Badge">
-          </a>
-          <a :href="footerLink.appleStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-4">
-            <img src="/img/apple-app-store-badge.svg" alt="Apple Store Badge">
-          </a>
+          <div class="grid grid-cols-2 md:grid-cols-1 items-center">
+            <a :href="footerLink.gplayStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-4 md:mt-10">
+              <img src="/img/gplay-app-store-badge.svg" alt="Google Play Badge">
+            </a>
+            <a :href="footerLink.appleStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-4">
+              <img src="/img/apple-app-store-badge.svg" alt="Apple Store Badge">
+            </a>
+          </div>
         </div>
         <div>
-          <div class="mt-12 mb-6 md:mt-0 md:mb-0">
+          <div class="mt-2 mb-6 md:mt-0 md:mb-0">
             <h3 class="app-footer__link-header">
               Lainnya
             </h3>
@@ -38,7 +40,7 @@
           </div>
         </div>
         <div>
-          <div class="grid grid-rows-2 mt-12 md:mt-0 lg:ml-10">
+          <div class="grid grid-rows-2 mt-2 md:mt-0 lg:ml-10">
             <h3 class="app-footer__link-header">
               Temukan Kami
             </h3>

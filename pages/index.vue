@@ -135,7 +135,7 @@ export default {
           image: '/img/icon-hero.svg',
           imagePosition: 'right',
           backLink: '#eventStatistics',
-          prompt: 'Selanjutnya'
+          prompt: 'Selengkapnya'
         },
         {
           header: 'Kenali Covid-19',

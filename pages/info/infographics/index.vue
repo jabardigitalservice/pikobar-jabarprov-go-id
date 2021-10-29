@@ -10,7 +10,7 @@
       <figure
         v-for="(item, index) in infographics"
         :key="index"
-        class="relative w-full bg-white rounded-lg shadow divide-y divide-gray-200"
+        class="relative w-full bg-white rounded-lg border divide-y divide-gray-200"
         @click="onClickSlide(item.route)"
       >
         <div class="img-container relative overflow-hidden">
@@ -61,7 +61,7 @@ export default {
   },
   mounted () {
     this.isPending = true
-    this.getItems({ perPage: 9, fresh: true })
+    this.getItems({ perPage: 12, fresh: true })
       .finally(() => {
         if (process.browser) {
           analytics.logEvent('infographic_list_view')
@@ -75,7 +75,7 @@ export default {
     }),
     async onLoadMore () {
       this.isPending = true
-      await this.getItems({ perPage: 9, fresh: true })
+      await this.getItems({ perPage: 12, fresh: true })
       this.isPending = false
     },
     beforeDownload (item) {

@@ -53,7 +53,7 @@ export default {
       tabs: Object.freeze([
         {
           name: 'recent',
-          label: 'Berita Terkini'
+          label: 'Berita Vaksinasi'
         },
         {
           name: 'antiHoax',
