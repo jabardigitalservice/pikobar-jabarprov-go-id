@@ -186,12 +186,8 @@ export default {
           filled: 0,
           color: '#33ad3f',
           tooltip: [
-            'Konfirmasi tanpa gejala',
-            'Konfirmas dengan gejala ringan',
-            'Pneumonia ringan (RR < 24 X/menit) dengan rontgen thorax pneumonia',
-            'Saturasi >95% tanpa bantuan oksigen',
-            'Kesadaran CM',
-            'Tensi = Systole > 100 mmhb tanpa support obat-obatan'
+            'Kategori: Tanpa Gejala - Gejala Ringan',
+            'Isolasi Tanpa Tekanan Negatif'
           ]
         },
         {
@@ -205,11 +201,8 @@ export default {
           color: '#d5c042',
           tooltip:
           [
-            'Gejala sedang pada kasus konfirmasi dewasa atau anak-anak',
-            'Dengan Pneumonia tanpa ancaman gagal napas',
-            'Saturasi oksigen > 90% dengan bantuan 02 nasal 5 liter/menit',
-            'Kesadaran cm',
-            'Tensi, map >  65 mmHg tanpa support obat-obatan'
+            'Kategori: Gejala Ringan - Gejala Sedang',
+            'Isolasi Tekanan Negatif'
           ]
         },
         {
@@ -223,14 +216,8 @@ export default {
           color: '#cb3146',
           tooltip:
           [
-            'Kasus konfirmasi dengan gejala berat',
-            'RR > 30x menit',
-            'Saturasi < 93% dengan bantuan NRM dan HNFC selama 30 menit',
-            'Heart rate > 120x per menit',
-            'Pneumonia dengan ancaman gagal napas dan membutuhkan ventilasi mekanis',
-            'ARDS atau gangguan hemodinamik disertai kegagalan sirkulasi , map > 65 mmHg',
-            'Penurunan kesadaran',
-            'Ada tanda sepsis atau syok sepsis'
+            'Kategori: Gejala Berat',
+            'ICU Tekanan Negatif dengan Ventilator'
           ]
         },
         {
