@@ -16,21 +16,33 @@
     <p class="success-page__info lg:w-5/12">
       Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan permohonan dan melakukan lacak permohonan dengan menggunakan ID Permohonan.
     </p>
-    <button
-      class="success-page__button sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-3/12 w-full"
-      @click="onReturn"
-    >
-      Kembali ke halaman utama
-    </button>
+    <div class="success-page__result lg:w-6/12">
+      <div class="flex flex-row">
+        <button
+          class="success-page__button mr-2 bg-brand-green hover:bg-brand-green-light w-full"
+          @click="onReturn"
+        >
+          Kembali ke halaman utama
+        </button>
+        <button
+          class="success-page__button mr-2 bg-brand-green hover:bg-brand-green-light w-full"
+          @click="onClick"
+        >
+          Lanjut Konsultasi
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { konsultasiDokter } from '../IsolasiMandiri/backlinks'
 export default {
   data () {
     return {
-      result: null
+      result: null,
+      whatsappBacklink: konsultasiDokter
     }
   },
   computed: {
@@ -63,6 +75,10 @@ export default {
       this.$emit('update:step', 0)
       this.$store.dispatch('isoman/resetForm')
       this.$store.dispatch('isoman/resetReceipt')
+    },
+    onClick () {
+      window.open(this.whatsappBacklink, '_blank', 'noopener,noreferrer')
+      return true
     }
   }
 }
