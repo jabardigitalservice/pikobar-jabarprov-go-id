@@ -12,7 +12,7 @@
         <template #button="props">
           <ContentCardButton
             v-bind="props"
-            class="mt-6"
+            class="mt-6 w-full lg:w-auto"
           />
         </template>
       </ContentCard>
@@ -30,7 +30,10 @@
         @loading="onSectionLoad('eventStatistics', $event)"
       />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
-        <ContentCardButton v-bind="button.eventStatistics" />
+        <ContentCardButton
+          v-bind="button.eventStatistics"
+          class="w-full lg:w-auto"
+        />
       </div>
     </Section>
     <Section class="bg-white">
