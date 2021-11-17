@@ -6,7 +6,7 @@
           <a href="/">
             <img class="h-10" src="/img/pikobar-logo-full.svg" alt="Pikobar Jabar Prov">
           </a>
-          <div class="grid grid-cols-2 md:grid-cols-1 items-center">
+          <div class="app-footer__store">
             <a :href="footerLink.gplayStore" target="_blank" rel="noopener noreferrer" class="flow-root mt-4 md:mt-10">
               <img src="/img/gplay-app-store-badge.svg" alt="Google Play Badge">
             </a>
@@ -152,6 +152,14 @@ export default {
 
     &-text {
       @apply pb-4 text-base text-white text-center;
+    }
+  }
+
+  &__store {
+    @apply flex flex-row gap-2 items-center;
+
+    @screen md {
+      @apply grid grid-cols-1;
     }
   }
 }
