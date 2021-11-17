@@ -21,6 +21,7 @@
           <div>
             <div class="rounded border">
               <CategoryTabFAQ
+                v-show="query.search === ''"
                 :data="data"
                 :selected="query.category"
                 :tab-selected.sync="query.category"
