@@ -19,9 +19,11 @@
       <div>
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
           <div>
-            <div class="rounded border">
+            <div
+              class="rounded border"
+              :class="{ 'hidden lg:block': query.search }"
+            >
               <CategoryTabFAQ
-                v-show="query.search === ''"
                 :data="data"
                 :selected="query.category"
                 :tab-selected.sync="query.category"
