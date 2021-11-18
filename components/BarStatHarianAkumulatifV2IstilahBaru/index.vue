@@ -407,7 +407,7 @@ export default {
         series: { 2: { type: 'line' } },
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         },
         chartArea: {
           width: '100%',
@@ -444,7 +444,7 @@ export default {
         series: { 2: { type: 'line' } },
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         },
         vAxis: {
           viewWindow: {
@@ -484,7 +484,7 @@ export default {
         series: { 3: { type: 'line' } },
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         },
         vAxis: {
           viewWindow: {
@@ -522,7 +522,7 @@ export default {
         // curveType: 'function',
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         },
         chartArea: {
           width: '100%',
@@ -559,7 +559,7 @@ export default {
         // curveType: 'function',
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         },
         vAxis: {
           viewWindow: {
@@ -599,7 +599,7 @@ export default {
         // curveType: 'function',
         hAxis: {
           slantedText: true,
-          slantedTextAngle: -90
+          slantedTextAngle: 45
         },
         vAxis: {
           viewWindow: {

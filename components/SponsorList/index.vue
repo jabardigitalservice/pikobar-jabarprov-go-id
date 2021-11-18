@@ -106,12 +106,12 @@ export default {
         {
           logo: '/img/logo-grey/logo-ipspi.svg',
           alt: 'IPSPI',
-          url: 'http://ipspi-indonesia.com/dpd/wilayah/32'
+          url: 'https://www.ipspi.org/'
         },
         {
           logo: '/img/logo-grey/logo-ismki.svg',
           alt: 'Ikatan Senat Mahasiswa Kedokteran Indonesia',
-          url: 'http://ismki.org',
+          url: 'https://ismki.or.id/',
           height: '10em'
         },
         {

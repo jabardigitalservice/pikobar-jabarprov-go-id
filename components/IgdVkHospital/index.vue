@@ -1,34 +1,29 @@
 <template>
   <div>
     <div :class="!isLoading ? 'bg-white rounded-lg shadow-lg' : 'hidden'">
-      <div class="flex flex-col md:flex-row flex-wrap items-center p-4 pb-2">
-        <h4 class="font-bold text-lg m-1">
-          Keterisian Tempat Tidur (BOR) RS Melayani Covid di Jawa Barat
+      <div class="flex flex-col md:flex-row flex-wrap items-center p-4">
+        <h4 class="font-bold text-lg">
+          Tabel IGD & VK Rumah Sakit di Jawa Barat
         </h4>
-      </div>
-      <div class="flex flex-col justify-between w-full md:flex-row flex-wrap lg:flex-no-wrap xl:ml-auto p-4 pt-0">
-        <div class="relative rounded-md m-1 mb-3 lg:mb-1 w-full lg:w-56">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span class="text-gray-500 sm:text-sm">
-              <FontAwesomeIcon :icon="icons.faSearch" />
-            </span>
-          </div>
-          <input
-            id="price"
-            v-model="searchHospital"
-            type="text"
-            name="price"
-            class="focus:ring-indigo-500 focus:border-indigo-500 block pl-8 py-2 sm:text-sm border rounded-md w-full"
-            placeholder="Pencarian Rumah Sakit"
-            @input="resetDataTable"
-          >
-        </div>
-        <client-only>
-          <div class="flex flex-col md:flex-row flex-wrap md:flex-no-wrap w-full items-center justify-end">
-            <div class="w-full lg:w-auto hidden lg:block m-1 mr-3">
-              Filter:
+        <div class="flex flex-col w-full md:w-auto md:flex-row flex-wrap xl:ml-auto">
+          <div class="relative rounded-md shadow-sm m-1">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-gray-500 sm:text-sm">
+                <FontAwesomeIcon :icon="icons.faSearch" />
+              </span>
             </div>
-            <div class="w-full md:w-1/3 lg:w-48 m-1 mr-1 md:mr-3">
+            <input
+              id="price"
+              v-model="searchHospital"
+              type="text"
+              name="price"
+              class="focus:ring-indigo-500 focus:border-indigo-500 block pl-8 py-2 sm:text-sm border rounded-md w-full md:w-56"
+              placeholder="Pencarian Rumah Sakit"
+              @input="resetDataTable"
+            >
+          </div>
+          <client-only>
+            <div class="w-full md:w-48 m-1">
               <multiselect
                 v-model="selectedCity"
                 class="optCity"
@@ -42,28 +37,8 @@
                 @input="setSelectedCity"
               />
             </div>
-            <div class="w-full md:w-1/3 lg:w-auto m-1 mr-1 md:mr-3">
-              <RangeSlider
-                :label="'Total Bor'"
-                :affix="'%'"
-                :min-value="rangeBor.min"
-                :max-value="rangeBor.max"
-                @update:min="value => setRangeFilter('bor', 'min', value)"
-                @update:max="value => setRangeFilter('bor', 'max', value)"
-              />
-            </div>
-            <div class="w-full md:w-1/3 lg:w-auto m-1">
-              <RangeSlider
-                :label="'Kapasitas'"
-                :min-value="rangeCapacity.min"
-                :max-value="rangeCapacity.max"
-                :max-range="rangeCapacity.maxRange"
-                @update:min="value => setRangeFilter('capacity', 'min', value)"
-                @update:max="value => setRangeFilter('capacity', 'max', value)"
-              />
-            </div>
-          </div>
-        </client-only>
+          </client-only>
+        </div>
       </div>
       <div class="overflow-auto">
         <data-table
@@ -128,16 +103,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import _forEach from 'lodash/forEach'
 import _filter from 'lodash/filter'
 import _orderBy from 'lodash/orderBy'
-import RangeSlider from './RangeSlider'
 
 export default {
-  name: 'BorHospital',
+  name: 'IgdVkHospital',
   components: {
     DataTable,
     ItemsPerPageDropdown,
     Pagination,
-    ContentLoader,
-    RangeSlider
+    ContentLoader
   },
   data () {
     return {
@@ -146,16 +119,6 @@ export default {
       data: [
       ],
       searchHospital: '',
-      rangeTimeout: null,
-      rangeBor: {
-        min: 0,
-        max: 100
-      },
-      rangeCapacity: {
-        min: 0,
-        max: 180,
-        maxRange: 180
-      },
       optionsCity: [
         { value: 'all', label: 'Semua Kota/Kab' },
         { value: 'Kab. Bandung', label: 'Kab. Bandung' },
@@ -213,47 +176,37 @@ export default {
           sortable: true
         },
         {
-          name: 'green',
-          label: 'Hijau',
+          name: 'igd',
+          label: 'IGD',
           sortable: true
         },
         {
-          name: 'yellow',
-          label: 'Kuning',
+          name: 'igd_terisi',
+          label: 'IGD Terisi',
           sortable: true
         },
         {
-          name: 'red',
-          label: 'Merah',
+          name: 'igd_tersedia',
+          label: 'IGD Tersedia',
           sortable: true
         },
         {
-          name: 'icu',
-          label: 'Ruang Intensif',
+          name: 'birth',
+          label: 'R. Bersalin (VK)',
           sortable: true
         },
         {
-          name: 'filled',
-          label: 'Terisi',
+          name: 'birth_terisi',
+          label: 'VK Terisi',
           sortable: true
         },
         {
-          name: 'available',
-          label: 'Tersedia',
-          sortable: true
-        },
-        {
-          name: 'total',
-          label: 'Kapasitas',
-          sortable: true
-        },
-        {
-          name: 'bor',
-          label: 'BOR',
+          name: 'birth_tersedia',
+          label: 'VK Tersedia',
           sortable: true
         }
       ],
-      sort: 'asc',
+      sort: 'desc',
       sortField: 'bor',
       datatableCSS: {
         table: 'table table-bordered table-hover table-striped table-center',
@@ -304,24 +257,6 @@ export default {
     })
   },
   methods: {
-    setRangeFilter (type, rangeType, data) {
-      switch (type) {
-        case 'bor':
-          this.rangeBor[rangeType] = data
-          break
-        default:
-          this.rangeCapacity[rangeType] = data
-          break
-      }
-
-      if (this.rangeTimeout) {
-        clearTimeout(this.rangeTimeout)
-      }
-
-      this.rangeTimeout = setTimeout(() => {
-        this.resetDataTable()
-      }, 200)
-    },
     setSelectedCity () {
       this.resetDataTable()
     },
@@ -332,48 +267,33 @@ export default {
       const dataTable = []
       let i = 1
       _forEach(data, (el) => {
-        const filled = el.hijau_terisi + el.kuning_terisi + el.merah_terisi + el.icu_terisi
-        const total = el.hijau_tersedia + el.kuning_tersedia + el.merah_tersedia + el.icu_tersedia
-        const available = total - filled
         dataTable.push(
           {
             no: i,
             city: el.nama_wilayah,
             hospital: el.rumah_sakit,
-            green: `${el.hijau_persentase}% (${el.hijau_terisi}/${el.hijau_tersedia})`,
-            yellow: `${el.kuning_persentase}% (${el.kuning_terisi}/${el.kuning_tersedia})`,
-            red: `${el.merah_persentase}% (${el.merah_terisi}/${el.merah_tersedia})`,
-            icu: `${el.icu_persentase}% (${el.icu_terisi}/${el.icu_tersedia})`,
-            igd: `${el.igd_persentase}% (${el.igd_terisi}/${el.igd_tersedia})`,
-            birth: `${el.ruang_bersalin_persentase}% (${el.ruang_bersalin_terisi}/${el.ruang_bersalin_tersedia})`,
-            filled,
-            available: (available > 0) ? available : 0,
-            total,
-            bor: `${el.total_persentase}%`,
-            bor_percentage: el.total_persentase,
+            igd: `${el.igd_persentase}%`,
+            igd_terisi: el.igd_terisi,
+            igd_tersedia: el.igd_tersedia,
+            birth: `${el.ruang_bersalin_persentase}%`,
+            birth_terisi: el.ruang_bersalin_terisi,
+            birth_tersedia: el.ruang_bersalin_tersedia,
             isReference: (el.rujukan_non_rujukan !== null),
             sort: {
               city: el.nama_wilayah,
               hospital: el.rumah_sakit,
-              green: el.hijau_persentase,
-              yellow: el.kuning_persentase,
-              red: el.merah_persentase,
-              icu: el.icu_persentase,
               igd: el.igd_persentase,
+              igd_terisi: el.igd_terisi,
+              igd_tersedia: el.igd_tersedia,
               birth: el.ruang_bersalin_persentase,
-              filled,
-              available: (available > 0) ? available : 0,
-              total,
-              bor: el.total_persentase
+              birth_terisi: el.ruang_bersalin_terisi,
+              birth_tersedia: el.ruang_bersalin_tersedia
             }
           }
         )
         i++
       })
       const sortedData = _orderBy(dataTable, ['sort.' + this.sortField], [this.sort])
-      const max = _orderBy(dataTable, ['sort.total'], ['desc'])[0] ? _orderBy(dataTable, ['sort.total'], ['desc'])[0].total : 0
-      this.rangeCapacity.max = max
-      this.rangeCapacity.maxRange = max
       this.totalItems = sortedData.length
       this.dataTable = sortedData
       this.dataHospital = sortedData
@@ -385,10 +305,6 @@ export default {
       const start = (currentPage - 1) * this.itemsPerPage
       const end = currentPage * this.itemsPerPage
       this.data = this.dataTable.slice(start, end)
-    },
-    filterRange (o) {
-      return (o.bor_percentage >= this.rangeBor.min && o.bor_percentage <= this.rangeBor.max) &&
-        (o.total >= this.rangeCapacity.min && o.total <= this.rangeCapacity.max)
     },
     updateData ({ sortField, sort }) {
       this.dataTable = _orderBy(this.dataTable, ['sort.' + sortField], [sort])
@@ -410,7 +326,7 @@ export default {
       this.dataTable = data
     },
     resetDataTable () {
-      let dataTable = []
+      const dataTable = []
       let data = this.dataHospital
       let i = 1
       const city = this.selectedCity.value
@@ -433,12 +349,8 @@ export default {
         dataTable.push(elem)
         i++
       })
-
-      dataTable = _filter(dataTable, this.filterRange)
-
       this.dataTable = dataTable
       this.totalItems = dataTable.length
-      this.resetNumber()
       this.changePage(1)
     }
   }
@@ -749,4 +661,5 @@ export default {
     cursor: pointer;
   }
   /* END ITEMS PER PAGE DROPDOWN CSS */
+
 </style>

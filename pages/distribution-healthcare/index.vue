@@ -1,49 +1,102 @@
 <template>
   <div class="container mx-auto">
     <br>
-    <div class="m-4 mb-4 md:m-8 md:mb-4">
-      <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="lg md:auto sm:w-auto">
-          <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
-            Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit
-          </h3>
-          <small class="text-xl opacity-75">Update Terakhir: {{ lastupdate }}</small>
+    <div class="mb-4 md:m-8 md:mb-4">
+      <ul class="tabs flex mb-0 list-none flex-wrap flex-row border-b-2 border-secondary">
+        <li>
+          <a
+            class="py-4 px-6 font-bold block focus:outline-none"
+            href="javascript:void(0);"
+            :class="currentTab === 1 ? 'active' : 'text-gray-500'"
+            @click="toggleTabs(1)">
+            Keterisian Tempat Tidur (BOR)
+          </a>
+        </li>
+        <li>
+          <a
+            class="py-4 px-6 font-bold block focus:outline-none"
+            href="javascript:void(0);"
+            :class="currentTab === 2 ? 'active' : 'text-gray-500'"
+            @click="toggleTabs(2)">
+            Keterisian Ruang IGD dan VK
+          </a>
+        </li>
+      </ul>
+    </div>
+    <section :class="currentTab !== 1 ? 'hidden' : null">
+      <div class="m-4 mb-4 md:m-8 md:mb-4">
+        <div class="flex flex-col lg:flex-row lg:items-stretch">
+          <div class="lg md:auto sm:w-auto">
+            <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
+              Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit
+            </h3>
+            <small class="text-xl opacity-75">Update Terakhir: {{ lastupdate }}</small>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="m-4 mb-8 md:my-4 md:mx-8">
-      <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm">
-        <FontAwesomeIcon
-          class="inline-block mr-2 cursor-pointer mt-1"
-          :icon="icons.faInfoCircle"
-        />
-        <div class="ml-2">
-          Sumber data yang digunakan merupakan Data RS <i>Online</i> (Kemenkes) yang diperoleh dari fasilitas kesehatan dan dilakukan secara harian (tidak <i>realtime</i>). Adapun data Total BOR di bawah ini, dikelompokkan sesuai dengan kategori yang telah ditetapkan oleh Dinas Kesehatan Provinsi Jawa Barat, namun dihitung tanpa mengikutsertaan data IGD dan Ruang Bersalin.
+      <div class="m-4 mb-8 md:my-4 md:mx-8">
+        <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm">
+          <FontAwesomeIcon
+            class="inline-block mr-2 cursor-pointer mt-1"
+            :icon="icons.faInfoCircle"
+          />
+          <div class="ml-2">
+            Sumber data yang digunakan merupakan hasil integrasi dengan RS <i>Online</i> (Kemenkes) yang diperbaharui setiap pukul 11.00 WIB (tidak <i>realtime</i>). Adapun data Total BOR di bawah ini, dikelompokkan sesuai dengan kategori yang telah ditetapkan oleh Dinas Kesehatan Provinsi Jawa Barat, namun dihitung tanpa mengikutsertaan data IGD dan Ruang Bersalin.
+          </div>
         </div>
       </div>
-    </div>
-    <div class="m-1 md:m-4">
-      <BorAggregation />
-    </div>
-    <div class="m-1 md:m-4">
-      <BorAggregationCategory />
-    </div>
-    <div class="m-5 md:m-8">
-      <TrendBor />
-    </div>
-    <div class="m-1 md:m-4">
-      <div class="flex flex-col sm:flex-row sm:flex-wrap">
-        <div class="flex-1 mx-2 my-1">
-          <ChartBorZone />
-        </div>
-        <div class="flex-1 mx-2 my-1">
-          <ChartBorCity />
+      <div class="m-1 md:m-4">
+        <BorAggregation />
+      </div>
+      <div class="m-1 md:m-4">
+        <BorAggregationCategory />
+      </div>
+      <div class="m-5 md:m-8">
+        <TrendBor />
+      </div>
+      <div class="m-1 md:m-4">
+        <div class="flex flex-col sm:flex-row sm:flex-wrap">
+          <div class="flex-1 mx-2 my-1">
+            <ChartBorZone />
+          </div>
+          <div class="flex-1 mx-2 my-1">
+            <ChartBorCity />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="m-5 md:m-8">
-      <BorHospital />
-    </div>
+      <div class="m-5 md:m-8">
+        <BorHospital />
+      </div>
+    </section>
+    <section :class="currentTab !== 2 ? 'hidden' : null">
+      <div class="m-4 mb-4 md:m-8 md:mb-4">
+        <div class="flex flex-col lg:flex-row lg:items-stretch">
+          <div class="lg md:auto sm:w-auto">
+            <h3 class="text-3xl text-gray-900 font-bold text-left leading-none" style="margin-bottom: 10px; ">
+              Ketersediaan Ruang IGD dan Ruang Bersalin (VK) RS Menangani Covid-19 Jawa Barat
+            </h3>
+            <small class="text-xl opacity-75">Update Terakhir: {{ lastupdate }}</small>
+          </div>
+        </div>
+      </div>
+      <div class="m-4 mb-8 md:my-4 md:mx-8">
+        <div class="disclaimer flex flex-nowrap lg:flex-row items-start rounded p-3 text-sm">
+          <FontAwesomeIcon
+            class="inline-block mr-2 cursor-pointer mt-1"
+            :icon="icons.faInfoCircle"
+          />
+          <div class="ml-2">
+            Sumber data yang digunakan merupakan Data RS <i>Online</i> (Kemenkes) yang diperoleh dari fasilitas kesehatan dan dilakukan secara harian (tidak <i>realtime</i>). Adapun data Total BOR di bawah ini, dikelompokkan sesuai dengan kategori yang telah ditetapkan oleh Dinas Kesehatan Provinsi Jawa Barat, namun dihitung tanpa mengikutsertaan data IGD dan Ruang Bersalin.
+          </div>
+        </div>
+      </div>
+      <div class="m-1 md:m-4">
+        <IgdVkAggregationCategory />
+      </div>
+      <div class="m-5 md:m-8">
+        <IgdVkHospital />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -55,13 +108,16 @@ export default {
   components: {
     BorAggregation: () => import('~/components/BorAggregation'),
     BorAggregationCategory: () => import('~/components/BorAggregationCategory'),
+    IgdVkAggregationCategory: () => import('~/components/IgdVkAggregationCategory'),
     ChartBorZone: () => import('~/components/ChartBorZone'),
     ChartBorCity: () => import('~/components/ChartBorCity'),
     TrendBor: () => import('~/components/TrendBor'),
-    BorHospital: () => import('~/components/BorHospital')
+    BorHospital: () => import('~/components/BorHospital'),
+    IgdVkHospital: () => import('~/components/IgdVkHospital')
   },
   data () {
     return {
+      currentTab: 1,
       lastupdate: '',
       icons: {
         faInfoCircle
@@ -91,7 +147,11 @@ export default {
       })
     })
   },
-  methods: {},
+  methods: {
+    toggleTabs (key) {
+      this.currentTab = key
+    }
+  },
   head () {
     const title =
       'Keterisian Tempat Tidur - Pikobar [Pusat Informasi dan Koordinasi COVID-19 Jawa Barat]'
@@ -134,6 +194,33 @@ export default {
 }
 .btn {
   border-radius: 0.25rem;
+}
+
+.tabs a{
+  position: relative;
+  transition: .3s ease-in-out;
+}
+
+.tabs a:hover{
+  color: #069550;
+}
+
+.tabs a:before {
+  transition: .3s ease-in-out;
+}
+
+.tabs a.active {
+  color: #069550
+}
+
+.tabs a.active:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 4px;
+  background: #069550;
 }
 
 .container-map {

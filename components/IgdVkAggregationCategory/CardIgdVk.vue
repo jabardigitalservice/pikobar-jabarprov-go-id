@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-nowrap md:justify-center">
+      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-nowrap justify-center lg:px-6 md:px-0">
         <div class="set-size pie-wrapper style-2">
           <div class="label">
             <div class="text-3xl">
@@ -39,7 +39,7 @@
           </div>
           <div class="shadow" />
         </div>
-        <div class="bed my-auto mx-auto text-center sm:text-left flex mt-6">
+        <div class="bed mx-auto text-center sm:text-left flex">
           <FontAwesomeIcon class="inline-block mr-0 mr-5  sm:mr-5 cursor-pointer text-gray-500" :icon="icons.faBed" />
           <div>
             <div class="text-3xl font-bold">
