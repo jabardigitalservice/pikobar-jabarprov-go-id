@@ -1,7 +1,7 @@
 <template>
   <div class="news-list">
     <!-- <template v-if="loading"> -->
-    <div class="mb-8 rounded-lg p-6 bg-white">
+    <div class="mb-8 rounded-lg bg-white">
       <ul role="list" class="news-list__grid">
         <li
           v-for="(item, index) in items"

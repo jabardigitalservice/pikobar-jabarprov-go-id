@@ -32,7 +32,10 @@
               />
             </div>
           </div>
-          <div class="mt-12 lg:mt-0 lg:col-span-3">
+          <div
+            class="lg:mt-0 lg:col-span-3"
+            :class="{ 'mt-12' : !query.search }"
+          >
             <div v-show="!items">
               <div
                 v-for="i in 6"
