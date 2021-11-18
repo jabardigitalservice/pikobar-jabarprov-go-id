@@ -24,7 +24,7 @@ export default {
   },
   data () {
     return {
-      showStep: 4
+      showStep: 0
     }
   }
 }
