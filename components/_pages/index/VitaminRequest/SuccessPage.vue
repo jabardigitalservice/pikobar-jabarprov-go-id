@@ -16,7 +16,13 @@
     <p class="success-page__info lg:w-5/12">
       Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan permohonan dan melakukan lacak permohonan dengan menggunakan ID Permohonan.
     </p>
-    <div class="success-page__result lg:w-6/12">
+    <div
+      class="success-page__result"
+      :class="{
+        'lg:w-6/12': consultation,
+        'lg:w-4/12': !consultation
+      }"
+    >
       <div class="flex flex-row">
         <button
           class="success-page__button mr-2 bg-brand-green hover:bg-brand-green-light w-full"
@@ -25,6 +31,7 @@
           Kembali ke halaman utama
         </button>
         <button
+          v-if="consultation"
           class="success-page__button mr-2 bg-brand-green hover:bg-brand-green-light w-full"
           @click="onClick"
         >
@@ -39,6 +46,12 @@
 import { mapState } from 'vuex'
 import { konsultasiDokter } from '../IsolasiMandiri/backlinks'
 export default {
+  props: {
+    consultation: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       result: null,
