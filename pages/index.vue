@@ -53,7 +53,10 @@
         @loading="onSectionLoad('recentNews', $event)"
       />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
-        <ContentCardButton v-bind="button.recentNews" />
+        <ContentCardButton
+          v-bind="button.recentNews"
+          class="w-full lg:w-auto"
+        />
       </div>
     </Section>
     <Section
@@ -66,11 +69,13 @@
           v-if="model.infoAndDocTab === 0"
           key="infographics"
           v-bind="button.infographics"
+          class="w-full lg:w-auto"
         />
         <ContentCardButton
           v-if="model.infoAndDocTab === 1"
           key="documents"
           v-bind="button.documents"
+          class="w-full lg:w-auto"
         />
       </div>
     </Section>
