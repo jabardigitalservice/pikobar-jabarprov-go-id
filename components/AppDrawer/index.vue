@@ -93,7 +93,9 @@ export default {
         { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
         { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
-        { to: '/cekbansos', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen }
+        { to: '/cekbansos', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen },
+        { to: '/info/infographics', label: 'Info Praktikal', icon: this.icon.faInfoCircle },
+        { to: '/info/documents', label: 'Dokumen', icon: this.icon.faFolderOpen }
       ]
     }
   },
@@ -135,7 +137,9 @@ export default {
         faBed,
         faMap,
         faSyringe,
-        faLungs
+        faLungs,
+        faFolderOpen,
+        faInfoCircle
       } = lib
       this.icon = {
         faHome,
@@ -152,7 +156,9 @@ export default {
         faBed,
         faMap,
         faSyringe,
-        faLungs
+        faLungs,
+        faFolderOpen,
+        faInfoCircle
       }
     },
     animate (toggled) {
