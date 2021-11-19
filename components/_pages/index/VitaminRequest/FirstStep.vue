@@ -100,6 +100,12 @@ export default {
     TextArea,
     FileInput
   },
+  props: {
+    requestType: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
       inputList: firstStepInput,
@@ -158,6 +164,7 @@ export default {
       if (!valid) {
         return
       }
+      this.form.request_type = this.requestType
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
       window.scrollTo({

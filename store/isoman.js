@@ -14,7 +14,7 @@ export const state = () => ({
   testLocations: [],
   testTypes: [],
   formRequest: {
-    request_type: 'vitamin', // @todo: set this prop dynamically when medicine request feature available
+    request_type: null, // @todo: set this prop dynamically when medicine request feature available
     name: '',
     nik: '',
     ktp_photo: null,
