@@ -1,7 +1,7 @@
 <template>
   <div>
     <WelcomePage v-if="showStep === 0" :step.sync="showStep" />
-    <FirstStep v-if="showStep === 1" :step.sync="showStep" />
+    <FirstStep v-if="showStep === 1" :step.sync="showStep" request-type="vitamin" />
     <SecondStep v-if="showStep === 2" :step.sync="showStep" />
     <ConfirmationStep v-if="showStep === 3" :step.sync="showStep" />
     <SuccessPage v-if="showStep === 4" :step.sync="showStep" />
