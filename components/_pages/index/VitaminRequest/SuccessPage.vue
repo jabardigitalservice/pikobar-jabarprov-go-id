@@ -5,7 +5,7 @@
     <span class="success-page__title">Hatur Nuhun</span>
     <span class="success-page__name-label">{{ receipt.name || '' }}</span>
     <p class="success-page__info lg:w-5/12">
-      Anda telah mengisi Formulir Pengajuan Vitamin untuk kebutuhan Isoman. Berikut data yang telah kami terima:
+      {{ messageInfo }}
     </p>
     <div class="success-page__result w-full lg:w-4/12">
       <div v-for="item in result" :key="item.title" class="flex flex-row">
@@ -14,7 +14,7 @@
       </div>
     </div>
     <p class="success-page__info lg:w-5/12">
-      Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan permohonan dan melakukan lacak permohonan dengan menggunakan ID Permohonan.
+      {{ messageDetail }}
     </p>
     <div
       class="success-page__result"
@@ -44,7 +44,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { konsultasiDokter } from '../IsolasiMandiri/backlinks'
+import { konsultasiDokter, infoConsultation, infoVitamin, detailConsultation, detailVitamin } from '../IsolasiMandiri/backlinks'
 export default {
   props: {
     consultation: {
@@ -55,7 +55,9 @@ export default {
   data () {
     return {
       result: null,
-      whatsappBacklink: konsultasiDokter
+      whatsappBacklink: konsultasiDokter,
+      messageInfo: null,
+      messageDetail: null
     }
   },
   computed: {
@@ -76,12 +78,19 @@ export default {
       {
         title: 'Nama Pemohon',
         value: this.receipt.name || ''
-      },
-      {
-        title: 'Nama Paket',
-        value: this.receipt.package_name || ''
       }
     ]
+    if (!this.consultation) {
+      this.result.push({
+        title: 'Nama Paket',
+        value: this.receipt.package_name || ''
+      })
+      this.messageInfo = infoVitamin
+      this.messageDetail = detailVitamin
+    } else {
+      this.messageInfo = infoConsultation
+      this.messageDetail = detailConsultation
+    }
   },
   methods: {
     onReturn () {
