@@ -4,10 +4,18 @@ const konsultasiDokter = `https://wa.me/${phoneNum}?text=${encodeURIComponent(ms
 const permohonanKebutuhan = '/vitamin-request'
 const permohonanKonsultasiDokter = '/consultation-request'
 const trackApplication = '/tracking'
+const infoConsultation = 'Anda telah mengisi Formulir Pendataan Telekonsultasi Dokter untuk kebutuhan Isoman. Berikut data yang telah kami terima:'
+const infoVitamin = 'Anda telah mengisi Formulir Pengajuan Vitamin untuk kebutuhan Isoman. Berikut data yang telah kami terima:'
+const detailConsultation = 'Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan Telekonsultasi Dokter. Silahkan klik Lanjut Konsultasi agar terhubung dengan layanan Telekonsultasi Dokter.'
+const detailVitamin = 'Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan permohonan dan melakukan lacak permohonan dengan menggunakan ID Permohonan.'
 
 export {
   konsultasiDokter,
   permohonanKebutuhan,
   trackApplication,
-  permohonanKonsultasiDokter
+  permohonanKonsultasiDokter,
+  infoConsultation,
+  infoVitamin,
+  detailConsultation,
+  detailVitamin
 }
