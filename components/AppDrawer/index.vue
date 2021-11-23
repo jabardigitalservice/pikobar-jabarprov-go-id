@@ -253,6 +253,7 @@ export default {
   width: 75%;
   max-width: 400px;
   min-width: 300px;
+  overflow: auto;
   @apply absolute top-0 left-0 bottom-0
   bg-white;
 }
