@@ -242,7 +242,10 @@ export default {
             'ICU Tanpa Tekanan Negatif Tanpa Ventilator',
             'ICU Tekanan Negatif tanpa Ventilator',
             'NICU Covid-19',
-            'PICU Covid-19'
+            'PICU Covid-19',
+            'Penurunan Kesadaran',
+            'Penurunan Tekanan Darah yang memerlukan obat-obat penyokong',
+            'Saturasi Oksigen di bawah 90% tanpa Oksigen tambahan'
           ]
         }
       ],
