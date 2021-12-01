@@ -132,7 +132,7 @@ export default {
       this.mSearchString = str
       this.onSearchData(str)
       this.loading = false
-      if (!this.list.lenght) { this.isEmpty = true }
+      this.isEmpty = this.list.length === 0
     },
     onSearchData (search) {
       switch (this.contact_type) {
