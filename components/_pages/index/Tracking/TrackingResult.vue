@@ -145,7 +145,7 @@ export default {
     this.resultIdentity = [
       {
         title: 'ID Permohonan',
-        value: this.trackingResult.id_permohonan || ''
+        value: this.trackingResult.request_number || ''
       },
       {
         title: 'NIK',
@@ -153,15 +153,15 @@ export default {
       },
       {
         title: 'Nama Pemohon',
-        value: this.trackingResult.nama_lengkap || ''
+        value: this.trackingResult.name || ''
       },
       {
         title: 'Nama Paket',
-        value: this.trackingResult.paket_obatvitamin || ''
+        value: this.trackingResult.package_name || ''
       },
       {
         title: 'Alamat Domisili',
-        value: this.trackingResult.alamat_tempat || ''
+        value: this.trackingResult.address || ''
       }
     ]
   }

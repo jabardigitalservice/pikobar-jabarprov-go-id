@@ -103,7 +103,7 @@ export default {
       this.captchaResponse = response
       this.$refs.recaptcha.reset()
       const params = {
-        request_id: this.searchTracking,
+        request_number: this.searchTracking,
         'g-recaptcha-response': this.captchaResponse
       }
       await this.$store.dispatch('tracking/getTracking', params)
