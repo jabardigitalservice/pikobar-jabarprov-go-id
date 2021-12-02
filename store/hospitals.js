@@ -12,13 +12,10 @@ export const mutations = {
 
 export const actions = {
   getItems ({ state, commit }, options) {
-    if (!state.items || !state.items.length) {
-      return get()
-        .then((items) => {
-          commit('setItems', items)
-          return state.items
-        })
-    }
-    return state.items
+    return get(options)
+      .then((items) => {
+        commit('setItems', items)
+        return state.items
+      })
   }
 }

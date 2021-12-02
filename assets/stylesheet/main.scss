@@ -14,6 +14,20 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Lora';
+  src: url('../fonts/Lora-Regular.ttf');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('../fonts/Lora-Bold.ttf');
+  font-weight: bold;
+  font-display: swap;
+}
+
 html {
   font-family: 'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -32,6 +46,11 @@ html {
   @screen sm {
     font-size: 16px;
   }
+}
+
+h1, h2 {
+  font-family: 'Lora', serif;
+  color: #212121;
 }
 
 *,
@@ -105,7 +124,7 @@ html {
   }
 
   &__brand-logo {
-    @apply block w-auto h-10 mx-auto mr-4
+    @apply block w-auto mx-auto h-12 mr-4
     object-contain object-center;
   }
 
@@ -117,6 +136,7 @@ html {
         display: block;
       }
     }
+
   }
 
   &__menu-item {
@@ -162,7 +182,7 @@ html {
   .appbar-menu-item:not(.nuxt-link-active) {
     &,
     > * {
-      @apply text-gray-500 font-bold;
+      @apply text-gray-600 font-bold;
     }
   }
   .appbar-menu-item.nuxt-link-active {
@@ -174,8 +194,7 @@ html {
 
   .appbar-menu-item__dropdown {
     @apply hidden absolute rounded bg-white pb-3
-    border border-solid border-gray-300
-    shadow-md;
+    border border-solid border-gray-500;
   }
 }
 

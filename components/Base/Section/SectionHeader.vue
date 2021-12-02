@@ -12,7 +12,7 @@
       <slot name="icon">
         {{ icon }}
       </slot>
-      <p
+      <h2
         v-show="!loading && ($slots.title || title)"
         :class="{
           'section-header__title': true,
@@ -25,7 +25,7 @@
         <slot name="title">
           {{ title }}
         </slot>
-      </p>
+      </h2>
     </div>
     <p
       v-show="!loading && ($slots.subtitle || subtitle)"

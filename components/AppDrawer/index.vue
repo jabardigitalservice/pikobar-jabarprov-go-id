@@ -33,6 +33,12 @@
             <span>
               {{ m.label }}
             </span>
+            <span class="app-drawer__menu-item__arrow" :class="['hidden arrow-down-' + index]">
+              <FontAwesomeIcon :icon="icon.faChevronDown" />
+            </span>
+            <span class="app-drawer__menu-item__arrow" :class="['arrow-right-' + index]">
+              <FontAwesomeIcon :icon="icon.faChevronRight" />
+            </span>
           </a>
           <ul v-if="m.children" :class="['hidden ml-5 submenu-' + index]">
             <li v-for="(subm, indexSub) in m.children" :key="indexSub">
@@ -73,11 +79,11 @@ export default {
   computed: {
     menus () {
       return [
-        { to: '/', label: 'Home', exact: true, icon: this.icon.faHome },
         {
           to: '#',
           label: 'Data',
           icon: this.icon.faTachometerAlt,
+          isExpanded: false,
           children: [
             { to: '/data', label: 'Statistik', icon: this.icon.faChartLine },
             { to: '/distribution-case', label: 'Sebaran Kasus', icon: this.icon.faMapMarked },
@@ -85,15 +91,24 @@ export default {
             { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan', icon: this.icon.faMap }
           ]
         },
-        { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
-        { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
         { to: '/oxygen', label: 'Cari Oksgien', icon: this.icon.faLungs },
-        { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
-        { to: 'https://forum.pikobar.jabarprov.go.id/', label: 'Forum', icon: this.icon.faComment },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
-        { to: '/cekbansos', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen }
+        {
+          to: '#',
+          label: 'Informasi',
+          icon: this.icon.faInfoCircle,
+          isExpanded: false,
+          children: [
+            { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
+            { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
+            { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
+            { to: '/cekbansos', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen },
+            { to: '/info/infographics', label: 'Info Praktikal', icon: this.icon.faInfoCircle },
+            { to: '/info/documents', label: 'Dokumen', icon: this.icon.faFolderOpen }
+          ]
+        }
       ]
     }
   },
@@ -135,7 +150,11 @@ export default {
         faBed,
         faMap,
         faSyringe,
-        faLungs
+        faLungs,
+        faFolderOpen,
+        faInfoCircle,
+        faChevronRight,
+        faChevronDown
       } = lib
       this.icon = {
         faHome,
@@ -152,7 +171,11 @@ export default {
         faBed,
         faMap,
         faSyringe,
-        faLungs
+        faLungs,
+        faFolderOpen,
+        faInfoCircle,
+        faChevronRight,
+        faChevronDown
       }
     },
     animate (toggled) {
@@ -196,11 +219,12 @@ export default {
     onClickMenuItem (menu, index = 0) {
       if (menu.children) {
         const x = document.getElementsByClassName('submenu-' + index)
-        if (x[0].style.display === 'none') {
-          x[0].style.display = 'block'
-        } else {
-          x[0].style.display = 'none'
-        }
+        const arrowRight = document.getElementsByClassName('arrow-right-' + index)
+        const arrowDown = document.getElementsByClassName('arrow-down-' + index)
+        menu.isExpanded = !menu.isExpanded
+        x[0].style.display = menu.isExpanded ? 'block' : 'none'
+        arrowRight[0].style.display = menu.isExpanded ? 'none' : 'block'
+        arrowDown[0].style.display = menu.isExpanded ? 'block' : 'none'
       } else {
         this.animateHide()
         setTimeout(() => {
@@ -229,6 +253,7 @@ export default {
   width: 75%;
   max-width: 400px;
   min-width: 300px;
+  overflow: auto;
   @apply absolute top-0 left-0 bottom-0
   bg-white;
 }
@@ -252,6 +277,10 @@ export default {
   &__icon {
     min-width: 36px;
     display: inline-block;
+  }
+
+  &__arrow {
+    @apply absolute right-0 mr-4;
   }
 
   &.is-active {

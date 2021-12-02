@@ -9,10 +9,13 @@
         </nuxt-link>
         <nuxt-link to="/">
           <div class="text-left">
-            <p class="text-base">
-              Pusat Informasi &amp; Koordinasi COVID-19
+            <p class="text-2xl font-bold">
+              PIKOBAR
             </p>
-            <p class="text-sm text-gray-700">
+            <p class="text-xs text-gray-700 font-bold">
+              Pusat Informasi &amp; Koordinasi
+            </p>
+            <p class="text-xs text-gray-700 font-bold -mt-1">
               Provinsi Jawa Barat
             </p>
           </div>
@@ -99,7 +102,7 @@
           tag="li"
           to="/notifications"
           :exact="true"
-          class="cursor-pointer w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-200 box-content"
+          class="appbar-menu-item cursor-pointer w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-200 box-content"
         >
           <a class="text-gray-500">
             <FontAwesomeIcon
@@ -131,7 +134,6 @@ export default {
         faBell
       },
       menus: [
-        { to: '/', label: 'Home', exact: true },
         {
           to: '#',
           label: 'Data',
@@ -150,10 +152,12 @@ export default {
           to: '#',
           label: 'Informasi',
           children: [
-            { to: '/articles?tab=jabar', label: 'Berita' },
+            { to: '/articles', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
             { to: '/contact', label: 'Kontak' },
-            { to: '/cekbansos', label: 'Bantuan Sosial' }
+            { to: '/cekbansos', label: 'Bantuan Sosial' },
+            { to: '/info/infographics', label: 'Info Praktikal' },
+            { to: '/info/documents', label: 'Dokumen' }
           ]
         }
       ]

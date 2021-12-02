@@ -4,14 +4,13 @@ function convertToJSON (documentSnapshot) {
   const data = documentSnapshot.data()
   return {
     ...data,
-    published_at: data.published_at.toDate(),
     id: documentSnapshot.id
   }
 }
 
 export async function get () {
   const snapshots = await db
-    .collection('vaccination_content')
+    .collection('vaccination_content_v2')
     .orderBy('order', 'asc')
     .get()
 
@@ -24,4 +23,19 @@ export async function get () {
      * Convert FirebaseFirestore.DocumentSnapshot to POJO
      */
     .map(convertToJSON)
+}
+
+export async function getVaccinationSchedule () {
+  const document = await db.collection('iframes')
+    .doc('airtable-jadwal-vaksinasi-jabar')
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return {
+          id: doc.id,
+          ...doc.data()
+        }
+      }
+    })
+  return document
 }
