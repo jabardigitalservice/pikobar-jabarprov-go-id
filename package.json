@@ -42,7 +42,7 @@
     "swiper": "^5.4.5",
     "turf-inside": "^3.0.12",
     "v-datatable-light": "^0.8.1",
-    "vee-validate": "^3.2.5",
+    "vee-validate": "^3.4.11",
     "vue-awesome-swiper": "^4.1.1",
     "vue-carousel": "^0.18.0",
     "vue-content-loader": "^0.2.3",

@@ -187,7 +187,9 @@ export default {
           color: '#33ad3f',
           tooltip: [
             'Kategori: Tanpa Gejala - Gejala Ringan',
-            'Isolasi Tanpa Tekanan Negatif'
+            'Isolasi Tanpa Tekanan Negatif',
+            'Gejala sesak napas, batuk, demam',
+            'Saturasi 94-95% tanpa bantuan oksigen tambahan'
           ]
         },
         {
@@ -202,7 +204,9 @@ export default {
           tooltip:
           [
             'Kategori: Gejala Ringan - Gejala Sedang',
-            'Isolasi Tekanan Negatif'
+            'Isolasi Tekanan Negatif',
+            'Gejala sesak napas, batuk, demam',
+            'Saturasi oksigen 90-93% tanpa bantuan oksigen tambahan'
           ]
         },
         {
@@ -217,7 +221,10 @@ export default {
           tooltip:
           [
             'Kategori: Gejala Berat',
-            'ICU Tekanan Negatif dengan Ventilator'
+            'ICU Tekanan Negatif dengan Ventilator',
+            'Penurunan Kesadaran',
+            'Penurunan Tekanan Darah yang memerlukan obat-obat penyokong',
+            'Saturasi Oksigen di bawah 90% tanpa Oksigen tambahan'
           ]
         },
         {

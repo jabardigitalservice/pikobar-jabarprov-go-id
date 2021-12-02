@@ -1,4 +1,4 @@
-import { getTrackingResult } from '../api/tracking'
+import { getTrackingResult } from '../api/isoman'
 
 export const state = () => ({
   result: {}
