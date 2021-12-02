@@ -9,10 +9,8 @@
         </p>
       </h2>
       <br>
-      <ShareableItemTable
-        :columns="shareableDocumentsColumns"
+      <DocumentList
         :items="shareableDocuments"
-        :show-load-more="true"
         :loading="isPending"
         @load:more="onLoadMore"
       />
@@ -25,10 +23,10 @@ import _get from 'lodash/get'
 import { mapState, mapActions } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import { formatDateTimeShort } from '~/lib/date'
-import ShareableItemTable from '~/components/ShareableItemTable'
+import DocumentList from '~/components/_pages/documents/DocumentList.vue'
 export default {
   components: {
-    ShareableItemTable
+    DocumentList
   },
   data () {
     return {
