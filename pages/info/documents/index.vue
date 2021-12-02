@@ -73,7 +73,7 @@ export default {
   },
   mounted () {
     this.isPending = true
-    this.getItems({ fresh: true })
+    this.getItems()
       .finally(() => {
         if (process.browser) {
           analytics.logEvent('documents_list_view')
