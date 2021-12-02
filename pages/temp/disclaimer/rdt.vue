@@ -32,7 +32,6 @@
         <a
           class="appearance-none px-4 py-2 rounded-lg text-white bg-brand-blue"
           :href="backlink"
-          target="_blank"
         >
           Mengerti
         </a>
