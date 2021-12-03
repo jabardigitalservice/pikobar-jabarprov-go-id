@@ -7,7 +7,7 @@
     </h2>
     <br>
     <div
-      v-if="isPending || !infographics.length"
+      v-if="showLoader"
       class="infographic__skeleton"
     >
       <InfographicSkeleton
@@ -15,7 +15,7 @@
         :key="i"
       />
     </div>
-    <div class="infographic__list">
+    <div v-show="isImageLoaded" class="infographic__list">
       <figure
         v-for="(item, index) in infographics"
         :key="index"
@@ -40,7 +40,7 @@
     </div>
     <br>
     <div
-      v-if="!isPending"
+      v-if="!isPending && isImageLoaded"
       class="flex justify-center pb-6"
     >
       <button
@@ -76,7 +76,10 @@ export default {
   computed: {
     ...mapState('infographics', {
       infographics: 'items'
-    })
+    }),
+    showLoader () {
+      return this.isPending || !this.infographics.length || !this.isImageLoaded
+    }
   },
   mounted () {
     this.isPending = true
