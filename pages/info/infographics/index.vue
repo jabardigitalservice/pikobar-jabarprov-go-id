@@ -6,6 +6,15 @@
       </p>
     </h2>
     <br>
+    <div
+      v-if="isPending || !infographics.length"
+      class="infographic__skeleton"
+    >
+      <InfographicSkeleton
+        v-for="i in 4"
+        :key="i"
+      />
+    </div>
     <div class="infographic__list">
       <figure
         v-for="(item, index) in infographics"
@@ -13,14 +22,14 @@
         class="relative w-full bg-white rounded-lg border divide-y divide-gray-200"
         @click="onClickSlide(item.route)"
       >
-        <div class="img-container relative overflow-hidden">
+        <div class="img-container">
           <img
             :src="item.images[0] || null"
-            class="cursor-pointer infographic-list__item-image w-full object-cover object-left-top rounded-lg shadow-lg"
+            class="infographic-list__item-image cursor-pointer"
             @click.prevent="$router.push(item.route)"
           >
         </div>
-        <caption class="px-4 py-2 overflow-ellipsis text-left block w-full font-bold opacity-75 hover:underline">
+        <caption class="infographic__caption overflow-ellipsis">
           <nuxt-link :to="item.route">
             {{ item.title }}
           </nuxt-link>
@@ -28,7 +37,10 @@
       </figure>
     </div>
     <br>
-    <div class="flex justify-center pb-6">
+    <div
+      v-if="!isPending"
+      class="flex justify-center pb-6"
+    >
       <button
         class="infographic__button"
         @click="onLoadMore"
@@ -44,7 +56,11 @@ import { faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
 import { mapState, mapActions } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
+import InfographicSkeleton from '~/components/_pages/infographics/InfographicSkeleton.vue'
 export default {
+  components: {
+    InfographicSkeleton
+  },
   data () {
     return {
       icon: {
@@ -61,7 +77,7 @@ export default {
   },
   mounted () {
     this.isPending = true
-    this.getItems({ perPage: 12, fresh: true })
+    this.getItems({ perPage: 12 })
       .finally(() => {
         if (process.browser) {
           analytics.logEvent('infographic_list_view')
@@ -119,11 +135,33 @@ export default {
 
 <style lang="scss" scoped>
 .infographic {
+  &__skeleton {
+    @apply grid grid-cols-1 gap-6;
+
+    @screen md {
+      @apply grid-cols-4;
+    }
+  }
+
   &__list {
     @apply grid grid-cols-1 gap-6;
 
     @screen md {
       @apply grid-cols-4;
+    }
+  }
+
+  &__item-image {
+    @apply w-full object-cover object-left-top
+    rounded-lg shadow-lg;
+  }
+
+  &__caption {
+    @apply px-4 py-2 text-left
+    block w-full font-bold opacity-75;
+
+    &:hover {
+      @apply underline;
     }
   }
 
@@ -139,6 +177,8 @@ export default {
 }
 
 .img-container {
+  @apply relative overflow-hidden;
+
   > img {
 
     &:hover {
