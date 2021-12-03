@@ -25,7 +25,9 @@
         <div class="img-container">
           <img
             :src="item.images[0] || null"
-            class="infographic-list__item-image cursor-pointer"
+            class="infographic-list__item-image cursor-pointer rounded-lg"
+            :class="{'h-64': !isImageLoaded}"
+            @load="isImageLoaded = true"
             @click.prevent="$router.push(item.route)"
           >
         </div>
@@ -67,7 +69,8 @@ export default {
         faDownload,
         faShare
       },
-      isPending: true
+      isPending: true,
+      isImageLoaded: false
     }
   },
   computed: {
@@ -139,6 +142,14 @@ export default {
     @apply grid grid-cols-1 gap-6;
 
     @screen md {
+      @apply grid-cols-2;
+    }
+
+    @screen lg {
+      @apply grid-cols-3;
+    }
+
+    @screen xl {
       @apply grid-cols-4;
     }
   }
@@ -147,13 +158,21 @@ export default {
     @apply grid grid-cols-1 gap-6;
 
     @screen md {
+      @apply grid-cols-2;
+    }
+
+    @screen lg {
+      @apply grid-cols-3;
+    }
+
+    @screen xl {
       @apply grid-cols-4;
     }
   }
 
   &__item-image {
     @apply w-full object-cover object-left-top
-    rounded-lg shadow-lg;
+    shadow-lg;
   }
 
   &__caption {
