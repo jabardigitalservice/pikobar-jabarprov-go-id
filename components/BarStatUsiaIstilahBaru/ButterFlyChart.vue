@@ -26,9 +26,9 @@ export default {
       datasets: [],
       margin: {
         top: 20,
-        right: 20,
+        right: 80,
         bottom: 30,
-        left: 20
+        left: 80
       },
       contentWidth: 0,
       contentHeight: 0,
@@ -183,20 +183,37 @@ export default {
       const bars = this.chartContainer.append('g')
         .attr('class', 'bars')
 
-      bars.selectAll('.bar')
+      const barItem = bars.selectAll('.bar')
         .data(dataset)
         .enter()
-        .append('rect')
+        .append('g')
         .attr('class', (data) => { return 'bar bar--' + data.gender })
+
+      barItem.append('rect')
         .attr('x', (data) => { return this.x(Math.min(0, data.value)) + (data.gender === 'laki_laki' ? -30 : 25) })
         .attr('y', (data) => { return this.y(data.age) })
         .attr('width', (data) => { return Math.abs(this.x(data.value) - this.x(0)) })
         .attr('height', this.y.bandwidth())
-        .on('mouseover', () => {
-          this.tooltip.transition()
-            .duration(100)
-            .style('opacity', 0.9)
+      barItem.append('text')
+        .attr('x', (data) => {
+          let positionX
+          if (data.gender === 'laki_laki') {
+            positionX = this.x(Math.min(0, data.value)) - 35
+          } else {
+            positionX = this.x(data.value) + 30
+          }
+          return positionX
         })
+        .attr('y', (data) => { return this.y(data.age) + (this.y.bandwidth() / 2) })
+        .attr('text-anchor', (data) => { return data.gender === 'laki_laki' ? 'end' : 'start' })
+        .attr('alignment-baseline', 'middle')
+        .style('fill', '#999999')
+        .text((data) => { return data.value ? this.numberFormat(this.removeNegative(data.value)) : 0 })
+      barItem.on('mouseover', () => {
+        this.tooltip.transition()
+          .duration(100)
+          .style('opacity', 0.9)
+      })
         .on('mousemove', (data) => {
           this.tooltip.html('<b>' + data.age.replace('bawah_', '<').replace('atas_', '>').replace('_', ' - ') +
             '</b><br/>' + this.chartOptions.category + ': ' + this.numberFormat(this.removeNegative(data.value)))
