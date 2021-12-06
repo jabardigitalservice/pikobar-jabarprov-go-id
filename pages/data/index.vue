@@ -237,7 +237,7 @@ export default {
   column-gap: 1rem;
   row-gap: 1rem;
 
-  @screen md {
+  @screen lg {
     grid-template-columns: 2fr 4fr;
   }
 }
