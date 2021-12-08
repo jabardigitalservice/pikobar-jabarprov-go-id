@@ -123,11 +123,11 @@ export default {
       this.xAxis = this.$d3.axisBottom(this.x)
         .ticks(9)
         .tickSize(-this.contentHeight)
-        .tickFormat(row => '')
+        .tickFormat(() => '')
 
       this.yAxis = this.$d3.axisLeft(this.y)
         .tickSize(0)
-        .tickFormat(row => '')
+        .tickFormat(() => '')
 
       this.yAxisLabel = this.$d3.axisLeft(this.y)
         .tickSize(0)
@@ -385,7 +385,7 @@ export default {
   }
 }
 
-div.tooltip {
+div.butterfly-chart-tooltip {
   position: absolute;
   text-align: center;
   padding: 10px 15px;
