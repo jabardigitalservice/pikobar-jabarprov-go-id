@@ -32,7 +32,7 @@
         prompt="Tanyakan Sekarang"
         :event="konsultasiDokterEvent"
         :image="konsultasiDokterImage"
-        :backlink="permohonanKonsultasiDokter"
+        :backlink="konsultasiDokter"
       />
       <ActionCard
         class="isoman__action-card"
