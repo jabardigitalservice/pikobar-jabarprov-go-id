@@ -167,6 +167,9 @@ export default {
           this.$refs.vueCarousel.handleNavigation('backward')
           break
       }
+    },
+    getCurrentPage () {
+      return this.$refs.vueCarousel.currentPage
     }
   }
 }
