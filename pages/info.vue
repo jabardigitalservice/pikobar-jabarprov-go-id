@@ -104,7 +104,6 @@ export default {
           return `${str}`.toLowerCase().includes(this.query.search.toLowerCase())
         })
       })
-      console.log(array)
       return array
     },
     async onSearchStringChanged (str) {

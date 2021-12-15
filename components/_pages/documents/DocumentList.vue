@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import DocumentItem from './DocumentItem.vue'
 import DocumentSkeleton from './DocumentSkeleton.vue'
 export default {
@@ -52,8 +53,11 @@ export default {
     }
   },
   computed: {
+    ...mapState('documents', [
+      'isFiltered'
+    ]),
     showLoadMore () {
-      return !this.loading && this.items?.length
+      return !this.loading && this.items?.length && !this.isFiltered
     },
     showEmptyFig () {
       return !this.loading && !this.items?.length
@@ -69,7 +73,7 @@ export default {
 
 <style lang="scss" scoped>
 .document-list {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col gap-4 pb-5;
 
   &__container {
     @apply flex justify-center items-center;
