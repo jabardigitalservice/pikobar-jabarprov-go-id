@@ -53,7 +53,7 @@ export function getById (id) {
           id: doc.id,
           published_at: data.published_at.toDate(),
           route,
-          shareText: `[Pikobar] Bagikan "${data.title}". Selengkapnya di ${process.env.URL}${route}`
+          shareText: `[Pikobar] Bagikan "${data.title}".\n\nSelengkapnya di ${process.env.URL}${route}`
         }
       }
       return null
