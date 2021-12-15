@@ -15,6 +15,12 @@
       >
         <a :class="['text-lg', tab.id === mActiveTabId && 'font-bold text-brand-green']">
           {{ tab.title }}
+          <span
+            v-show="showCounts"
+            :class="tab.id === mActiveTabId ? 'count--active' : 'count'"
+          >
+            {{ counts(tab) }}
+          </span>
         </a>
       </li>
     </ul>
@@ -33,6 +39,10 @@ export default {
       default: null
     },
     fixed: {
+      type: Boolean,
+      default: false
+    },
+    showCounts: {
       type: Boolean,
       default: false
     }
@@ -56,11 +66,23 @@ export default {
         this.mActiveTabId = newTabId
         this.$emit('change', newTabId)
       }
+    },
+    counts (tab) {
+      return tab.counts > 99 ? '99+' : tab.counts
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.count {
+  @apply text-xs rounded-lg ml-3 p-1
+  bg-gray-500 text-white;
 
+  &--active {
+    @apply text-xs rounded-lg
+    border-brand-green text-white
+    bg-brand-green ml-3 p-1;
+  }
+}
 </style>
