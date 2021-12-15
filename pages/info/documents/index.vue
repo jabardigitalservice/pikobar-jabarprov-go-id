@@ -2,7 +2,7 @@
   <div>
     <section>
       <h2 class="text-xl md:text-3xl leading-normal">
-        <p class="text-base opacity-75">
+        <p class="info-text">
           Lihat dan unduh dokumen serta rilis pers seputar informasi COVID-19 di Jawa Barat.
           Dokumen dan rilis pers yang ditampilkan berdasarkan informasi resmi dari
           Pemerintah Provinsi Jawa Barat.
@@ -138,5 +138,10 @@ export default {
   @screen lg {
     grid-template-columns: 1fr 1fr 1fr;
   }
+}
+.info-text {
+  @apply text-base opacity-75;
+
+  font-family: 'Roboto', sans-serif;
 }
 </style>
