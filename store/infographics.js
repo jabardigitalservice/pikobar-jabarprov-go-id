@@ -5,7 +5,8 @@ import { get, getById, ORDER_INDEX, ORDER_TYPE } from '~/api/infographic'
 
 export const state = () => ({
   items: [],
-  lastSnapshot: null
+  lastSnapshot: null,
+  isFiltered: false
 })
 
 export const getters = {
@@ -34,24 +35,31 @@ export const mutations = {
   },
   setLastSnapshot (state, lastSnapshot) {
     state.lastSnapshot = lastSnapshot
+  },
+  setIsFiltered (state, data) {
+    state.isFiltered = data
   }
 }
 
 export const actions = {
-  getItems ({ state, commit }, options = { perPage: 6, fresh: false }) {
+  getItems ({ state, commit }, options = { perPage: 6, fresh: false, isFiltered: false }) {
     if (!state.items || !state.items.length || options.fresh) {
       return get({
         ...options,
         lastSnapshot: state.lastSnapshot
       })
         .then(({ data, lastSnapshot }) => {
-          if (process.client || process.browser) {
-            commit('appendItems', data)
-            commit('setLastSnapshot', lastSnapshot)
+          if (!options.isFiltered) {
+            if (process.client || process.browser) {
+              commit('appendItems', data)
+              commit('setLastSnapshot', lastSnapshot)
+            } else {
+              commit('setItems', data)
+            }
+            return state.items
           } else {
-            commit('setItems', data)
+            return data
           }
-          return state.items
         })
     }
     return state.items
@@ -66,5 +74,11 @@ export const actions = {
         commit('setItems', [...state.items, item])
         return getters.itemsMap[id]
       })
+  },
+  setItems ({ commit }, items) {
+    commit('setItems', items)
+  },
+  setIsFiltered ({ commit }, data) {
+    commit('setIsFiltered', data)
   }
 }

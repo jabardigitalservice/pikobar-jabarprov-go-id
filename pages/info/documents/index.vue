@@ -30,7 +30,7 @@ export default {
   },
   data () {
     return {
-      isPending: true,
+      isPending: false,
       columns: [
         {
           prop: 'published_at',
@@ -45,7 +45,8 @@ export default {
   },
   computed: {
     ...mapState('documents', {
-      documents: 'items'
+      documents: 'items',
+      isFiltered: 'isFiltered'
     }),
     shareableDocumentsColumns () {
       return [
@@ -72,14 +73,16 @@ export default {
     }
   },
   mounted () {
-    this.isPending = true
-    this.getItems()
-      .finally(() => {
-        if (process.browser) {
-          analytics.logEvent('documents_list_view')
-        }
-        this.isPending = false
-      })
+    if (!this.isFiltered) {
+      this.isPending = true
+      this.getItems()
+        .finally(() => {
+          this.isPending = false
+        })
+    }
+    if (process.browser) {
+      analytics.logEvent('documents_list_view')
+    }
   },
   methods: {
     ...mapActions('documents', {
@@ -89,7 +92,11 @@ export default {
       return _get(row, column.prop)
     },
     onLoadMore () {
+      this.isPending = true
       this.getItems({ fresh: true })
+        .finally(() => {
+          this.isPending = false
+        })
     }
   },
   head () {

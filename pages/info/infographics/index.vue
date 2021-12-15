@@ -6,15 +6,6 @@
       </p>
     </h2>
     <br>
-    <div
-      v-if="showLoader"
-      class="infographic__skeleton"
-    >
-      <InfographicSkeleton
-        v-for="i in 4"
-        :key="i"
-      />
-    </div>
     <div v-show="isImageLoaded" class="infographic__list">
       <figure
         v-for="(item, index) in infographics"
@@ -38,9 +29,18 @@
         </caption>
       </figure>
     </div>
+    <div
+      v-if="showLoader"
+      class="infographic__skeleton"
+    >
+      <InfographicSkeleton
+        v-for="i in 4"
+        :key="i"
+      />
+    </div>
     <br>
     <div
-      v-if="!isPending && isImageLoaded"
+      v-if="showLoadMore"
       class="flex justify-center pb-6"
     >
       <button
@@ -49,6 +49,16 @@
       >
         Load More
       </button>
+    </div>
+    <div
+      v-if="showEmptyFig"
+      class="flex justify-center"
+    >
+      <img
+        src="~/static/img/icon-empty-state.svg"
+        alt="img-faq-empty"
+        class="mb-5"
+      >
     </div>
   </div>
 </template>
@@ -69,27 +79,36 @@ export default {
         faDownload,
         faShare
       },
-      isPending: true,
+      isPending: false,
       isImageLoaded: false
     }
   },
   computed: {
     ...mapState('infographics', {
-      infographics: 'items'
+      infographics: 'items',
+      isFiltered: 'isFiltered'
     }),
     showLoader () {
-      return this.isPending || !this.infographics.length || !this.isImageLoaded
+      return this.isPending || (!this.isImageLoaded && this.infographics.length)
+    },
+    showLoadMore () {
+      return !this.isPending && this.isImageLoaded && this.infographics.length && !this.isFiltered
+    },
+    showEmptyFig () {
+      return !this.infographics.length && !this.showLoader
     }
   },
   mounted () {
-    this.isPending = true
-    this.getItems({ perPage: 12 })
-      .finally(() => {
-        if (process.browser) {
-          analytics.logEvent('infographic_list_view')
-        }
-        this.isPending = false
-      })
+    if (!this.isFiltered) {
+      this.isPending = true
+      this.getItems({ perPage: 12 })
+        .finally(() => {
+          this.isPending = false
+        })
+    }
+    if (process.browser) {
+      analytics.logEvent('infographic_list_view')
+    }
   },
   methods: {
     ...mapActions('infographics', {
