@@ -100,7 +100,6 @@ export default {
   },
   mounted () {
     if (!this.isFiltered) {
-      console.log('masuk')
       this.isPending = true
       this.getItems({ perPage: 12 })
         .finally(() => {
