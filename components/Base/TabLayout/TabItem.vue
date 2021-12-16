@@ -10,6 +10,13 @@
     <span class="tablayout-item__label">
       {{ label }}
     </span>
+    <span
+      :class="mActive
+        ? 'tablayout-item__count--active'
+        : 'tablayout-item__count'"
+    >
+      {{ count }}
+    </span>
   </button>
 </template>
 
@@ -26,6 +33,10 @@ export default {
     },
     label: {
       type: String,
+      default: null
+    },
+    count: {
+      type: [String, Number],
       default: null
     }
   },
@@ -74,5 +85,16 @@ export default {
   &:active {
     outline: none;
   }
+
+  &__count {
+  @apply text-xs rounded-lg ml-3 p-1
+  bg-gray-500 text-white;
+
+  &--active {
+    @apply text-xs rounded-lg
+    border-brand-green text-white
+    bg-brand-green ml-3 p-1;
+  }
+}
 }
 </style>
