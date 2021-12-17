@@ -11,11 +11,12 @@
       {{ label }}
     </span>
     <span
+      v-show="showCount"
       :class="mActive
         ? 'tablayout-item__count--active'
         : 'tablayout-item__count'"
     >
-      {{ count }}
+      {{ countDisplay }}
     </span>
   </button>
 </template>
@@ -38,6 +39,10 @@ export default {
     count: {
       type: [String, Number],
       default: null
+    },
+    showCount: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -53,6 +58,11 @@ export default {
           ? v
           : !!v
       }
+    }
+  },
+  computed: {
+    countDisplay () {
+      return this.count > 99 ? '99+' : this.count
     }
   }
 }
@@ -87,13 +97,13 @@ export default {
   }
 
   &__count {
-  @apply text-xs rounded-lg ml-3 p-1
+  @apply text-xs rounded-lg p-1
   bg-gray-500 text-white;
 
   &--active {
     @apply text-xs rounded-lg
     border-brand-green text-white
-    bg-brand-green ml-3 p-1;
+    bg-brand-green p-1;
   }
 }
 }
