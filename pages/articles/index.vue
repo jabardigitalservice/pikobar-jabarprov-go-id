@@ -182,6 +182,7 @@ export default {
         this.items = []
       }
       if (this.query.search.length) {
+        // executed when search input is filled
         this.lastDocumentSnapshot = null
         this.$store.dispatch('news/setIsFiltered', true)
 
@@ -220,9 +221,11 @@ export default {
             this.isProvinceLoading = false
           })
         this.tabs[0].count = this.articles.length
+
         return
       } else if (!append && this.lastDocumentSnapshot) {
         // executed when search is back to null value, after list being searched
+        // set list item in all tabs to default (12 cards per tab)
         this.lastDocumentSnapshot = null
         this.$store.dispatch('news/setIsFiltered', false)
         this.$store.dispatch('news/getArticleNationals', { perPage: 12 })
@@ -265,6 +268,8 @@ export default {
           } else {
             this.items = docs
           }
+
+          // store items on global variable based on current tab
           switch (this.tabActive) {
             case 1:
               this.$store.dispatch('news/setArticleNationals', this.items)
@@ -275,6 +280,7 @@ export default {
             default:
               this.$store.dispatch('news/setArticles', this.items)
           }
+
           if (!docs.length) {
             this.hasReachedEnd = true
           }
