@@ -10,6 +10,7 @@
         :key="i"
         :active="i === mValue"
         v-bind="tab"
+        :show-count="showCount"
         @click="onClickTabItem(tab, i)"
       />
     </div>
@@ -65,6 +66,10 @@ export default {
     tabs: {
       type: Array,
       default: () => []
+    },
+    showCount: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
