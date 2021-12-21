@@ -140,8 +140,9 @@ export default {
   }
 }
 .info-text {
-  @apply text-base opacity-75;
+  @apply text-base;
 
   font-family: 'Roboto', sans-serif;
+  color: #424242;
 }
 </style>

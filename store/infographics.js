@@ -80,5 +80,8 @@ export const actions = {
   },
   setIsFiltered ({ commit }, data) {
     commit('setIsFiltered', data)
+  },
+  setLastSnapshot ({ commit }, data) {
+    commit('setLastSnapshot', data)
   }
 }

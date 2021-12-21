@@ -41,7 +41,7 @@
             >
           </div>
           <span class="document__title-small">
-            {{ item.title }}
+            {{ item.description }}
           </span>
           <div class="document__button-container">
             <button

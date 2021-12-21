@@ -1,7 +1,7 @@
 <template>
   <div class="infographic">
     <h2 class="text-xl md:text-3xl leading-normal">
-      <p class="text-base opacity-75">
+      <p class="infographic__description">
         Info yang memuat infografis terkait COVID-19
       </p>
     </h2>
@@ -214,6 +214,13 @@ export default {
       @screen lg {
         @apply w-1/4 ;
       }
+  }
+
+  &__description {
+    @apply text-base;
+
+    color: #424242;
+    font-family: 'Roboto', sans-serif;
   }
 }
 
