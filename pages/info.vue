@@ -4,10 +4,10 @@
   >
     <Section class="bg-white">
       <div class="space-y-3 pt-2 lg:pt-8">
-        <h3 class="text-3xl text-gray-900 font-bold">
+        <h2 class="text-3xl text-gray-900 font-bold">
           Informasi Lainnya
-        </h3>
-        <p class="text-gray-500">
+        </h2>
+        <p class="subtitle">
           Informasi terkait infografis, dokumen dan rilis pers seputar Covid-19 di Jawa Barat.
         </p>
         <StringSearchQuery
@@ -111,8 +111,9 @@ export default {
 
       // search on infographics
       this.isInfographicLoading = true
+      if (this.query.search) { this.$store.dispatch('infographics/setLastSnapshot', null) }
       const infographicsRawData = await this.$store.dispatch('infographics/getItems', {
-        perPage: this.query.search ? 500 : 6,
+        perPage: this.query.search ? 500 : 8,
         fresh: true,
         isFiltered: true
       })
@@ -127,12 +128,14 @@ export default {
       } else {
         this.tabs[0].counts = null
         this.$store.dispatch('infographics/setIsFiltered', false)
+        this.$store.dispatch('infographics/setLastSnapshot', this.infographicsItems[this.infographicsItems.length - 1].published_date)
       }
 
       // search on documents
       this.isDocumentLoading = true
+      if (this.query.search) { this.$store.dispatch('documents/setLastSnapshot', null) }
       const documentsRawData = await this.$store.dispatch('documents/getItems', {
-        perPage: this.query.search ? 500 : 6,
+        limit: this.query.search ? 500 : 8,
         fresh: true,
         isFiltered: true
       })
@@ -147,8 +150,16 @@ export default {
       } else {
         this.tabs[1].counts = null
         this.$store.dispatch('documents/setIsFiltered', false)
+        this.$store.dispatch('documents/setLastSnapshot', this.documentItems[this.documentItems.length - 1].published_at)
       }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.subtitle {
+  color: #424242;
+  font-family: 'Roboto', sans-serif;
+}
+</style>
