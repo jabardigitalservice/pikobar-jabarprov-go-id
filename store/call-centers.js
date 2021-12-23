@@ -1,33 +1,33 @@
-import { db } from '~/lib/firebase'
+import { get } from '../api/call-centers'
 
 export const state = () => ({
-  items: null
+  items: null,
+  isFiltered: null
 })
 
 export const mutations = {
   setItems (state, items) {
     state.items = items
+  },
+  setIsFiltered (state, data) {
+    state.isFiltered = data
   }
 }
 
 export const actions = {
-  getItems ({ state, commit }, options) {
-    let query = db.collection('call_centers')
-      .orderBy('nama_kotkab', 'asc')
-
-    if (options) {
-      query = query.limit(options.perPage)
+  getItems ({ state, commit }, options = { perPage: 27, fresh: false }) {
+    if (!state.items || !state.items.length || options.fresh) {
+      return get(options)
+        .then((items) => {
+          if (!state.isFiltered) { commit('setItems', items) }
+          return items
+        })
     }
-    // TODO: move to "~/api"
-    return query.get()
-      .then((docs) => {
-        if (!docs.empty) {
-          return docs.docs.map(doc => doc.data())
-        }
-        return []
-      }).then((items) => {
-        commit('setItems', items)
-        return state.items
-      })
+  },
+  setItems ({ commit }, data) {
+    commit('setItems', data)
+  },
+  setIsFiltered ({ commit }, data) {
+    commit('setIsFiltered', data)
   }
 }
