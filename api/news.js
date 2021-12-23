@@ -25,7 +25,7 @@ export function get (options = { perPage: 3, tag: null }) {
             date: data.published_at.toDate(),
             source: data.news_channel,
             published_at: data.published_at.toDate(),
-            route: slugifyArticleRoute(doc.id, data.title)
+            url: slugifyArticleRoute(doc.id, data.title)
           }
         })
       }
