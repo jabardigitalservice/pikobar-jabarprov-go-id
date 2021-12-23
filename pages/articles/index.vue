@@ -71,7 +71,7 @@ export default {
       items: [],
       query: {
         perPage: 12,
-        search: ''
+        search: this.$route.query?.search || ''
       },
       collectionName: 'articles',
       isLoading: false,
@@ -186,6 +186,12 @@ export default {
         this.lastDocumentSnapshot = null
         this.$store.dispatch('news/setIsFiltered', true)
 
+        this.$router.replace({
+          query: {
+            search: this.query.search
+          }
+        })
+
         // search on national tab
         this.isNationalLoading = true
         const nationalRawData = await this.$store.dispatch('news/getArticleNationals', {
@@ -235,6 +241,9 @@ export default {
         return
       }
       this.$store.dispatch('news/setIsFiltered', false)
+      this.$router.replace({
+        query: null
+      })
       let querySnapshot = db
         .collection(this.collectionName)
         .orderBy('published_at', 'desc')
@@ -256,6 +265,7 @@ export default {
                 thumbnail: data.image,
                 date: data.published_at.toDate(),
                 source: data.news_channel,
+                published_at: data.published_at.toDate(),
                 url: slugifyArticleRoute(doc.id, data.title)
               })
             })
@@ -295,7 +305,7 @@ export default {
     },
     arrayFilter (array) {
       array = array.filter((data) => {
-        return [data.title, data.content].some((str) => {
+        return [data.title].some((str) => {
           return `${str}`.toLowerCase().includes(this.query.search.toLowerCase())
         })
       })
