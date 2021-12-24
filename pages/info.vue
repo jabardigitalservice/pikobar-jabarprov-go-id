@@ -7,9 +7,9 @@
         <h2 class="text-3xl text-gray-900 font-bold">
           Informasi Lainnya
         </h2>
-        <p class="subtitle">
+        <h4 class="subtitle">
           Informasi terkait infografis, dokumen dan rilis pers seputar Covid-19 di Jawa Barat.
-        </p>
+        </h4>
         <StringSearchQuery
           :placeholder="'Cari informasi'"
           :value="query.search"
