@@ -15,7 +15,12 @@
         @search="onLocalSearchStringChanged"
       />
       <!-- eslint-disable vue/valid-v-slot -->
-      <TabLayout v-model="tabLayoutModel" :tabs="tabs" class="pt-8">
+      <TabLayout
+        v-model="tabLayoutModel"
+        :tabs="tabs"
+        :show-count="showCount"
+        class="pt-8"
+      >
         <template #content.contact>
           <div class="mt-10">
             <ListContact
@@ -62,14 +67,15 @@ export default {
         },
         {
           name: 'contact',
-          type: 'website',
+          type: 'task_forces',
           label: 'Website Gugus Tugas Kota/Kabupaten Jawa Barat'
         }
       ]),
-      list: [],
       contact_type: '',
-      loading: false,
-      isEmpty: false
+      isEmpty: false,
+      isHospitalLoading: false,
+      isCallCenterLoading: false,
+      isTaskForcesLoading: false
     }
   },
   computed: {
@@ -90,12 +96,29 @@ export default {
         this.mValue = index
         this.contact_type = this.tabs[index].type
         this.$emit('change', index)
-        this.getData()
+        if (!this.mSearchString && !this.list) { this.initializeData() }
+        this.isEmpty = this.list.length === 0
       }
+    },
+    list () {
+      switch (this.contact_type) {
+        case 'call_center':
+          return this.list_call_centers
+        case 'task_forces':
+          return this.list_websites
+        default:
+          return this.list_hospitals
+      }
+    },
+    loading () {
+      return this.isHospitalLoading || this.isCallCenterLoading || this.isTaskForcesLoading
+    },
+    showCount () {
+      return this.mSearchString.length !== 0 && !this.loading
     }
   },
   mounted () {
-    this.getData()
+    this.initializeData()
     this.$nextTick(() => {
       if (process.browser) {
         analytics.logEvent('contacts_view')
@@ -104,71 +127,104 @@ export default {
   },
   methods: {
     async getData () {
-      this.loading = true
-      switch (this.contact_type) {
-        case 'call_center':
-          // eslint-disable-next-line no-case-declarations
-          const callCenter = await this.$store.dispatch('call-centers/getItems', { perPage: 27 })
-          this.list = callCenter
-          this.loading = false
-          return this.list
-        case 'website':
-          // eslint-disable-next-line no-case-declarations
-          const websites = await this.$store.dispatch('task-forces/getItems', { perPage: 27 })
-          this.list = websites
-          this.loading = false
-          return this.list
-        default:
-          // eslint-disable-next-line no-case-declarations
-          const hospitals = await this.$store.dispatch('hospitals/getItems', { perPage: 999 })
-          this.list = hospitals
-          this.loading = false
-          return this.list
+      // set isFiltered state
+      if (this.mSearchString) {
+        this.$store.dispatch('call-centers/setIsFiltered', true)
+        this.$store.dispatch('task-forces/setIsFiltered', true)
+        this.$store.dispatch('hospitals/setIsFiltered', true)
+      } else {
+        this.$store.dispatch('call-centers/setIsFiltered', false)
+        this.$store.dispatch('task-forces/setIsFiltered', false)
+        this.$store.dispatch('hospitals/setIsFiltered', false)
+      }
+
+      // search on call centers
+      this.isCallCenterLoading = true
+      // eslint-disable-next-line no-case-declarations
+      const callCenterRawData = await this.$store.dispatch('call-centers/getItems', { perPage: 27, fresh: true })
+      const filteredCallCenter = this.mSearchString ? this.arrayFilter('call_center', callCenterRawData) : callCenterRawData
+      this.$store.dispatch('call-centers/setItems', filteredCallCenter)
+        .finally(() => {
+          this.isCallCenterLoading = false
+        })
+
+      // search on task forces
+      this.isTaskForcesLoading = true
+      // eslint-disable-next-line no-case-declarations
+      const taskForcesRawData = await this.$store.dispatch('task-forces/getItems', { perPage: 27, fresh: true })
+      const filteredTaskForces = this.mSearchString ? this.arrayFilter('task_forces', taskForcesRawData) : taskForcesRawData
+      this.$store.dispatch('task-forces/setItems', filteredTaskForces)
+        .finally(() => {
+          this.isTaskForcesLoading = false
+        })
+
+      // search on hospitals
+      this.isHospitalLoading = true
+      // eslint-disable-next-line no-case-declarations
+      const hospitalsRawData = await this.$store.dispatch('hospitals/getItems', { perPage: 999, fresh: true })
+      const filteredHospitals = this.mSearchString ? this.arrayFilter('hospital', hospitalsRawData) : hospitalsRawData
+      this.$store.dispatch('hospitals/setItems', filteredHospitals)
+        .finally(() => {
+          this.isHospitalLoading = false
+        })
+
+      if (this.mSearchString) {
+        this.tabs[0].count = this.list_hospitals.length
+        this.tabs[1].count = this.list_call_centers.length
+        this.tabs[2].count = this.list_websites.length
+      } else {
+        this.tabs[0].count = null
+        this.tabs[1].count = null
+        this.tabs[2].count = null
       }
     },
     onLocalSearchStringChanged (str) {
       this.$emit('update:searchString')
-      this.loading = true
       this.mSearchString = str
-      this.onSearchData(str)
-      this.loading = false
+      this.getData()
       this.isEmpty = this.list.length === 0
     },
-    onSearchData (search) {
+    arrayFilter (type, array) {
+      switch (type) {
+        case 'call_center':
+          return array.filter((data) => {
+            return [data.nama_kotkab].some((str) => {
+              return `${str}`.toLowerCase().includes(this.mSearchString.toLowerCase())
+            })
+          })
+        case 'task_forces':
+          return array.filter((data) => {
+            return [data.name].some((str) => {
+              return `${str}`.toLowerCase().includes(this.mSearchString.toLowerCase())
+            })
+          })
+        default:
+          return array.filter((data) => {
+            return [data.name, data.address, data.city].some((str) => {
+              return `${str}`.toLowerCase().includes(this.mSearchString.toLowerCase())
+            })
+          })
+      }
+    },
+    async initializeData () {
       switch (this.contact_type) {
         case 'call_center':
-          if (!search) {
-            this.list = this.list_call_centers
-            return this.list
-          }
-          this.list = this.list.filter((data) => {
-            return [data.nama_kotkab].some((str) => {
-              return `${str}`.toLowerCase().includes(search.toLowerCase())
-            })
-          })
-          return this.list
-        case 'website':
-          if (!search) {
-            this.list = this.list_websites
-            return this.list
-          }
-          this.list = this.list.filter((data) => {
-            return [data.name].some((str) => {
-              return `${str}`.toLowerCase().includes(search.toLowerCase())
-            })
-          })
-          return this.list
+          this.isCallCenterLoading = true
+          this.$store.dispatch('call-centers/setIsFiltered', false)
+          await this.$store.dispatch('call-centers/getItems', { perPage: 27, fresh: true })
+          this.isCallCenterLoading = false
+          break
+        case 'task_forces':
+          this.isTaskForcesLoading = true
+          this.$store.dispatch('task-forces/setIsFiltered', false)
+          await this.$store.dispatch('task-forces/getItems', { perPage: 27, fresh: true })
+          this.isTaskForcesLoading = false
+          break
         default:
-          if (!search) {
-            this.list = this.list_hospitals
-            return this.list
-          }
-          this.list = this.list.filter((data) => {
-            return [data.name, data.address, data.city].some((str) => {
-              return `${str}`.toLowerCase().includes(search.toLowerCase())
-            })
-          })
-          return this.list
+          this.isHospitalLoading = true
+          this.$store.dispatch('hospitals/setIsFiltered', false)
+          await this.$store.dispatch('hospitals/getItems', { perPage: 999, fresh: true })
+          this.isHospitalLoading = false
       }
     }
   }

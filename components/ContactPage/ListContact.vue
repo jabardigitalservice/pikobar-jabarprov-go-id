@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div v-if="showContent" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <template v-for="(item, i) in list">
         <ContactCard
           :key="i"
@@ -58,7 +58,7 @@ export default {
     },
     items: {
       type: Array,
-      default: null
+      default: () => []
     },
     isEmpty: {
       type: Boolean,
@@ -77,6 +77,9 @@ export default {
       set (value) {
         return value.map(this.mapItem)
       }
+    },
+    showContent () {
+      return this.items && !this.loading
     }
   },
   methods: {
@@ -103,7 +106,7 @@ export default {
             title: item.nama_kotkab,
             contacts: [...callCenters, ...hotlines]
           }
-        case 'website':
+        case 'task_forces':
           // eslint-disable-next-line no-case-declarations
           const websites = toArray(item.website)
             .map(w => ({
