@@ -97,7 +97,7 @@ export default {
         this.contact_type = this.tabs[index].type
         this.$emit('change', index)
         if (!this.mSearchString && !this.list) { this.initializeData() }
-        this.isEmpty = this.list?.length === 0
+        this.isEmpty = this.list.length === 0
       }
     },
     list () {
