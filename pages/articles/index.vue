@@ -5,7 +5,7 @@
       <h2 class="font-bold text-3xl">
         Berita Terkini
       </h2>
-      <h4 class="text-gray-500">
+      <h4 class="subtitle">
         Berita seputar Covid-19 mulai dari berita lokal hingga mancanegara.
       </h4>
     </div>
@@ -315,3 +315,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.subtitle {
+  color: #424242;
+  font-family: 'Roboto', sans-serif;
+}
+</style>

@@ -2,12 +2,12 @@
   <div class="">
     <Section class="py-6 md:py-12 bg-white">
       <div class="space-y-3 mb-10">
-        <h3 class="text-4xl text-gray-900 font-bold">
+        <h2 class="text-4xl text-gray-900 font-bold">
           Kontak Rumah Sakit dan Call Center
-        </h3>
-        <p class="text-gray-500">
+        </h2>
+        <h4 class="subtitle">
           Informasi dan nomor alamat rumah sakit yang menjadi rujukan pemeriksaan gejala COVID-19.
-        </p>
+        </h4>
       </div>
       <StringSearchQuery
         :placeholder="'Cari Kabupaten atau Kota'"
@@ -174,3 +174,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.subtitle {
+  color: #424242;
+  font-family: 'Roboto', sans-serif;
+}
+</style>
