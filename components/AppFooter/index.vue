@@ -77,10 +77,6 @@ export default {
     return {
       listMenuFooter: [
         {
-          title: 'Periksa Mandiri',
-          link: 'https://covid19.prixa.ai/partner/80b47a20-1353-49e9-af91-a0a5995ca89f/app/52b7d983-3e5d-49cc-9c99-508dc779aad3'
-        },
-        {
           title: 'Forum Pikobar',
           link: 'https://forum.pikobar.jabarprov.go.id/'
         },
