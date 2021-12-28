@@ -15,25 +15,21 @@
     </header>
     <section class="max-w-xl mx-auto my-8 md:p-8 md:bg-white md:rounded-lg md:shadow-xl md:border md:border-solid md:border-gray-300">
       <h4 class="text-xl text-center">
-        <strong>Perhatian</strong>
+        <strong>Pemberitahuan</strong>
       </h4>
       <br>
       <p>
-        Pendaftaran Peserta TES MASIF COVID-19 bersifat terbatas dan
-        hanya diprioritaskan bagi masyarakat dengan profesi interaksi tinggi dengan publik,
-        rawan terinfeksi dan/atau yang memiliki gejala COVID-19.
+        Fitur Periksa Mandiri dan Pendaftaran Tes Masif Covid-19 akan dihilangkan pada Website dan Aplikasi Pikobar pada 2022 mendatang. Namun, Anda masih bisa melakukan pengetesan dan pendaftaran tes Covid-19 melalui fasilitas pelayanan kesehatan terdekat.
         <br><br>
-        Peserta yang telah <b>melalui tahap diagnosa dari fitur Periksa Mandiri</b>
-        dan telah mendaftarkan diri, akan diverifikasi dan divalidasi oleh Dinas Kesehatan Kabupaten/Kota dan Dinas Kesehatan Provinsi.
-        Hanya peserta yang disetujuilah yang dapat mengikuti tes ini.
+        Terima kasih.
       </p>
       <br>
       <p class="text-center my-4">
         <a
-          class="appearance-none px-4 py-2 rounded-lg text-white bg-brand-blue"
-          :href="backlink"
+          class="appearance-none px-4 py-2 rounded-lg text-white bg-brand-blue cursor-pointer"
+          @click="$router.back()"
         >
-          Mengerti
+          Kembali
         </a>
       </p>
     </section>
