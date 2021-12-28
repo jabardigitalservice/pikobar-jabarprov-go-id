@@ -29,12 +29,7 @@
               </div>
             </div>
             <div class="font-normal mt-2" style="font-size: 14px;">
-              <div v-if="bor.name.length <= 12">
-                TT {{ bor.name }} Terisi
-              </div>
-              <div v-if="bor.name.length > 12">
-                TT {{ bor.name }} <br> Terisi
-              </div>
+              Tempat Tidur<br/>Terisi
             </div>
           </div>
 
@@ -51,7 +46,7 @@
               {{ bor.available.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") }}
             </div>
             <div style="font-size: 14px;">
-              TT Tersedia
+              Tempat Tidur Tersedia
             </div>
           </div>
         </div>

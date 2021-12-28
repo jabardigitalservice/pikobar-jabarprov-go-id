@@ -12,7 +12,7 @@
         <template #button="props">
           <ContentCardButton
             v-bind="props"
-            class="mt-6"
+            class="mt-6 w-full lg:w-auto"
           />
         </template>
       </ContentCard>
@@ -30,7 +30,10 @@
         @loading="onSectionLoad('eventStatistics', $event)"
       />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
-        <ContentCardButton v-bind="button.eventStatistics" />
+        <ContentCardButton
+          v-bind="button.eventStatistics"
+          class="w-full lg:w-auto"
+        />
       </div>
     </Section>
     <Section class="bg-white">
@@ -50,7 +53,10 @@
         @loading="onSectionLoad('recentNews', $event)"
       />
       <div class="mt-6 md:mt-10 flex flex-row justify-center">
-        <ContentCardButton v-bind="button.recentNews" />
+        <ContentCardButton
+          v-bind="button.recentNews"
+          class="w-full lg:w-auto"
+        />
       </div>
     </Section>
     <Section
@@ -63,11 +69,13 @@
           v-if="model.infoAndDocTab === 0"
           key="infographics"
           v-bind="button.infographics"
+          class="w-full lg:w-auto"
         />
         <ContentCardButton
           v-if="model.infoAndDocTab === 1"
           key="documents"
           v-bind="button.documents"
+          class="w-full lg:w-auto"
         />
       </div>
     </Section>
@@ -135,7 +143,7 @@ export default {
           image: '/img/icon-hero.svg',
           imagePosition: 'right',
           backLink: '#eventStatistics',
-          prompt: 'Selanjutnya'
+          prompt: 'Selengkapnya'
         },
         {
           header: 'Kenali Covid-19',

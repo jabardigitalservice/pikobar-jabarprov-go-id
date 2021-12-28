@@ -155,7 +155,9 @@ export default {
             { to: '/articles', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
             { to: '/contact', label: 'Kontak' },
-            { to: '/cekbansos', label: 'Bantuan Sosial' }
+            { to: '/cekbansos', label: 'Bantuan Sosial' },
+            { to: '/info/infographics', label: 'Info Praktikal' },
+            { to: '/info/documents', label: 'Dokumen' }
           ]
         }
       ]

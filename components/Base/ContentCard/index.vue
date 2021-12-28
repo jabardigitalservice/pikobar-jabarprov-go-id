@@ -16,9 +16,9 @@
           <p v-if="header" class="content-card__header">
             {{ header }}
           </p>
-          <p class="content-card__title">
+          <h2 class="content-card__title">
             {{ title }}
-          </p>
+          </h2>
           <div class="content-card__body text-gray-600">
             <slot name="body">
               {{ body }}
@@ -132,6 +132,8 @@ export default {
 
   &__body {
     @apply mt-3 text-base;
+
+    font-family: 'Roboto', sans-serif;
   }
 
   &__btn {

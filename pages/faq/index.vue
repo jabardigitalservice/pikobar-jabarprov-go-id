@@ -11,7 +11,7 @@
       </div>
       <div class="py-10">
         <StringSearchQuery
-          :placeholder="'Cari pertanyaan di sini.'"
+          :placeholder="'Cari informasi di sini...'"
           :value="query.search"
           @search="onSearchStringChanged"
         />
@@ -19,7 +19,10 @@
       <div>
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
           <div>
-            <div class="rounded border">
+            <div
+              class="rounded border"
+              :class="{ 'hidden lg:block': query.search }"
+            >
               <CategoryTabFAQ
                 :data="data"
                 :selected="query.category"
@@ -29,7 +32,10 @@
               />
             </div>
           </div>
-          <div class="mt-12 lg:mt-0 lg:col-span-3">
+          <div
+            class="lg:mt-0 lg:col-span-3"
+            :class="{ 'mt-12' : !query.search }"
+          >
             <div v-show="!items">
               <div
                 v-for="i in 6"
