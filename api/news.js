@@ -51,7 +51,7 @@ export function getArticleNational (options = { perPage: 3 }) {
             date: data.published_at.toDate(),
             source: data.news_channel,
             published_at: data.published_at.toDate(),
-            route: slugifyArticleRoute(doc.id, data.title)
+            url: slugifyArticleRoute(doc.id, data.title)
           }
         })
       }
@@ -78,7 +78,7 @@ export function getArticleWorld (options = { perPage: 3 }) {
             date: data.published_at.toDate(),
             source: data.news_channel,
             published_at: data.published_at.toDate(),
-            route: slugifyArticleRoute(doc.id, data.title)
+            url: slugifyArticleRoute(doc.id, data.title)
           }
         })
       }
