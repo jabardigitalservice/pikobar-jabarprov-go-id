@@ -66,6 +66,10 @@ export default {
   &__title {
     @apply flex-1 my-6 mb-4
     font-medium text-base text-left;
+
+    font-family: 'Roboto', sans-serif;
+    color: #424242;
+    font-weight: 500;
   }
 
   @screen lg {
@@ -90,6 +94,10 @@ export default {
 
     &__title {
       @apply my-0;
+
+      font-family: 'Roboto', sans-serif;
+      color: #424242;
+      font-weight: 500;
     }
   }
 }
