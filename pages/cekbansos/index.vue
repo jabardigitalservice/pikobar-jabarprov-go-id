@@ -3,12 +3,12 @@
     <Section class="pt-16 bg-white">
       <ContentCard v-bind="listContent[0]">
         <template #body>
-          <div class="mt-3">
+          <p class="mt-3">
             Laman ini berguna untuk mengetahui tata cara mengakses data penerima bantuan sosial yang telah disalurkan atau masih dalam proses penyaluran melalui Website Kemensos.
-          </div>
-          <div class="text-gray-500 mt-6">
+          </p>
+          <p class="info">
             *Laman ini tidak ditujukan untuk melakukan pengajuan bantuan sosial
-          </div>
+          </p>
         </template>
       </ContentCard>
     </Section>
@@ -16,15 +16,17 @@
       <Jumbotron>
         <div class="mx-2">
           <template>
-            Halaman yang dituju adalah halaman untuk memeriksa penyaluran bantuan sosial dari kementrian sosial Republik Indonesia. BUKAN untuk pengajuan bantuan sosial. Jika ada aduan atau pertanyaan lebih lanjut silahkan kunjungi FAQ atau hubungi hotline kami.
+            <p class="disclaimer">
+              Halaman ini hanya ditujukan untuk memeriksa penyaluran bantuan sosial dari Kementerian Sosial Republik Indonesia, tidak untuk mengajukan bantuan sosial. Kunjungi FAQ atau hubungi Hotline Pikobar untuk aduan/pertanyaan lebih lanjut.
+            </p>
           </template>
         </div>
       </Jumbotron>
     </Section>
-    <div class="bg-white text-3xl text-center font-bold overflow-x-auto">
+    <div class="timeline-title">
       Bagaimana Cara Mengakses Data
       <div>
-        <span class="px-2">Penerima</span><span class="text-green-600">Bansos Kemensos?</span>
+        <span class="px-2">Penerima</span><span class="text-green-600">Bansos Kemensos</span>?
       </div>
     </div>
     <Section class="py-6 md:py-16 bg-white mx-auto w-full h-full">
@@ -55,7 +57,7 @@ export default {
       imgFlowBansos: 'https://firebasestorage.googleapis.com/v0/b/jabarprov-covid19.appspot.com/o/public%2Fdekstop-flow-bansos.png?alt=media&token=69acce3b-9c01-45f4-8ee0-0d311050887b',
       listContent: [
         {
-          title: 'Selamat datang di Portal Informasi Data Penerima Bantuan Sosial Kemensos',
+          title: 'Selamat datang di Laman Informasi Data Penerima Bantuan Sosial Kemensos',
           image: '/img/icon-social-assistance.svg',
           imagePosition: 'right'
         }
@@ -68,3 +70,24 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+p {
+  color: #424242;
+}
+.info {
+  @apply italic mt-6;
+
+  font-size: 14px;
+}
+.disclaimer {
+  font-family: 'Roboto', sans-serif;
+  color: #424242;
+}
+.timeline-title {
+  @apply bg-white text-3xl text-center font-bold overflow-x-auto;
+
+  font-family: 'Lora', serif;
+  color: #424242;
+}
+</style>
