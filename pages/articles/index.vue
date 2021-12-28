@@ -104,6 +104,7 @@ export default {
       set (index) {
         this.collectionName = this.tabs[index].collection
         this.tabActive = index
+        this.$store.dispatch('news/setTabActive', this.tabActive)
         if (!this.isFiltered) { this.fetchItems(false) }
         this.$emit('change', index)
       }
@@ -152,6 +153,9 @@ export default {
         this.fetchItems(false)
       }
     }
+  },
+  mounted () {
+    this.$store.dispatch('news/setTabActive', this.tabActive)
   },
   methods: {
     onSearchStringChanged (str) {

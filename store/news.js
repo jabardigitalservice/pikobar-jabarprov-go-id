@@ -11,6 +11,7 @@ export const state = () => ({
   item_articles_national: [],
   item_articles_world: [],
   isFiltered: null,
+  tabActive: null,
 
   /**
    * @type {Date | null}
@@ -20,7 +21,19 @@ export const state = () => ({
 
 export const getters = {
   itemsMap (state) {
-    return state.items.reduce((obj, item) => {
+    let items
+    switch (state.tabActive) {
+      case 0:
+        items = [...state.items]
+        break
+      case 1:
+        items = [...state.item_articles_national]
+        break
+      default:
+        items = [...state.item_articles_world]
+        break
+    }
+    return items.reduce((obj, item) => {
       obj[item.id] = item
       return obj
     }, {})
@@ -51,6 +64,9 @@ export const mutations = {
   },
   setIsFiltered (state, data) {
     state.isFiltered = data
+  },
+  setTabActive (state, data) {
+    state.tabActive = data
   }
 }
 
@@ -105,5 +121,8 @@ export const actions = {
   },
   setIsFiltered ({ commit }, data) {
     commit('setIsFiltered', data)
+  },
+  setTabActive ({ commit, state }, data) {
+    commit('setTabActive', data)
   }
 }
