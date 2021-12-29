@@ -58,16 +58,18 @@ export default {
         {
           id: 'infographic',
           to: '/info/infographics',
-          title: 'Info Praktikal'
+          title: 'Info Praktikal',
+          count: null
         },
         {
           id: 'document',
           to: '/info/documents',
-          title: 'Dokumen'
+          title: 'Dokumen',
+          count: null
         }
       ],
       query: {
-        search: null
+        search: this.$route.query?.search ?? null
       },
       isInfographicLoading: false,
       isDocumentLoading: false
@@ -86,7 +88,29 @@ export default {
       return tab ? tab.id : null
     },
     showCounts () {
-      return this.query.search && !this.isDocumentLoading && !this.isInfographicLoading
+      return this.query.search &&
+      !this.isDocumentLoading &&
+      !this.isInfographicLoading &&
+      this.infographicsItems.length !== null &&
+      this.documentItems.length !== null &&
+      this.tabs[0].count !== null &&
+      this.tabs[1].count !== null
+    }
+  },
+  beforeMount () {
+    if (!this.query.search) {
+      this.$store.dispatch('infographics/setIsFiltered', false)
+      this.$store.dispatch('documents/setIsFiltered', false)
+    } else {
+      this.$store.dispatch('infographics/setIsFiltered', true)
+      this.$store.dispatch('documents/setIsFiltered', true)
+      this.onSearchStringChanged(this.query.search)
+    }
+  },
+  mounted () {
+    if (this.query.search) {
+      this.tabs[0].count = this.infographicsItems.length
+      this.tabs[1].count = this.documentItems.length
     }
   },
   methods: {
@@ -94,7 +118,8 @@ export default {
       const tab = this.tabs.find(item => item.id === newTabId)
       if (tab) {
         this.$router.replace({
-          path: tab.to
+          path: tab.to,
+          query: this.$route.query.search ? { search: this.$route.query.search } : null
         })
       }
     },
@@ -108,6 +133,13 @@ export default {
     },
     async onSearchStringChanged (str) {
       this.query.search = str !== '' ? str : null
+
+      // set search query
+      this.$router.replace({
+        query: {
+          search: this.query.search ?? null
+        }
+      })
 
       // search on infographics
       this.isInfographicLoading = true
