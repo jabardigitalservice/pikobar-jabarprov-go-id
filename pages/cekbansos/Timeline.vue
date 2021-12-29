@@ -114,7 +114,7 @@
           class="bansos-timeline__body--right"
         >
           <template>
-            Klik Tombol Cari Dan Telurusi Data Penerima Bantuan Sosial
+            Klik Tombol Cari Dan Telusuri Data Penerima Bantuan Sosial
           </template>
         </TimelineJumbotron>
       </div>

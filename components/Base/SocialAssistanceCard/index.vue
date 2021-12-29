@@ -12,14 +12,14 @@ export default {
     return {
       cards: Object.freeze([
         {
-          title: 'Kini, cari data penerima bantuan Kemensos bisa lebih cepat dan praktis! Segera kunjungi tautan berikut untuk lakukan pengecekan',
+          title: 'Lebih praktis & cepat cari data penerima Bansos Kemensos, klik tombol berikut untuk lakukan pengecekan',
           prompt: 'Cek Bansos',
           image: require('~/static/img/icon-artboard.png'),
           backlink: 'https://cekbansos.kemensos.go.id/'
         },
         {
-          title: 'Informasi lebih lanjut seputar Data Penerima Bantuan Sosial Kementerian Sosial RI dapat diakses melalui link di bawah',
-          prompt: 'DTKS Kemensos',
+          title: 'Hubungi email Kementerian Sosial RI untuk informasi lebih jauh seputar Bansos Kemensos',
+          prompt: 'Kontak',
           image: require('~/static/img/logo-kemensos.png'),
           backlink: 'mailto:dtks@kemsos.co.id'
         }
