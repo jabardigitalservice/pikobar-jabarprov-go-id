@@ -234,8 +234,6 @@ export default {
       const legendContainer = this.$d3.select('.legend-butterfly-chart')
       legendContainer.selectAll('.legend-item').remove()
 
-      this.$d3.select('#btn-terkonfirmasi-more').text('Tampilkan lebih banyak')
-
       const legendItem = legendContainer.selectAll('.legend-item')
         .data(this.legends)
         .enter().append('div')
@@ -244,7 +242,6 @@ export default {
         .on('click', (data) => {
           let legendElement
           const event = this.$d3.event
-          console.log(data.selector)
 
           if (event.target.nodeName === 'svg' || event.target.nodeName.toLowerCase() === 'span') {
             legendElement = event.target.parentElement
