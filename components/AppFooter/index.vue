@@ -105,7 +105,7 @@ export default {
   computed: {
     chunkedList () {
       return this.listMenuFooter.reduce((result, item, index) => {
-        const chunkIndex = Math.floor(index / 3)
+        const chunkIndex = Math.floor(index / 2)
         if (!result[chunkIndex]) {
           result[chunkIndex] = [] // start a new chunk
         }
