@@ -556,9 +556,9 @@ export default {
 }
 .logistic-selected {
   @apply border border-green-200 rounded mb-2 pt-2 pb-2 px-4 text-sm;
-  &.border-red-200 {
-    @apply border border-red-200 rounded mb-2 pt-2 pb-2 px-4 text-sm text-red-400;
-  }
+  // &.border-red-200 {
+  //   @apply border border-red-200 rounded mb-2 pt-2 pb-2 px-4 text-sm text-red-400;
+  // }
 }
 .quantity-logistic {
   width: 75px;

@@ -1,15 +1,13 @@
 /* purgecss start ignore */
 
 @font-face {
-  font-family: 'Product Sans';
-  src: url('../fonts/product-sans-regular.ttf');
+  font-family: Roboto;
   font-weight: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Product Sans';
-  src: url('../fonts/product-sans-bold.ttf');
+  font-family: Roboto;
   font-weight: bold;
   font-display: swap;
 }
@@ -194,7 +192,7 @@ h1, h2 {
 
   .appbar-menu-item__dropdown {
     @apply hidden absolute rounded bg-white pb-3
-    border border-solid border-gray-500;
+    border border-solid border-gray-400;
   }
 }
 
