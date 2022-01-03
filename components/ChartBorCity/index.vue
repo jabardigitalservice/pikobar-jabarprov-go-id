@@ -21,7 +21,7 @@
             />
             <multiselect
               v-model="selectedCategory"
-              class="optCategory mt-2 whitespace-nowrap"
+              class="optCategory mt-2 whitespace-no-wrap"
               :options="optionsCategory"
               :allow-empty="false"
               track-by="value"

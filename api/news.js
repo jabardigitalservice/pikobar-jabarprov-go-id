@@ -21,6 +21,62 @@ export function get (options = { perPage: 3, tag: null }) {
           return {
             ...data,
             id: doc.id,
+            thumbnail: data.image,
+            date: data.published_at.toDate(),
+            source: data.news_channel,
+            published_at: data.published_at.toDate(),
+            route: slugifyArticleRoute(doc.id, data.title)
+          }
+        })
+      }
+      return []
+    })
+}
+
+export function getArticleNational (options = { perPage: 3 }) {
+  const query = db.collection('articles_national')
+    .orderBy(ORDER_INDEX, 'desc')
+    .limit(options.perPage)
+
+  return query
+    .get()
+    .then((docs) => {
+      if (!docs.empty) {
+        return docs.docs.map((doc) => {
+          const data = doc.data()
+          return {
+            ...data,
+            id: doc.id,
+            thumbnail: data.image,
+            date: data.published_at.toDate(),
+            source: data.news_channel,
+            published_at: data.published_at.toDate(),
+            route: slugifyArticleRoute(doc.id, data.title)
+          }
+        })
+      }
+      return []
+    })
+}
+
+export function getArticleWorld (options = { perPage: 3 }) {
+  const query = db
+    .collection('articles_world')
+    .orderBy(ORDER_INDEX, 'desc')
+    .limit(options.perPage)
+
+  return query
+    .get()
+    .then((docs) => {
+      if (!docs.empty) {
+        return docs.docs.map((doc) => {
+          const data = doc.data()
+          return {
+            ...data,
+            id: doc.id,
+            thumbnail: data.image,
+            date: data.published_at.toDate(),
+            source: data.news_channel,
             published_at: data.published_at.toDate(),
             route: slugifyArticleRoute(doc.id, data.title)
           }
@@ -46,4 +102,21 @@ export function getById (id) {
       }
       return null
     })
+}
+
+/**
+ * Last update reflects of the timestamp of the latest inserted
+ * document into firebase "articles" collections, without regard
+ * to article tag or category.
+ * @returns {Date | undefined} last update date
+ */
+export function getLastUpdate () {
+  return get({
+    perPage: 1,
+    tag: null
+  }).then((news) => {
+    const latest = Array.isArray(news) ? news[0] : null
+    // eslint-disable-next-line camelcase
+    return latest?.published_at
+  })
 }

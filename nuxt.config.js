@@ -20,6 +20,7 @@ export default {
     DASHBOARD_API_KEY: process.env.DASHBOARD_API_KEY,
     ISOMAN_RECAPTCHA_KEY: process.env.ISOMAN_RECAPTCHA_KEY,
     ISOMAN_API_BASEURL: process.env.ISOMAN_API_BASEURL,
+    ISOMAN_API_BASEURL_STAGING: process.env.ISOMAN_API_BASEURL_STAGING,
     NUXT_ENV_OXYGEN_CENTER_BASE_URL: process.env.NUXT_ENV_OXYGEN_CENTER_BASE_URL
   },
   router: {
@@ -94,7 +95,9 @@ export default {
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
     { src: '~/plugins/vue-fullscreen', mode: 'client' },
     { src: '~/plugins/vue-multiselect', mode: 'client' },
-    { src: '~/plugins/custom', mode: 'client' }
+    { src: '~/plugins/custom', mode: 'client' },
+    { src: '~/plugins/vee-validate', mode: 'client' },
+    { src: '~/plugins/validate', mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -130,6 +133,10 @@ export default {
     }
   },
   purgeCSS: {
+    paths: [
+      'components/_pages/index/VitaminRequest/firstStep.js',
+      'components/_pages/index/VitaminRequest/secondStep.js'
+    ],
     whitelistPatterns: [
       /(^|\.)fa-/, /-fa($|\.)/,
       /(^|\.)leaflet-/,

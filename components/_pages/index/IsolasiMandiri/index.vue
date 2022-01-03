@@ -81,7 +81,7 @@ import { mapState } from 'vuex'
 import { ContentLoader } from 'vue-content-loader'
 import ExpandableContent from './ExpandableContent'
 import ActionCard from './ActionCard'
-import { konsultasiDokter, permohonanKebutuhan, trackApplication } from './backlinks'
+import { konsultasiDokter, permohonanKebutuhan, trackApplication, permohonanKonsultasiDokter } from './backlinks'
 import {
   TAP_KONSULTASI_DOKTER as konsultasiDokterEvent,
   TAP_PERMOHONAN_ISOMAN as permohonanKebutuhanEvent,
@@ -106,6 +106,7 @@ export default {
       konsultasiDokter,
       konsultasiDokterImage,
       konsultasiDokterEvent,
+      permohonanKonsultasiDokter,
       permohonanKebutuhan,
       permohonanKebutuhanImage,
       permohonanKebutuhanEvent,

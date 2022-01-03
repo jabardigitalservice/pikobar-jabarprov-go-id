@@ -21,14 +21,12 @@
     <AppDrawer ref="drawer" :show.sync="isDrawerOpen" class="lg:hidden" />
     <div
       class="w-full"
-      style="min-height: 75vh;"
+      style="min-height: 60vh;"
     >
       <nuxt />
     </div>
     <BackToTopButton />
-    <AppFooter v-show="isTopLevelRoute" class="container mx-auto pb-32">
-      <SponsorList :title-sponsor="this.$route.path.startsWith('/donate') ? 'Thanks To :' : null" class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md" />
-    </AppFooter>
+    <AppFooter />
   </div>
 </template>
 
@@ -37,15 +35,13 @@ import _throttle from 'lodash/throttle'
 import Appbar from '~/components/Appbar'
 import AppDrawer from '~/components/AppDrawer'
 import AppFooter from '~/components/AppFooter'
-import SponsorList from '~/components/SponsorList'
 import BackToTopButton from '~/components/BackToTopButton'
 export default {
   components: {
     Appbar,
     AppDrawer,
     BackToTopButton,
-    AppFooter,
-    SponsorList
+    AppFooter
   },
   data () {
     return {

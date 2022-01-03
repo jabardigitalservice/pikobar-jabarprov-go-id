@@ -1,79 +1,45 @@
 <template>
-  <div>
-    <slot>
-      <table class="w-full">
-        <thead class="hidden sm:table-header-group">
-          <tr class="bg-gray-200 border-b-2 border-t-2 border-solid border-gray-300">
-            <th
-              v-for="(col, index) in columns"
-              :key="index"
-              class="p-2 opacity-50 text-left"
-            >
-              {{ col.label }}
-            </th>
-            <th style="width: auto;" />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(item, rowIndex) in items"
-            :key="rowIndex"
-            class="cursor-pointer hover:bg-gray-100 flex flex-col sm:table-row mb-6 sm:mb-0"
-          >
-            <td
-              v-for="(col, colIndex) in columns"
-              :key="colIndex"
-              class="sm:p-2 text-left sm:border-b border-solid border-gray-300"
-              @click.capture="onClickItem(item)"
-            >
-              {{ getCellValue(col, item, colIndex, rowIndex) }}
-            </td>
-            <td
-              class="-mx-2 sm:mx-0 text-left sm:text-right sm:border-b border-solid border-gray-300"
-            >
-              <p class="flex-none text-sm text-gray-600">
-                <button
-                  class="px-2 py-2 mr-1 rounded-md hover:bg-gray-300"
-                  @click="beforeDownload(item)"
-                >
-                  <FontAwesomeIcon :icon="icon.faDownload" class="mr-1" />
-                  <span>
-                    Unduh
-                  </span>
-                </button>
-                <button
-                  class="px-2 py-2 rounded-md hover:bg-gray-300"
-                  @click="beforeShare(item)"
-                >
-                  <FontAwesomeIcon :icon="icon.faShare" class="mr-1" />
-                  <span>
-                    Bagikan
-                  </span>
-                </button>
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <div class="flex justify-center items-center">
-        <button
-          v-if="showLoadMore"
-          class="w-full lg:w-1/3 px-6 py-2 rounded-lg bg-brand-blue hover:bg-blue-400 text-white font-bold uppercase tracking-wider"
-          @click="onLoadMore"
-        >
-          Load More
-        </button>
-      </div>
-    </slot>
+  <div class="shareable_table">
+    <!-- eslint-disable vue/valid-v-slot -->
+    <SimpleTable
+      fixed-layout
+      :headers="headers"
+      :rows="items"
+      :loading="loading"
+      @click:row="onClickItem"
+    >
+      <template #item.published_at="{ value }">
+        <span class="block truncate">
+          {{ formatDateDayIndonesia(value) }}
+        </span>
+      </template>
+      <template #item.title="{ value }">
+        <span class="block truncate">
+          {{ value }}
+        </span>
+      </template>
+    </SimpleTable>
+    <div class="flex justify-center items-center">
+      <button
+        v-if="showLoadMore"
+        class="shareable_table__button"
+        @click="onLoadMore"
+      >
+        Load More
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import _get from 'lodash/get'
-import { faDownload, faShare } from '@fortawesome/free-solid-svg-icons'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
+import { SimpleTable } from '~/components/Base/SimpleTable'
+import { formatDateDayIndonesia } from '~/lib/date'
+
 export default {
+  components: {
+    SimpleTable
+  },
   props: {
     columns: {
       type: Array,
@@ -83,6 +49,10 @@ export default {
       type: Array,
       default: () => []
     },
+    loading: {
+      type: Boolean,
+      default: false
+    },
     showLoadMore: {
       type: Boolean,
       default: false
@@ -90,18 +60,24 @@ export default {
   },
   data () {
     return {
-      icon: {
-        faDownload,
-        faShare
-      }
+      headers: Object.freeze([
+        {
+          value: 'published_at',
+          text: 'Tanggal Rilis',
+          // "table-layout: fixed", along with "white-space: nowrap"
+          // mandates for width to be defined explicitly
+          // to prevent equal column width
+          width: '20ch'
+        },
+        {
+          value: 'title',
+          text: 'Judul Dokumen'
+        }
+      ])
     }
   },
   methods: {
-    getCellValue (column, row, columnIndex, rowIndex) {
-      const format = column.format
-      const value = _get(row, column.prop)
-      return typeof format === 'function' ? format(value) : value
-    },
+    formatDateDayIndonesia,
     onClickItem (item) {
       this.$router.push({
         path: item.route
@@ -120,6 +96,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.shareable_table {
+  &__button {
+      @apply w-full mt-6 bg-green-600 border border-transparent
+      rounded-md py-3 px-8 flex items-center justify-center
+      text-base font-medium text-white;
 
+      @screen lg {
+        @apply w-1/4 ;
+      }
+  }
+}
 </style>

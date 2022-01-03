@@ -2,8 +2,6 @@
   <div>
     <section>
       <h2 class="text-xl md:text-3xl leading-normal">
-        <b>Dokumen</b>
-        <br>
         <p class="text-base opacity-75">
           Lihat dan unduh dokumen serta rilis pers seputar informasi COVID-19 di Jawa Barat.
           Dokumen dan rilis pers yang ditampilkan berdasarkan informasi resmi dari
@@ -15,6 +13,7 @@
         :columns="shareableDocumentsColumns"
         :items="shareableDocuments"
         :show-load-more="true"
+        :loading="isPending"
         @load:more="onLoadMore"
       />
     </section>
