@@ -27,10 +27,8 @@
         <template>
           Covid-19 merupakan penyakit yang disebabkan Novel Coronavirus 2019.
           Meski bergejala mirip dengan flu biasa, Covid-19 sampai saat ini memiliki fatalitas lebih tinggi.
-          Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut tidak menunjukkan gejala. Penting bagi Anda untuk menilai kondisi secara mandiri. Anda bergejala?
-        </template>
-        <template #footer>
-          <ContentCardButton v-bind="button.jumbotron" />
+          Virus ini juga menyebar dengan sangat cepat karena bisa pindah dari orang ke orang bahkan sebelum orang tersebut tidak menunjukkan gejala.
+          Penting bagi Anda untuk menilai kondisi secara mandiri.
         </template>
       </Jumbotron>
       <ForumAndRelawan class="pt-4 md:pt-8" />
@@ -166,19 +164,6 @@ export default {
         loading: false,
         title: 'Gejala Umum Covid-19',
         subtitle: 'Jika ada orang yang dalam 14 hari sebelum muncul gejala di bawah ini pernah melakukan perjalanan ke negara terjangkit, atau pernah merawat/kontak erat dengan penderita Covid-19, maka terhadap orang tersebut akan dilakukan pemeriksaan laboratorium lebih lanjut untuk memastikan diagnosisnya.'
-      },
-      button: {
-        eventStatistics: {
-          backLink: '/data',
-          prompt: 'Selengkapnya',
-          buttonType: 'outline'
-        },
-        jumbotron: {
-          prompt: 'Periksa Diri Saya',
-          backLink: 'https://covid19.prixa.ai/partner/80b47a20-1353-49e9-af91-a0a5995ca89f/app/52b7d983-3e5d-49cc-9c99-508dc779aad3',
-          buttonType: 'outline',
-          iconType: 'open-new-tab'
-        }
       },
       listContent: [
         {
