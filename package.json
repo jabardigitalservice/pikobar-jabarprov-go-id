@@ -58,7 +58,7 @@
     "vue2-leaflet-markercluster": "^3.1.0",
     "vuejs-paginate": "^2.1.0",
     "vuex-router-sync": "^5.0.0",
-    "xlsx": "^0.16.0"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.9.2",
