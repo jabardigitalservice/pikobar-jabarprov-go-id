@@ -88,6 +88,7 @@ export default {
     { src: '~/plugins/initial-data.js', mode: 'client' },
     { src: '~/plugins/service-worker.js', mode: 'client' },
     '~/plugins/vuex-router-sync.js',
+    { src: '~/plugins/vue-d3.js', ssr: false },
     { src: '~/plugins/vue-leaflet.js', ssr: false },
     { src: '~/plugins/vue-lazyload.js', mode: 'client' },
     { src: '~/plugins/vue-carousel.js', mode: 'client' },
