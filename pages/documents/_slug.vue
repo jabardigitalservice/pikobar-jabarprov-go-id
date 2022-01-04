@@ -24,58 +24,38 @@
         </ContentLoader>
       </template>
       <template v-else-if="item">
-        <div class="flex flex-col justify-start items-start">
-          <h2 class="text-3xl font-bold leading-tight mb-3 lg:mb-0">
+        <div class="document">
+          <h2 class="document__title">
             {{ item.title }}
           </h2>
-          <p class="flex-none text-sm text-gray-600">
+          <span class="document__date">
+            {{ formatDateDayIndonesia(item.published_at) }}
+          </span>
+          <div
+            class="document__preview"
+            :style="`background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%), url(${item.images})`"
+          >
+            <img
+              class="document__pdf-logo"
+              src="~/assets/icons/pdf.svg"
+            >
+          </div>
+          <span class="document__title-small">
+            {{ item.description }}
+          </span>
+          <div class="document__button-container">
             <button
-              class="px-2 py-2 mr-1 rounded-md hover:bg-gray-300"
+              class="document__button"
               @click="beforeDownload"
             >
-              <FontAwesomeIcon :icon="icon.faDownload" class="mr-1" />
-              <span>
-                Unduh
-              </span>
+              Unduh
             </button>
             <button
-              class="px-2 py-2 rounded-md hover:bg-gray-300"
+              class="document__button-reverted"
               @click="beforeShare"
             >
-              <FontAwesomeIcon :icon="icon.faShare" class="mr-1" />
-              <span>
-                Bagikan
-              </span>
+              Bagikan
             </button>
-          </p>
-        </div>
-        <br>
-        <div class="flex flex-row justify-start items-start">
-          <div class="hidden md:inline-block px-4 py-3 mr-4 text-red-600 rounded-lg border border-solid border-gray-300">
-            <FontAwesomeIcon :icon="icon.faFilePdf" style="font-size: 5rem;" />
-          </div>
-          <div class="grid gap-3" style="grid-template-columns: auto auto 1fr;">
-            <span>
-              Tanggal Rilis
-            </span>
-            <small>:</small>
-            <p>
-              {{ formatDateTimeShort(item.published_at) }}
-            </p>
-            <span>
-              Judul
-            </span>
-            <small>:</small>
-            <p>
-              {{ item.title }}
-            </p>
-            <span>
-              Deskripsi
-            </span>
-            <small>:</small>
-            <p>
-              {{ item.description }}
-            </p>
           </div>
         </div>
       </template>
@@ -89,7 +69,7 @@ import { faDownload, faArrowLeft, faShare, faFilePdf } from '@fortawesome/free-s
 import { ContentLoader } from 'vue-content-loader'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import { analytics } from '~/lib/firebase'
-import { formatDateTimeShort } from '~/lib/date'
+import { formatDateDayIndonesia } from '~/lib/date'
 import { useArticleMetaInfo } from '~/lib/metainfo'
 import Section from '~/components/Base/Section'
 
@@ -139,7 +119,7 @@ export default {
     }
   },
   methods: {
-    formatDateTimeShort,
+    formatDateDayIndonesia,
     fetchItem () {
       this.isPending = true
       return this.$store.dispatch('documents/getItemById', this.itemId)
@@ -177,4 +157,71 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.document {
+  @apply flex flex-col justify-start items-start;
+
+  &__title {
+    @apply text-3xl font-bold leading-tight mb-3;
+
+    @screen lg {
+      @apply mb-0;
+    }
+  }
+
+  &__date {
+    @apply my-5;
+
+    color: #424242;
+  }
+
+  &__preview {
+    @apply border border-solid rounded-lg
+    w-full flex justify-center py-32 bg-cover;
+  }
+
+  &__pdf-logo {
+    width: 70px;
+    height: 80px;
+
+    @screen sm {
+      width: 105px;
+      height: 120px;
+    }
+  }
+
+  &__title-small {
+    @apply mt-5;
+
+    color: #212121;
+  }
+
+  &__button-container {
+    @apply flex flex-col w-full justify-center
+    items-center gap-5 mt-5;
+
+    @screen sm {
+      @apply flex-row mt-20;
+    }
+  }
+
+  &__button {
+    @apply w-full bg-green-600 border border-transparent
+    rounded-md py-3 px-8 flex items-center justify-center
+    text-base font-medium text-white;
+
+    @screen lg {
+      @apply w-1/4;
+    }
+  }
+
+  &__button-reverted {
+    @apply w-full border border-green-600
+    rounded-md py-3 px-8 flex items-center justify-center
+    text-base font-medium text-green-600;
+
+    @screen lg {
+      @apply w-1/4;
+    }
+  }
+}
 </style>

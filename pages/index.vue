@@ -171,7 +171,7 @@ export default {
           body: 'Ketahui lebih jauh program Vaksinasi Covid-19 sebagai upaya mencapai herd immunity sekaligus menurunkan angka penyakit dan kematian akibat Covid-19. Baca selengkapnya untuk mengetahui informasi lebih lanjut tentang Vaksinasi Covid-19 di Jawa Barat.',
           image: '/img/icon-inject-vaccine.svg',
           imagePosition: 'right',
-          backLink: '/',
+          backLink: '/vaccine',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         }

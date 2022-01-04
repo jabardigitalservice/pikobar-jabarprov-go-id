@@ -1,7 +1,6 @@
 <template>
   <div class="news-list">
-    <!-- <template v-if="loading"> -->
-    <div class="mb-8 rounded-lg bg-white">
+    <div v-if="showContent" class="mb-8 rounded-lg bg-white">
       <ul role="list" class="news-list__grid">
         <li
           v-for="(item, index) in items"
@@ -14,7 +13,6 @@
         </li>
       </ul>
     </div>
-    <!-- </template> -->
     <template v-if="loading">
       <ul role="list" class="news-list__grid">
         <ImageCarouselSkeleton
@@ -25,7 +23,7 @@
         />
       </ul>
     </template>
-    <template v-if="!loading && !isSearch && !hasReachedEnd">
+    <template v-if="showMore">
       <div class="flex justify-center">
         <button
           type="button"
@@ -60,10 +58,6 @@ export default {
         return []
       }
     },
-    isSearch: {
-      type: Boolean,
-      default: false
-    },
     onLoadMore: {
       type: Function,
       default: null
@@ -75,6 +69,22 @@ export default {
     hasReachedEnd: {
       type: Boolean,
       default: false
+    },
+    showLoadMore: {
+      type: Boolean,
+      default: false
+    },
+    isFiltered: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    showContent () {
+      return (this.loading ^ this.isFiltered) || (!this.loading && !this.isFiltered)
+    },
+    showMore () {
+      return !this.loading && !this.isFiltered && !this.hasReachedEnd && this.showLoadMore
     }
   }
 }

@@ -37,6 +37,7 @@
               class="absolute inset-0 w-full h-full"
               :items="imagesMap(item.images)"
               :carousel-props="carouselProps"
+              ref="carousel"
             />
           </div>
         </Section>
@@ -132,7 +133,8 @@ export default {
       onShare(this.item.shareText)
     },
     beforeDownload () {
-      onDownload(this.item.downloadURL, this.item.title)
+      const index = this.$refs.carousel.getCurrentPage()
+      onDownload(this.item.images[index], this.item.title)
     },
     imagesMap (item) {
       const array = item

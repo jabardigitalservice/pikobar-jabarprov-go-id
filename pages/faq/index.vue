@@ -2,12 +2,12 @@
   <div>
     <Section class="bg-white pb-24">
       <div class="space-y-3 pt-2 lg:pt-8">
-        <h3 class="text-3xl text-gray-900 font-bold">
+        <h2 class="text-3xl text-gray-900 font-bold">
           Frequently Asked Questions
-        </h3>
-        <p class="text-gray-500">
+        </h2>
+        <h4 class="subtitle">
           Pertanyaan yang sering ditanyakan terkait Covid-19 dan lainnya.
-        </p>
+        </h4>
       </div>
       <div class="py-10">
         <StringSearchQuery
@@ -203,3 +203,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.subtitle {
+  color: #424242;
+  font-family: 'Roboto', sans-serif;
+}
+</style>

@@ -118,6 +118,10 @@ export default {
           logo: '/img/logo-grey/logo-laporcovid19.svg',
           alt: 'Lapor Covid-19',
           url: 'https://laporcovid19.org/'
+        },
+        {
+          logo: '/img/logo-grey/logo-batics-id.svg',
+          alt: 'Batics ID'
         }
       ],
       chunkedSponsors: []

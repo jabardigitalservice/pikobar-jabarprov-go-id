@@ -2,17 +2,15 @@
   <div>
     <section>
       <h2 class="text-xl md:text-3xl leading-normal">
-        <p class="text-base opacity-75">
+        <p class="info-text">
           Lihat dan unduh dokumen serta rilis pers seputar informasi COVID-19 di Jawa Barat.
           Dokumen dan rilis pers yang ditampilkan berdasarkan informasi resmi dari
           Pemerintah Provinsi Jawa Barat.
         </p>
       </h2>
       <br>
-      <ShareableItemTable
-        :columns="shareableDocumentsColumns"
+      <DocumentList
         :items="shareableDocuments"
-        :show-load-more="true"
         :loading="isPending"
         @load:more="onLoadMore"
       />
@@ -25,14 +23,14 @@ import _get from 'lodash/get'
 import { mapState, mapActions } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import { formatDateTimeShort } from '~/lib/date'
-import ShareableItemTable from '~/components/ShareableItemTable'
+import DocumentList from '~/components/_pages/documents/DocumentList.vue'
 export default {
   components: {
-    ShareableItemTable
+    DocumentList
   },
   data () {
     return {
-      isPending: true,
+      isPending: false,
       columns: [
         {
           prop: 'published_at',
@@ -47,7 +45,8 @@ export default {
   },
   computed: {
     ...mapState('documents', {
-      documents: 'items'
+      documents: 'items',
+      isFiltered: 'isFiltered'
     }),
     shareableDocumentsColumns () {
       return [
@@ -74,14 +73,16 @@ export default {
     }
   },
   mounted () {
-    this.isPending = true
-    this.getItems({ fresh: true })
-      .finally(() => {
-        if (process.browser) {
-          analytics.logEvent('documents_list_view')
-        }
-        this.isPending = false
-      })
+    if (!this.isFiltered) {
+      this.isPending = true
+      this.getItems()
+        .finally(() => {
+          this.isPending = false
+        })
+    }
+    if (process.browser) {
+      analytics.logEvent('documents_list_view')
+    }
   },
   methods: {
     ...mapActions('documents', {
@@ -91,7 +92,11 @@ export default {
       return _get(row, column.prop)
     },
     onLoadMore () {
+      this.isPending = true
       this.getItems({ fresh: true })
+        .finally(() => {
+          this.isPending = false
+        })
     }
   },
   head () {
@@ -133,5 +138,11 @@ export default {
   @screen lg {
     grid-template-columns: 1fr 1fr 1fr;
   }
+}
+.info-text {
+  @apply text-base;
+
+  font-family: 'Roboto', sans-serif;
+  color: #424242;
 }
 </style>
