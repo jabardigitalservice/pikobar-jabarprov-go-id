@@ -136,7 +136,7 @@ h1, h2 {
   }
 
   &__brand-logo {
-    @apply block w-auto mx-auto h-12 mr-4
+    @apply block w-auto mx-auto h-10
     object-contain object-center;
   }
 
@@ -165,7 +165,7 @@ h1, h2 {
   }
 
   &__menu-item-parent {
-    @apply hidden cursor-pointer mx-2 px-2 py-2;
+    @apply hidden cursor-pointer mx-2 px-4 py-2;
 
     @screen lg {
       @apply flex;
@@ -185,6 +185,19 @@ h1, h2 {
 
     &:hover {
       @apply bg-gray-200;
+    }
+  }
+
+  &__download {
+    @apply cursor-pointer px-4 py-3
+    text-center ml-2 rounded-md bg-brand-green
+    text-sm;
+
+    font-family: 'Lato', sans-serif;
+    background: #069550;
+
+    &:hover {
+      @apply bg-brand-green-light;
     }
   }
 
