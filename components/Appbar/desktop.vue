@@ -5,7 +5,13 @@
         class="appbar-desktop__brand"
       >
         <nuxt-link to="/">
-          <img class="appbar-desktop__brand-logo" src="~/static/img/logo-full.svg" alt="Logo Pikobar">
+          <img
+            height="40px"
+            width="174px"
+            class="appbar-desktop__brand-logo"
+            src="~/static/img/logo-full.svg"
+            alt="Logo Pikobar"
+          >
         </nuxt-link>
       </div>
       <ul class="appbar-desktop__menus">

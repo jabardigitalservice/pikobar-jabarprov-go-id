@@ -152,7 +152,7 @@ h1, h2 {
   }
 
   &__menu-item {
-    @apply hidden cursor-pointer mx-2 px-2 py-2
+    @apply hidden cursor-pointer mx-2 px-4 py-2
     whitespace-no-wrap;
 
     @screen lg {
@@ -207,7 +207,10 @@ h1, h2 {
   .appbar-menu-item:not(.nuxt-link-active) {
     &,
     > * {
-      @apply text-gray-600 font-bold;
+      @apply font-bold;
+
+      color: #757575;
+      font-family: 'Lato', sans-serif;
     }
   }
   .appbar-menu-item.nuxt-link-active {
