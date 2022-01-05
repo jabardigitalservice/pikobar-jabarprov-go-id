@@ -15,6 +15,12 @@ export default {
   components: {
     NewsCarousel
   },
+  props: {
+    tag: {
+      type: String,
+      default: null
+    }
+  },
   computed: {
     ...mapState('news', {
       news: (state) => {
@@ -53,7 +59,7 @@ export default {
     this.$store.dispatch('news/getLastUpdate')
     this.$store.dispatch('news/getItems', {
       perPage: 4,
-      tag: 'vaksin'
+      tag: this.tag
     })
   }
 }
