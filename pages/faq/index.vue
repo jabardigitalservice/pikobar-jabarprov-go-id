@@ -186,7 +186,7 @@ export default {
       this.filteredItems = this.items.filter((faq) => {
         if (query?.category) {
           return [faq.category_id].some((str) => {
-            return `${str}`.includes(query.category)
+            return str === query.category
           })
         }
 

@@ -52,7 +52,8 @@ export default {
     )
     this.$store.dispatch('news/getLastUpdate')
     this.$store.dispatch('news/getItems', {
-      perPage: 4
+      perPage: 4,
+      tag: 'vaksin'
     })
   }
 }
