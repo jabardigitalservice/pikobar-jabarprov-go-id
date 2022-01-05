@@ -54,11 +54,14 @@ export default {
 .evt-stat-counter {
   &__name {
     @apply
-    text-base text-gray-600
-    whitespace-no-wrap;
+    text-base whitespace-no-wrap;
+
+    font-family: 'Roboto', sans-serif;
+    color: #757575;
   }
   &__count {
     color: inherit;
+    font-family: 'Roboto', sans-serif;
     @apply text-base font-medium;
   }
 

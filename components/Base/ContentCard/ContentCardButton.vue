@@ -20,7 +20,7 @@
       <svg
         v-else-if="iconType === 'arrow-right'"
         xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 ml-3"
+        class="w-5 h-5 ml-2"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

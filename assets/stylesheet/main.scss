@@ -226,6 +226,12 @@ h1, h2 {
   }
 }
 
+.event-statistics {
+  @apply py-20;
+
+  background-color: #fafafa;
+}
+
 /* purgecss end ignore */
 // .calendar-right-to-left{
 //   margin-left: -650px !important;
