@@ -76,10 +76,10 @@ export default {
 
   &__title {
     opacity: 0.8;
+    color: #757575;
+    font-family: 'Lora', sans-serif;
 
-    @apply mb-6
-    text-gray-600
-    font-serif font-bold;
+    @apply mb-6 font-bold;
   }
 
   &__body {

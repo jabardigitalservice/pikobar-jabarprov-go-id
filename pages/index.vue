@@ -22,7 +22,7 @@
     </Section>
     <Section
       id="eventStatistics"
-      class="py-20 bg-gray-50"
+      class="event-statistics"
       v-bind="section.eventStatistics"
     >
       <EventStatistics
