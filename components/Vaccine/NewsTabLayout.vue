@@ -6,7 +6,7 @@
         Info yang memuat berita seputar vaksinasi di Jawa Barat.
       </p>
       <div class="mt-10">
-        <RecentNewsCarousel key="recentNewsCarousel" tag="vaksin" />
+        <RecentNewsCarousel key="recentNewsCarousel" :tag="'vaksin'" />
       </div>
     </template>
     <template #content.antiHoax>
