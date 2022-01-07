@@ -24,7 +24,16 @@ export default {
   computed: {
     ...mapState('news', {
       news: (state) => {
-        const items = state.items || []
+        // get articles from 3 collection
+        const provinceNews = state.items || []
+        const nationalNews = state.item_articles_national || []
+        const worldNews = state.item_articles_world || []
+
+        // filtering 4 most recent news from 3 collection
+        let items = [...provinceNews, ...nationalNews, ...worldNews]
+        items.sort((a, b) => (a.published_at < b.published_at) ? 1 : -1)
+        items = items.slice(0, 4)
+
         return items.map(item => ({
           ...item,
           thumbnail: item.image,
@@ -58,6 +67,14 @@ export default {
     )
     this.$store.dispatch('news/getLastUpdate')
     this.$store.dispatch('news/getItems', {
+      perPage: 4,
+      tag: this.tag
+    })
+    this.$store.dispatch('news/getArticleNationals', {
+      perPage: 4,
+      tag: this.tag
+    })
+    this.$store.dispatch('news/getArticleWorlds', {
       perPage: 4,
       tag: this.tag
     })

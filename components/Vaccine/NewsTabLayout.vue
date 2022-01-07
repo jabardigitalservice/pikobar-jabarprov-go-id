@@ -3,10 +3,10 @@
   <TabLayout v-model="tabLayoutModel" :tabs="tabs">
     <template #content.recent>
       <p class="text-gray-900">
-        Info yang memuat berita seputar vaksinasi di Jawa Barat.
+        Info yang memuat berita seputar vaksinasi di Jawa Barat, nasional, dan dunia.
       </p>
       <div class="mt-10">
-        <RecentNewsCarousel key="recentNewsCarousel" tag="vaksin" />
+        <RecentNewsCarousel key="recentNewsCarousel" :tag="'vaksin'" />
       </div>
     </template>
     <template #content.antiHoax>
