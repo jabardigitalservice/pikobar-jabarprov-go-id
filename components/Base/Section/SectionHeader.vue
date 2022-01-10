@@ -109,7 +109,7 @@ export default {
     }
 
     &--xl {
-      @apply text-3xl;
+      font-size: 1.75rem;
     }
   }
 

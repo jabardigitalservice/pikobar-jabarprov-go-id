@@ -76,9 +76,11 @@ export default {
 
   &__label {
     line-height: 1.618;
-    @apply py-2 px-4
-    text-gray-500 font-medium
+    @apply py-2 px-4 font-normal
     whitespace-no-wrap;
+
+    font-family: 'Roboto', sans-serif;
+    color: #9e9e9e;
   }
 
   &--active & {

@@ -47,8 +47,9 @@ export default {
 <style lang="scss" scoped>
 .action-card {
   @apply p-4 flex flex-col flex-no-wrap
-  rounded-md
-  bg-gray-100;
+  rounded-md;
+
+  background-color: #fafafa;
 
   &__image {
     width: auto;
@@ -73,7 +74,7 @@ export default {
   }
 
   @screen lg {
-    @apply px-0 grid grid-cols-3 gap-8
+    @apply px-0 py-6 grid grid-cols-3
     items-center;
 
     &__image {
@@ -82,7 +83,7 @@ export default {
       max-width: unset;
       max-height: 180px;
 
-      @apply col-span-1;
+      @apply col-span-1 px-6;
     }
 
     &__body {
@@ -93,10 +94,9 @@ export default {
     }
 
     &__title {
-      @apply my-0;
+      @apply mb-4 text-brand-black;
 
       font-family: 'Roboto', sans-serif;
-      color: #424242;
       font-weight: 500;
     }
   }
