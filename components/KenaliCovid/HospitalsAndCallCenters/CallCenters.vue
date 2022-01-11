@@ -61,7 +61,7 @@ export default {
         .map(h => ({
           icon: 'phone',
           label: h,
-          href: h
+          href: toPhoneURL(h)
         }))
 
       return {
