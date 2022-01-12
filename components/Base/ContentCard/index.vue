@@ -123,6 +123,8 @@ export default {
   &__header {
     @apply text-sm text-brand-green-darker
     font-bold;
+
+    font-family: 'Roboto', sans-serif;
   }
 
   &__title {
