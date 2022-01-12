@@ -214,13 +214,13 @@ h1, h2 {
     }
   }
   .appbar-menu-item.nuxt-link-active {
+    border: 2px solid #FFD026;
     &,
     > * {
       @apply text-brand-green-darker font-bold
       rounded-lg;
 
       font-family: 'Lato', sans-serif;
-      border: 2px solid #FFD026;
       background-color: #E6F6EC;
     }
   }
