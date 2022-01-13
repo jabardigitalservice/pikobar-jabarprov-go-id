@@ -22,6 +22,10 @@ module.exports = {
         'brand-yellow-darkest': '#FEC32B',
         'brand-black': '#424242'
       }
+    },
+    fontFamily: {
+      'roboto': 'Roboto, sans-serif',
+      'lora': 'Lora, serif'
     }
   },
   variants: {},

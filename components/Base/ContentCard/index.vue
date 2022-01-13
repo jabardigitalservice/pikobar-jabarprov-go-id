@@ -122,9 +122,7 @@ export default {
 
   &__header {
     @apply text-sm text-brand-green-darker
-    font-bold;
-
-    font-family: 'Roboto', sans-serif;
+    font-bold font-roboto;
   }
 
   &__title {
@@ -133,9 +131,8 @@ export default {
   }
 
   &__body {
-    @apply mt-3 text-base text-brand-black;
-
-    font-family: 'Roboto', sans-serif;
+    @apply mt-3 text-base
+    text-brand-black font-roboto;
   }
 
   &__btn {
