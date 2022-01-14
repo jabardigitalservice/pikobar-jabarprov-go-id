@@ -2,7 +2,7 @@
   <!-- eslint-disable vue/valid-v-slot -->
   <TabLayout v-model="tabLayoutModel" :tabs="tabs">
     <template #content.info>
-      <p class="text-gray-900">
+      <p class="disclaimer">
         Info yang memuat infografis terkait Covid-19
       </p>
       <div class="mt-10">
@@ -10,7 +10,7 @@
       </div>
     </template>
     <template #content.document>
-      <p class="text-gray-900">
+      <p class="disclaimer">
         Lihat dan unduh dokumen serta rilis pers seputar informasi COVID-19 di Jawa Barat.
         Dokumen dan rilis pers yang ditampilkan berdasarkan informasi resmi dari Pemerintah
         Provinsi Jawa Barat.
@@ -84,3 +84,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.disclaimer {
+  @apply text-brand-black;
+
+  font-family: 'Roboto', sans-serif;
+}
+</style>

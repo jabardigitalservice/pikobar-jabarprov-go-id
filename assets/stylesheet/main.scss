@@ -191,13 +191,13 @@ h1, h2 {
   &__download {
     @apply cursor-pointer px-4 py-3
     text-center ml-2 rounded-md bg-brand-green
-    text-sm;
+    text-sm font-bold;
 
     font-family: 'Lato', sans-serif;
     background: #069550;
 
     &:hover {
-      @apply bg-brand-green-light;
+      @apply opacity-75;
     }
   }
 
@@ -214,9 +214,14 @@ h1, h2 {
     }
   }
   .appbar-menu-item.nuxt-link-active {
+    border: 2px solid #FFD026;
     &,
     > * {
-      @apply text-brand-green font-bold;
+      @apply text-brand-green-darker font-bold
+      rounded-lg;
+
+      font-family: 'Lato', sans-serif;
+      background-color: #E6F6EC;
     }
   }
 
@@ -226,7 +231,7 @@ h1, h2 {
   }
 }
 
-.event-statistics {
+.event-statistics,.recent-news {
   @apply py-20;
 
   background-color: #fafafa;
