@@ -94,7 +94,7 @@ export default {
   &__title {
     line-height: 1.618;
     @apply pt-2 mb-2
-    text-gray-900 font-bold;
+    text-brand-black font-bold;
 
     &--sm {
       @apply text-sm;
@@ -109,7 +109,7 @@ export default {
     }
 
     &--xl {
-      @apply text-3xl;
+      font-size: 1.75rem;
     }
   }
 
@@ -117,8 +117,10 @@ export default {
     line-height: 1.618;
     @apply m-0 p-0 text-base font-normal;
 
+    font-family: 'Roboto', sans-serif;
+
     &--grey {
-      @apply text-gray-600;
+      color: #757575;
     }
     &--black {
       @apply text-gray-800;

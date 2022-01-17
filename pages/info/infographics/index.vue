@@ -7,27 +7,7 @@
     </h2>
     <br>
     <div v-show="isImageLoaded" class="infographic__list">
-      <figure
-        v-for="(item, index) in infographics"
-        :key="index"
-        class="relative w-full bg-white rounded-lg border divide-y divide-gray-200"
-        @click="onClickSlide(item.route)"
-      >
-        <div class="img-container">
-          <img
-            :src="item.images[0] || null"
-            class="infographic-list__item-image cursor-pointer rounded-lg"
-            :class="{'h-64': !isImageLoaded}"
-            @load="isImageLoaded = true"
-            @click.prevent="$router.push(item.route)"
-          >
-        </div>
-        <caption class="infographic__caption overflow-ellipsis">
-          <nuxt-link :to="item.route">
-            {{ item.title }}
-          </nuxt-link>
-        </caption>
-      </figure>
+      <InfographicCarousel :is-image-loaded.sync="isImageLoaded" />
     </div>
     <div
       v-if="showLoader"
@@ -69,9 +49,11 @@ import { mapState, mapActions } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import { onDownload, onShare } from '~/lib/download-and-share-firestore-doc'
 import InfographicSkeleton from '~/components/_pages/infographics/InfographicSkeleton.vue'
+import InfographicCarousel from '~/components/Homepage/InfographicCarousel'
 export default {
   components: {
-    InfographicSkeleton
+    InfographicSkeleton,
+    InfographicCarousel
   },
   data () {
     return {
@@ -161,7 +143,8 @@ export default {
 <style lang="scss" scoped>
 .infographic {
   &__skeleton {
-    @apply grid grid-cols-1 gap-6;
+    @apply grid grid-cols-1 gap-6
+    mt-6;
 
     @screen md {
       @apply grid-cols-2;
@@ -173,36 +156,6 @@ export default {
 
     @screen xl {
       @apply grid-cols-4;
-    }
-  }
-
-  &__list {
-    @apply grid grid-cols-1 gap-6;
-
-    @screen md {
-      @apply grid-cols-2;
-    }
-
-    @screen lg {
-      @apply grid-cols-3;
-    }
-
-    @screen xl {
-      @apply grid-cols-4;
-    }
-  }
-
-  &__item-image {
-    @apply w-full object-cover object-left-top
-    shadow-lg;
-  }
-
-  &__caption {
-    @apply px-4 py-2 text-left
-    block w-full font-bold opacity-75;
-
-    &:hover {
-      @apply underline;
     }
   }
 
@@ -221,38 +174,6 @@ export default {
 
     color: #424242;
     font-family: 'Roboto', sans-serif;
-  }
-}
-
-.img-container {
-  @apply relative overflow-hidden;
-
-  > img {
-
-    &:hover {
-      opacity: 0.5;
-
-      @screen lg {
-        opacity: 1;
-      }
-    }
-  }
-  > .action-overlay {
-    cursor: pointer;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateY(1rem);
-    transition-property: opacity, transform;
-    transition-duration: 0.25s;
-    transition-timing-function: ease-in-out;
-  }
-  &:hover {
-
-    > .action-overlay {
-      pointer-events: all;
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 }
 </style>

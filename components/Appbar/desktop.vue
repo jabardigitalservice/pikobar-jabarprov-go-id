@@ -5,20 +5,13 @@
         class="appbar-desktop__brand"
       >
         <nuxt-link to="/">
-          <img class="appbar-desktop__brand-logo" src="/logo.jpg" alt>
-        </nuxt-link>
-        <nuxt-link to="/">
-          <div class="text-left">
-            <p class="text-2xl font-bold">
-              PIKOBAR
-            </p>
-            <p class="text-xs text-gray-700 font-bold">
-              Pusat Informasi &amp; Koordinasi
-            </p>
-            <p class="text-xs text-gray-700 font-bold -mt-1">
-              Provinsi Jawa Barat
-            </p>
-          </div>
+          <img
+            height="40px"
+            width="174px"
+            class="appbar-desktop__brand-logo"
+            src="~/static/img/logo-full.svg"
+            alt="Logo Pikobar"
+          >
         </nuxt-link>
       </div>
       <ul class="appbar-desktop__menus">
@@ -113,7 +106,7 @@
         <a
           v-show="enableDownload"
           :href="downloadAppURL"
-          class="cursor-pointer px-4 py-2 text-center ml-2 rounded-md bg-brand-green hover:bg-brand-green-light"
+          class="appbar-desktop__download"
           style="color: white;"
         >
           Download App

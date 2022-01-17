@@ -84,7 +84,7 @@ $--bubble-gap: 16px;
 
   &__header {
     @apply inline-block mb-4
-    text-xl font-serif font-bold;
+    text-xl font-bold font-lora;
   }
 
   &__body {

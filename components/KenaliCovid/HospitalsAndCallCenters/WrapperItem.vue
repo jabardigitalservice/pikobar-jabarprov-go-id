@@ -55,7 +55,7 @@ export default {
 
     @apply block m-0 mb-4 p-0
     text-gray-900
-    font-bold font-serif;
+    font-bold font-lora;
   }
 
   &__body {

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { formatDateIndonesia } from '~/lib/date'
+import { formatDateIndonesiaShort } from '~/lib/date'
 export default {
   name: 'NewsCarouselItem',
   inheritAttrs: false,
@@ -57,7 +57,7 @@ export default {
   computed: {
     formattedDate () {
       return this.date
-        ? formatDateIndonesia(this.date)
+        ? formatDateIndonesiaShort(this.date)
         : ''
     }
   },
@@ -107,6 +107,7 @@ export default {
 
   &__source {
     font-size: 10px;
+    font-family: 'Roboto', sans-serif;
 
     @apply inline-block
     mb-5 px-2 py-1
@@ -118,7 +119,9 @@ export default {
   &__title {
     @apply cursor-pointer
     block
-    text-sm font-medium;
+    text-sm font-medium text-brand-black;
+
+    font-family: 'Roboto', sans-serif;
 
     &:hover {
       @apply underline;
@@ -127,10 +130,11 @@ export default {
 
   &__date {
     font-size: 11px;
+    font-family: 'Lato', sans-serif;
+    color: #757575;
 
     @apply block
-    m-4 mt-0
-    text-gray-600 font-bold;
+    m-4 mt-0 font-bold;
   }
 }
 </style>

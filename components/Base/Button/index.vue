@@ -50,19 +50,21 @@ export default {
 
 <style lang="scss" scoped>
 .base-button {
-  @apply inline-flex flex-row flex-no-wrap gap-2
+  @apply inline-flex flex-row flex-no-wrap
   justify-center items-center
-  px-4 py-3
+  px-6 py-3
   border border-solid border-transparent
   rounded-lg
   bg-brand-green-darker
   text-white font-bold tracking-wide;
 
+  font-family: 'Lato', sans-serif;
+
   &--outlined {
-    @apply border-green-500
+    @apply border-brand-green-darker
     rounded-md
-    bg-white
-    text-green-700;
+    bg-transparent
+    text-brand-green-darker px-4;
   }
 
   &--shadowed {
