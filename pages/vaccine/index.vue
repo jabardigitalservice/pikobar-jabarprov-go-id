@@ -3,13 +3,6 @@
     <Section class="py-6 md:py-20 bg-white">
       <ContentCard v-bind="headerContent" />
     </Section>
-    <Section
-      id="vaccinationSchedule"
-      class="py-6 md:py-20 bg-gray-100"
-      v-bind="section.vaccinationSchedule"
-    >
-      <VaccinationSchedule />
-    </Section>
     <Section class="pt-6 pb-10 md:py-20 bg-white">
       <VaccineJumbotron />
       <VaccinationContents class="pt-10 md:pt-24" />
@@ -57,7 +50,6 @@ import ContentCardButton from '~/components/Base/ContentCard/ContentCardButton'
 import ChatAndFaq from '~/components/Vaccine/ChatAndFaq'
 import VaccineJumbotron from '~/components/Vaccine/VaccineJumbotron'
 import NewsTabLayout from '~/components/Vaccine/NewsTabLayout'
-import VaccinationSchedule from '~/components/Vaccine/VaccinationSchedule'
 import VaccinationContents from '~/components/Vaccine/VaccinationContents'
 import VaccinationStages from '~/components/Vaccine/VaccinationStages'
 
@@ -70,7 +62,6 @@ export default {
     VaccineJumbotron,
     NewsTabLayout,
     ChatAndFaq,
-    VaccinationSchedule,
     VaccinationContents,
     VaccinationStages
   },
@@ -89,14 +80,10 @@ export default {
         `,
         image: '/img/icon-vaccine-family.svg',
         imagePosition: 'right',
-        prompt: 'Selengkapnya',
-        backLink: '#vaccinationSchedule'
+        prompt: 'Lihat di Sini',
+        backLink: '/vaccine/schedule'
       },
       section: {
-        vaccinationSchedule: {
-          title: 'Jadwal Vaksinasi di Jawa Barat',
-          subtitle: 'Pada tabel di bawah ini adalah informasi lokasi penyelenggaraan vaksin di Jawa Barat'
-        },
         newsTab: {
           title: 'Informasi Vaksin Lainnya',
           alignHeader: 'left'
