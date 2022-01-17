@@ -1,5 +1,6 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
+  <!-- @todo: delete this unused component -->
   <div>
     <div v-html="iframe" />
     <div
