@@ -12,6 +12,7 @@ export function get (options = { perPage: 3, tag: null }) {
   if (typeof options.tag === 'string' && options.tag.length) {
     query = query.where('tag', '==', options.tag)
   }
+
   return query
     .get()
     .then((docs) => {
@@ -33,11 +34,15 @@ export function get (options = { perPage: 3, tag: null }) {
     })
 }
 
-export function getArticleNational (options = { perPage: 3 }) {
-  const query = db.collection('articles_national')
+export function getArticleNational (options = { perPage: 3, tag: null }) {
+  let query = db.collection('articles_national')
     .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
 
+  if (typeof options.tag === 'string' && options.tag.length) {
+    query = query.where('tag', '==', options.tag)
+  }
+
   return query
     .get()
     .then((docs) => {
@@ -59,11 +64,15 @@ export function getArticleNational (options = { perPage: 3 }) {
     })
 }
 
-export function getArticleWorld (options = { perPage: 3 }) {
-  const query = db
+export function getArticleWorld (options = { perPage: 3, tag: null }) {
+  let query = db
     .collection('articles_world')
     .orderBy(ORDER_INDEX, 'desc')
     .limit(options.perPage)
+
+  if (typeof options.tag === 'string' && options.tag.length) {
+    query = query.where('tag', '==', options.tag)
+  }
 
   return query
     .get()
@@ -97,7 +106,43 @@ export function getById (id) {
           ...data,
           id: doc.id,
           published_at: data.published_at.toDate(),
-          route: slugifyArticleRoute(doc.id, data.title)
+          url: slugifyArticleRoute(doc.id, data.title)
+        }
+      }
+      return null
+    })
+}
+
+export function getByIdNational (id) {
+  return db.collection('articles_national')
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data()
+        return {
+          ...data,
+          id: doc.id,
+          published_at: data.published_at.toDate(),
+          url: slugifyArticleRoute(doc.id, data.title)
+        }
+      }
+      return null
+    })
+}
+
+export function getByIdWorld (id) {
+  return db.collection('articles_world')
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data()
+        return {
+          ...data,
+          id: doc.id,
+          published_at: data.published_at.toDate(),
+          url: slugifyArticleRoute(doc.id, data.title)
         }
       }
       return null

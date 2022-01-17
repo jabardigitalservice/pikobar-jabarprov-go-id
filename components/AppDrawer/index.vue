@@ -93,7 +93,7 @@ export default {
         },
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
-        { to: '/oxygen', label: 'Cari Oksgien', icon: this.icon.faLungs },
+        { to: '/oxygen', label: 'Cari Oksigen', icon: this.icon.faLungs },
         { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
         {
           to: '#',

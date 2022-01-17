@@ -114,7 +114,7 @@ export default {
     formatDateTimeShort,
     fetchItem () {
       this.isLoading = true
-      return this.$store.dispatch('news/getItemById', this.itemId)
+      return this.$store.dispatch('news/getItemByIdFromAllCollection', this.itemId)
         .then(() => {
           if (process.client || process.browser) {
             analytics.logEvent('article_detail_view', { id: this.itemId })

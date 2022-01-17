@@ -3,6 +3,8 @@ import {
   getArticleNational,
   getArticleWorld,
   getById,
+  getByIdNational,
+  getByIdWorld,
   getLastUpdate as __getLastUpdate
 } from '~/api/news'
 
@@ -21,17 +23,23 @@ export const state = () => ({
 
 export const getters = {
   itemsMap (state) {
-    let items
-    switch (state.tabActive) {
-      case 0:
-        items = [...state.items]
-        break
-      case 1:
-        items = [...state.item_articles_national]
-        break
-      default:
-        items = [...state.item_articles_world]
-        break
+    let items = []
+    if (state.tabActive) {
+      switch (state.tabActive) {
+        case 0:
+          items = [...state.items]
+          break
+        case 1:
+          items = [...state.item_articles_national]
+          break
+        default:
+          items = [...state.item_articles_world]
+          break
+      }
+    } else {
+      if (state.items?.length) { items = [...items, ...state.items] }
+      if (state.item_articles_national?.length) { items = [...items, ...state.item_articles_national] }
+      if (state.item_articles_world?.length) { items = [...items, ...state.item_articles_world] }
     }
     return items.reduce((obj, item) => {
       obj[item.id] = item
@@ -102,6 +110,21 @@ export const actions = {
         commit('setItems', [...state.items, item])
         return getters.itemsMap[id]
       })
+  },
+  async getItemByIdFromAllCollection ({ state, commit, getters }, id) {
+    const allItems = [...state.items, ...state.item_articles_national, ...state.item_articles_world]
+    const existing = allItems.find(item => item.id === id)
+    if (existing) {
+      return Promise.resolve(existing)
+    }
+    const province = await getById(id)
+    if (province) { commit('setItems', [...state.items, province]) }
+    const national = await getByIdNational(id)
+    if (national) { commit('setItemNationals', [...state.item_articles_national, national]) }
+    const world = await getByIdWorld(id)
+    if (world) { commit('setItemWorlds', [...state.item_articles_world, world]) }
+
+    return getters.itemsMap[id]
   },
   async getLastUpdate ({ state, commit }) {
     if (!state.lastUpdate) {
