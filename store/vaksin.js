@@ -1,11 +1,12 @@
 import {
   get,
-  getVaccinationSchedule as __getSchedule
+  getSchedule as __getSchedule
 } from '../api/vaksin'
 
 export const state = () => ({
   items: null,
-  schedule: null
+  schedule: null,
+  offset: null
 })
 
 export const mutations = {
@@ -14,6 +15,9 @@ export const mutations = {
   },
   setSchedule (state, schedule) {
     state.schedule = schedule
+  },
+  setOffset (state, offset) {
+    state.offset = offset
   }
 }
 
@@ -30,10 +34,10 @@ export const actions = {
     return state.items
   },
   async getSchedule ({ state, commit }) {
-    if (!state.schedule) {
-      const schedule = await __getSchedule()
-      commit('setSchedule', schedule)
-    }
+    const response = await __getSchedule()
+    commit('setSchedule', response.records)
+    commit('setOffset', response.offset)
+
     return state.schedule
   }
 }
