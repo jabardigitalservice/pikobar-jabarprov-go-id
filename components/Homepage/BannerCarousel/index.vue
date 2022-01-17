@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     onClickSlide (slide) {
-      const { route } = slide
+      const route = slide.route || slide.action_url
       if (typeof route !== 'string' || !route.length) {
         return
       }

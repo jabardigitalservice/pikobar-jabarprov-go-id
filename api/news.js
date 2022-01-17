@@ -106,7 +106,43 @@ export function getById (id) {
           ...data,
           id: doc.id,
           published_at: data.published_at.toDate(),
-          route: slugifyArticleRoute(doc.id, data.title)
+          url: slugifyArticleRoute(doc.id, data.title)
+        }
+      }
+      return null
+    })
+}
+
+export function getByIdNational (id) {
+  return db.collection('articles_national')
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data()
+        return {
+          ...data,
+          id: doc.id,
+          published_at: data.published_at.toDate(),
+          url: slugifyArticleRoute(doc.id, data.title)
+        }
+      }
+      return null
+    })
+}
+
+export function getByIdWorld (id) {
+  return db.collection('articles_world')
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data()
+        return {
+          ...data,
+          id: doc.id,
+          published_at: data.published_at.toDate(),
+          url: slugifyArticleRoute(doc.id, data.title)
         }
       }
       return null

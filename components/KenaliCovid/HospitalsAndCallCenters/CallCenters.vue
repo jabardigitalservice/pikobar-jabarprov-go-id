@@ -52,16 +52,16 @@ export default {
   methods: {
     mapCallCenteritem (item) {
       const callCenters = toArray(item.call_center)
-        .map(cc => ({
+        .map(callCenter => ({
           icon: 'phone',
-          label: cc,
-          href: toPhoneURL(cc)
+          label: callCenter,
+          href: toPhoneURL(callCenter)
         }))
       const hotlines = toArray(item.hotline)
-        .map(h => ({
+        .map(hotline => ({
           icon: 'phone',
-          label: h,
-          href: h
+          label: hotline,
+          href: toPhoneURL(hotline)
         }))
 
       return {

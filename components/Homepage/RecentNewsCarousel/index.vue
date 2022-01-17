@@ -39,7 +39,7 @@ export default {
           thumbnail: item.image,
           date: item.published_at,
           source: item.news_channel,
-          url: item.route
+          url: item.url
         }))
       },
       /**
