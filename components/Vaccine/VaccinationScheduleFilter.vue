@@ -73,7 +73,7 @@ export default {
     /**
      * Fetch district options from API
      * and map it to multiselect needs
-     * @returns {Object}
+     * @returns {Array}
      */
     async getDistrictList () {
       const districtQuery = {
