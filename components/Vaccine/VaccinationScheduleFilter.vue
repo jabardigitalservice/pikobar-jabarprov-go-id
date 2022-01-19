@@ -70,6 +70,11 @@ export default {
   },
   methods: {
     _uniqBy,
+    /**
+     * Fetch district options from API
+     * and map it to multiselect needs
+     * @returns {Object}
+     */
     async getDistrictList () {
       const districtQuery = {
         setState: false,
