@@ -16,7 +16,7 @@
     </multiselect>
     <multiselect
       v-model="query.age"
-      :options="ages"
+      :options="ageCategory"
       :allow-empty="true"
       placeholder="Pilih Kategori Usia"
       :searchable="true"
@@ -48,6 +48,7 @@
 
 <script>
 import _uniqBy from 'lodash/uniqBy'
+import ageCategory from './ageCategory'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
@@ -61,29 +62,7 @@ export default {
         date: null
       },
       districts: [],
-      ages: [
-        'Anak-anak (6-11 Tahun)',
-        'DKM Masjid & Marbot',
-        'Ibu Hamil',
-        'Ibu Menyusui',
-        'Informasi detil dapat menghubungi penyelenggara',
-        'Kelompok Tertentu',
-        'Lansia (60 tahun ke atas)',
-        'Mahasiswa',
-        'Orang Dengan Ganguan Jiwa (ODGJ)',
-        'Pekerja ',
-        'Pekerja Sektor Pelabuhan',
-        'Pelajar',
-        'Penyakit Komorbid (Terkontrol)',
-        'Penyandang Disabilitas',
-        'Penyintas Covid',
-        'Pra Lansia (50-59 tahun)',
-        'Remaja (12-17 tahun)',
-        'Tenaga Kesehatan (Booster)',
-        'UMKM',
-        'Umum (18-49 tahun)',
-        'Usia 55 Keatas'
-      ]
+      ageCategory
     }
   },
   async mounted () {
