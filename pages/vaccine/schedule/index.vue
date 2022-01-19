@@ -82,7 +82,7 @@ h4 {
   @apply bg-white pb-16;
 
   &__info {
-
+    // @todo: create info style
   }
 }
 </style>
