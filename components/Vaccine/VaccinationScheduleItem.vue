@@ -10,8 +10,8 @@
       <span class="schedule-item__address">
         {{ cutString(address) }}
       </span>
-      <div class="flex flex-row gap-2 mb-6">
-        <img :src="iconClock">
+      <div class="flex flex-row gap-2 mb-6 w-full">
+        <img width="16px" height="16px" :src="iconClock">
         <div class="schedule-item__date">
           {{ date }}
         </div>
@@ -95,8 +95,8 @@ export default {
   }
 
   &__date {
-    @apply flex-none font-roboto
-    font-medium text-brand-black;
+    @apply font-roboto
+    font-medium text-brand-black flex-wrap;
   }
 
   &__age {
