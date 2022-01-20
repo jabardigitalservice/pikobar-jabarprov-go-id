@@ -85,13 +85,17 @@ export default {
         }
       }
       let districtOptions = await this.$store.dispatch('vaksin/getSchedule', districtQuery)
-      districtOptions = this._uniqBy(districtOptions, 'fields["A2. Kota/Kabupaten"]')
-      this.districts = districtOptions.map((options) => {
-        return {
-          ...options,
-          label: options.fields['A2. Kota/Kabupaten']
-        }
-      })
+      if (Array.isArray(districtOptions)) {
+        districtOptions = this._uniqBy(districtOptions, 'fields["A2. Kota/Kabupaten"]')
+        this.districts = districtOptions.map((options) => {
+          return {
+            ...options,
+            label: options.fields['A2. Kota/Kabupaten']
+          }
+        })
+      } else {
+        return []
+      }
     }
   }
 }
