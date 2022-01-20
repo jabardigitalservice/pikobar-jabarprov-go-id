@@ -85,7 +85,8 @@ export default {
   }
 
   &__title {
-    @apply font-roboto font-medium mb-1;
+    @apply font-roboto font-medium
+    mb-1 text-brand-black;
 
     font-size: 21px;
   }

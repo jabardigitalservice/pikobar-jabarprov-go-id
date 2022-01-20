@@ -18,7 +18,7 @@
       v-model="query.age"
       :options="ageCategory"
       :allow-empty="true"
-      placeholder="Pilih Kategori Usia"
+      placeholder="Pilih Sasaran/Usia"
       :searchable="true"
       class="schedule-filter__filter"
     >
