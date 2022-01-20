@@ -10,7 +10,7 @@
           Untuk informasi lebih lanjut, silakan hubungi kontak yang tercantum.
         </h4>
       </div>
-      <VaccinationScheduleFilter />
+      <VaccinationScheduleFilter @search="onSearch" />
       <div class="schedule__info" />
       <VaccinationSchedule
         v-if="schedule.length"
@@ -59,6 +59,12 @@ export default {
   },
   async mounted () {
     await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+  },
+  methods: {
+    async onSearch (params) {
+      this.query.filterByFormula = params
+      await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+    }
   }
 }
 </script>
