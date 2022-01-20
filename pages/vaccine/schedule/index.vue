@@ -11,7 +11,13 @@
         </h4>
       </div>
       <VaccinationScheduleFilter @search="onSearch" />
-      <div class="schedule__info" />
+      <BaseAlert
+        v-if="schedule.length"
+        :icon="faInfoCircle"
+        info
+        class="mt-8"
+        :label="disclaimer"
+      />
       <VaccinationSchedule
         v-if="schedule.length"
         :list="schedule"
@@ -22,18 +28,23 @@
 
 <script>
 import { mapState } from 'vuex'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import Section from '~/components/Base/Section'
 import VaccinationSchedule from '~/components/Vaccine/VaccinationSchedule.vue'
 import VaccinationScheduleFilter from '@/components/Vaccine/VaccinationScheduleFilter.vue'
+import BaseAlert from '@/components/Base/Alert'
 export default {
   name: 'Schedule',
   components: {
     Section,
     VaccinationSchedule,
-    VaccinationScheduleFilter
+    VaccinationScheduleFilter,
+    BaseAlert
   },
   data () {
     return {
+      faInfoCircle,
+      disclaimer: '',
       query: {
         maxRecords: null
       }
@@ -59,6 +70,7 @@ export default {
   },
   async mounted () {
     await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+    this.disclaimer = `Menampilkan ${this.schedule.length} informasi jadwal dan lokasi vaksinasi`
   },
   methods: {
     async onSearch (params) {
