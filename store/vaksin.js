@@ -33,10 +33,19 @@ export const actions = {
     }
     return state.items
   },
-  async getSchedule ({ state, commit }) {
-    const response = await __getSchedule()
-    commit('setSchedule', response.records)
-    commit('setOffset', response.offset)
+  async getSchedule ({ state, commit }, options = { params: null, setState: true }) {
+    const response = await __getSchedule(options.params)
+    if (options.setState) {
+      response.records.sort(function compare (a, b) {
+        const dateA = new Date(a.createdTime)
+        const dateB = new Date(b.createdTime)
+        return dateB - dateA
+      })
+      commit('setSchedule', response.records)
+      commit('setOffset', response.offset)
+    } else {
+      return response.records
+    }
 
     return state.schedule
   }

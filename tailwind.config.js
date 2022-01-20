@@ -20,12 +20,15 @@ module.exports = {
         'brand-yellow-dark': '#FFD126',
         'brand-yellow-darker': '#FFD126',
         'brand-yellow-darkest': '#FEC32B',
-        'brand-black': '#424242'
+        'brand-black': '#424242',
+        'brand-gray': '#FAFAFA',
+        'brand-gray-dark': '#757575'
       }
     },
     fontFamily: {
       'roboto': 'Roboto, sans-serif',
-      'lora': 'Lora, serif'
+      'lora': 'Lora, serif',
+      'lato': 'Lato, serif'
     }
   },
   variants: {},
