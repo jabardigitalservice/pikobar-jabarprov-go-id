@@ -16,12 +16,28 @@
         :icon="faInfoCircle"
         info
         class="mt-8"
-        :label="disclaimer"
+        :label="`Menampilkan ${schedule.length} informasi jadwal dan lokasi vaksinasi`"
       />
       <VaccinationSchedule
         v-if="schedule.length"
         :list="schedule"
+        @click="onScheduleClick"
       />
+      <VaccinationSchedulePopup
+        v-if="showScheduleDetail"
+        :is-active.sync="showScheduleDetail"
+        :schedule="scheduleDetail"
+      />
+      <div
+        v-if="showEmptyFig"
+        class="flex justify-center"
+      >
+        <img
+          src="~/static/img/icon-empty-state.svg"
+          alt="img-faq-empty"
+          class="mb-5 mt-10"
+        >
+      </div>
     </Section>
   </div>
 </template>
@@ -32,19 +48,23 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import Section from '~/components/Base/Section'
 import VaccinationSchedule from '~/components/Vaccine/VaccinationSchedule.vue'
 import VaccinationScheduleFilter from '@/components/Vaccine/VaccinationScheduleFilter.vue'
+import VaccinationSchedulePopup from '@/components/Vaccine/VaccinationSchedulePopup.vue'
 import BaseAlert from '@/components/Base/Alert'
 export default {
   name: 'Schedule',
   components: {
     Section,
+    BaseAlert,
     VaccinationSchedule,
     VaccinationScheduleFilter,
-    BaseAlert
+    VaccinationSchedulePopup
   },
   data () {
     return {
       faInfoCircle,
       disclaimer: '',
+      showScheduleDetail: false,
+      scheduleDetail: {},
       query: {
         maxRecords: null
       }
@@ -52,30 +72,39 @@ export default {
   },
   computed: {
     ...mapState('vaksin', [
+      // @todo: implement offset in fetching schedule data
       'offset'
     ]),
     ...mapState({
       schedule: (state) => {
         const items = state.vaksin?.schedule || []
-        return items.map(item => ({
+        return items.map((item, index) => ({
           ...item,
           header: item.fields['A2. Kota/Kabupaten'],
           title: item.fields['A1. Instansi Penyelenggara'],
           address: item.fields['C1. Lokasi Vaksin'],
           date: `${item.fields['C2. Start Date (Pelaksanaan)'] || '...'} - ${item.fields['C3. End Date (Pelaksanaan)'] || '...'}`,
-          ageCategory: item.fields['D1. Target Usia']
+          ageCategory: item.fields['D1. Target Usia'],
+          index
         }))
       }
-    })
+    }),
+    showEmptyFig () {
+      // @todo: insert loading condition
+      return this.schedule.length === 0
+    }
   },
   async mounted () {
     await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
-    this.disclaimer = `Menampilkan ${this.schedule.length} informasi jadwal dan lokasi vaksinasi`
   },
   methods: {
     async onSearch (params) {
       this.query.filterByFormula = params
       await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+    },
+    onScheduleClick (index) {
+      this.scheduleDetail = this.schedule[index]
+      this.showScheduleDetail = true
     }
   }
 }
@@ -97,10 +126,6 @@ h4 {
   }
 }
 .schedule {
-  @apply bg-white pb-16;
-
-  &__info {
-    // @todo: create info style
-  }
+  @apply bg-white pb-16
 }
 </style>
