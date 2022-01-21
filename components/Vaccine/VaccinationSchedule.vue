@@ -4,6 +4,7 @@
       v-for="schedule in list"
       :key="schedule.id"
       v-bind="schedule"
+      @click="(index) => $emit('click', index)"
     />
   </div>
 </template>

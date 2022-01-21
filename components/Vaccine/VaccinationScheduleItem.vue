@@ -26,7 +26,7 @@
         </span>
       </div>
     </div>
-    <span class="schedule-item__show-more">
+    <span class="schedule-item__show-more" @click="onClick">
       Lihat Selengkapnya
     </span>
   </div>
@@ -55,6 +55,10 @@ export default {
     ageCategory: {
       type: Array,
       default: () => []
+    },
+    index: {
+      type: Number,
+      default: null
     }
   },
   data () {
@@ -68,6 +72,9 @@ export default {
         return string.substring(0, 80) + '...'
       }
       return string
+    },
+    onClick () {
+      this.$emit('click', this.index)
     }
   }
 }
