@@ -1,28 +1,30 @@
 <template>
   <div class="schedule-item">
-    <span class="schedule-item__header">
-      {{ header }}
-    </span>
-    <span class="schedule-item__title">
-      {{ title }}
-    </span>
-    <span class="schedule-item__address">
-      {{ cutString(address) }}
-    </span>
-    <div class="flex flex-row gap-2 mb-6">
-      <img :src="iconClock">
-      <div class="schedule-item__date">
-        {{ date }}
-      </div>
-    </div>
-    <div class="flex flex-row flex-wrap gap-2">
-      <span
-        v-for="age in ageCategory"
-        :key="age"
-        class="schedule-item__age"
-      >
-        {{ age }}
+    <div class="flex flex-col items-start">
+      <span class="schedule-item__header">
+        {{ header }}
       </span>
+      <span class="schedule-item__title">
+        {{ title }}
+      </span>
+      <span class="schedule-item__address">
+        {{ cutString(address) }}
+      </span>
+      <div class="flex flex-row gap-2 mb-6 w-full">
+        <img width="16px" height="16px" :src="iconClock">
+        <div class="schedule-item__date">
+          {{ date }}
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap gap-2">
+        <span
+          v-for="age in ageCategory"
+          :key="age"
+          class="schedule-item__age"
+        >
+          {{ age }}
+        </span>
+      </div>
     </div>
     <span class="schedule-item__show-more">
       Lihat Selengkapnya
@@ -74,7 +76,7 @@ export default {
 <style lang="scss" scoped>
 .schedule-item {
   @apply flex flex-col bg-brand-gray
-  items-start p-4 rounded-lg;
+  justify-between p-4 rounded-lg;
 
   &__header {
     @apply font-lato text-sm text-white
@@ -83,7 +85,8 @@ export default {
   }
 
   &__title {
-    @apply font-roboto font-medium mb-1;
+    @apply font-roboto font-medium
+    mb-1 text-brand-black;
 
     font-size: 21px;
   }
@@ -93,8 +96,8 @@ export default {
   }
 
   &__date {
-    @apply flex-none font-roboto
-    font-medium text-brand-black;
+    @apply font-roboto
+    font-medium text-brand-black flex-wrap;
   }
 
   &__age {

@@ -31,8 +31,15 @@ export async function getSchedule (params) {
     const baseURL = process.env.NUXT_ENV_AIRTABLE_URL
     const headers = { Authorization: `Bearer ${process.env.NUXT_ENV_AIRTABLE_API_KEY}` }
     const url = '/Informasi Vaksinasi Pikobar'
+    let additionalFormula = ''
 
-    params.filterByFormula = 'AND({F2. Status Production}="Ready to publish",{F1. Verification}="1")'
+    if (params.filterByFormula) {
+      params.filterByFormula.forEach((item) => {
+        additionalFormula = additionalFormula.concat(',', item)
+      })
+    }
+
+    params.filterByFormula = `AND({F2. Status Production}="Ready to publish",{F1. Verification}="1"${additionalFormula})`
 
     const response = await axios.request({
       baseURL,

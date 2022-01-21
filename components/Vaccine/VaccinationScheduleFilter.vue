@@ -18,7 +18,7 @@
       v-model="query.age"
       :options="ageCategory"
       :allow-empty="true"
-      placeholder="Pilih Kategori Usia"
+      placeholder="Pilih Sasaran/Usia"
       :searchable="true"
       class="schedule-filter__filter"
     >
@@ -41,6 +41,7 @@
       label="Reset"
       class="schedule-filter__button"
       outlined
+      monochrome
       @click.prevent="onReset"
     />
   </div>
@@ -57,8 +58,8 @@ export default {
   data () {
     return {
       query: {
-        district: null,
-        age: null,
+        district: null, // {A2. Kota/Kabupaten}
+        age: null, // {D1. Target Usia}
         date: null
       },
       districts: [],
@@ -96,6 +97,36 @@ export default {
       } else {
         return []
       }
+    },
+    /**
+     * create formula for airtable API filter data
+     * based on this filter component value
+     * @event search
+     * @property {Array} params mapped array of query for airtable API needs
+     */
+    onSearch () {
+      const params = []
+
+      const district = this.query.district ? `{A2. Kota/Kabupaten}="${this.query.district.label}"` : ''
+      if (this.query.district) { params.push(district) }
+
+      const age = this.query.age ? `SEARCH("${this.query.age}",ARRAYJOIN({D1. Target Usia}))` : ''
+      if (this.query.age) { params.push(age) }
+
+      this.$emit('search', params)
+    },
+    /**
+     * reset the query value
+     * @event search
+     * @property {Array}
+     */
+    onReset () {
+      this.query = {
+        district: null,
+        age: null,
+        date: null
+      }
+      this.$emit('search', [])
     }
   }
 }

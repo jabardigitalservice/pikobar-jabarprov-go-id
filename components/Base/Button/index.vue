@@ -3,7 +3,9 @@
     :is="tag"
     :class="{
       'base-button': true,
+      'base-button--gray': monochrome,
       'base-button--outlined': outlined,
+      'base-button--outlined--gray': outlined && monochrome,
       'base-button--shadowed': shadowed || outlined
     }"
     :disabled="disabled"
@@ -23,7 +25,7 @@
 
 <script>
 /**
- * As of now, only supports green color (filled or outlined).
+ * As of now, only supports green color (filled or outlined) and gray (monochrome).
  */
 export default {
   props: {
@@ -43,6 +45,9 @@ export default {
     },
     shadowed: {
       type: Boolean
+    },
+    monochrome: {
+      type: Boolean
     }
   }
 }
@@ -60,11 +65,19 @@ export default {
 
   font-family: 'Lato', sans-serif;
 
+  &--gray {
+    @apply bg-brand-gray-dark
+  }
+
   &--outlined {
     @apply border-brand-green-darker
     rounded-md
     bg-transparent
     text-brand-green-darker px-4;
+
+    &--gray {
+      @apply border-brand-gray-dark text-brand-gray-dark
+    }
   }
 
   &--shadowed {
