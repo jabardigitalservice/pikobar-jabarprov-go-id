@@ -86,10 +86,9 @@ export default {
 
   &__label {
     color: inherit;
-    font-size: 14px;
     line-height: 20px;
 
-    @apply flex-none;
+    @apply flex-none text-sm;
   }
 
   &__icon {

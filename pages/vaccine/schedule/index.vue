@@ -24,8 +24,12 @@
         @click="onScheduleClick"
       />
       <VaccinationSchedulePopup
-        v-if="showScheduleDetail"
-        :is-active.sync="showScheduleDetail"
+        v-if="showSchedulePopup"
+        :is-active.sync="showSchedulePopup"
+        :schedule="scheduleDetail"
+      />
+      <VaccinationScheduleBottomSheet
+        :is-active.sync="showScheduleBottomSheet"
         :schedule="scheduleDetail"
       />
       <div
@@ -49,6 +53,7 @@ import Section from '~/components/Base/Section'
 import VaccinationSchedule from '~/components/Vaccine/VaccinationSchedule.vue'
 import VaccinationScheduleFilter from '@/components/Vaccine/VaccinationScheduleFilter.vue'
 import VaccinationSchedulePopup from '@/components/Vaccine/VaccinationSchedulePopup.vue'
+import VaccinationScheduleBottomSheet from '@/components/Vaccine/VaccinationScheduleBottomSheet.vue'
 import BaseAlert from '@/components/Base/Alert'
 export default {
   name: 'Schedule',
@@ -57,13 +62,15 @@ export default {
     BaseAlert,
     VaccinationSchedule,
     VaccinationScheduleFilter,
-    VaccinationSchedulePopup
+    VaccinationSchedulePopup,
+    VaccinationScheduleBottomSheet
   },
   data () {
     return {
       faInfoCircle,
       disclaimer: '',
-      showScheduleDetail: false,
+      showSchedulePopup: false,
+      showScheduleBottomSheet: false,
       scheduleDetail: {},
       query: {
         maxRecords: null
@@ -104,7 +111,8 @@ export default {
     },
     onScheduleClick (index) {
       this.scheduleDetail = this.schedule[index]
-      this.showScheduleDetail = true
+      this.showScheduleBottomSheet = window.innerWidth <= 768
+      this.showSchedulePopup = window.innerWidth > 768
     }
   }
 }
