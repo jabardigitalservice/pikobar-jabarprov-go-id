@@ -1,10 +1,10 @@
 <template>
   <div :class="['schedule-popup', isActive && 'is-active']" @click.self="onCloseOrCancel">
     <VaccinatonScheduleDetail
-    :schedule="schedule"
-    class="schedule-popup__content"
-    @close="onCloseOrCancel"
-  />
+      :schedule="schedule"
+      class="schedule-popup__content"
+      @close="onCloseOrCancel"
+    />
   </div>
 </template>
 
