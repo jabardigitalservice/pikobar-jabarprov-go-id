@@ -10,16 +10,18 @@
           Untuk informasi lebih lanjut, silakan hubungi kontak yang tercantum.
         </h4>
       </div>
-      <VaccinationScheduleFilter @search="onSearch" />
+      <client-only>
+        <VaccinationScheduleFilter @search="onSearch" />
+      </client-only>
       <BaseAlert
-        v-if="schedule.length"
+        v-if="showContent"
         :icon="faInfoCircle"
         info
         class="mt-8"
         :label="`Menampilkan ${schedule.length} informasi jadwal dan lokasi vaksinasi`"
       />
       <VaccinationSchedule
-        v-if="schedule.length"
+        v-if="showContent"
         :list="schedule"
         @click="onScheduleClick"
       />
@@ -32,6 +34,7 @@
         :is-active.sync="showScheduleBottomSheet"
         :schedule="scheduleDetail"
       />
+      <VaccinationScheduleSkeleton v-show="isLoading" />
       <div
         v-if="showEmptyFig"
         class="flex justify-center"
@@ -54,6 +57,7 @@ import VaccinationSchedule from '~/components/Vaccine/VaccinationSchedule.vue'
 import VaccinationScheduleFilter from '@/components/Vaccine/VaccinationScheduleFilter.vue'
 import VaccinationSchedulePopup from '@/components/Vaccine/VaccinationSchedulePopup.vue'
 import VaccinationScheduleBottomSheet from '@/components/Vaccine/VaccinationScheduleBottomSheet.vue'
+import VaccinationScheduleSkeleton from '@/components/Vaccine/VaccinationScheduleSkeleton.vue'
 import BaseAlert from '@/components/Base/Alert'
 export default {
   name: 'Schedule',
@@ -63,7 +67,8 @@ export default {
     VaccinationSchedule,
     VaccinationScheduleFilter,
     VaccinationSchedulePopup,
-    VaccinationScheduleBottomSheet
+    VaccinationScheduleBottomSheet,
+    VaccinationScheduleSkeleton
   },
   data () {
     return {
@@ -72,6 +77,7 @@ export default {
       showSchedulePopup: false,
       showScheduleBottomSheet: false,
       scheduleDetail: {},
+      isLoading: true,
       query: {
         maxRecords: null
       }
@@ -97,17 +103,24 @@ export default {
       }
     }),
     showEmptyFig () {
-      // @todo: insert loading condition
-      return this.schedule.length === 0
+      return this.schedule.length === 0 && !this.isLoading && this.query.filterByFormula
+    },
+    showContent () {
+      return this.schedule.length > 0 && !this.isLoading
     }
   },
   async mounted () {
-    await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+    await this.getScheduleList()
   },
   methods: {
+    async getScheduleList () {
+      this.isLoading = true
+      await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+      this.isLoading = false
+    },
     async onSearch (params) {
       this.query.filterByFormula = params
-      await this.$store.dispatch('vaksin/getSchedule', { params: this.query, setState: true })
+      await this.getScheduleList()
     },
     onScheduleClick (index) {
       this.scheduleDetail = this.schedule[index]
