@@ -5,8 +5,7 @@ import {
 
 export const state = () => ({
   items: null,
-  schedule: null,
-  offset: null
+  schedule: null
 })
 
 export const mutations = {
@@ -15,9 +14,6 @@ export const mutations = {
   },
   setSchedule (state, schedule) {
     state.schedule = schedule
-  },
-  setOffset (state, offset) {
-    state.offset = offset
   }
 }
 
@@ -36,15 +32,14 @@ export const actions = {
   async getSchedule ({ state, commit }, options = { params: null, setState: true }) {
     const response = await __getSchedule(options.params)
     if (options.setState) {
-      response.records.sort(function compare (a, b) {
+      response.sort(function compare (a, b) {
         const dateA = new Date(a.createdTime)
         const dateB = new Date(b.createdTime)
         return dateB - dateA
       })
-      commit('setSchedule', response.records)
-      commit('setOffset', response.offset)
+      commit('setSchedule', response)
     } else {
-      return response.records
+      return response
     }
 
     return state.schedule
