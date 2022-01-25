@@ -84,10 +84,6 @@ export default {
     }
   },
   computed: {
-    ...mapState('vaksin', [
-      // @todo: implement offset in fetching schedule data
-      'offset'
-    ]),
     ...mapState({
       schedule: (state) => {
         const items = state.vaksin?.schedule || []
