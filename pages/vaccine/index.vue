@@ -72,12 +72,8 @@ export default {
       },
       headerContent: {
         headerSize: 'large',
-        title: 'Informasi Vaksinasi Covid-19',
-        body: `
-          Vaksinasi Covid-19 sudah dimulai sejak 13 Januari 2021. Program
-          vaksinasi ini akan dilakukan secara bertahap dalam 2 gelombang yang
-          akan berlangsung hingga Maret 2022.
-        `,
+        title: 'Jadwal dan Lokasi Vaksinasi Covid-19',
+        body: 'Temukan lokasi dan jadwal kegiatan vaksinasi Covid-19 yang akan berlangsung di Jawa Barat.',
         image: '/img/icon-vaccine-family.svg',
         imagePosition: 'right',
         prompt: 'Lihat di Sini',

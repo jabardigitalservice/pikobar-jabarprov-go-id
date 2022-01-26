@@ -40,16 +40,26 @@ export async function getSchedule (params) {
     }
 
     params.filterByFormula = `AND({F2. Status Production}="Ready to publish",{F1. Verification}="1"${additionalFormula})`
+    let offset = null
+    let scheduleList = []
 
-    const response = await axios.request({
-      baseURL,
-      headers,
-      url,
-      params,
-      method: 'GET'
-    })
+    // this loop is necessary because airtable API provides max 100 row data per request
+    do {
+      params.offset = offset
 
-    return response.data
+      const response = await axios.request({
+        baseURL,
+        headers,
+        url,
+        params,
+        method: 'GET'
+      })
+
+      scheduleList = [...scheduleList, ...response.data.records]
+      offset = response.data.offset ?? null
+    } while (offset)
+
+    return scheduleList
   } catch (e) {
     throw e
   }
