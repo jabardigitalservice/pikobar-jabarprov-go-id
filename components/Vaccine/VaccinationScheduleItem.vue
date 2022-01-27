@@ -13,7 +13,7 @@
       <div class="flex flex-row gap-2 mb-6 w-full">
         <img width="16px" height="16px" :src="iconClock">
         <div class="schedule-item__date">
-          {{ this.displayDate(beginDate) }} - {{ this.displayDate(endDate) }}
+          {{ displayDate(beginDate) }} - {{ displayDate(endDate) }}
         </div>
       </div>
       <div class="flex flex-row flex-wrap gap-2">
