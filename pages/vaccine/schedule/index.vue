@@ -92,7 +92,8 @@ export default {
           header: item.fields['A2. Kota/Kabupaten'],
           title: item.fields['A1. Instansi Penyelenggara'],
           address: item.fields['C1. Lokasi Vaksin'],
-          date: `${item.fields['C2. Start Date (Pelaksanaan)'] || '...'} - ${item.fields['C3. End Date (Pelaksanaan)'] || '...'}`,
+          beginDate: item.fields['C2. Start Date (Pelaksanaan)'],
+          endDate: item.fields['C3. End Date (Pelaksanaan)'],
           ageCategory: item.fields['D1. Target Usia'],
           index
         }))

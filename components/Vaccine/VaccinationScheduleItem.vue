@@ -13,7 +13,7 @@
       <div class="flex flex-row gap-2 mb-6 w-full">
         <img width="16px" height="16px" :src="iconClock">
         <div class="schedule-item__date">
-          {{ date }}
+          {{ this.displayDate(beginDate) }} - {{ this.displayDate(endDate) }}
         </div>
       </div>
       <div class="flex flex-row flex-wrap gap-2">
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { formatDateIndonesiaShort } from '~/lib/date'
 import iconClock from '~/assets/icons/clock-outline.svg'
 export default {
   props: {
@@ -48,7 +49,11 @@ export default {
       type: String,
       default: ''
     },
-    date: {
+    beginDate: {
+      type: String,
+      default: ''
+    },
+    endDate: {
       type: String,
       default: ''
     },
@@ -67,6 +72,7 @@ export default {
     }
   },
   methods: {
+    formatDateIndonesiaShort,
     cutString (string) {
       if (string.length > 80) {
         return string.substring(0, 80) + '...'
@@ -75,6 +81,9 @@ export default {
     },
     onClick () {
       this.$emit('click', this.index)
+    },
+    displayDate (date) {
+      return date ? this.formatDateIndonesiaShort(date) : '...'
     }
   }
 }
