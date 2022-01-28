@@ -1,6 +1,6 @@
 <template>
   <div>
-    <WelcomePage v-if="showStep === 0" :step.sync="showStep" />
+    <WelcomePage v-if="showStep === 0" :step.sync="showStep" :consultation="true" />
     <FirstStep v-if="showStep === 1" :step.sync="showStep" request-type="obat_vitamin" />
     <SecondStep v-if="showStep === 2" :step.sync="showStep" />
     <ConfirmationStep v-if="showStep === 3" :step.sync="showStep" />
