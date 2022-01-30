@@ -275,9 +275,9 @@ export default {
     transition: all 0.3s ease;
     transition-property: transform, opacity;
     transform: translateY(0);
+    z-index: 5;
 
-    @apply z-10 absolute
-    flex-none;
+    @apply absolute flex-none;
 
     &--prev {
       left: 1rem;
