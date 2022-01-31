@@ -29,10 +29,10 @@
         class="isoman__action-card"
         title="Konsultasi dengan Dokter"
         body="Bagi Wargi yang membutuhkan obat, yuk konsultasikan terlebih dahulu dengan dokter melalui layanan telekonsultasi dokter Pikobar"
-        prompt="Tanyakan Sekarang"
+        prompt="Daftar Konsultasi"
         :event="konsultasiDokterEvent"
         :image="konsultasiDokterImage"
-        :backlink="konsultasiDokter"
+        :backlink="permohonanKonsultasiDokter"
       />
       <ActionCard
         class="isoman__action-card"

@@ -5,7 +5,7 @@
         Selamat Datang,
       </h2>
       <p class="text-center lg:text-left">
-        Form pendataan pemohon ini dapat warga gunakan untuk mengajukan kebutuhan vitamin selama isolasi mandiri. Dimohon warga mengisi dengan benar & sesuai dengan kondisi sesungguhnya untuk memudahkan petugas dalam mendistribusikan vitamin langsung ke rumah warga.
+        {{ redactionText }}
       </p>
       <p class="hidden lg:block">
         (Catatan: Mohon maaf Wargi Jabar, tidak semua permohonan dapat disetujui. Setiap permohonan yang masuk, akan diverifikasi terlebih dahulu dari sisi NIK, kelengkapan alamat, validitas hasil PCR/Antigen, dan area distribusi pengiriman hanya Jawa Barat)
@@ -24,7 +24,26 @@
 </template>
 
 <script>
+import { redactionConsultation, redactionVitamin } from '~/components/_pages/index/IsolasiMandiri/backlinks'
+
 export default {
+  props: {
+    consultation: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      redactionConsultation,
+      redactionVitamin
+    }
+  },
+  computed: {
+    redactionText () {
+      return (this.consultation) ? redactionConsultation : redactionVitamin
+    }
+  },
   methods: {
     onClick () {
       this.$emit('update:step', 1)
