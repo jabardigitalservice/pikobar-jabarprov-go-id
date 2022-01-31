@@ -44,7 +44,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { konsultasiDokter, infoConsultation, infoVitamin, detailConsultation, detailVitamin } from '../IsolasiMandiri/backlinks'
+import { consultationLink, infoConsultation, infoVitamin, detailConsultation, detailVitamin } from '../IsolasiMandiri/backlinks'
 export default {
   props: {
     consultation: {
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       result: null,
-      whatsappBacklink: konsultasiDokter,
+      whatsappBacklink: consultationLink,
       messageInfo: null,
       messageDetail: null
     }

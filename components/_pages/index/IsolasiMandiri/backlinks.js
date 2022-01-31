@@ -10,6 +10,7 @@ const detailConsultation = 'Anda dapat merekam/ screenshot halaman ini sebagai b
 const detailVitamin = 'Anda dapat merekam/ screenshot halaman ini sebagai bukti mengajukan permohonan dan melakukan lacak permohonan dengan menggunakan ID Permohonan.'
 const redactionConsultation = 'Form daftar konsultasi ini dapat warga gunakan untuk melakukan pendaftaran Telekonsultasi selama isolasi mandiri. Dimohon warga mengisi dengan benar & sesuai dengan kondisi sesungguhnya untuk memudahkan petugas melakukan pendataan Telekonsultasi sehingga dapat memudahkan dalam pelaksanaan konsultasi dan jika dibutuhkan untuk peresepan obat yang didistribusikan langsung ke rumah warga.'
 const redactionVitamin = 'Form pendataan pemohon ini dapat warga gunakan untuk mengajukan kebutuhan vitamin selama isolasi mandiri. Dimohon warga mengisi dengan benar & sesuai dengan kondisi sesungguhnya untuk memudahkan petugas dalam mendistribusikan vitamin langsung ke rumah warga.'
+const consultationLink = 'https://bit.ly/hotlineisomanpikobar'
 
 export {
   konsultasiDokter,
@@ -21,5 +22,6 @@ export {
   detailConsultation,
   detailVitamin,
   redactionConsultation,
-  redactionVitamin
+  redactionVitamin,
+  consultationLink
 }
