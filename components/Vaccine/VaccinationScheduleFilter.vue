@@ -26,12 +26,13 @@
         Data Tidak Ditemukan.
       </template>
     </multiselect>
-    <!-- @todo : create datepicker filter input
-    <input
-      type="date"
-      class="schedule-filter__date"
+    <DatePicker
+      v-model="query.date"
+      range
       placeholder="Pilih Tanggal Vaksinasi"
-    > -->
+      class="schedule-filter__date"
+      @input="onDateSelected"
+    />
     <BaseButton
       label="Cari"
       class="schedule-filter__button"
@@ -48,22 +49,28 @@
 </template>
 
 <script>
+import { format as formatDate } from 'date-fns'
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
-    BaseButton
+    BaseButton,
+    DatePicker
   },
   data () {
     return {
+      ageCategory,
+      districts: [],
       query: {
         district: null, // {A2. Kota/Kabupaten}
-        age: null, // {D1. Target Usia}
-        date: null
-      },
-      districts: [],
-      ageCategory
+        age: null, // {D1. Target Usia},
+        date: null,
+        startDate: null, // {C2. Start Date (Pelaksanaan)}
+        endDate: null // {C3. End Date (Pelaksanaan)}
+      }
     }
   },
   async mounted () {
@@ -71,6 +78,7 @@ export default {
   },
   methods: {
     _uniqBy,
+    formatDate,
     /**
      * Fetch district options from API
      * and map it to multiselect needs
@@ -110,8 +118,20 @@ export default {
       const district = this.query.district ? `{A2. Kota/Kabupaten}="${this.query.district.label}"` : ''
       if (this.query.district) { params.push(district) }
 
-      const age = this.query.age ? `SEARCH("${this.query.age}",ARRAYJOIN({D1. Target Usia}))` : ''
+      const age = this.query.age ? `SEARCH("${this.query.age}", ARRAYJOIN({D1. Target Usia}))` : ''
       if (this.query.age) { params.push(age) }
+
+      const date = this.query.startDate
+        ? `OR(
+            AND(
+              {C2. Start Date (Pelaksanaan)}>DATETIME_FORMAT("${this.query.startDate}", "YYYY-MM-DD"),
+              {C2. Start Date (Pelaksanaan)}<DATETIME_FORMAT("${this.query.endDate}", "YYYY-MM-DD")),
+            AND(
+              {C3. End Date (Pelaksanaan)}>DATETIME_FORMAT("${this.query.startDate}", "YYYY-MM-DD"),
+              {C3. End Date (Pelaksanaan)}<DATETIME_FORMAT("${this.query.endDate}", "YYYY-MM-DD"))
+            )`
+        : ''
+      if (this.query.startDate) { params.push(date) }
 
       this.$emit('search', params)
     },
@@ -127,6 +147,13 @@ export default {
         date: null
       }
       this.$emit('search', [])
+    },
+    /**
+     * set date value into query
+     */
+    onDateSelected () {
+      this.query.startDate = formatDate(this.query.date[0], 'yyyy-MM-dd')
+      this.query.endDate = formatDate(this.query.date[1], 'yyyy-MM-dd')
     }
   }
 }
@@ -144,12 +171,22 @@ export default {
     @apply col-span-2 cursor-pointer
   }
 
-  &__date {
-    @apply col-span-2 rounded-lg px-4
-    cursor-pointer;
+  &__date::v-deep {
+    @apply flex col-span-2 rounded-lg px-4
+    cursor-pointer w-full h-full
+    justify-between items-center;
 
     border: 1px solid #e8e8e8;
     color: #adadad;
+
+    .mx-input-wrapper {
+      @apply w-full
+    }
+
+    .mx-input {
+      @apply border-none shadow-none p-0
+      font-lato text-sm text-brand-gray-dark
+    }
   }
 
   &__button {
