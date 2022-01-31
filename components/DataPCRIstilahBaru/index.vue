@@ -1,224 +1,109 @@
 <template>
-  <div
-    class="pcr-main text-white overflow-hidden rounded-lg shadow-md p-5 flex flex-col xl:flex-row"
-  >
-    <section class="w-full xl:w-1/2 p-3">
-      <div :class="isLoading ? 'block' : 'hidden'">
-        <ContentLoader
-          :speed="2"
-          width="400"
-          height="150"
-          primary-color="rgba(214, 210, 210,0.6)"
-          secondary-color="rgba(214, 210, 210,1)"
-          style="max-width: 400px;"
-        >
-          <rect
-            x="0"
-            y="0"
-            rx="8"
-            ry="6"
-            width="50%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="30"
-            rx="8"
-            ry="6"
-            width="66%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="60"
-            rx="8"
-            ry="6"
-            width="20%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="90"
-            rx="8"
-            ry="6"
-            width="50%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="120"
-            rx="8"
-            ry="6"
-            width="66%"
-            height="16"
-          />
-        </ContentLoader>
-      </div>
-      <div :class="!isLoading ? 'block' : 'hidden'">
-        <h4 class="text-center text-white text-2xl">
-          <b>Tes PCR (Orang Kasus Baru)</b>
-        </h4>
-        <div class="flex flex-col text-white text-center mt-5">
-          <div class="w-full color-title">
-            <div class="text-3xl">
-              {{ formatNumber(data.pcr_individu.total) }}
-            </div>
-            <span class="text-md text-blue-white">Total Orang</span>
+  <div class="pcr-main p-5 rounded-lg shadow-md h-full">
+    <div :class="isLoading ? 'block' : 'hidden'">
+      <ContentLoader
+        :speed="2"
+        width="400"
+        height="150"
+        primary-color="rgba(214, 210, 210,0.6)"
+        secondary-color="rgba(214, 210, 210,1)"
+        style="max-width: 400px;"
+      >
+        <rect
+          x="0"
+          y="0"
+          rx="8"
+          ry="6"
+          width="50%"
+          height="16"
+        />
+        <rect
+          x="0"
+          y="30"
+          rx="8"
+          ry="6"
+          width="66%"
+          height="16"
+        />
+        <rect
+          x="0"
+          y="64"
+          rx="8"
+          ry="6"
+          width="20%"
+          height="16"
+        />
+        <rect
+          x="0"
+          y="90"
+          rx="8"
+          ry="6"
+          width="50%"
+          height="16"
+        />
+        <rect
+          x="0"
+          y="120"
+          rx="8"
+          ry="6"
+          width="66%"
+          height="16"
+        />
+      </ContentLoader>
+    </div>
+    <div :class="!isLoading ? 'block' : 'hidden'">
+      <b class="text-lg">Tes PCR (Spesimen)</b>
+      <div class="flex flex-col text-white text-center mt-5">
+        <div class="w-full color-title">
+          <div class="text-3xl">
+            {{ formatNumber(data.pcr.total) }}
           </div>
-          <div class="w-full flex mt-5">
-            <div class="w-1/3">
-              <div>
-                <span class="text-2xl">
-                  {{ formatNumber(data.pcr_individu.positif) }}
-                </span>
-                <span class="text-sm">
-                  ({{ formatNumberPercent(data.pcr_individu_persentase_by_total.positif) }}%)
-                </span>
-              </div>
-              <span class="text-sm text-blue-white">Positif</span>
+          <span class="text-md text-blue-white">Total Spesimen</span>
+        </div>
+        <div class="w-full flex mt-5">
+          <div class="w-1/3">
+            <div>
+              <span class="text-2xl">
+                {{ formatNumber(data.pcr.positif) }}
+              </span>
+              <span class="text-sm">
+                ({{ formatNumberPercent(data.pcr_persentase_by_total.positif) }}%)
+              </span>
             </div>
-            <div class="w-1/3">
-              <div>
-                <span class="text-2xl">
-                  {{ formatNumber(data.pcr_individu.negatif) }}
-                </span>
-                <span class="text-sm">
-                  ({{ formatNumberPercent(data.pcr_individu_persentase_by_total.negatif) }}%)
-                </span>
-              </div>
-              <span class="text-sm text-blue-white">Negatif</span>
-            </div>
-            <div class="w-1/3">
-              <div>
-                <span class="text-2xl">
-                  {{ formatNumber(data.pcr_individu.invalid) }}
-                </span>
-                <span class="text-sm">
-                  ({{ formatNumberPercent(data.pcr_individu_persentase_by_total.invalid) }}%)
-                </span>
-              </div>
-              <span class="text-sm text-blue-white">Inkonklusif</span>
-            </div>
+            <span class="text-sm text-blue-white">Positif</span>
           </div>
-          <div class="text-sm text-blue-white text-left mt-5">
-            Disclaimer :<br>
-            <span>Angka Tes PCR (Orang Kasus Baru) didapatkan dari pemrosesan link and match identitas unik individu dari database Allrecord TC-19 dan Labkes Jabar.</span>
-            <br>
-            <br>
-            <span>Update Terakhir: {{ data.pcr_individu.tanggal }}</span>
+          <div class="w-1/3">
+            <div>
+              <span class="text-2xl">
+                {{ formatNumber(data.pcr.negatif) }}
+              </span>
+              <span class="text-sm">
+                ({{ formatNumberPercent(data.pcr_persentase_by_total.negatif) }}%)
+              </span>
+            </div>
+            <span class="text-sm text-blue-white">Negatif</span>
+          </div>
+          <div class="w-1/3">
+            <div>
+              <span class="text-2xl">
+                {{ formatNumber(data.pcr.invalid) }}
+              </span>
+              <span class="text-sm">
+                ({{ formatNumberPercent(data.pcr_persentase_by_total.invalid) }}%)
+              </span>
+            </div>
+            <span class="text-sm text-blue-white">Inkonklusif</span>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="w-full xl:w-1/2 p-3">
-      <div :class="isLoading ? 'block' : 'hidden'">
-        <ContentLoader
-          :speed="2"
-          width="400"
-          height="150"
-          primary-color="rgba(214, 210, 210,0.6)"
-          secondary-color="rgba(214, 210, 210,1)"
-          style="max-width: 400px;"
-        >
-          <rect
-            x="0"
-            y="0"
-            rx="8"
-            ry="6"
-            width="50%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="30"
-            rx="8"
-            ry="6"
-            width="66%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="64"
-            rx="8"
-            ry="6"
-            width="20%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="90"
-            rx="8"
-            ry="6"
-            width="50%"
-            height="16"
-          />
-          <rect
-            x="0"
-            y="120"
-            rx="8"
-            ry="6"
-            width="66%"
-            height="16"
-          />
-        </ContentLoader>
-      </div>
-      <div :class="!isLoading ? 'block' : 'hidden'">
-        <h4 class="text-center text-white text-2xl">
-          <b>Tes PCR (Spesimen)</b>
-        </h4>
-        <div class="flex flex-col text-white text-center mt-5">
-          <div class="w-full color-title">
-            <div class="text-3xl">
-              {{ formatNumber(data.pcr.total) }}
-            </div>
-            <span class="text-md text-blue-white">Total Spesimen</span>
-          </div>
-          <div class="w-full flex mt-5">
-            <div class="w-1/3">
-              <div>
-                <span class="text-2xl">
-                  {{ formatNumber(data.pcr.positif) }}
-                </span>
-                <span class="text-sm">
-                  ({{ formatNumberPercent(data.pcr_persentase_by_total.positif) }}%)
-                </span>
-              </div>
-              <span class="text-sm text-blue-white">Positif</span>
-            </div>
-            <div class="w-1/3">
-              <div>
-                <span class="text-2xl">
-                  {{ formatNumber(data.pcr.negatif) }}
-                </span>
-                <span class="text-sm">
-                  ({{ formatNumberPercent(data.pcr_persentase_by_total.negatif) }}%)
-                </span>
-              </div>
-              <span class="text-sm text-blue-white">Negatif</span>
-            </div>
-            <div class="w-1/3">
-              <div>
-                <span class="text-2xl">
-                  {{ formatNumber(data.pcr.invalid) }}
-                </span>
-                <span class="text-sm">
-                  ({{ formatNumberPercent(data.pcr_persentase_by_total.invalid) }}%)
-                </span>
-              </div>
-              <span class="text-sm text-blue-white">Inkonklusif</span>
-            </div>
-          </div>
-          <div class="text-sm text-blue-white text-left mt-5">
-            Disclaimer :<br>
-            <span>Jumlah tes PCR yang ditampilkan bersumber dari database Labkes Jabar dan Allrecord TC-19. Angka belum sepenuhnya merefleksikan jumlah spesimen di Jawa Barat secara real-time.</span>
-            <br>
-            <br>
-            <span>Update Terakhir: {{ data.pcr.tanggal }}</span>
-          </div>
+        <div class="text-sm text-blue-white text-left mt-5">
+          Disclaimer :<br>
+          <span>Jumlah tes PCR yang ditampilkan bersumber dari database Labkes Jabar dan Allrecord TC-19. Angka belum sepenuhnya merefleksikan jumlah spesimen di Jawa Barat secara real-time.</span>
+          <br>
+          <br>
+          <span>Update Terakhir: {{ data.pcr.tanggal }}</span>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 

@@ -11,10 +11,14 @@
       <DataSummaryIstilahBaru />
     </section>
     <section class="m-4 mb-8 md:m-8">
-      <DataRDT />
-    </section>
-    <section class="m-4 mb-8 md:m-8">
-      <DataPCRIstilahBaru />
+      <div class="grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="text-white h-full">
+          <DataRDT />
+        </div>
+        <div class="text-white h-full">
+          <DataPCRIstilahBaru />
+        </div>
+      </div>
     </section>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
@@ -72,10 +76,6 @@
 
     <section class="m-4 mb-8 md:m-8">
       <BarStatAreaSingleV2IstilahBaru />
-    </section>
-
-    <section class="m-4 md:m-8">
-      <BarStatHarianAkumulatifV2IstilahBaru />
     </section>
 
     <section class="m-4 mb-8 md:m-8">
