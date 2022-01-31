@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { redaksiKonsultasi, redaksiVitamin } from '~/components/_pages/index/IsolasiMandiri/backlinks'
+import { redactionConsultation, redactionVitamin } from '~/components/_pages/index/IsolasiMandiri/backlinks'
 
 export default {
   props: {
@@ -35,13 +35,13 @@ export default {
   },
   data () {
     return {
-      redaksiKonsultasi,
-      redaksiVitamin
+      redactionConsultation,
+      redactionVitamin
     }
   },
   computed: {
     redactionText () {
-      return (this.consultation) ? redaksiKonsultasi : redaksiVitamin
+      return (this.consultation) ? redactionConsultation : redactionVitamin
     }
   },
   methods: {
