@@ -60,7 +60,7 @@ import {
   transformToTopStatisticsData,
   transformToBottomStatisticsData
 } from './data.utils'
-import { formatDateTimeShort } from '~/lib/date'
+import { formatDateShort } from '~/lib/date'
 
 import {
   EventStatCard,
@@ -81,8 +81,8 @@ export default {
         // eslint-disable-next-line camelcase
         const date = state.metadata?.last_update
         return date
-          ? formatDateTimeShort(new Date(date))
-          : null
+          ? formatDateShort(new Date(date)) + ' 17:00'
+          : '-'
       },
       dataJabar: 'items',
       isLoadingDataJabar: 'isLoading'

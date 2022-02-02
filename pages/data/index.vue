@@ -153,7 +153,7 @@ import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummaryIstilahBaru from '~/components/_pages/index/DataSummaryIstilahBaru'
 import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { formatDateTimeShort } from '~/lib/date'
+import { formatDateShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 
 export default {
@@ -189,12 +189,18 @@ export default {
     ...mapState({
       cases: state => state.statistics.cases
     }),
-    lastUpdatedAt () {
-      if (!this.cases) {
-        return ''
+    ...mapState('data-kasus-total-v2', {
+      /**
+       * @public
+       */
+      lastUpdatedAt: (state) => {
+        // eslint-disable-next-line camelcase
+        const date = state.metadata?.last_update
+        return date
+          ? formatDateShort(new Date(date)) + ' 17:00'
+          : '-'
       }
-      return this.formatDateTimeShort(this.cases.updated_at)
-    }
+    })
   },
   mounted () {
     this.$nextTick(() => {
@@ -217,7 +223,7 @@ export default {
     })
   },
   methods: {
-    formatDateTimeShort,
+    formatDateShort,
     enableHeatmap () {
       this.stat.isActiveHeatmap = true
       this.stat.isActiveFaskes = false
