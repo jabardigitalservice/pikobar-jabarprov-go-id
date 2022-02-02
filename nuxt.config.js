@@ -77,8 +77,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/stylesheet/main.scss',
-    'vue2-datepicker/index.css'
+    '~/assets/stylesheet/main.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -91,6 +90,7 @@ export default {
     '~/plugins/vuex-router-sync.js',
     { src: '~/plugins/vue-d3.js', ssr: false },
     { src: '~/plugins/vue-leaflet.js', ssr: false },
+    { src: '~/plugins/vue-datepicker.js', ssr: false },
     { src: '~/plugins/vue-lazyload.js', mode: 'client' },
     { src: '~/plugins/vue-carousel.js', mode: 'client' },
     { src: '~/plugins/vue-rangedate-picker', mode: 'client' },
