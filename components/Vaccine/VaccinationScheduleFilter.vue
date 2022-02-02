@@ -51,7 +51,6 @@
 <script>
 import { format as formatDate } from 'date-fns'
 import DatePicker from 'vue2-datepicker'
-import 'vue2-datepicker/index.css'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
 import BaseButton from '@/components/Base/Button'

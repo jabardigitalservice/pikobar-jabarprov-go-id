@@ -77,7 +77,8 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/stylesheet/main.scss'
+    '~/assets/stylesheet/main.scss',
+    'vue2-datepicker/index.css'
   ],
   /*
   ** Plugins to load before mounting the App
