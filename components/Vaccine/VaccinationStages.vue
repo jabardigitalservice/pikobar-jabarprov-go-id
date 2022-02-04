@@ -81,8 +81,7 @@ export default {
   &__title {
     font-size: 20px;
     color: #008444;
-    @apply mb-6
-    font-serif font-bold;
+    @apply mb-6 font-lora font-bold;
   }
 
   &__list,

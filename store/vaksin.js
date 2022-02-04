@@ -1,6 +1,6 @@
 import {
   get,
-  getVaccinationSchedule as __getSchedule
+  getSchedule as __getSchedule
 } from '../api/vaksin'
 
 export const state = () => ({
@@ -29,11 +29,19 @@ export const actions = {
     }
     return state.items
   },
-  async getSchedule ({ state, commit }) {
-    if (!state.schedule) {
-      const schedule = await __getSchedule()
-      commit('setSchedule', schedule)
+  async getSchedule ({ state, commit }, options = { params: null, setState: true }) {
+    const response = await __getSchedule(options.params)
+    if (options.setState) {
+      response.sort(function compare (a, b) {
+        const dateA = new Date(a.createdTime)
+        const dateB = new Date(b.createdTime)
+        return dateB - dateA
+      })
+      commit('setSchedule', response)
+    } else {
+      return response
     }
+
     return state.schedule
   }
 }

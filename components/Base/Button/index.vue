@@ -3,7 +3,9 @@
     :is="tag"
     :class="{
       'base-button': true,
+      'base-button--gray': monochrome,
       'base-button--outlined': outlined,
+      'base-button--outlined--gray': outlined && monochrome,
       'base-button--shadowed': shadowed || outlined
     }"
     :disabled="disabled"
@@ -23,7 +25,7 @@
 
 <script>
 /**
- * As of now, only supports green color (filled or outlined).
+ * As of now, only supports green color (filled or outlined) and gray (monochrome).
  */
 export default {
   props: {
@@ -43,6 +45,9 @@ export default {
     },
     shadowed: {
       type: Boolean
+    },
+    monochrome: {
+      type: Boolean
     }
   }
 }
@@ -50,19 +55,29 @@ export default {
 
 <style lang="scss" scoped>
 .base-button {
-  @apply inline-flex flex-row flex-no-wrap gap-2
+  @apply inline-flex flex-row flex-no-wrap
   justify-center items-center
-  px-4 py-3
+  px-6 py-3
   border border-solid border-transparent
   rounded-lg
   bg-brand-green-darker
   text-white font-bold tracking-wide;
 
+  font-family: 'Lato', sans-serif;
+
+  &--gray {
+    @apply bg-brand-gray-dark
+  }
+
   &--outlined {
-    @apply border-green-500
+    @apply border-brand-green-darker
     rounded-md
-    bg-white
-    text-green-700;
+    bg-transparent
+    text-brand-green-darker px-4;
+
+    &--gray {
+      @apply border-brand-gray-dark text-brand-gray-dark
+    }
   }
 
   &--shadowed {
@@ -71,10 +86,9 @@ export default {
 
   &__label {
     color: inherit;
-    font-size: 14px;
     line-height: 20px;
 
-    @apply flex-none;
+    @apply flex-none text-sm;
   }
 
   &__icon {

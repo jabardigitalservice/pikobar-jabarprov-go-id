@@ -26,6 +26,20 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Regular.ttf');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Bold.ttf');
+  font-weight: bold;
+  font-display: swap;
+}
+
 html {
   font-family: 'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -122,7 +136,7 @@ h1, h2 {
   }
 
   &__brand-logo {
-    @apply block w-auto mx-auto h-12 mr-4
+    @apply block w-auto mx-auto h-10
     object-contain object-center;
   }
 
@@ -138,7 +152,7 @@ h1, h2 {
   }
 
   &__menu-item {
-    @apply hidden cursor-pointer mx-2 px-2 py-2
+    @apply hidden cursor-pointer mx-2 px-4 py-2
     whitespace-no-wrap;
 
     @screen lg {
@@ -151,7 +165,7 @@ h1, h2 {
   }
 
   &__menu-item-parent {
-    @apply hidden cursor-pointer mx-2 px-2 py-2;
+    @apply hidden cursor-pointer mx-2 px-4 py-2;
 
     @screen lg {
       @apply flex;
@@ -174,19 +188,40 @@ h1, h2 {
     }
   }
 
+  &__download {
+    @apply cursor-pointer px-4 py-3
+    text-center ml-2 rounded-md bg-brand-green
+    text-sm font-bold;
+
+    font-family: 'Lato', sans-serif;
+    background: #069550;
+
+    &:hover {
+      @apply opacity-75;
+    }
+  }
+
   .appbar-menu-item {
     @apply text-sm;
   }
   .appbar-menu-item:not(.nuxt-link-active) {
     &,
     > * {
-      @apply text-gray-600 font-bold;
+      @apply font-bold;
+
+      color: #757575;
+      font-family: 'Lato', sans-serif;
     }
   }
   .appbar-menu-item.nuxt-link-active {
+    border: 2px solid #FFD026;
     &,
     > * {
-      @apply text-brand-green font-bold;
+      @apply text-brand-green-darker font-bold
+      rounded-lg;
+
+      font-family: 'Lato', sans-serif;
+      background-color: #E6F6EC;
     }
   }
 
@@ -194,6 +229,12 @@ h1, h2 {
     @apply hidden absolute rounded bg-white pb-3
     border border-solid border-gray-400;
   }
+}
+
+.event-statistics,.recent-news {
+  @apply py-20;
+
+  background-color: #fafafa;
 }
 
 /* purgecss end ignore */

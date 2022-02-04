@@ -19,7 +19,7 @@
           <h2 class="content-card__title">
             {{ title }}
           </h2>
-          <div class="content-card__body text-gray-600">
+          <div class="content-card__body">
             <slot name="body">
               {{ body }}
             </slot>
@@ -121,8 +121,8 @@ export default {
   }
 
   &__header {
-    @apply text-sm text-green-600
-    font-bold;
+    @apply text-sm text-brand-green-darker
+    font-bold font-roboto;
   }
 
   &__title {
@@ -131,9 +131,8 @@ export default {
   }
 
   &__body {
-    @apply mt-3 text-base;
-
-    font-family: 'Roboto', sans-serif;
+    @apply mt-3 text-base
+    text-brand-black font-roboto;
   }
 
   &__btn {
