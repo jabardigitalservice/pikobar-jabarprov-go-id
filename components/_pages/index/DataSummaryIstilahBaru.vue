@@ -1,10 +1,10 @@
 <template>
-  <div class="grid grid-rows-4 md:grid-rows-2 lg:grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-3">
+  <div class="grid grid-rows-4 md:grid-rows-2 lg:grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
     <!-- Terkonfirmasi -->
     <CounterCardLoader
       :is-pending="isLoadingJabar || isLoadingNasional"
       :is-main="true"
-      class="mb-5 border border-solid"
+      class="border border-solid"
       style="background: #2C347C;"
       label="Total Terkonfirmasi"
     >
@@ -40,7 +40,7 @@
     <CounterCardLoader
       :is-pending="isLoadingJabar || isLoadingNasional"
       :is-main="false"
-      class="mb-5 border border-solid bg-white text-title"
+      class="border border-solid bg-white text-title"
       label="Isolasi/Dalam Perawatan"
     >
       <div class="flex flex-row color-confirmation-diisolasi text-center mt-3 font-bold">
@@ -75,7 +75,7 @@
     <CounterCardLoader
       :is-pending="isLoadingJabar || isLoadingNasional"
       :is-main="false"
-      class="mb-5 border border-solid bg-white text-title"
+      class="border border-solid bg-white text-title"
       label="Selesai Isolasi/Sembuh"
     >
       <div class="flex flex-row color-confirmation-selesai text-center mt-3 font-bold">
@@ -110,7 +110,7 @@
     <CounterCardLoader
       :is-pending="isLoadingJabar || isLoadingNasional"
       :is-main="false"
-      class="mb-5 border border-solid bg-white text-title"
+      class="border border-solid bg-white text-title"
       label="Meninggal"
     >
       <div class="flex flex-row color-confirmation-meninggal text-center mt-3 font-bold">
