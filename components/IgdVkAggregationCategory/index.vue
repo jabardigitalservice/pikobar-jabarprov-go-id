@@ -11,7 +11,7 @@
     <div :class="{hidden: !isLoading }" class="mx-1">
       <div class="md:flex md:flex-row flex-wrap'">
         <div class="md:flex-1 mx-3 my-2">
-          <div class=" rounded-lg p-6 shadow-lg bg-white">
+          <div class=" rounded-lg p-6 bg-white border border-solid border-gray-300">
             <ContentLoader
               :speed="2"
               width="400"

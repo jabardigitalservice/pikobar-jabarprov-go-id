@@ -1,6 +1,6 @@
 <template>
   <div class="md:flex-1 mx-2 my-3">
-    <div class=" rounded-lg p-6 shadow-lg bg-white relative">
+    <div class=" rounded-lg p-6 bg-white relative border border-solid border-gray-300">
       <ul class="tooltiptext list-inside text-xs list-disc w-3/4" :class="{['tooltip-' + bor.id]: true, ['visible']: bor.id === activeTooltip, ['invisible']: bor.id !== activeTooltip}">
         <li v-for="item in bor.tooltip" :key="item">
           {{ item }}

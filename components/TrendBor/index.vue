@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="!isLoading ? '' : 'hidden'">
-      <div class="my-3 bg-white rounded-lg shadow-lg">
+      <div class="my-3 bg-white rounded-lg border border-solid border-gray-300">
         <div class="flex flex-col lg:flex-row border-b-2 p-4">
           <h4 class="font-bold text-lg">
             Tren Keterisian Tempat Tidur (BOR)
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div :class="!isLoading ? 'hidden': ''">
-      <div class="rounded-lg p-6 shadow-lg bg-white">
+      <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
         <ContentLoader
           :speed="2"
           width="400"
