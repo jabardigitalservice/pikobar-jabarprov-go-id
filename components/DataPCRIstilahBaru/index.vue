@@ -1,5 +1,5 @@
 <template>
-  <div class="pcr-main p-5 rounded-lg shadow-md h-full">
+  <div class="pcr-main p-5 rounded-lg h-full relative">
     <div :class="isLoading ? 'block' : 'hidden'">
       <ContentLoader
         :speed="2"
@@ -52,56 +52,56 @@
       </ContentLoader>
     </div>
     <div :class="!isLoading ? 'block' : 'hidden'">
-      <b class="text-lg">Tes PCR (Spesimen)</b>
-      <div class="flex flex-col text-white text-center mt-5">
-        <div class="w-full color-title">
-          <div class="text-3xl">
+      <b class="text-lg mb-4 inline-block">Pengujian PCR (Spesimen)</b>
+      <div class="w-full h-auto text-sm mr-10 mt-5 row flex-row lg:flex xl:flex">
+        <div class="w-full pl-2 h-auto text-left">
+          <div class="text-4xl font-extrabold">
             {{ formatNumber(data.pcr.total) }}
           </div>
-          <span class="text-md text-blue-white">Total Spesimen</span>
-        </div>
-        <div class="w-full flex mt-5">
-          <div class="w-1/3">
-            <div>
-              <span class="text-2xl">
-                {{ formatNumber(data.pcr.positif) }}
-              </span>
-              <span class="text-sm">
-                ({{ formatNumberPercent(data.pcr_persentase_by_total.positif) }}%)
-              </span>
-            </div>
-            <span class="text-sm text-blue-white">Positif</span>
-          </div>
-          <div class="w-1/3">
-            <div>
-              <span class="text-2xl">
-                {{ formatNumber(data.pcr.negatif) }}
-              </span>
-              <span class="text-sm">
-                ({{ formatNumberPercent(data.pcr_persentase_by_total.negatif) }}%)
-              </span>
-            </div>
-            <span class="text-sm text-blue-white">Negatif</span>
-          </div>
-          <div class="w-1/3">
-            <div>
-              <span class="text-2xl">
-                {{ formatNumber(data.pcr.invalid) }}
-              </span>
-              <span class="text-sm">
-                ({{ formatNumberPercent(data.pcr_persentase_by_total.invalid) }}%)
-              </span>
-            </div>
-            <span class="text-sm text-blue-white">Inkonklusif</span>
+          <div class="text-sm">
+            Total Spesimen
           </div>
         </div>
-        <div class="text-sm text-blue-white text-left mt-5">
+      </div>
+      <div class="w-full h-auto text-sm mr-10 mt-5 row flex flex-col sm:flex-row">
+        <div class="w-full sm:w-1/2 md:w-1/3 mb-3 sm:mb-0 pl-2 h-auto text-left">
+          <div class="mb-1">
+            <span class="text-2xl font-extrabold">{{ formatNumber(data.pcr.positif) }}</span>
+            <span class="text-sm">({{ formatNumberPercent(data.pcr_persentase_by_total.positif) }}%)</span>
+          </div>
+          <div class="text-sm">
+            Positif
+          </div>
+        </div>
+        <div class="w-full sm:w-1/2 md:w-1/3 mb-3 sm:mb-0 pl-2 h-auto text-left">
+          <div class="mb-1">
+            <span class="text-2xl font-extrabold">{{ formatNumber(data.pcr.negatif) }}</span>
+            <span class="text-sm">({{ formatNumberPercent(data.pcr_persentase_by_total.negatif) }}%)</span>
+          </div>
+          <div class="text-sm">
+            Negatif
+          </div>
+        </div>
+        <div class="w-full sm:w-1/2 md:w-1/3 pl-2 h-auto text-left">
+          <div class="mb-1">
+            <span class="text-2xl font-extrabold">{{ formatNumber(data.pcr.invalid) }}</span>
+            <span class="text-sm">({{ formatNumberPercent(data.pcr_persentase_by_total.invalid) }}%)</span>
+          </div>
+          <div class="text-sm">
+            Invalid
+          </div>
+        </div>
+      </div>
+      <div class="w-full text-sm mr-10 mt-5 row flex flex-col sm:flex-row">
+        <div class="w-full pl-2 text-left text-sm">
           Disclaimer :<br>
-          <span>Jumlah tes PCR yang ditampilkan bersumber dari database Labkes Jabar dan Allrecord TC-19. Angka belum sepenuhnya merefleksikan jumlah spesimen di Jawa Barat secara real-time.</span>
-          <br>
-          <br>
-          <span>Update Terakhir: {{ data.pcr.tanggal }}</span>
+          <span>Per tanggal 7 Februari 2022, telah dilakukan perubahan sumber data jumlah spesimen tes PCR yang ditampilkan. Saat ini, data jumlah spesimen telah bersumber dari berbagai laboratorium yang telah difilitrasi dan tercantum pada New All Record (NAR). Walaupun demikian, angka belum sepenuhnya merefleksikan jumlah total spesimen di Jawa Barat secara real-time.</span>
         </div>
+      </div>
+      <div class="mt-5 text-sm absolute bottom-0 left-0 pl-5 pb-5">
+        <span>
+          Update Terakhir: {{ data.pcr.tanggal }}
+        </span>
       </div>
     </div>
   </div>
@@ -209,6 +209,7 @@ export default {
   }
   .pcr-main {
     background-color: #41A5DE;
+    padding-bottom: 80px;
   }
   /* Tooltip container */
   .tooltip {

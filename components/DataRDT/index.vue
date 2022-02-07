@@ -1,5 +1,5 @@
 <template>
-  <div class="rdt-antigen p-5 rounded-lg shadow-md h-full">
+  <div class="rdt-antigen p-5 rounded-lg h-full relative">
     <div :class="isLoading ? 'block' : 'hidden'">
       <ContentLoader
         :speed="2"
@@ -52,21 +52,14 @@
       </ContentLoader>
     </div>
     <div :class="!isLoading ? 'block' : 'hidden'">
-      <b class="text-lg">Rapid Diagnostic Test (RDT) Antigen</b>
-      <div class="w-full h-auto text-sm mr-10 mt-2">
-        Rapid Test Antigen merupakan tes diagnostik cepat untuk mengidentifikasi orang yang terinfeksi virus Covid-19 dengan mendeteksi adanya materi genetik atau protein spesifik dari virus Covid-19 dalam tubuh seseorang.
-      </div>
+      <b class="text-lg mb-4 inline-block">Pengujian Antigen</b>
       <div class="w-full h-auto text-sm mr-10 mt-5 row flex-row lg:flex xl:flex">
         <div class="w-full pl-2 h-auto text-left">
           <div class="text-4xl font-extrabold">
             {{ Number(data.antigen.total).toLocaleString('id-ID') }}
           </div>
           <div class="text-sm">
-            Jumlah RDT
-            <div class="tooltip pl-1">
-              &#9432;
-              <span class="tooltiptext text-xs">Jumlah Rapid Diagnostic Test (RDT) Antigen yang telah dilakukan</span>
-            </div>
+            Total Spesimen
           </div>
         </div>
       </div>
@@ -90,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-5 text-sm">
+      <div class="mt-5 text-sm pl-2 absolute bottom-0 left-0 pl-5 pb-5">
         <span>
           Update Terakhir: {{ data.antigen.tanggal }}
         </span>
@@ -186,6 +179,7 @@ export default {
 <style scoped>
   .rdt-antigen {
     background-color: #e2a000;
+    padding-bottom: 80px;
   }
   /* Tooltip container */
   .tooltip {

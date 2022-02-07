@@ -10,19 +10,9 @@
     <section class="m-4 mb-8 md:m-5">
       <DataSummaryIstilahBaru />
     </section>
-    <section class="m-4 mb-8 md:m-8">
-      <div class="grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-2 gap-5">
-        <div class="text-white h-full">
-          <DataRDT />
-        </div>
-        <div class="text-white h-full">
-          <DataPCRIstilahBaru />
-        </div>
-      </div>
-    </section>
     <section class="m-4 md:m-8">
       <div class="flex flex-col lg:flex-row lg:items-stretch">
-        <div class="w-full mb-6 lg:mb-0 bg-white rounded-lg mb-8 shadow-lg">
+        <div class="w-full mb-6 lg:mb-0 bg-white rounded-lg mb-8 border border-solid border-gray-300">
           <div>
             <h3 class="p-5 text-lg md:text">
               <b>Peta Kasus Covid-19 di Jawa Barat</b>
@@ -41,7 +31,7 @@
           <a
             href="/distribution-case"
           >
-            <div class="banner bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 bg-orange-600 rounded-lg shadow-md relative" style="height: 320px;background-color: #FEC52E;">
+            <div class="banner bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 bg-orange-600 rounded-lg relative" style="height: 320px;background-color: #FEC52E;">
               <div class="float-left py-6 px-10">
                 <div class="w-text xl:text-2xl font-bold">
                   Ketahui informasi lebih lengkap mengenai <br>
@@ -59,7 +49,7 @@
           <a
             href="/distribution-healthcare"
           >
-            <div class="banner-healthcare bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 rounded-lg shadow-md relative" style="height: 320px;background-color: #69b85d;">
+            <div class="banner-healthcare bg-no-repeat bg-right-bottom m-4 mb-8 md:m-8 h-48 rounded-lg relative" style="height: 320px;background-color: #69b85d;">
               <div class="float-left py-6 px-10">
                 <div class="w-text xl:text-2xl font-bold">
                   Keterisian Tempat Tidur (BOR) Berdasarkan Gejala dan Ruang Perawatan di Rumah Sakit <br><br>
@@ -85,6 +75,17 @@
       </div>
     </section>
 
+    <section class="m-4 mb-8 md:m-8">
+      <div class="grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="text-white h-full">
+          <DataRDT />
+        </div>
+        <div class="text-white h-full">
+          <DataPCRIstilahBaru />
+        </div>
+      </div>
+    </section>
+
     <section class="m-4 md:m-8 flex">
       <a class="link-hover bg-white rounded-lg overflow-hidden shadow-md w-1/2 mr-2" href="/table-case" target="_blank">
         <div class="flex" style="padding: 40px;">
@@ -107,22 +108,20 @@
         </div>
       </a>
     </section>
-    <section class="m-4 md:m-8 flex flex-col xl:flex-row rounded-lg overflow-hidden shadow-md" style="background:#e6e6e6">
-      <div class="w-full xl:w-1/2 m-1 p-5">
-        <b>Disclaimer :</b>
-        <p>
-          Data Suspek, Probable dan Kontak Erat diterima Pikobar berdasarkan laporan harian Dinas Kesehatan Kab/Kota per 5 Agustus 2020,
-          sehingga terlihat penumpukan kasus pada Chart Harian dan Kumulatif untuk Suspek, Probable, dan Kontak Erat pada tanggal tersebut.
-        </p>
-      </div>
-      <div class="w-full xl:w-1/2 m-1 p-5">
-        <b>&#9432; Sumber Data :</b>
-        <ul style="list-style: inherit; margin-left: 20px;">
-          <li>Konfirmasi (Total, Dalam Perawatan, Sembuh, Meninggal): Laporan Harian Kemenkes</li>
-          <li>Suspek (Total, Dalam Perawatan, Discarded): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
-          <li>Kontak Erat (Total, Karantina, Discarded): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
-          <li>Probable (Total, Dalam Perawatan, Sembuh, Meninggal): Laporan Harian Dinkes Kab/Kota di Jawa Barat</li>
-        </ul>
+    <section class="m-4 md:m-8 flex flex-col xl:flex-row rounded-lg overflow-hidden bg-blue-100 border border-solid border-blue-700">
+      <div class="w-full m-1 p-5">
+        <div class="flex items-center">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="inline-block mr-1">
+            <path d="M10 2.00098C8.41775 2.00098 6.87103 2.47017 5.55544 3.34922C4.23985 4.22827 3.21447 5.4777 2.60897 6.93951C2.00347 8.40132 1.84504 10.0098 2.15372 11.5617C2.4624 13.1135 3.22433 14.539 4.34315 15.6578C5.46197 16.7766 6.88743 17.5386 8.43928 17.8473C9.99113 18.1559 11.5997 17.9975 13.0615 17.392C14.5233 16.7865 15.7727 15.7611 16.6518 14.4455C17.5308 13.1299 18 11.5832 18 10.001C18 8.9504 17.7931 7.91011 17.391 6.93951C16.989 5.9689 16.3997 5.08699 15.6569 4.34412C14.914 3.60125 14.0321 3.01198 13.0615 2.60994C12.0909 2.2079 11.0506 2.00098 10 2.00098ZM10.8 13.201C10.8 13.4131 10.7157 13.6166 10.5657 13.7667C10.4157 13.9167 10.2122 14.001 10 14.001C9.78783 14.001 9.58435 13.9167 9.43432 13.7667C9.28429 13.6166 9.2 13.4131 9.2 13.201V9.20097C9.2 8.9888 9.28429 8.78532 9.43432 8.63529C9.58435 8.48526 9.78783 8.40097 10 8.40097C10.2122 8.40097 10.4157 8.48526 10.5657 8.63529C10.7157 8.78532 10.8 8.9888 10.8 9.20097V13.201ZM10 7.60098C9.84178 7.60098 9.6871 7.55406 9.55555 7.46615C9.42399 7.37825 9.32145 7.2533 9.2609 7.10712C9.20035 6.96094 9.18451 6.80009 9.21537 6.6449C9.24624 6.48972 9.32243 6.34717 9.43432 6.23529C9.5462 6.12341 9.68874 6.04722 9.84393 6.01635C9.99911 5.98548 10.16 6.00132 10.3061 6.06187C10.4523 6.12242 10.5773 6.22496 10.6652 6.35652C10.7531 6.48808 10.8 6.64275 10.8 6.80098C10.8 7.01315 10.7157 7.21663 10.5657 7.36666C10.4157 7.51669 10.2122 7.60098 10 7.60098Z" fill="#1565C0"/>
+          </svg>
+          <span>Sumber Data Konfirmasi (Total, Dalam Perawatan, Sembuh, Meninggal): <b>Laporan Harian Kemenkes.</b></span>
+        </div>
       </div>
     </section>
   </div>
@@ -152,7 +151,7 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import DataSummaryIstilahBaru from '~/components/_pages/index/DataSummaryIstilahBaru'
-import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faFirstAid, faBug, faMap, faCalendarMinus, faArrowRight, faChevronRight, faInfo, faInfoCircle, faCircle, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { formatDateShort } from '~/lib/date'
 import { analytics } from '~/lib/firebase'
 

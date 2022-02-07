@@ -18,7 +18,7 @@
     </div>
 
     <section>
-      <div class="bg-white overflow-hidden rounded-lg shadow-md">
+      <div class="bg-white overflow-hidden rounded-lg border border-solid border-gray-300">
         <div class="md:flex">
           <h4 class="p-5 text-xl md:w-1/2">
             <b>{{ judul }}</b>

@@ -7,7 +7,7 @@ export default {
     const staticClass = context.data.staticClass || ''
     const staticStyle = context.data.staticStyle || {}
     const containerProps = {
-      class: ['p-5 rounded-lg border border-solid border-gray-300 bg-white shadow-md', staticClass],
+      class: ['p-5 rounded-lg border border-solid border-gray-300 bg-white', staticClass],
       style: staticStyle
     }
     return (
