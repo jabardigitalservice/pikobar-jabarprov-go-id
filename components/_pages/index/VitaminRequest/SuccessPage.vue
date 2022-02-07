@@ -1,8 +1,10 @@
 <template>
   <div class="success-page container md:px-20 md:py-10">
     <img src="~assets/save-success.png" width="350px" height="216px">
-    <span class="success-page__title">Data Berhasil Disimpan!</span>
-    <span class="success-page__title">Hatur Nuhun</span>
+    <div v-show="!consultation">
+      <span class="success-page__title">Data Berhasil Disimpan!</span>
+      <span class="success-page__title">Hatur Nuhun</span>
+    </div>
     <span class="success-page__name-label">{{ receipt.name || '' }}</span>
     <p class="success-page__info lg:w-5/12">
       {{ messageInfo }}
@@ -25,6 +27,7 @@
     >
       <div class="flex flex-row">
         <button
+          v-show="!consultation"
           class="success-page__button mr-2 bg-brand-green hover:bg-brand-green-light w-full"
           @click="onReturn"
         >
