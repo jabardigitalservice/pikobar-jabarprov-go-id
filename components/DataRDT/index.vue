@@ -83,6 +83,12 @@
           </div>
         </div>
       </div>
+      <div class="w-full text-sm mr-10 mt-5 row flex flex-col sm:flex-row">
+        <div class="w-full pl-2 text-left text-sm">
+          Disclaimer :<br>
+          <span>Jumlah pengujian Antigen yang ditampilkan bersumber dari data Kementerian Kesehatan National All Record (NAR). Angka yang ditampilkan tidak menunjukkan jumlah pengujian spesimen di Jawa Barat secara real time.</span>
+        </div>
+      </div>
       <div class="mt-5 text-sm pl-2 absolute bottom-0 left-0 pl-5 pb-5">
         <span>
           Update Terakhir: {{ data.antigen.tanggal }}

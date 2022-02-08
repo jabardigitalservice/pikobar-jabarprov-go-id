@@ -88,14 +88,14 @@
             <span class="text-sm">({{ formatNumberPercent(data.pcr_persentase_by_total.invalid) }}%)</span>
           </div>
           <div class="text-sm">
-            Invalid
+            Inkonklusif
           </div>
         </div>
       </div>
       <div class="w-full text-sm mr-10 mt-5 row flex flex-col sm:flex-row">
         <div class="w-full pl-2 text-left text-sm">
           Disclaimer :<br>
-          <span>Per tanggal 7 Februari 2022, telah dilakukan perubahan sumber data jumlah spesimen tes PCR yang ditampilkan. Saat ini, data jumlah spesimen telah bersumber dari berbagai laboratorium yang telah difilitrasi dan tercantum pada New All Record (NAR). Walaupun demikian, angka belum sepenuhnya merefleksikan jumlah total spesimen di Jawa Barat secara real-time.</span>
+          <span>Jumlah pengujian PCR yang ditampilkan bersumber dari data Kementerian Kesehatan National All Record (NAR). Angka yang ditampilkan tidak menunjukkan jumlah pengujian spesimen di Jawa Barat secara real time.</span>
         </div>
       </div>
       <div class="mt-5 text-sm absolute bottom-0 left-0 pl-5 pb-5">
