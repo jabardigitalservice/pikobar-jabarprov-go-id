@@ -12,7 +12,11 @@ export const mutations = {
 
 export const actions = {
   async getTracking ({ commit }, params) {
-    const result = await getTrackingResult(params)
-    commit('setResult', result.status ? result : {})
+    try {
+      const result = await getTrackingResult(params)
+      commit('setResult', result.status ? result : {})
+    } catch (e) {
+      commit('setResult', {})
+    }
   }
 }
