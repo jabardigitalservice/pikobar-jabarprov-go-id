@@ -67,7 +67,7 @@ export default [
     class: 'md:block md:w-8/12'
   },
   {
-    label: 'Kota/Kabupaten',
+    label: 'Kota/Kabupaten Tempat Tinggal Saat Ini',
     required: true,
     model: 'city_id',
     name: 'Kota/Kabupaten',
@@ -76,7 +76,7 @@ export default [
     type: 'select'
   },
   {
-    label: 'Kecamatan',
+    label: 'Kecamatan Tempat Tinggal Saat Ini',
     required: true,
     model: 'district_id',
     name: 'Kecamatan',
@@ -85,7 +85,7 @@ export default [
     type: 'select'
   },
   {
-    label: 'Kelurahan',
+    label: 'Kelurahan Tempat Tinggal Saat Ini',
     required: true,
     model: 'subdistrict_id',
     name: 'Kelurahan',
@@ -94,7 +94,7 @@ export default [
     type: 'select'
   },
   {
-    label: 'RT',
+    label: 'RT Tempat Tinggal Saat Ini',
     required: true,
     model: 'rt',
     name: 'RT',
@@ -103,7 +103,7 @@ export default [
     type: 'select'
   },
   {
-    label: 'RW',
+    label: 'RW Tempat Tinggal Saat Ini',
     required: true,
     model: 'rw',
     name: 'RW',
