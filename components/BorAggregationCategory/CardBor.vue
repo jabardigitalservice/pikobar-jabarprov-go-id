@@ -1,6 +1,6 @@
 <template>
-  <div class="md:flex-1 mx-2 my-3">
-    <div class=" rounded-lg p-6 shadow-lg bg-white relative">
+  <div>
+    <div class=" rounded-lg p-6 bg-white relative border border-solid border-gray-300">
       <ul class="tooltiptext list-inside text-xs list-disc w-3/4" :class="{['tooltip-' + bor.id]: true, ['visible']: bor.id === activeTooltip, ['invisible']: bor.id !== activeTooltip}">
         <li v-for="item in bor.tooltip" :key="item">
           {{ item }}
@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-no-wrap">
+      <div class="charts-container flex flex-col items-center sm:flex-wrap md:flex-row md:flex-nowrap justify-center md:px-0">
         <div class="set-size pie-wrapper style-2">
           <div class="label">
             <div class="text-3xl">
@@ -39,7 +39,7 @@
           </div>
           <div class="shadow" />
         </div>
-        <div class="bed my-auto mx-auto text-center sm:text-left flex mt-6">
+        <div class="bed mx-auto text-center sm:text-left flex">
           <FontAwesomeIcon class="inline-block mr-0 mr-5  sm:mr-5 cursor-pointer text-gray-500" :icon="icons.faBed" />
           <div>
             <div class="text-3xl font-bold">

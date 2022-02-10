@@ -1,6 +1,6 @@
 <template>
-  <div class="md:flex md:flex-row flex-no-wrap mx-1">
-    <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
+  <div class="grid grid-rows-4 lg:grid-rows-2 xl:grid-rows-1 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
+    <div class="total-bor rounded-lg p-6 text-white border border-solid border-gray-300">
       <ContentLoader
         :speed="2"
         width="400"
@@ -34,7 +34,7 @@
         />
       </ContentLoader>
     </div>
-    <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+    <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
       <ContentLoader
         :speed="2"
         width="400"
@@ -68,7 +68,7 @@
         />
       </ContentLoader>
     </div>
-    <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+    <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
       <ContentLoader
         :speed="2"
         width="400"
@@ -102,7 +102,7 @@
         />
       </ContentLoader>
     </div>
-    <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+    <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
       <ContentLoader
         :speed="2"
         width="400"

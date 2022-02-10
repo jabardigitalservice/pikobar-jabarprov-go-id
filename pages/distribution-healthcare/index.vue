@@ -45,10 +45,10 @@
           </div>
         </div>
       </div>
-      <div class="m-1 md:m-4">
+      <div class="m-4 md:m-8 mb-8">
         <BorAggregation />
       </div>
-      <div class="m-1 md:m-4">
+      <div class="m-4 md:m-8 mb-8">
         <BorAggregationCategory />
       </div>
       <div class="m-5 md:m-8">

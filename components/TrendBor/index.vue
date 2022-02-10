@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="!isLoading ? '' : 'hidden'">
-      <div class="my-3 bg-white rounded-lg shadow-lg">
+      <div class="my-3 bg-white rounded-lg border border-solid border-gray-300">
         <div class="flex flex-col lg:flex-row border-b-2 p-4">
           <h4 class="font-bold text-lg">
             Tren Keterisian Tempat Tidur (BOR)
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div :class="!isLoading ? 'hidden': ''">
-      <div class="rounded-lg p-6 shadow-lg bg-white">
+      <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
         <ContentLoader
           :speed="2"
           width="400"
@@ -154,28 +154,41 @@ export default {
             }
           },
           seminggu () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const currentDate = new Date()
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 8, 0, 0)
+            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59)
             return {
               label: '1 Minggu Terakhir',
               active: false,
               dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
+                start: startDate,
+                end: endDate
               }
             }
           },
           sebulan () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const currentDate = new Date()
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 31, 0, 0)
+            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59)
             return {
               label: '1 Bulan Terakhir',
               active: false,
               dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
+                start: startDate,
+                end: endDate
+              }
+            }
+          },
+          triwulan () {
+            const currentDate = new Date()
+            const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 90, 0, 0)
+            const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59)
+            return {
+              label: '3 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: startDate,
+                end: endDate
               }
             }
           }
@@ -282,6 +295,10 @@ export default {
     }
   },
   mounted () {
+    const currentDate = new Date()
+
+    this.activeDate.start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 90, 0, 0)
+    this.activeDate.end = new Date()
   },
   methods: {
     setSelectedZone () {
@@ -378,7 +395,7 @@ export default {
         const startTime = this.activeDate.start.getTime()
         const endTime = this.activeDate.end.getTime()
         if (dateTime >= startTime && dateTime <= endTime) {
-          const label = moment(elem.tanggal).format('DD/MM')
+          const label = moment(elem.tanggal).locale('id').format('D MMM')
           chartData.labels.push(label)
           chartData.datasets[0].data.push(elem.hijau_persentase)
           chartData.datasets[1].data.push(elem.kuning_persentase)

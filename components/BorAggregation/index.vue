@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div :class="!isLoading ? 'md:flex md:flex-row flex-no-wrap mx-2' : 'hidden'">
-      <div class="total-bor md:flex-1 mx-2 my-3 rounded-lg p-6 shadow-lg text-white">
+    <div :class="!isLoading ? 'grid grid-rows-4 lg:grid-rows-2 xl:grid-rows-1 grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5' : 'hidden'">
+      <div class="total-bor rounded-lg p-6 text-white">
         <h4 class="text-center font-bold">
           TOTAL BOR
         </h4>
@@ -22,7 +22,7 @@
           <span class="text-sm">{{ formatThousandSeparator(dataIsolateTotal.total_terisi) }} dari {{ formatThousandSeparator(dataIsolateTotal.total_tersedia) }} Tempat Tidur Terisi</span>
         </div>
       </div>
-      <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+      <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
         <h4 class="text-center font-bold">
           TOTAL RS
         </h4>
@@ -33,7 +33,7 @@
           <span class="text-sm">Total RS di Jawa Barat</span>
         </div>
       </div>
-      <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+      <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
         <h4 class="text-center font-bold">
           RS MELAYANI COVID-19
         </h4>
@@ -44,7 +44,7 @@
           <span class="text-sm">{{ dataIsolateTotal.total_rs_rujukan_persentase }}% dari Total RS</span>
         </div>
       </div>
-      <div class="md:flex-1 mx-2 my-3 rounded-lg p-6 bg-white shadow-lg">
+      <div class="rounded-lg p-6 bg-white border border-solid border-gray-300">
         <h4 class="text-center font-bold">
           RS TIDAK MELAYANI COVID-19
         </h4>

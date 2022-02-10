@@ -1,297 +1,145 @@
 <template>
-  <div class="container mx-auto">
-    <div>
-      <section class="flex flex-row flex-wrap">
-        <!-- Terkonfirmasi -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar || isLoadingNasional"
-          :is-main="true"
-          class="mb-8 border border-solid digital-signage"
-          style="background: #2C347C;"
-          label="Total Terkonfirmasi"
-        >
-          <div class="flex flex-row text-white text-center mt-3 font-bold">
-            <div class="w-1/2">
-              <b class="text-md">Jawa Barat</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.confirmation_total) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-white px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(dataIstilahBaru.confirmation_total_pertumbuhan)" />
-                </span>
-                {{ dataIstilahBaru.confirmation_total_pertumbuhan }}
-              </div>
-            </div>
-            <div class="w-1/2">
-              <b class="text-md">Indonesia</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataNational.update.total.jumlah_positif) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-white px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_positif)" />
-                </span>
-                {{ dataNational.update.penambahan.jumlah_positif }}
-              </div>
-            </div>
+  <div class="grid grid-rows-4 md:grid-rows-2 lg:grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <!-- Terkonfirmasi -->
+    <CounterCardLoader
+      :is-pending="isLoadingJabar || isLoadingNasional"
+      :is-main="true"
+      class="border border-solid"
+      style="background: #2C347C;"
+      label="Total Terkonfirmasi"
+    >
+      <div class="flex flex-row text-white text-center mt-3 font-bold">
+        <div class="w-1/2">
+          <b class="text-md">Jawa Barat</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataIstilahBaru.confirmation_total) }}
           </div>
-        </CounterCardLoader>
+          <div>
+            <span class="rounded-full bg-white px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(dataIstilahBaru.confirmation_total_pertumbuhan)" />
+            </span>
+            {{ dataIstilahBaru.confirmation_total_pertumbuhan }}
+          </div>
+        </div>
+        <div class="w-1/2">
+          <b class="text-md">Indonesia</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataNational.update.total.jumlah_positif) }}
+          </div>
+          <div>
+            <span class="rounded-full bg-white px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer" style="color:#2C347C" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_positif)" />
+            </span>
+            {{ dataNational.update.penambahan.jumlah_positif }}
+          </div>
+        </div>
+      </div>
+    </CounterCardLoader>
 
-        <!-- Isolasi -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar || isLoadingNasional"
-          :is-main="false"
-          class="mb-8 border border-solid digital-signage bg-white text-title"
-          label="Isolasi/Dalam Perawatan"
-        >
-          <div class="flex flex-row color-confirmation-diisolasi text-center mt-3 font-bold">
-            <div class="w-1/2">
-              <b class="text-md text-black">Jawa Barat</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.confirmation_diisolasi) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-confirmation-diisolasi px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataIstilahBaru.confirmation_diisolasi_pertumbuhan)" />
-                </span>
-                {{ dataIstilahBaru.confirmation_diisolasi_pertumbuhan }}
-              </div>
-            </div>
-            <div class="w-1/2">
-              <b class="text-md  text-black">Indonesia</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataNational.update.total.jumlah_dirawat) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-confirmation-diisolasi px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_dirawat)" />
-                </span>
-                {{ dataNational.update.penambahan.jumlah_dirawat }}
-              </div>
-            </div>
+    <!-- Isolasi -->
+    <CounterCardLoader
+      :is-pending="isLoadingJabar || isLoadingNasional"
+      :is-main="false"
+      class="border border-solid bg-white text-title"
+      label="Isolasi/Dalam Perawatan"
+    >
+      <div class="flex flex-row color-confirmation-diisolasi text-center mt-3 font-bold">
+        <div class="w-1/2">
+          <b class="text-md text-black">Jawa Barat</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataIstilahBaru.confirmation_diisolasi) }}
           </div>
-        </CounterCardLoader>
+          <div>
+            <span class="rounded-full bg-confirmation-diisolasi px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataIstilahBaru.confirmation_diisolasi_pertumbuhan)" />
+            </span>
+            {{ dataIstilahBaru.confirmation_diisolasi_pertumbuhan }}
+          </div>
+        </div>
+        <div class="w-1/2">
+          <b class="text-md  text-black">Indonesia</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataNational.update.total.jumlah_dirawat) }}
+          </div>
+          <div>
+            <span class="rounded-full bg-confirmation-diisolasi px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_dirawat)" />
+            </span>
+            {{ dataNational.update.penambahan.jumlah_dirawat }}
+          </div>
+        </div>
+      </div>
+    </CounterCardLoader>
 
-        <!-- Selesai -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar || isLoadingNasional"
-          :is-main="false"
-          class="mb-8 border border-solid digital-signage bg-white text-title"
-          label="Selesai Isolasi/Sembuh"
-        >
-          <div class="flex flex-row color-confirmation-selesai text-center mt-3 font-bold">
-            <div class="w-1/2">
-              <b class="text-md text-black">Jawa Barat</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.confirmation_selesai) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-confirmation-selesai px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataIstilahBaru.confirmation_selesai_pertumbuhan)" />
-                </span>
-                {{ dataIstilahBaru.confirmation_selesai_pertumbuhan }}
-              </div>
-            </div>
-            <div class="w-1/2">
-              <b class="text-md  text-black">Indonesia</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataNational.update.total.jumlah_sembuh) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-confirmation-selesai px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_sembuh)" />
-                </span>
-                {{ dataNational.update.penambahan.jumlah_sembuh }}
-              </div>
-            </div>
+    <!-- Selesai -->
+    <CounterCardLoader
+      :is-pending="isLoadingJabar || isLoadingNasional"
+      :is-main="false"
+      class="border border-solid bg-white text-title"
+      label="Selesai Isolasi/Sembuh"
+    >
+      <div class="flex flex-row color-confirmation-selesai text-center mt-3 font-bold">
+        <div class="w-1/2">
+          <b class="text-md text-black">Jawa Barat</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataIstilahBaru.confirmation_selesai) }}
           </div>
-        </CounterCardLoader>
+          <div>
+            <span class="rounded-full bg-confirmation-selesai px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataIstilahBaru.confirmation_selesai_pertumbuhan)" />
+            </span>
+            {{ dataIstilahBaru.confirmation_selesai_pertumbuhan }}
+          </div>
+        </div>
+        <div class="w-1/2">
+          <b class="text-md  text-black">Indonesia</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataNational.update.total.jumlah_sembuh) }}
+          </div>
+          <div>
+            <span class="rounded-full bg-confirmation-selesai px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_sembuh)" />
+            </span>
+            {{ dataNational.update.penambahan.jumlah_sembuh }}
+          </div>
+        </div>
+      </div>
+    </CounterCardLoader>
 
-        <!-- Meninggal -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar || isLoadingNasional"
-          :is-main="false"
-          class="mb-8 border border-solid digital-signage bg-white text-title"
-          label="Meninggal"
-        >
-          <div class="flex flex-row color-confirmation-meninggal text-center mt-3 font-bold">
-            <div class="w-1/2">
-              <b class="text-md text-black">Jawa Barat</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.confirmation_meninggal) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-confirmation-meninggal px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataIstilahBaru.confirmation_meninggal_pertumbuhan)" />
-                </span>
-                {{ dataIstilahBaru.confirmation_meninggal_pertumbuhan }}
-              </div>
-            </div>
-            <div class="w-1/2">
-              <b class="text-md  text-black">Indonesia</b>
-              <div class="text-3xl">
-                {{ formatNumber(dataNational.update.total.jumlah_meninggal) }}
-              </div>
-              <div>
-                <span class="rounded-full bg-confirmation-meninggal px-custom-1 mr-1" style="">
-                  <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_meninggal)" />
-                </span>
-                {{ dataNational.update.penambahan.jumlah_meninggal }}
-              </div>
-            </div>
+    <!-- Meninggal -->
+    <CounterCardLoader
+      :is-pending="isLoadingJabar || isLoadingNasional"
+      :is-main="false"
+      class="border border-solid bg-white text-title"
+      label="Meninggal"
+    >
+      <div class="flex flex-row color-confirmation-meninggal text-center mt-3 font-bold">
+        <div class="w-1/2">
+          <b class="text-md text-black">Jawa Barat</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataIstilahBaru.confirmation_meninggal) }}
           </div>
-        </CounterCardLoader>
-      </section>
-
-      <section class="flex flex-col md:flex-row flex-wrap">
-        <!-- Kontak Erat -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar"
-          :is-main="false"
-          :is-tooltip-closecontact="true"
-          :is-tooltip-suspect="false"
-          :is-tooltip-probable="false"
-          class="flex-1 border border-solid bg-white text-title md:mx-2 mb-8"
-          label="Kontak Erat"
-        >
-          <div class="flex flex-col text-white text-center mt-3 font-bold">
-            <div class="w-full color-title">
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.closecontact_total) }}
-              </div>
-              <span class="text-md">Total Kontak Erat</span>
-            </div>
-            <div class="w-full flex mt-3">
-              <div class="w-1/2 color-closecontact-dikarantina">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.closecontact_dikarantina) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.closecontact_dikarantina / dataIstilahBaru.closecontact_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Masih Dikarantina</span>
-              </div>
-              <div class="w-1/2 color-closecontact-discarded">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.closecontact_discarded) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.closecontact_discarded / dataIstilahBaru.closecontact_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Discarded</span>
-                <div class="tooltip pl-1">
-                  &#9432;
-                  <span class="tooltiptext text-xs">Kasus dikatakan discarded apabila orang dengan status kontak erat telah menyelesaikan masa karantina selama 14 hari.</span>
-                </div>
-              </div>
-            </div>
+          <div>
+            <span class="rounded-full bg-confirmation-meninggal px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataIstilahBaru.confirmation_meninggal_pertumbuhan)" />
+            </span>
+            {{ dataIstilahBaru.confirmation_meninggal_pertumbuhan }}
           </div>
-        </CounterCardLoader>
-
-        <!-- Suspect -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar"
-          :is-main="false"
-          :is-tooltip-closecontact="false"
-          :is-tooltip-suspect="true"
-          :is-tooltip-probable="false"
-          class="flex-1 mb-8 border border-solid bg-white text-title md:mx-2"
-          label="Suspek"
-        >
-          <div class="flex flex-col text-white text-center mt-3 font-bold">
-            <div class="w-full color-title">
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.suspect_total) }}
-              </div>
-              <span class="text-md">Total Suspek</span>
-            </div>
-            <div class="w-full flex mt-3">
-              <div class="w-1/2 color-suspect-diisolasi">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.suspect_diisolasi) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.suspect_diisolasi / dataIstilahBaru.suspect_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Isolasi/Dalam Perawatan</span>
-              </div>
-              <div class="w-1/2 color-suspect-discarded">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.suspect_discarded) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.suspect_discarded / dataIstilahBaru.suspect_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Discarded</span>
-                <div class="tooltip pl-1">
-                  &#9432;
-                  <span class="tooltiptext text-xs">Kasus dikatakan discarded apabila orang dengan status kasus suspek memiliki hasil pemeriksaan RT-PCR 2 kali negatif selama 2 hari berturut-turut dengan selang waktu > 24 jam.</span>
-                </div>
-              </div>
-              <!-- <div class="w-1/3 color-suspect-meninggal">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.suspect_meninggal) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.suspect_meninggal / dataIstilahBaru.suspect_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Meninggal</span>
-              </div> -->
-            </div>
+        </div>
+        <div class="w-1/2">
+          <b class="text-md  text-black">Indonesia</b>
+          <div class="text-2xl">
+            {{ formatNumber(dataNational.update.total.jumlah_meninggal) }}
           </div>
-        </CounterCardLoader>
-
-        <!-- Probable -->
-        <CounterCardLoader
-          :is-pending="isLoadingJabar"
-          :is-main="false"
-          :is-tooltip-closecontact="false"
-          :is-tooltip-suspect="false"
-          :is-tooltip-probable="true"
-          class="flex-1 mb-8 border border-solid bg-white text-title md:mx-2"
-          label="Probable"
-        >
-          <div class="flex flex-col text-white text-center mt-3 font-bold">
-            <div class="w-full color-title">
-              <div class="text-3xl">
-                {{ formatNumber(dataIstilahBaru.probable_total) }}
-              </div>
-              <span class="text-md">Total Probable</span>
-            </div>
-            <div class="w-full flex mt-3">
-              <div class="w-1/2 color-probable-diisolasi">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.probable_diisolasi) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.probable_diisolasi / dataIstilahBaru.probable_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Isolasi/Dalam Perawatan</span>
-              </div>
-              <div class="w-1/2 color-probable-discarded">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.probable_discarded) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.probable_discarded / dataIstilahBaru.probable_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Selesai Isolasi/Sembuh</span>
-              </div>
-              <div class="w-1/3 color-probable-meninggal">
-                <div class="text-2xl">
-                  {{ formatNumber(dataIstilahBaru.probable_meninggal) }}
-                </div>
-                <div class="text-sm">
-                  ({{ formatNumberPercent((dataIstilahBaru.probable_meninggal / dataIstilahBaru.probable_total) * 100) }}%)
-                </div>
-                <span class="text-sm color-title">Meninggal</span>
-              </div>
-            </div>
+          <div>
+            <span class="rounded-full bg-confirmation-meninggal px-custom-1 mr-1" style="">
+              <FontAwesomeIcon class="text-xs cursor-pointer text-white" :icon="iconPlusMinus(dataNational.update.penambahan.jumlah_meninggal)" />
+            </span>
+            {{ dataNational.update.penambahan.jumlah_meninggal }}
           </div>
-        </CounterCardLoader>
-      </section>
-    </div>
+        </div>
+      </div>
+    </CounterCardLoader>
   </div>
 </template>
 

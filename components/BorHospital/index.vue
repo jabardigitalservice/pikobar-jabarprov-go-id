@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="!isLoading ? 'bg-white rounded-lg shadow-lg' : 'hidden'">
+    <div :class="!isLoading ? 'bg-white rounded-lg border border-solid border-gray-300' : 'hidden'">
       <div class="flex flex-col md:flex-row flex-wrap items-center p-4 pb-2">
         <h4 class="font-bold text-lg m-1">
           Keterisian Tempat Tidur (BOR) RS Melayani Covid di Jawa Barat
@@ -101,7 +101,7 @@
         </div>
       </div>
     </div>
-    <div :class="isLoading ? 'bg-white rounded-lg shadow-lg p-4' : 'hidden'">
+    <div :class="isLoading ? 'bg-white rounded-lg p-4 border border-solid border-gray-300' : 'hidden'">
       <ContentLoader
         :speed="2"
         width="400"

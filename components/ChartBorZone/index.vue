@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg shadow-lg' : 'hidden'">
+    <div :class="!isLoading ? 'mx-2 my-3 bg-white rounded-lg border border-solid border-gray-300' : 'hidden'">
       <div class="flex flex-col md:flex-row border-b-2 px-4 pt-8 pb-10">
         <h4 class="font-bold text-lg mb-2 md:mb-0">
           Ketersediaan Tempat Tidur berdasarkan Zonasi
@@ -30,7 +30,7 @@
     <div :class="!isLoading ? 'hidden': ''">
       <div class="md:flex md:flex-row flex-wrap'">
         <div class="md:flex-1 my-1">
-          <div class=" rounded-lg p-6 shadow-lg bg-white">
+          <div class=" rounded-lg p-6 border border-solid border-gray-300 bg-white">
             <ContentLoader
               :speed="2"
               width="400"
