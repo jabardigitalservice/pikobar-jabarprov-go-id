@@ -146,8 +146,7 @@ export default {
       const options = {
         test_location_id: [
           { name: 'Pilih Lokasi' },
-          ...this.testLocations,
-          { code: 'Lainnya', id: 500, name: 'Lainnya' }
+          ...this.testLocations
         ],
         test_type_id: [
           { name: 'Pilih Jenis Tes' },
