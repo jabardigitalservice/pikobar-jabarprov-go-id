@@ -22,7 +22,10 @@
       <!-- END: TOP 4 CARDS -->
 
       <!-- START: BOTTOM 3 CARDS -->
-      <EventStatCard
+      <!--
+        Take Over Kontak Erat, Suspek, Probabel
+      -->
+      <!-- <EventStatCard
         v-for="(stat, statIndex) in bottomStats"
         :key="`bottom:${statIndex}`"
         :class="[stat.className, 'evt-statistics__bottom-grid-item']"
@@ -48,7 +51,7 @@
             size="xsmall"
           />
         </template>
-      </EventStatCard>
+      </EventStatCard> -->
       <!-- END: BOTTOM 3 CARDS -->
     </div>
   </div>

@@ -36,23 +36,23 @@ export const address = {
   title: 'Alamat Pemohon',
   data: [
     {
-      label: 'Kota/Kabupaten',
+      label: 'Kota/Kabupaten Tempat Tinggal Saat Ini',
       model: 'city_id'
     },
     {
-      label: 'Kecamatan',
+      label: 'Kecamatan Tempat Tinggal Saat Ini',
       model: 'district_id'
     },
     {
-      label: 'Kelurahan',
+      label: 'Kelurahan Tempat Tinggal Saat Ini',
       model: 'subdistrict_id'
     },
     {
-      label: 'RT',
+      label: 'RT Tempat Tinggal Saat Ini',
       model: 'rt'
     },
     {
-      label: 'RW',
+      label: 'RW Tempat Tinggal Saat Ini',
       model: 'rw'
     },
     {
