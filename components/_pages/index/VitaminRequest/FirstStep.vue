@@ -53,6 +53,7 @@
             :accept="item.accept"
             :note="item.note"
             :type="item.type"
+            :request-type="requestType"
           />
           <div class="flex flex-col mb-4">
             <i class="message">
