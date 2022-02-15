@@ -143,10 +143,12 @@ export default {
       })
     },
     options (model) {
+      const sortLocations = this.testLocations.filter(item => item.code !== 'Lainnya')
       const options = {
         test_location_id: [
           { name: 'Pilih Lokasi' },
-          ...this.testLocations
+          ...sortLocations,
+          { code: 'Lainnya', id: 999999, name: 'Lainnya' }
         ],
         test_type_id: [
           { name: 'Pilih Jenis Tes' },

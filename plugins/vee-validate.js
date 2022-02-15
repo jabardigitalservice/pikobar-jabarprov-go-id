@@ -9,7 +9,6 @@ import {
 } from 'vee-validate/dist/rules'
 import { extend, setInteractionMode } from 'vee-validate'
 import { isPhoneNumber } from './validate'
-import { checkNikAvailability } from '~/api/isoman'
 
 setInteractionMode('eager')
 
@@ -53,22 +52,4 @@ extend('image', {
 extend('size', {
   ...size,
   message: (_, values) => `Ukuran file ${values._field_} maksimal ${values.size / 1000}MB`
-})
-
-extend('nikAvailability', {
-  validate: async (val) => {
-    if (val.length === 16) {
-      try {
-        await checkNikAvailability({
-          nik: val
-        })
-        return true
-      } catch (e) {
-        return false
-      }
-    } else {
-      return false
-    }
-  },
-  message: 'NIK telah terdaftar'
 })
