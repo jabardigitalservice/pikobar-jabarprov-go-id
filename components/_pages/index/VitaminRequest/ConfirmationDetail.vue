@@ -78,7 +78,7 @@ export default {
       if (!array) {
         return null
       }
-      const result = array.find(area => area.id === parseInt(param)) || { name: '-' }
+      const result = array.find(area => parseInt(area.id) === parseInt(param)) || { name: '-' }
       return result.name
     },
     displayImage (item) {
