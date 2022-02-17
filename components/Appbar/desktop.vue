@@ -140,7 +140,7 @@ export default {
         { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/isoman', label: 'Isoman' },
         { to: '/oxygen', label: 'Cari Oksigen' },
-        { to: '/donate/logistic', label: 'Donasi' },
+        { to: '/logistic', label: 'Logistik', href: process.env.URL_LOGISTIC },
         {
           to: '#',
           label: 'Informasi',
