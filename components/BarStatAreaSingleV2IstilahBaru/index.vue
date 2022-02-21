@@ -6,14 +6,14 @@
         :active="stat.isActiveHarian"
         @click="enableHarian"
       >
-        <font-awesome-icon :icon="fontChartBar" />Angka Harian
+        <font-awesome-icon :icon="fontChartBar" /> Angka Harian
       </button>
       <button
         class="button-selector"
         :active="stat.isActiveAkumulatif"
         @click="enableAkumulatif"
       >
-        <font-awesome-icon :icon="fontChartLine" />Kumulatif
+        <font-awesome-icon :icon="fontChartLine" /> Kumulatif
       </button>
     </div>
 
@@ -122,36 +122,41 @@
           </div>
         </div>
         <hr>
-        <GChart
+        <div class="pb-5">
+          <BarChart
+            v-if="stat.isActiveHarian"
+            :chartData="chartHarianData"
+            :chartOptions="chartHarianOptions" />
+        </div>
+        <!-- <GChart
           v-if="stat.isActiveHarian"
           type="ComboChart"
           class="mb-4"
-          :data="ChartHarianData"
-          :options="ChartHarianOptions"
+          :data="chartHarianData"
+          :options="chartHarianOptions"
         />
         <GChart
           v-if="stat.isActiveAkumulatif"
           type="ComboChart"
           class="mb-4"
-          :data="ChartKumulatifData"
+          :data="chartKumulatifData"
           :options="ChartKumulatifOptions"
-        />
+        /> -->
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import BarChart from './BarChart'
 
 export default {
   name: 'BarStatAreaSingleV2IstilahBaru',
   components: {
-    GChart,
+    BarChart,
     FontAwesomeIcon
-    // DateRangePicker
   },
   data () {
     return {
@@ -725,63 +730,10 @@ export default {
           dataAkumulatif: []
         }
       ],
-      ChartHarianData: [
-        [
-          'Tanggal',
-          'Harian',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { type: 'number', role: 'annotation' },
-          'Rata-rata 7 Hari',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, 0, '']
-      ],
-      ChartKumulatifData: [
-        [
-          'Tanggal',
-          'Aktif',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Sembuh',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Total Terkonfirmasi',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
-      ],
-      ChartHarianOptions: {
-        height: 500,
-        orientation: 'horizontal',
-        colors: ['#5AB55B', '#EC5D5D', '#9C0000'],
-        legend: {
-          position: 'bottom'
-        },
-        annotations: {
-          alwaysOutside: 'true',
-          textStyle: {
-            fontSize: 10,
-            color: 'black'
-          }
-        },
-        hAxis: {
-          slantedText: true,
-          slantedTextAngle: 45
-        },
-        isStacked: true,
-        seriesType: 'bars',
-        series: {
-          1: {
-            type: 'line'
-          }
-        },
-        chartArea: {
-          width: '85%',
-          bottom: 100
-        },
-        tooltip: {
-          isHtml: true
-        }
+      chartHarianData: [],
+      chartKumulatifData: [],
+      chartHarianOptions: {
+        legendAverageChart: 'Rata-rata 7 Hari'
       },
       ChartKumulatifOptions: {
         height: 500,
@@ -932,7 +884,6 @@ export default {
       selectedListGroupWaktu: 'harian',
       selectedListGroupWaktuLabel: 'Harian',
       legendAverageChart: 'Rata-rata 7 Hari'
-
     }
   },
   computed: {
@@ -998,63 +949,39 @@ export default {
       this.changeData()
     },
     dataNasionalHarian (val) {
-      // this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
       for (let i = 0; i < val.length; i++) {
         const temp1 = val[i]
         let jmlHarian = 0
         let ratarataHarian = 0
-        // let jmlKumulatif = 0
-        // let ratarataKumulatif = 0
         if (i === 0) {
           jmlHarian = val[i].jumlah_positif.value
           ratarataHarian = jmlHarian / 1
-          // jmlKumulatif = val[i].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 1
         } else if (i === 1) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value
           ratarataHarian = jmlHarian / 2
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 2
         } else if (i === 2) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value
           ratarataHarian = jmlHarian / 3
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 3
         } else if (i === 3) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value
           ratarataHarian = jmlHarian / 4
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 4
         } else if (i === 4) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value
           ratarataHarian = jmlHarian / 5
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 5
         } else if (i === 5) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value + val[i - 5].jumlah_positif.value
           ratarataHarian = jmlHarian / 6
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 6
         } else if (i >= 6) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value + val[i - 5].jumlah_positif.value +
             val[i - 6].jumlah_positif.value
           ratarataHarian = jmlHarian / 7
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif +
-          //   val[i - 6].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 7
         } else {
           jmlHarian = 0
           ratarataHarian = 0
-          // jmlKumulatif = 0
-          // ratarataKumulatif = 0
         }
         const temp2 = { jumlah_positif_ratarata: { value: parseInt(ratarataHarian.toFixed(2)) } }
         const temp3 = { ...temp1, ...temp2 }
@@ -1268,31 +1195,23 @@ export default {
             fontSize: 12
           }
         }
-        this.ChartHarianOptions.hAxis = hAxisOptions
+        this.chartHarianOptions.hAxis = hAxisOptions
         this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata Per Bulan'
+        this.chartHarianOptions.legendAverageChart = this.legendAverageChart
       } else {
         const hAxisOptions = {
           slantedText: true,
           slantedTextAngle: 45
         }
-        this.ChartHarianOptions.hAxis = hAxisOptions
+        this.chartHarianOptions.hAxis = hAxisOptions
         this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata 7 Hari'
+        this.chartHarianOptions.legendAverageChart = this.legendAverageChart
       }
 
-      this.ChartHarianData = [
-        [
-          'Tanggal',
-          'Harian',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { type: 'number', role: 'annotation' },
-          this.legendAverageChart,
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, 0, '']
-      ]
-      this.ChartKumulatifData = [
+      this.chartHarianData = []
+      this.chartKumulatifData = [
         [
           'Tanggal',
           'Aktif',
@@ -1309,7 +1228,7 @@ export default {
       if (this.stat.isActiveHarian === true) {
         this.judul = 'Chart ' + this.selectedListGroupWaktuLabel + ' Terkonfirmasi ' + this.selectedListWilayah
         if (this.selectedListWilayah === 'Jawa Barat') {
-          this.fetchDataProvinsiSatuan()
+          this.fetchDataProvinsiHarian()
         } else if (this.selectedListWilayah === 'Indonesia') {
           this.fetchDataNasionalHarian()
         } else {
@@ -1327,7 +1246,7 @@ export default {
       }
     },
     fetchDataNasionalHarian () {
-      this.ChartHarianOptions.hAxis = {
+      this.chartHarianOptions.hAxis = {
         slantedText: true,
         slantedTextAngle: 45
       }
@@ -1350,25 +1269,22 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
-        const data = self.jsonDataNasionalHarianKumulatif
         const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
+        const data = self.jsonDataNasionalHarianKumulatif
         const showAnnotation = this.getShowAnnotation(data, i, startNum, endNum, 'nasional')
+        const tooltipDate = self.formatDate(date)
+        const xAxisLabel = self.formatDateNoYear(date)
 
-        // by Harian
-        let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-        tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value) + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Rata-rata 7 Hari</td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value) + '</b></td></tr>'
-        tooltipHarian += '</table>'
-        self.ChartHarianData.push([
-          self.formatDateNoYear(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value, tooltipHarian,
-          !showAnnotation ? self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value : null,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value, tooltipHarian
-        ])
+        self.chartHarianData.push({
+          tooltipDate,
+          xAxisLabel,
+          showAnnotation,
+          value: self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value,
+          average: Math.floor(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value)
+        })
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
-        self.ChartHarianData.splice(1, 1)
+        self.chartHarianData.splice(1, 1)
       }
     },
     fetchDataNasionalKumulatif () {
@@ -1400,7 +1316,7 @@ export default {
         tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value) + '</b></td></tr>'
         tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value) + '</b></td></tr>'
         tooltipKumulatif += '</table>'
-        self.ChartKumulatifData.push([
+        self.chartKumulatifData.push([
           self.formatDateNoYear(date),
           self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value, tooltipKumulatif,
           self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value, tooltipKumulatif,
@@ -1409,10 +1325,10 @@ export default {
         ])
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
+        self.chartKumulatifData.splice(1, 1)
       }
     },
-    fetchDataProvinsiSatuan () {
+    fetchDataProvinsiHarian () {
       const self = this
       const data = this.jsonDataKasus.provinsi.satuan[this.selectedListGroupWaktu]
       const today = new Date()
@@ -1459,7 +1375,7 @@ export default {
       }
 
       if (data.length > 0) {
-        self.ChartHarianData.splice(1, 1)
+        self.chartHarianData.splice(1, 1)
       }
     },
     fetchDataProvinsiKumulatif () {
@@ -1506,7 +1422,7 @@ export default {
         }
       }
       if (data.length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
+        self.chartKumulatifData.splice(1, 1)
       }
     },
     fetchDataKabupatenHarian () {
@@ -1565,7 +1481,7 @@ export default {
         }
       }
       if (firstData.length > 0) {
-        self.ChartHarianData.splice(1, 1)
+        self.chartHarianData.splice(1, 1)
       }
     },
     fetchDataKabupatenKumulatif () {
@@ -1627,7 +1543,7 @@ export default {
         }
       }
       if (self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu].length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
+        self.chartKumulatifData.splice(1, 1)
       }
     },
     onDateSelected (daterange) {
@@ -1667,18 +1583,13 @@ export default {
       }
     },
     generateChartSatuan (data, tooltipDate, xAxisLabel, showAnnotation) {
-      const self = this
-      let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-      tooltipHarian += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
-      tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data.confirmation_total) + '</b></td></tr>'
-      tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data.confirmation_ratarata) + '</b></td></tr>'
-      tooltipHarian += '</table>'
-      self.ChartHarianData.push([
+      this.chartHarianData.push({
+        tooltipDate,
         xAxisLabel,
-        data.confirmation_total, tooltipHarian,
-        showAnnotation ? data.confirmation_total : null,
-        data.confirmation_ratarata, tooltipHarian
-      ])
+        showAnnotation,
+        value: data.confirmation_total,
+        average: Math.floor(data.confirmation_ratarata)
+      })
     },
     generateChartKumulatif (data, tooltipDate, xAxisLabel) {
       const self = this
@@ -1689,7 +1600,7 @@ export default {
       tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_selesai) + '</b></td></tr>'
       tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_meninggal) + '</b></td></tr>'
       tooltipKumulatif += '</table>'
-      self.ChartKumulatifData.push([
+      self.chartKumulatifData.push([
         xAxisLabel,
         data.confirmation_diisolasi, tooltipKumulatif,
         data.confirmation_selesai, tooltipKumulatif,
