@@ -11,7 +11,7 @@
           <a
             v-if="m.children === undefined"
             :class="['app-drawer__menu-item' + ' 33', isMenuItemActive(m) && 'is-active']"
-            :href="m.to"
+            v-bind="getAnchorProps(m)"
             @click.prevent="onClickMenuItem(m)"
           >
             <span class="app-drawer__menu-item__icon">
@@ -24,7 +24,7 @@
           <a
             v-if="m.children"
             :class="['app-drawer__menu-item', isMenuItemActive(m) && 'is-active']"
-            :href="m.to"
+            v-bind="getAnchorProps(m)"
             @click.prevent="onClickMenuItem(m, index)"
           >
             <span class="app-drawer__menu-item__icon">
@@ -94,7 +94,7 @@ export default {
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
         { to: '/oxygen', label: 'Cari Oksigen', icon: this.icon.faLungs },
-        { to: '/donate/logistic', label: 'Donasi', icon: this.icon.faBoxOpen },
+        { to: process.env.URL_LOGISTIC, label: 'Logistik', href: true, icon: this.icon.faBoxOpen },
         {
           to: '#',
           label: 'Informasi',
@@ -128,6 +128,13 @@ export default {
     )
   },
   methods: {
+    getAnchorProps (m) {
+      const { href, to } = m
+      if (href) {
+        return { href, target: '_blank' }
+      }
+      return { to }
+    },
     async loadIcons () {
       const lib = await import('@fortawesome/free-solid-svg-icons')
         .then(m => m ? m.default || m : null)
