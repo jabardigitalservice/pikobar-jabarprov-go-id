@@ -1,14 +1,14 @@
 <template>
-  <div class="bar-chart-container">
-    <div ref="chart" class="bar-chart">
+  <div class="line-chart-container">
+    <div ref="chart" class="line-chart">
     </div>
-    <div ref="legend" class="legend-container legend-bar-chart flex justify-center items-center flex-wrap" />
+    <div ref="legend" class="legend-container legend-line-chart flex justify-center items-center flex-wrap" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'BarChart',
+  name: 'LineChart',
   props: {
     chartData: {
       type: [Object, Array],
@@ -38,7 +38,29 @@ export default {
       yAxis: null,
       legends: null,
       tooltip: null,
-      buildTimeout: null
+      buildTimeout: null,
+      lineType: [
+        {
+          text: 'Aktif',
+          key: 'confirmation_diisolasi',
+          color: '#ceb546'
+        },
+        {
+          text: 'Sembuh',
+          key: 'confirmation_selesai',
+          color: '#03b167'
+        },
+        {
+          text: 'Meninggal',
+          key: 'confirmation_meninggal',
+          color: '#9c0000'
+        },
+        {
+          text: 'Total Terkonfirmasi',
+          key: 'confirmation_total',
+          color: '#3d4486'
+        }
+      ]
     }
   },
   watch: {
@@ -86,11 +108,11 @@ export default {
       this.drawAxis()
       // End draw
 
-      // Draw bars & line
-      this.initCanvas('bar-chart-bar')
-      this.initSVG('bar-chart-svg')
-      this.drawBarCanvas(percent, animate)
+      // Draw line
+      this.initSVG('line-chart-svg')
+      this.drawLine(animate)
       // End draw
+
       this.drawLegend()
     },
 
@@ -102,7 +124,13 @@ export default {
         .padding(0.5)
         .domain(data.map((val) => { return val.tooltipDate }))
 
-      const max = this.$d3.max(data, (val) => { return val.value * 1 })
+      const maxY1 = this.$d3.max(data, (val) => { return val.confirmation_diisolasi * 1 })
+      const maxY2 = this.$d3.max(data, (val) => { return val.confirmation_selesai * 1 })
+      const maxY3 = this.$d3.max(data, (val) => { return val.confirmation_meninggal * 1 })
+      const maxY4 = this.$d3.max(data, (val) => { return val.confirmation_total * 1 })
+      const arrayMax = [maxY1, maxY2, maxY3, maxY4]
+      const max = this.$d3.max(arrayMax)
+
       this.y = this.$d3
         .scaleLinear()
         .rangeRound([this.contentHeight, 0])
@@ -112,8 +140,10 @@ export default {
       this.datasets.forEach((val) => {
         this.dataPoint.push({
           x: this.x(val.tooltipDate),
-          y: this.y(val.value),
-          yAvg: this.y(val.average),
+          y1: this.y(val.confirmation_diisolasi),
+          y2: this.y(val.confirmation_selesai),
+          y3: this.y(val.confirmation_meninggal),
+          y4: this.y(val.confirmation_total),
           ...val
         })
       })
@@ -131,42 +161,34 @@ export default {
 
       this.yAxis = this.$d3.axisLeft(this.y).tickSize(-this.contentWidth).ticks(5)
 
-      this.yAxisGrid = this.$d3
-        .axisLeft(this.y)
-        .tickSize(-this.contentWidth)
-        .ticks(10)
-        .tickFormat('')
-
-      this.valueline = this.$d3
-        .line()
-        .x((val) => { return this.x(val.tooltipDate) + this.x.bandwidth() / 2 || 0 })
-        .y((val) => { return this.y(val.average) || 0 })
-        .curve(this.$d3.curveMonotoneX)
+      this.valueline = []
+      this.lineType.forEach((line) => {
+        this.valueline.push(
+          this.$d3
+            .line()
+            .x((val) => { return this.x(val.tooltipDate) + this.x.bandwidth() / 2 || 0 })
+            .y((val) => { return this.y(val[line.key]) || 0 })
+        )
+      })
 
       this.legends = [
-        {
-          text: 'Harian',
-          color: '#069550',
-          type: 'rect',
-          fillType: 'solid',
-          show: true,
-          selector: '.bar-chart-bar'
-        },
-        {
-          text: this.chartOptions.legendAverageChart,
-          color: '#ec5d5d',
-          type: 'line',
-          fillType: 'solid',
-          show: true,
-          selector: '.bar-chart-line'
-        }
+        ...this.lineType.map((val) => {
+          return {
+            text: val.text,
+            color: val.color,
+            type: 'line',
+            fillType: 'solid',
+            show: true,
+            selector: '.line-chart-' + val.key
+          }
+        })
       ]
 
-      this.$d3.selectAll('.bar-chart-tooltip').remove()
+      this.$d3.selectAll('.line-chart-tooltip').remove()
       this.tooltip = this.$d3
         .select('body')
         .append('div')
-        .attr('class', 'chart-tooltip bar-chart-tooltip')
+        .attr('class', 'chart-tooltip line-chart-tooltip')
         .style('opacity', 0)
     },
 
@@ -219,13 +241,13 @@ export default {
         .attr('width', this.contentWidth)
         .attr('height', this.contentHeight + 10)
         .style('position', 'absolute')
-        .attr('class', 'highlight-bar-chart')
+        .attr('class', 'highlight-line-chart')
         .style('left', this.margin.left + 'px')
         .style('top', this.margin.top + 'px')
 
       const highlightContext = highlightCanvas.node().getContext('2d')
 
-      this.$d3.select('.highlight-bar-chart')
+      this.$d3.select('.highlight-line-chart')
         .on('mouseover', () => {
           this.tooltip.transition().duration(100).style('opacity', 0.9)
         })
@@ -240,12 +262,12 @@ export default {
           })
 
           if (selectedData.length > 0) {
-            const cx2 = selectedData[0].x + this.x.bandwidth() / 2 || 0
-            const cy2 = selectedData[0].yAvg
-            const selectedX = selectedData[0].x
-            const selectedY = selectedData[0].y
+            const cx = selectedData[0].x + this.x.bandwidth() / 2
+            const cy1 = selectedData[0].y1
+            const cy2 = selectedData[0].y2
+            const cy3 = selectedData[0].y3
+            const cy4 = selectedData[0].y4
 
-            // Clearing rect
             highlightContext.clearRect(
               0,
               0,
@@ -253,39 +275,21 @@ export default {
               this.contentHeight + 10
             )
 
-            // Draw rect
-            highlightContext.globalAlpha = 0.6
-            this.drawRect(
-              highlightContext,
-              selectedX,
-              selectedY - 3,
-              this.x.bandwidth(),
-              this.contentHeight - selectedY + 3,
-              '#FFFFFF'
-            )
-            highlightContext.globalAlpha = 1
+            this.drawCircle(highlightContext, cx, cy1, this.lineType[0].color, 5, true)
+            this.drawCircle(highlightContext, cx, cy2, this.lineType[1].color, 5, true)
+            this.drawCircle(highlightContext, cx, cy3, this.lineType[2].color, 5, true)
+            this.drawCircle(highlightContext, cx, cy4, this.lineType[3].color, 5, true)
 
-            // Draw circle
-            highlightContext.fillStyle = '#ec5d5d'
-            highlightContext.beginPath()
-            highlightContext.arc(cx2, cy2, 5, 0, 2 * Math.PI)
-            highlightContext.fill()
-            highlightContext.strokeStyle = '#FFFFFF'
-            highlightContext.strokeWidth = 1
-            highlightContext.stroke()
+            html = `<b>${selectedData[0].tooltipDate}</b>`
 
-            this.tooltip.transition().duration(100).style('opacity', 0.9)
+            this.lineType.forEach((val) => {
+              html +=
+                '<br/>' +
+                val.text +
+                ': ' +
+                this.numberFormat(selectedData[0][val.key])
+            })
 
-            html =
-              '<b>' +
-              selectedData[0].tooltipDate +
-              '</b><br/>Terkonfirmasi: ' +
-              this.numberFormat(selectedData[0].value) +
-              `<br/>${this.chartOptions.legendAverageChart}: ` +
-              this.numberFormat(selectedData[0].average)
-          }
-
-          if (selectedData.length > 0) {
             this.tooltip.transition().duration(100).style('opacity', 0.9)
             this.tooltip
               .html(html)
@@ -373,14 +377,39 @@ export default {
       context.fillRect(x, y, width, height)
     },
 
+    drawCircle (
+      context,
+      cx,
+      cy,
+      color = '#8df584',
+      r = 1.5,
+      stroke = false
+    ) {
+      context.fillStyle = color
+      context.beginPath()
+      context.arc(cx, cy, r, 0, 2 * Math.PI)
+      context.fill()
+
+      if (stroke && r > 1.5) {
+        context.strokeStyle = '#fff'
+        context.strokeWidth = 1
+        context.stroke()
+      }
+    },
+
     drawLine (animate = true) {
       const data = this.datasets
 
-      this.path = this.g
-        .append('path')
-        .data([data])
-        .attr('class', 'line bar-chart-line')
-        .attr('d', this.valueline)
+      this.lineType.forEach((val, key) => {
+        this.path = this.g
+          .append('path')
+          .data([data])
+          .attr('class', 'line-chart-' + val.key)
+          .style('stroke', val.color)
+          .style('fill', 'none')
+          .style('stroke-width', '2')
+          .attr('d', this.valueline.filter((val2, key2) => key === key2)[0])
+      })
 
       this.pathLength = this.path.node().getTotalLength()
 
@@ -388,7 +417,7 @@ export default {
         this.animatePath()
         setTimeout(() => {
           this.initCanvasHighlight()
-        }, 2000)
+        }, 1500)
       } else {
         this.initCanvasHighlight()
       }
@@ -415,7 +444,7 @@ export default {
         .data(data)
         .enter()
         .append('text')
-        .attr('class', 'chart-label-shadow bar-chart-bar')
+        .attr('class', 'chart-label-shadow line-chart-bar')
         .attr('x', (val) => { return this.x(val.tooltipDate) + this.x.bandwidth() / 2 || 0 })
         .attr('y', (val) => { return this.y(val.value) - 20 || 0 })
         .attr('text-anchor', 'middle')
@@ -426,7 +455,7 @@ export default {
         .data(data)
         .enter()
         .append('text')
-        .attr('class', 'chart-label bar-chart-bar')
+        .attr('class', 'chart-label line-chart-bar')
         .attr('x', (val) => { return this.x(val.tooltipDate) + this.x.bandwidth() / 2 || 0 })
         .attr('y', (val) => { return this.y(val.value) - 20 || 0 })
         .attr('text-anchor', 'middle')
@@ -437,7 +466,7 @@ export default {
         .data(data)
         .enter()
         .append('line')
-        .attr('class', 'chart-label-line bar-chart-bar')
+        .attr('class', 'chart-label-line line-chart-bar')
         .attr('x1', (val) => { return this.x(val.tooltipDate) + this.x.bandwidth() / 2 || 0 })
         .attr('y1', (val) => { return this.y(val.value) - 15 || 0 })
         .attr('x2', (val) => { return this.x(val.tooltipDate) + this.x.bandwidth() / 2 || 0 })
@@ -448,7 +477,7 @@ export default {
 
     drawLegend () {
       const legendSize = 20
-      const legendContainer = this.$d3.select('.legend-bar-chart')
+      const legendContainer = this.$d3.select('.legend-line-chart')
       legendContainer.selectAll('.legend-item').remove()
 
       const legendItem = legendContainer.selectAll('.legend-item')
@@ -484,8 +513,8 @@ export default {
         const item = this.$d3.select(node[index])
 
         item.classed('active', data.show)
-        item.classed('hidden', index > 2)
-        item.classed('legend-more', index > 2)
+        item.classed('hidden', index > 3)
+        item.classed('legend-more', index > 3)
 
         const svg = item.append('svg')
           .attr('width', legendSize)
@@ -530,7 +559,7 @@ export default {
     },
 
     toggleLegend (e) {
-      this.$d3.selectAll('.legend-bar-chart .legend-more').each(
+      this.$d3.selectAll('.legend-line-chart .legend-more').each(
         (val, i, n) => {
           const item = this.$d3.select(n[i])
 
@@ -538,7 +567,7 @@ export default {
         }
       )
 
-      if (this.$d3.select('.legend-bar-chart .legend-more').classed('hidden')) {
+      if (this.$d3.select('.legend-line-chart .legend-more').classed('hidden')) {
         e.target.textContent = 'Tampilkan lebih banyak'
       } else {
         e.target.textContent = 'Tutup legend'
@@ -562,7 +591,7 @@ export default {
 </script>
 
 <style lang="scss">
-.bar-chart {
+.line-chart {
   height: 500px;
   position: relative;
 
@@ -625,7 +654,7 @@ export default {
   font: 12px sans-serif;
 }
 
-div.bar-chart-tooltip {
+div.line-chart-tooltip {
   position: absolute;
   text-align: center;
   padding: 10px 15px;

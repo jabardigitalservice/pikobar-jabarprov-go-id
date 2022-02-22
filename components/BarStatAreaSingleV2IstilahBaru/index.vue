@@ -26,13 +26,13 @@
 
           <div
             v-if="!isMobile"
-            class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2"
+            class="flex flex-wrap items-stretch justify-center pt-2 pb-2 pr-2 md:w-1/2 mt-2"
             style="margin: auto"
           >
             <select
               v-if="selectedListWilayah !== 'Indonesia'"
               v-model="selectedListGroupWaktu"
-              class="select-option-selector my-2 mx-1 ml-auto"
+              class="select-option-selector my-2 mx-1 md:ml-auto"
               @change="changeFilterGroupWaktu()"
             >
               <option
@@ -127,6 +127,10 @@
             v-if="stat.isActiveHarian"
             :chartData="chartHarianData"
             :chartOptions="chartHarianOptions" />
+          <LineChart
+            v-if="stat.isActiveAkumulatif"
+            :chartData="chartKumulatifData"
+            :chartOptions="ChartKumulatifOptions" />
         </div>
         <!-- <GChart
           v-if="stat.isActiveHarian"
@@ -151,11 +155,13 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import BarChart from './BarChart'
+import LineChart from './LineChart'
 
 export default {
   name: 'BarStatAreaSingleV2IstilahBaru',
   components: {
     BarChart,
+    LineChart,
     FontAwesomeIcon
   },
   data () {
@@ -736,34 +742,7 @@ export default {
         legendAverageChart: 'Rata-rata 7 Hari'
       },
       ChartKumulatifOptions: {
-        height: 500,
-        orientation: 'horizontal',
-        colors: ['#CEB546', '#03B167', '#9c0000', '#3D4486'],
-        legend: {
-          position: 'bottom'
-        },
-        // isStacked: true,
-        // seriesType: 'bars',
-        hAxis: {
-          slantedText: true,
-          slantedTextAngle: 45
-        },
-        vAxis: {
-          viewWindow: {
-            min: 0
-          }
-        },
-        chartArea: {
-          width: '85%',
-          bottom: 100
-        },
-        series: {
-          0: { lineWidth: 3 },
-          1: { lineWidth: 3 },
-          2: { lineWidth: 3 },
-          3: { lineWidth: 3 }
-        },
-        tooltip: { isHtml: true }
+        legendAverageChart: 'Rata-rata 7 Hari'
       },
       optionListWilayah: [
         'Indonesia',
@@ -1109,7 +1088,7 @@ export default {
       const options = {
         day: 'numeric',
         month: 'short',
-        year: 'numeric'
+        year: '2-digit'
       }
       return d.toLocaleString('id-ID', options)
     },
@@ -1211,20 +1190,7 @@ export default {
       }
 
       this.chartHarianData = []
-      this.chartKumulatifData = [
-        [
-          'Tanggal',
-          'Aktif',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Sembuh',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Total Terkonfirmasi',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
-      ]
+      this.chartKumulatifData = []
       if (this.stat.isActiveHarian === true) {
         this.judul = 'Chart ' + this.selectedListGroupWaktuLabel + ' Terkonfirmasi ' + this.selectedListWilayah
         if (this.selectedListWilayah === 'Jawa Barat') {
@@ -1308,21 +1274,17 @@ export default {
       // get data
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
+        const tooltipDate = self.formatDate(date)
+        const xAxisLabel = self.formatDateNoYear(date)
         // by Akumulatif
-        let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-        tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '</table>'
-        self.chartKumulatifData.push([
-          self.formatDateNoYear(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value, tooltipKumulatif
-        ])
+        self.chartKumulatifData.push({
+          tooltipDate,
+          xAxisLabel,
+          confirmation_diisolasi: self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value,
+          confirmation_selesai: self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value,
+          confirmation_meninggal: self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value,
+          confirmation_total: self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value
+        })
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
         self.chartKumulatifData.splice(1, 1)
@@ -1592,21 +1554,14 @@ export default {
       })
     },
     generateChartKumulatif (data, tooltipDate, xAxisLabel) {
-      const self = this
-      let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-      tooltipKumulatif += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
-      tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_total) + '</b></td></tr>'
-      tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_diisolasi) + '</b></td></tr>'
-      tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_selesai) + '</b></td></tr>'
-      tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_meninggal) + '</b></td></tr>'
-      tooltipKumulatif += '</table>'
-      self.chartKumulatifData.push([
+      this.chartKumulatifData.push({
+        tooltipDate,
         xAxisLabel,
-        data.confirmation_diisolasi, tooltipKumulatif,
-        data.confirmation_selesai, tooltipKumulatif,
-        data.confirmation_meninggal, tooltipKumulatif,
-        data.confirmation_total, tooltipKumulatif
-      ])
+        confirmation_diisolasi: data.confirmation_diisolasi,
+        confirmation_selesai: data.confirmation_selesai,
+        confirmation_meninggal: data.confirmation_meninggal,
+        confirmation_total: data.confirmation_total
+      })
     }
   }
 }
