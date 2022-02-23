@@ -121,6 +121,16 @@ export default {
       const breakpoint = this.contentWidth < 900 ? 8 : 16
       this.xAxis = this.$d3
         .axisBottom(this.x)
+        .tickFormat((val) => {
+          let reformat = val
+          if (this.chartOptions.selectedListGroupWaktu !== 'harian') {
+            const arrayLabel = val.split(' ')
+            arrayLabel.splice(2, 1)
+            arrayLabel.splice(5, 1)
+            reformat = arrayLabel.join(' ')
+          }
+          return reformat
+        })
         .tickValues(
           this.x
             .domain()
@@ -130,12 +140,6 @@ export default {
         )
 
       this.yAxis = this.$d3.axisLeft(this.y).tickSize(-this.contentWidth).ticks(5)
-
-      this.yAxisGrid = this.$d3
-        .axisLeft(this.y)
-        .tickSize(-this.contentWidth)
-        .ticks(10)
-        .tickFormat('')
 
       this.valueline = this.$d3
         .line()
@@ -310,10 +314,10 @@ export default {
         .attr('transform', 'translate(0,' + this.contentHeight + ')')
         .call(this.xAxis)
         .selectAll('text')
-        .style('text-anchor', 'start')
-        .attr('dx', '.9em')
+        .style('text-anchor', 'end')
+        .attr('dx', '-1em')
         .attr('dy', '.15em')
-        .attr('transform', 'rotate(65)')
+        .attr('transform', 'rotate(-65)')
 
       // left axis
       this.g

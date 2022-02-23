@@ -130,22 +130,8 @@
           <LineChart
             v-if="stat.isActiveAkumulatif"
             :chartData="chartKumulatifData"
-            :chartOptions="ChartKumulatifOptions" />
+            :chartOptions="chartKumulatifOptions" />
         </div>
-        <!-- <GChart
-          v-if="stat.isActiveHarian"
-          type="ComboChart"
-          class="mb-4"
-          :data="chartHarianData"
-          :options="chartHarianOptions"
-        />
-        <GChart
-          v-if="stat.isActiveAkumulatif"
-          type="ComboChart"
-          class="mb-4"
-          :data="chartKumulatifData"
-          :options="ChartKumulatifOptions"
-        /> -->
       </div>
     </section>
   </div>
@@ -739,10 +725,11 @@ export default {
       chartHarianData: [],
       chartKumulatifData: [],
       chartHarianOptions: {
-        legendAverageChart: 'Rata-rata 7 Hari'
+        legendAverageChart: 'Rata-rata 7 Hari',
+        selectedListGroupWaktu: 'harian'
       },
-      ChartKumulatifOptions: {
-        legendAverageChart: 'Rata-rata 7 Hari'
+      chartKumulatifOptions: {
+        selectedListGroupWaktu: 'harian'
       },
       optionListWilayah: [
         'Indonesia',
@@ -1167,27 +1154,16 @@ export default {
     },
     changeData () {
       if (this.selectedListGroupWaktu !== 'harian') {
-        const hAxisOptions = {
-          slantedText: true,
-          slantedTextAngle: 45,
-          textStyle: {
-            fontSize: 12
-          }
-        }
-        this.chartHarianOptions.hAxis = hAxisOptions
-        this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata Per Bulan'
-        this.chartHarianOptions.legendAverageChart = this.legendAverageChart
       } else {
-        const hAxisOptions = {
-          slantedText: true,
-          slantedTextAngle: 45
-        }
-        this.chartHarianOptions.hAxis = hAxisOptions
-        this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata 7 Hari'
-        this.chartHarianOptions.legendAverageChart = this.legendAverageChart
       }
+
+      this.chartHarianOptions = {
+        legendAverageChart: this.legendAverageChart,
+        selectedListGroupWaktu: this.selectedListGroupWaktu
+      }
+      this.chartKumulatifOptions.selectedListGroupWaktu = this.selectedListGroupWaktu
 
       this.chartHarianData = []
       this.chartKumulatifData = []
@@ -1212,10 +1188,6 @@ export default {
       }
     },
     fetchDataNasionalHarian () {
-      this.chartHarianOptions.hAxis = {
-        slantedText: true,
-        slantedTextAngle: 45
-      }
       const self = this
       let startNum = 0
       let endNum = 0
