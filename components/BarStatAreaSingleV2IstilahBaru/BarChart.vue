@@ -281,20 +281,28 @@ export default {
             this.tooltip.transition().duration(100).style('opacity', 0.9)
 
             html =
-              '<b>' +
+              '<b class="block mb-2">' +
               selectedData[0].tooltipDate +
-              '</b><br/>Terkonfirmasi: ' +
-              this.numberFormat(selectedData[0].value) +
-              `<br/>${this.chartOptions.legendAverageChart}: ` +
-              this.numberFormat(selectedData[0].average)
+              '</b>' +
+              '<div class="flex justify-between">Terkonfirmasi: ' +
+              `<span class="ml-3">${this.numberFormat(selectedData[0].value)}</span></div>` +
+              `<div class="flex justify-between">${this.chartOptions.legendAverageChart}: ` +
+              `<span class="ml-3">${this.numberFormat(selectedData[0].average)}</span></div>`
           }
 
           if (selectedData.length > 0) {
             this.tooltip.transition().duration(100).style('opacity', 0.9)
-            this.tooltip
+            const tooltip = this.tooltip
               .html(html)
-              .style('left', this.$d3.event.pageX + 10 + 'px')
               .style('top', this.$d3.event.pageY - 28 + 'px')
+
+            if ((this.$d3.event.view.innerWidth - this.$d3.event.pageX) < 200) {
+              tooltip.style('right', (this.$d3.event.view.innerWidth - this.$d3.event.pageX) + 'px')
+                .style('left', 'unset')
+            } else {
+              tooltip.style('left', this.$d3.event.pageX + 10 + 'px')
+                .style('right', 'unset')
+            }
           } else {
             this.tooltip.transition().duration(500).style('opacity', 0)
           }
@@ -631,7 +639,7 @@ export default {
 
 div.bar-chart-tooltip {
   position: absolute;
-  text-align: center;
+  text-align: left;
   padding: 10px 15px;
   font: 12px sans-serif;
   background: #fff;

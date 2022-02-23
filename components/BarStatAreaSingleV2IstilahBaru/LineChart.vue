@@ -290,21 +290,28 @@ export default {
             this.drawCircle(highlightContext, cx, cy3, this.lineType[2].color, 5, true)
             this.drawCircle(highlightContext, cx, cy4, this.lineType[3].color, 5, true)
 
-            html = `<b>${selectedData[0].tooltipDate}</b>`
+            html = `<b class="block mb-2">${selectedData[0].tooltipDate}</b>`
 
             this.lineType.forEach((val) => {
               html +=
-                '<br/>' +
-                val.text +
-                ': ' +
-                this.numberFormat(selectedData[0][val.key])
+                '<div class="flex justify-between">' +
+                `${val.text}: ` +
+                `<span class="ml-3">${this.numberFormat(selectedData[0][val.key])}</span>` +
+                '</div>'
             })
 
             this.tooltip.transition().duration(100).style('opacity', 0.9)
-            this.tooltip
+            const tooltip = this.tooltip
               .html(html)
-              .style('left', this.$d3.event.pageX + 10 + 'px')
               .style('top', this.$d3.event.pageY - 28 + 'px')
+
+            if ((this.$d3.event.view.innerWidth - this.$d3.event.pageX) < 200) {
+              tooltip.style('right', (this.$d3.event.view.innerWidth - this.$d3.event.pageX) + 'px')
+                .style('left', 'unset')
+            } else {
+              tooltip.style('left', this.$d3.event.pageX + 10 + 'px')
+                .style('right', 'unset')
+            }
           } else {
             this.tooltip.transition().duration(500).style('opacity', 0)
           }
@@ -666,7 +673,7 @@ export default {
 
 div.line-chart-tooltip {
   position: absolute;
-  text-align: center;
+  text-align: left;
   padding: 10px 15px;
   font: 12px sans-serif;
   background: #fff;
