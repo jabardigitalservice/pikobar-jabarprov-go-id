@@ -1,23 +1,7 @@
 export default [
   'Anak-anak (6-11 Tahun)',
-  'DKM Masjid & Marbot',
-  'Ibu Hamil',
-  'Ibu Menyusui',
-  'Informasi detil dapat menghubungi penyelenggara',
-  'Kelompok Tertentu',
-  'Lansia (60 tahun ke atas)',
-  'Mahasiswa',
-  'Orang Dengan Ganguan Jiwa (ODGJ)',
-  'Pekerja ',
-  'Pekerja Sektor Pelabuhan',
-  'Pelajar',
-  'Penyakit Komorbid (Terkontrol)',
-  'Penyandang Disabilitas',
-  'Penyintas Covid',
-  'Pra Lansia (50-59 tahun)',
   'Remaja (12-17 tahun)',
-  'Tenaga Kesehatan (Booster)',
-  'UMKM',
   'Umum (18-49 tahun)',
-  'Usia 55 Keatas'
+  'Pra Lansia (50-59 tahun)',
+  'Lansia (60 tahun ke atas)'
 ]
