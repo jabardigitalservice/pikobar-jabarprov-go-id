@@ -1,0 +1,170 @@
+<template>
+  <ValidationObserver ref="formValidate" class="w-full">
+    <form
+      lazy-validation
+    >
+      <ValidationProvider
+        v-for="item in listForm"
+        :key="item.name"
+        v-slot="{ errors }"
+        :rules="item.rules"
+        :name="item.name"
+        :class="item.class"
+      >
+        <div v-if="item.type === 'heading'">
+          {{ item.label }}
+        </div>
+        <SelectInput
+          v-else-if="item.type === 'select'"
+          v-model="form[item.model]"
+          :label="item.label"
+          :required="item.required"
+          :name="item.name"
+          :options="options(item.model)"
+        />
+        <TextArea
+          v-else-if="item.type === 'area'"
+          v-model="form[item.model]"
+          :label="item.label"
+          :required="item.required"
+          :name="item.name"
+          :placeholder="item.placeholder"
+          :note="item.note"
+        />
+        <FileInput
+          v-else-if="item.type === 'file'"
+          v-model="form[item.model]"
+          :label="item.label"
+          :required="item.required"
+          :name="item.name"
+          :placeholder="item.placeholder"
+          :accept="item.accept"
+          :note="item.note"
+        />
+        <RadioButton
+          v-else-if="item.type === 'radio'"
+          v-model="form[item.model]"
+          :label="item.label"
+          :required="item.required"
+          :name="item.name"
+          :placeholder="item.placeholder"
+          :accept="item.accept"
+          :note="item.note"
+          :type="item.type"
+          :options="options(item.model)"
+        />
+        <Input
+          v-else
+          v-model="form[item.model]"
+          :label="item.label"
+          :required="item.required"
+          :model="item.model"
+          :name="item.name"
+          :placeholder="item.placeholder"
+          :accept="item.accept"
+          :note="item.note"
+          :type="item.type"
+          @change="(value) => onChange(item.name, value, item.requestType)"
+        />
+        <div class="flex flex-col mb-4">
+          <i class="message">
+            {{ item.note }}
+          </i>
+          <i v-if="errors[0]" class="message__error">
+            {{ errors[0] }}
+          </i>
+        </div>
+      </ValidationProvider>
+    </form>
+  </ValidationObserver>
+</template>
+
+<script>
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import Input from '~/components/Input'
+import FileInput from '~/components/FileInput'
+import SelectInput from '~/components/SelectInput'
+import TextArea from '~/components/TextArea'
+import RadioButton from '~/components/RadioButton'
+import { checkNikAvailability } from '~/api/isoman'
+
+export default {
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+    Input,
+    SelectInput,
+    TextArea,
+    FileInput,
+    RadioButton
+  },
+  props: {
+    listForm: {
+      type: Array,
+      default: () => []
+    },
+    listOption: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  data () {
+    return {
+      form: {}
+    }
+  },
+  watch: {
+    form: {
+      handler (val) {
+        this.$emit('update', val)
+      },
+      deep: true
+    }
+  },
+  methods: {
+    options (model) {
+      return this.listOption[model.toLowerCase()] ?? []
+    },
+    onChange (name, value, requestType) {
+      if (name === 'NIK') {
+        extend('nikAvailability', {
+          validate: async () => {
+            try {
+              await checkNikAvailability({
+                nik: value,
+                request_type: requestType
+              })
+              return true
+            } catch (e) {
+              return false
+            }
+          },
+          message: 'NIK belum dapat digunakan karena belum memenuhi syarat untuk mengajukan permohonan'
+        })
+        this.$emit('requestType', requestType)
+      } else {
+        return true
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.title {
+  @apply mb-6 mt-4;
+  font-family: Lora;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 45px;
+  color: #BDBDBD;
+}
+.message {
+  @apply text-sm;
+
+  &__error {
+    @apply text-sm text-red-500;
+  }
+}
+</style>
