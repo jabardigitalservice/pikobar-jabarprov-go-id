@@ -10,7 +10,7 @@
 
 <script>
 import WelcomePage from '~/components/_pages/index/VitaminRequest/WelcomePage.vue'
-import FirstStep from '~/components/_pages/index/VitaminRequest/FirstStep.vue'
+import FirstStep from '~/components/_pages/index/ConsultationVitamin/First.vue'
 import SecondStep from '~/components/_pages/index/VitaminRequest/SecondStep.vue'
 import ConfirmationStep from '~/components/_pages/index/VitaminRequest/ConfirmationStep.vue'
 import SuccessPage from '~/components/_pages/index/VitaminRequest/SuccessPage.vue'
