@@ -1,15 +1,7 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" />
-    <IdentityCard
-      ref="identity"
-      :form-request="form"
-      request-type="obat_vitamin"
-    />
-    <AddressCard
-      ref="address"
-      :form-request="form"
-    />
+    <Form ref="firstStep" :list-option="listOption" :list-form="inputList" @update="updateForm" @requestType="updateRequestType" />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -30,14 +22,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import firstStepInput from './firstStep'
+import Form from '~/components/Form'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
-import IdentityCard from '~/components/_pages/index/ConsultationVitamin/First/IdentityCard.vue'
-import AddressCard from '~/components/_pages/index/ConsultationVitamin/First/AddressCard.vue'
 export default {
   components: {
-    Progress,
-    IdentityCard,
-    AddressCard
+    Form,
+    Progress
   },
   props: {
     requestType: {
@@ -51,18 +42,74 @@ export default {
   },
   data () {
     return {
+      inputList: firstStepInput,
       form: {}
     }
   },
   computed: {
     ...mapState('isoman', [
-      'formRequest'
-    ])
+      'formRequest',
+      'cities',
+      'districts',
+      'subDistricts'
+    ]),
+    listOption () {
+      return {
+        city_id: [
+          { name: 'Pilih Kota' },
+          ...this.cities
+        ],
+        district_id: [
+          { name: 'Pilih Kecamatan' },
+          ...this.districts
+        ],
+        subdistrict_id: [
+          { name: 'Pilih Kelurahan' },
+          ...this.subDistricts
+        ],
+        rw: this.generateRtRwOptions('rw'),
+        rt: this.generateRtRwOptions('rt')
+      }
+    }
   },
-  created () {
+  async created () {
     this.form = { ...this.formRequest }
+    await this.$store.dispatch('isoman/getCities')
+
+    this.$watch('form.city_id', async (val) => {
+      this.form.district_id = null
+      this.$store.dispatch('isoman/deleteDistricts')
+
+      this.form.subdistrict_id = null
+      this.$store.dispatch('isoman/deleteSubDistricts')
+
+      if (val !== null) {
+        const params = {
+          city_id: val
+        }
+        await this.$store.dispatch('isoman/getDistricts', params)
+      }
+    })
+
+    this.$watch('form.district_id', async (val) => {
+      this.form.subdistrict_id = null
+      this.$store.dispatch('isoman/deleteSubDistricts')
+
+      if (val !== null) {
+        const params = {
+          district_id: val
+        }
+        await this.$store.dispatch('isoman/getSubDistricts', params)
+      }
+    })
   },
   methods: {
+    updateRequestType (val) {
+      this.form.request_type = val
+    },
+    updateForm (val) {
+      this.form = { ...this.form, ...val }
+    },
     onCancel () {
       this.$emit('update:step', 0)
       window.scrollTo({
@@ -71,20 +118,48 @@ export default {
       })
     },
     async onNext () {
-      const identity = await this.$refs.identity.$refs.identityStep.validate()
-      const address = await this.$refs.address.$refs.addressStep.validate()
-      if (!identity && !address) {
+      const valid = await this.$refs.firstStep.$refs.formValidate.validate()
+      if (!valid) {
         return
       }
-      const identityForm = await this.$refs.identity.form
-      const addressForm = await this.$refs.address.form
-      this.form = { ...identityForm, ...addressForm }
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       })
+    },
+    generateRtRwOptions (val) {
+      switch (val) {
+        case 'rw': {
+          const listRw = []
+          for (let i = 0; i < 60; i++) {
+            listRw.push({
+              name: i + 1,
+              id: i + 1
+            })
+          }
+          return [
+            { name: 'Pilih RW' },
+            ...listRw
+          ]
+        }
+        case 'rt': {
+          const listRt = []
+          for (let i = 0; i < 50; i++) {
+            listRt.push({
+              name: i + 1,
+              id: i + 1
+            })
+          }
+          return [
+            { name: 'Pilih RT' },
+            ...listRt
+          ]
+        }
+        default:
+          return []
+      }
     }
   }
 }
