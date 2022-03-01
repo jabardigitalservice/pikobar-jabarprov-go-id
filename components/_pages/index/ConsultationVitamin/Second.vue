@@ -1,10 +1,7 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" />
-    <MedicCard
-      ref="medic"
-      :form-request="form"
-    />
+    <Form ref="secondStep" :list-option="listOption" :list-form="inputList" @update="updateForm" />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -25,13 +22,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import secondStepInput from './secondStep'
+import Form from '~/components/Form'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
-import MedicCard from '~/components/_pages/index/ConsultationVitamin/Second/MedicCard.vue'
 
 export default {
   components: {
     Progress,
-    MedicCard
+    Form
   },
   props: {
     step: {
@@ -41,18 +39,48 @@ export default {
   },
   data () {
     return {
+      inputList: secondStepInput,
       form: {}
     }
   },
   computed: {
     ...mapState('isoman', [
-      'formRequest'
-    ])
+      'formRequest',
+      'testLocations',
+      'testTypes'
+    ]),
+    listOption () {
+      const sortLocations = this.testLocations.filter(item => item.code !== 'Lainnya')
+      return {
+        test_location_id: [
+          { name: 'Pilih Lokasi' },
+          ...sortLocations,
+          { code: 'Lainnya', id: 999999, name: 'Lainnya' }
+        ],
+        test_type_id: [
+          { name: 'Pilih Jenis Tes' },
+          ...this.testTypes
+        ],
+        is_reported: [
+          { name: 'Sudah', id: 1 },
+          { name: 'Belum', id: 0 }
+        ],
+        is_reported_tracing: [
+          { name: 'Sudah', id: 1 },
+          { name: 'Belum', id: 0 }
+        ]
+      }
+    }
   },
-  created () {
+  async created () {
+    await this.$store.dispatch('isoman/getTestLocations')
+    await this.$store.dispatch('isoman/getTestTypes')
     this.form = { ...this.formRequest }
   },
   methods: {
+    updateForm (val) {
+      this.form = { ...this.form, ...val }
+    },
     onBack () {
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 1)
@@ -62,13 +90,11 @@ export default {
       })
     },
     async onNext () {
-      const valid = await this.$refs.medic.$refs.medicStep.validate()
+      const valid = await this.$refs.secondStep.$refs.formValidate.validate()
       if (!valid) {
         return
       }
-      const form = await this.$refs.medic.form
-      this.form = { ...form }
-      this.$store.dispatch('isoman/updateForm', form)
+      this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 3)
       window.scrollTo({
         top: 0,
