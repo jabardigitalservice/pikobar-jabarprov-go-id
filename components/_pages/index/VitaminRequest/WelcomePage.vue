@@ -18,7 +18,7 @@
       </button>
     </div>
     <div class="welcome-page__ilustration lg:w-1/2">
-      <img src="~assets/vitamin-request.png" width="482px" height="348px">
+      <img src="~assets/vitamin-request.png" width="482px" height="348px" alt="Vitamin Request">
     </div>
   </div>
 </template>
@@ -65,7 +65,7 @@ h2, p {
   @media (min-width: 1024px) {
     &__background {
       background-image: url('~assets/vitamin-request-background.png');
-      height: 60vh;
+      height: 75vh;
     }
   }
 
