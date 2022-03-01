@@ -2,7 +2,9 @@
   <div class="flex flex-col">
     <label :for="name">
       <span class="input-label md:text-base">{{ label }}</span>
-      <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
+      <em v-show="model === 'landmark'" class="text-sm md:text-base">(Blok/Unit/Patokan)</em>
+      <em v-if="required" class="text-sm md:text-base">(wajib diisi)</em>
+      <em v-else class="text-sm md:text-base">(optional)</em>
     </label>
     <input
       :value="value"
@@ -35,6 +37,10 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    model: {
+      type: String,
+      default: null
     },
     required: {
       type: Boolean,
