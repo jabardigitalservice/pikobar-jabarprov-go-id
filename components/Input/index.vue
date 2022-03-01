@@ -15,7 +15,7 @@
       :accept="accept"
       :max="date(new Date(),'yyyy-MM-dd')"
       @input="$emit('input', $event.target.value)"
-      @change="onChange(name, $event.target.value)"
+      @change="$emit('change', $event.target.value)"
       @blur="$emit('blur')"
       @focus="$emit('focus')"
     >
@@ -24,8 +24,6 @@
 
 <script>
 import { format } from 'date-fns'
-import { extend } from 'vee-validate'
-import { checkNikAvailability } from '~/api/isoman'
 
 export default {
   $_veeValidate: {
@@ -69,37 +67,11 @@ export default {
     type: {
       type: String,
       default: 'text'
-    },
-    requestType: {
-      type: String,
-      default: null
     }
   },
   data () {
     return {
       date: format
-    }
-  },
-  methods: {
-    onChange (name) {
-      if (name === 'NIK') {
-        extend('nikAvailability', {
-          validate: async () => {
-            try {
-              await checkNikAvailability({
-                nik: this.value,
-                request_type: this.requestType
-              })
-              return true
-            } catch (e) {
-              return false
-            }
-          },
-          message: 'NIK belum dapat digunakan karena belum memenuhi syarat untuk mengajukan permohonan'
-        })
-      } else {
-        return true
-      }
     }
   }
 }
