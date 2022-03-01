@@ -38,7 +38,6 @@ export default {
       yAxis: null,
       legends: null,
       tooltip: null,
-      buildTimeout: null,
       lineType: [
         {
           text: 'Aktif',
@@ -65,10 +64,7 @@ export default {
   },
   watch: {
     chartData () {
-      clearTimeout(this.buildTimeout)
-      this.buildTimeout = setTimeout(() => {
-        this.updateData()
-      }, 2000)
+      this.updateData()
     }
   },
   mounted () {

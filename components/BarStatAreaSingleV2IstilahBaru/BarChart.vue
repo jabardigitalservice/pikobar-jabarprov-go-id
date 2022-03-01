@@ -37,20 +37,16 @@ export default {
       xAxis: null,
       yAxis: null,
       legends: null,
-      tooltip: null,
-      buildTimeout: null
+      tooltip: null
     }
   },
   watch: {
     chartData () {
-      clearTimeout(this.buildTimeout)
-      this.buildTimeout = setTimeout(() => {
-        this.updateData()
-      }, 2000)
+      this.updateData()
     }
   },
   mounted () {
-    window.addEventListener('resize', this.updateData)
+    window.addEventListener('resize', () => { this.updateData(99, false) })
     this.updateData()
   },
   methods: {
@@ -73,6 +69,9 @@ export default {
         window.cancelAnimationFrame(this.animation)
       }
       const element = this.$refs.chart
+      if (!element) {
+        return
+      }
 
       this.contentWidth =
         element.offsetWidth - this.margin.left - this.margin.right

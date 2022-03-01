@@ -911,8 +911,6 @@ export default {
           }
         }
       }
-
-      this.changeData()
     },
     dataNasionalHarian (val) {
       for (let i = 0; i < val.length; i++) {
@@ -973,8 +971,6 @@ export default {
 
       this.jsonDataKasus.provinsi.satuan.mingguan = data.mingguan
       this.jsonDataKasus.provinsi.kumulatif.mingguan = data.kumulatif
-
-      this.changeData()
     },
     dataKasusDwiMingguanProvinsi (val) {
       const data = {
@@ -995,8 +991,6 @@ export default {
 
       this.jsonDataKasus.provinsi.satuan.dwimingguan = data.dwimingguan
       this.jsonDataKasus.provinsi.kumulatif.dwimingguan = data.kumulatif
-
-      this.changeData()
     },
     dataKasusMingguanKota (val) {
       for (let j = 0; j < this.jsonDataKasus.kota.length; j++) {
@@ -1017,8 +1011,6 @@ export default {
           }
         }
       }
-
-      this.changeData()
     },
     dataKasusDwiMingguanKota (val) {
       for (let j = 0; j < this.jsonDataKasus.kota.length; j++) {
@@ -1039,8 +1031,6 @@ export default {
           }
         }
       }
-
-      this.changeData()
     }
   },
   mounted () {
