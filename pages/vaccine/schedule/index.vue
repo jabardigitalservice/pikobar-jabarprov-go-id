@@ -18,6 +18,13 @@
         :icon="faInfoCircle"
         info
         class="mt-8"
+        label="Tim Pikobar mewadahi publikasi kegiatan vaksinasi yang sedang dan akan berlangsung di Jawa Barat. Informasi kegiatan vaksinasi yang tertera pada laman ini tidak diselenggarakan oleh Pikobar."
+      />
+      <BaseAlert
+        v-if="showContent"
+        :icon="faInfoCircle"
+        info
+        class="mt-4"
         :label="`Menampilkan ${schedule.length} informasi jadwal dan lokasi vaksinasi`"
       />
       <VaccinationSchedule
