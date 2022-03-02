@@ -47,7 +47,7 @@ export default [
     required: true,
     model: 'phone_secondary',
     name: 'Nomor Telepon Lainnya',
-    rules: 'required|isPhoneNumber',
+    rules: 'required|isPhoneNumber|isDuplicatePhoneNumber',
     class: 'md:block md:w-full'
   },
   {

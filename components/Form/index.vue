@@ -1,6 +1,7 @@
 <template>
   <ValidationObserver ref="formValidate" class="w-full">
     <form
+      ref="form"
       lazy-validation
     >
       <ValidationProvider
@@ -64,7 +65,7 @@
           :accept="item.accept"
           :note="item.note"
           :type="item.type"
-          @change="(value) => onChange(item.name, value, item.requestType)"
+          @change="(value) => onChange(item.model, value, item.requestType)"
         />
         <div class="flex flex-col mb-4">
           <i class="message">
@@ -125,8 +126,8 @@ export default {
     options (model) {
       return this.listOption[model.toLowerCase()] ?? []
     },
-    onChange (name, value, requestType) {
-      if (name === 'NIK') {
+    onChange (model, value, requestType) {
+      if (model === 'nik') {
         extend('nikAvailability', {
           validate: async () => {
             try {
@@ -142,6 +143,13 @@ export default {
           message: 'NIK belum dapat digunakan karena belum memenuhi syarat untuk mengajukan permohonan'
         })
         this.$emit('requestType', requestType)
+      } else if (model === 'phone_secondary') {
+        extend('isDuplicatePhoneNumber', {
+          validate: () => {
+            return this.form.phone_primary !== this.form.phone_secondary
+          },
+          message: 'Tuliskan nomor kontak yang berbeda'
+        })
       } else {
         return true
       }
