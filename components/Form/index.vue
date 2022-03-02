@@ -164,7 +164,7 @@ export default {
 <style lang="scss" scoped>
 .title {
   @apply mb-6 mt-4;
-  font-family: Lora;
+  font-family: font-lora;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;

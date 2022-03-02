@@ -7,36 +7,14 @@
       Konsultasi dengan dokter mengenai gejala yang Anda rasakan
     </span>
     <div class="step__img">
-      <img
-        v-show="step === 1"
-        src="~/assets/progressbar/progress-1.svg"
-        width="1200px"
-        alt="Identitas Diri"
-      >
-      <img
-        v-show="step === 2"
-        src="~/assets/progressbar/progress-2.svg"
-        width="1200px"
-        alt="Informasi Medis"
-      >
-      <img
-        v-show="step === 3"
-        src="~/assets/progressbar/progress-3.svg"
-        width="1200px"
-        alt="Unggah Data"
-      >
-      <img
-        v-show="step === 4"
-        src="~/assets/progressbar/progress-4.svg"
-        width="1200px"
-        alt="Pratinjau Data"
-      >
-      <img
-        v-show="step === 5"
-        src="~/assets/progressbar/progress-5.svg"
-        width="1200px"
-        alt="Konsultasi"
-      >
+      <div v-for="item in 5" :key="item">
+        <img
+          v-show="step === item"
+          :src="`/_nuxt/assets/progressbar/progress-${item}.svg`"
+          width="1200px"
+          :alt="item"
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -57,7 +35,7 @@ export default {
   @apply mx-auto rounded-lg flex flex-col w-full;
 }
 .step {
-  font-family: Lora;
+  font-family: font-lora;
   display: flex;
   align-items: center;
   color: #424242;
