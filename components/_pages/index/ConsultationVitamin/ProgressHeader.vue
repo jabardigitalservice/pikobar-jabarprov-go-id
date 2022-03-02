@@ -17,25 +17,25 @@
         v-show="step === 2"
         src="~/assets/progressbar/progress-2.svg"
         width="1200px"
-        alt="Identitas Diri"
+        alt="Informasi Medis"
       >
       <img
         v-show="step === 3"
         src="~/assets/progressbar/progress-3.svg"
         width="1200px"
-        alt="Identitas Diri"
+        alt="Unggah Data"
       >
       <img
         v-show="step === 4"
         src="~/assets/progressbar/progress-4.svg"
         width="1200px"
-        alt="Identitas Diri"
+        alt="Pratinjau Data"
       >
       <img
         v-show="step === 5"
         src="~/assets/progressbar/progress-5.svg"
         width="1200px"
-        alt="Identitas Diri"
+        alt="Konsultasi"
       >
     </div>
   </div>
