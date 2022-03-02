@@ -24,6 +24,7 @@
 import { mapState } from 'vuex'
 import firstStepInput from './firstStep'
 import Form from '~/components/Form'
+import Utils from '~/utils/index.js'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
 export default {
   components: {
@@ -67,8 +68,8 @@ export default {
           { name: 'Pilih Kelurahan' },
           ...this.subDistricts
         ],
-        rw: this.generateRtRwOptions('rw'),
-        rt: this.generateRtRwOptions('rt')
+        rw: Utils.generateRtRwOptions('rw'),
+        rt: Utils.generateRtRwOptions('rt')
       }
     }
   },
@@ -112,58 +113,17 @@ export default {
     },
     onCancel () {
       this.$emit('update:step', 0)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      Utils.scrollToTop()
     },
     async onNext () {
       const valid = await this.$refs.firstStep.$refs.formValidate.validate()
       if (!valid) {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        })
+        Utils.scrollToTop()
         return
       }
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    },
-    generateRtRwOptions (val) {
-      switch (val) {
-        case 'rw': {
-          const listRw = []
-          for (let i = 0; i < 60; i++) {
-            listRw.push({
-              name: i + 1,
-              id: i + 1
-            })
-          }
-          return [
-            { name: 'Pilih RW' },
-            ...listRw
-          ]
-        }
-        case 'rt': {
-          const listRt = []
-          for (let i = 0; i < 50; i++) {
-            listRt.push({
-              name: i + 1,
-              id: i + 1
-            })
-          }
-          return [
-            { name: 'Pilih RT' },
-            ...listRt
-          ]
-        }
-        default:
-          return []
-      }
+      Utils.scrollToTop()
     }
   }
 }
