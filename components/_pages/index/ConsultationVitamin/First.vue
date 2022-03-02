@@ -120,6 +120,10 @@ export default {
     async onNext () {
       const valid = await this.$refs.firstStep.$refs.formValidate.validate()
       if (!valid) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
         return
       }
       this.$store.dispatch('isoman/updateForm', this.form)
