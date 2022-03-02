@@ -22,6 +22,7 @@
           :required="item.required"
           :name="item.name"
           :options="options(item.model)"
+          @input="(value) => onChange(item.model, value, item)"
         />
         <TextArea
           v-else-if="item.type === 'area'"
@@ -150,6 +151,8 @@ export default {
           },
           message: 'Tuliskan nomor kontak yang berbeda'
         })
+      } else if (model === 'test_location_id') {
+        this.listForm[3].class = (parseInt(value) === 999999) ? 'inline-block w-full' : 'inline-block w-full hidden'
       } else {
         return true
       }

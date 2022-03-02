@@ -30,7 +30,7 @@ export default [
     label: 'Lokasi Tes Lainnya',
     model: 'other_test_location',
     name: 'Lokasi Lainnya',
-    class: 'inline-block w-full',
+    class: 'inline-block w-full hidden',
     type: 'area',
     placeholder: 'Masukkan nama tempat lokasi jika tidak terdapat pada pilihan di samping'
   },
