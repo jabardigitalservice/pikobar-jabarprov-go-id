@@ -1,7 +1,7 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" />
-    <Form ref="thirdStep" :list-form="inputList" />
+    <Form ref="thirdStep" :list-form="inputList" @update="updateForm" />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -53,6 +53,9 @@ export default {
     this.form = { ...this.formRequest }
   },
   methods: {
+    updateForm (val) {
+      this.form = { ...this.form, ...val }
+    },
     onBack () {
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
