@@ -3,9 +3,8 @@
     <FirstStep v-if="showStep === 1" :step.sync="showStep" />
     <SecondStep v-if="showStep === 2" :step.sync="showStep" />
     <ThirdStep v-if="showStep === 3" :step.sync="showStep" />
-    <PreviewImageStep v-if="showStep === 4" :step.sync="showStep" />
-    <ConfirmationStep v-if="showStep === 5" :step.sync="showStep" />
-    <SuccessPage v-if="showStep === 6" :step.sync="showStep" consultation />
+    <ConfirmationStep v-if="showStep === 4" :step.sync="showStep" />
+    <SuccessPage v-if="showStep === 5" :step.sync="showStep" consultation />
   </div>
 </template>
 
@@ -25,7 +24,7 @@ export default {
   },
   data () {
     return {
-      showStep: 3
+      showStep: 1
     }
   }
 }
