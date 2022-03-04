@@ -24,6 +24,7 @@
 import { mapState } from 'vuex'
 import secondStepInput from './secondStep'
 import Form from '~/components/Form'
+import Utils from '~/utils/index.js'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
 
 export default {
@@ -84,22 +85,17 @@ export default {
     onBack () {
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 1)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      Utils.scrollToTop()
     },
     async onNext () {
       const valid = await this.$refs.secondStep.$refs.formValidate.validate()
       if (!valid) {
+        Utils.scrollToTop()
         return
       }
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 3)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      Utils.scrollToTop()
     }
   }
 }
