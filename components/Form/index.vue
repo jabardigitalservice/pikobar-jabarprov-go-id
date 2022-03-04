@@ -15,6 +15,13 @@
         <div v-if="item.type === 'heading'">
           {{ item.label }}
         </div>
+        <BaseAlert
+          v-else-if="item.step === 3"
+          :icon="faInfoCircle"
+          info
+          class="mt-8 alert__content"
+          label="Pastikan bukti foto merupakan dokumen resmi dari Laboratorium/Klinik/RS yang mencantumkan keterangan tanggal dan hasil tes."
+        />
         <SelectInput
           v-else-if="item.type === 'select'"
           v-model="form[item.model]"
@@ -83,6 +90,8 @@
 
 <script>
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import BaseAlert from '@/components/Base/Alert'
 import Input from '~/components/Input'
 import FileInput from '~/components/FileInput'
 import SelectInput from '~/components/SelectInput'
@@ -98,7 +107,8 @@ export default {
     SelectInput,
     TextArea,
     FileInput,
-    RadioButton
+    RadioButton,
+    BaseAlert
   },
   props: {
     listForm: {
@@ -112,7 +122,8 @@ export default {
   },
   data () {
     return {
-      form: {}
+      form: {},
+      faInfoCircle
     }
   },
   watch: {
@@ -177,5 +188,13 @@ export default {
   &__error {
     @apply text-sm text-red-500;
   }
+}
+.alert__content {
+  @apply font-roboto text-brand-black;
+  font-size: 14px;
+  word-spacing: 1px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 45px;
 }
 </style>
