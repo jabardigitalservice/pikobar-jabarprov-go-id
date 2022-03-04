@@ -10,7 +10,7 @@
       <div v-for="item in 5" :key="item">
         <img
           v-show="step === item"
-          :src="`/_nuxt/assets/progressbar/progress-${item}.svg`"
+          :src="img"
           width="1200px"
           :alt="item"
         >
@@ -25,6 +25,11 @@ export default {
     step: {
       type: Number,
       default: null
+    }
+  },
+  computed: {
+    img () {
+      return require(`~/assets/progressbar/progress-${this.step}.svg`)
     }
   }
 }
