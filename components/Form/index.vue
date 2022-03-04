@@ -1,6 +1,7 @@
 <template>
   <ValidationObserver ref="formValidate" class="w-full">
     <form
+      ref="form"
       lazy-validation
     >
       <ValidationProvider
@@ -21,6 +22,7 @@
           :required="item.required"
           :name="item.name"
           :options="options(item.model)"
+          @input="(value) => onChange(item.model, value, item)"
         />
         <TextArea
           v-else-if="item.type === 'area'"
@@ -64,7 +66,7 @@
           :accept="item.accept"
           :note="item.note"
           :type="item.type"
-          @change="(value) => onChange(item.name, value, item.requestType)"
+          @change="(value) => onChange(item.model, value, item.requestType)"
         />
         <div class="flex flex-col mb-4">
           <i class="message">
@@ -125,8 +127,8 @@ export default {
     options (model) {
       return this.listOption[model.toLowerCase()] ?? []
     },
-    onChange (name, value, requestType) {
-      if (name === 'NIK') {
+    onChange (model, value, requestType) {
+      if (model === 'nik') {
         extend('nikAvailability', {
           validate: async () => {
             try {
@@ -142,6 +144,15 @@ export default {
           message: 'NIK belum dapat digunakan karena belum memenuhi syarat untuk mengajukan permohonan'
         })
         this.$emit('requestType', requestType)
+      } else if (model === 'phone_secondary') {
+        extend('isDuplicatePhoneNumber', {
+          validate: () => {
+            return this.form.phone_primary !== this.form.phone_secondary
+          },
+          message: 'Tuliskan nomor kontak yang berbeda'
+        })
+      } else if (model === 'test_location_id') {
+        this.listForm[3].class = (parseInt(value) === 999999) ? 'inline-block w-full' : 'inline-block w-full hidden'
       } else {
         return true
       }
@@ -153,7 +164,7 @@ export default {
 <style lang="scss" scoped>
 .title {
   @apply mb-6 mt-4;
-  font-family: Lora;
+  font-family: font-lora;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
