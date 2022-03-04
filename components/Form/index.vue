@@ -14,14 +14,14 @@
       >
         <div v-if="item.type === 'heading'">
           {{ item.label }}
+          <BaseAlert
+            v-if="item.step === 3"
+            :icon="faInfoCircle"
+            info
+            class="mt-4 alert__content"
+            label="Pastikan bukti foto merupakan dokumen resmi dari Laboratorium/Klinik/RS yang mencantumkan keterangan tanggal dan hasil tes."
+          />
         </div>
-        <BaseAlert
-          v-else-if="item.step === 3"
-          :icon="faInfoCircle"
-          info
-          class="mt-8 alert__content"
-          label="Pastikan bukti foto merupakan dokumen resmi dari Laboratorium/Klinik/RS yang mencantumkan keterangan tanggal dan hasil tes."
-        />
         <SelectInput
           v-else-if="item.type === 'select'"
           v-model="form[item.model]"
