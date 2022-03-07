@@ -14,6 +14,13 @@
       >
         <div v-if="item.type === 'heading'">
           {{ item.label }}
+          <BaseAlert
+            v-if="item.step === 3"
+            :icon="faInfoCircle"
+            info
+            class="mt-4 alert__content"
+            label="Pastikan bukti foto merupakan dokumen resmi dari Laboratorium/Klinik/RS yang mencantumkan keterangan tanggal dan hasil tes."
+          />
         </div>
         <SelectInput
           v-else-if="item.type === 'select'"
@@ -42,6 +49,7 @@
           :placeholder="item.placeholder"
           :accept="item.accept"
           :note="item.note"
+          @input="(value) => onChange(item.model, value, item)"
         />
         <RadioButton
           v-else-if="item.type === 'radio'"
@@ -83,6 +91,8 @@
 
 <script>
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import BaseAlert from '@/components/Base/Alert'
 import Input from '~/components/Input'
 import FileInput from '~/components/FileInput'
 import SelectInput from '~/components/SelectInput'
@@ -98,7 +108,8 @@ export default {
     SelectInput,
     TextArea,
     FileInput,
-    RadioButton
+    RadioButton,
+    BaseAlert
   },
   props: {
     listForm: {
@@ -112,7 +123,8 @@ export default {
   },
   data () {
     return {
-      form: {}
+      form: {},
+      faInfoCircle
     }
   },
   watch: {
@@ -152,7 +164,9 @@ export default {
           message: 'Tuliskan nomor kontak yang berbeda'
         })
       } else if (model === 'test_location_id') {
-        this.listForm[3].class = (parseInt(value) === 999999) ? 'inline-block w-full' : 'inline-block w-full hidden'
+        this.listForm[4].class = (parseInt(value) === 999999) ? 'inline-block w-full' : 'inline-block w-full hidden'
+      } else if (model === 'ktp_photo' || model === 'test_result_photo') {
+        this.$emit('preview', model, value)
       } else {
         return true
       }
@@ -177,5 +191,13 @@ export default {
   &__error {
     @apply text-sm text-red-500;
   }
+}
+.alert__content {
+  @apply font-roboto text-brand-black;
+  font-size: 14px;
+  word-spacing: 1px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 45px;
 }
 </style>
