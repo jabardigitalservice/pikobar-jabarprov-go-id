@@ -68,7 +68,6 @@ export default {
         evidence
       ],
       form: {},
-      formImage: {},
       isLoading: false,
       showAlert: false,
       alertMessage: 'Terjadi Kesalahan'
