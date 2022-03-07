@@ -1,5 +1,10 @@
 export default [
   {
+    label: 'Informasi Medis',
+    type: 'heading',
+    class: 'title'
+  },
+  {
     label: 'Tanggal Pemeriksaan',
     required: true,
     model: 'date_check',

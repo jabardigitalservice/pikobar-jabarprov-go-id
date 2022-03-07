@@ -1,7 +1,8 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" />
-    <Form ref="thirdStep" :list-form="inputList" @update="updateForm" />
+    <PreviewUpload v-if="formImage.modelKTP && formImage.modelTestResult" :form-image="formImage" @update="updateFormImage" />
+    <Form v-else ref="thirdStep" :list-form="inputList" @update="updateForm" @preview="updatePreview" />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -26,10 +27,12 @@ import thirdStepInput from './thirdStep.js'
 import Utils from '~/utils/index.js'
 import Form from '~/components/Form'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
+import PreviewUpload from '~/components/_pages/index/ConsultationVitamin/PreviewUpload.vue'
 
 export default {
   components: {
     Progress,
+    PreviewUpload,
     Form
   },
   props: {
@@ -41,7 +44,8 @@ export default {
   data () {
     return {
       inputList: thirdStepInput,
-      form: {}
+      form: {},
+      formImage: {}
     }
   },
   computed: {
@@ -53,6 +57,30 @@ export default {
     this.form = { ...this.formRequest }
   },
   methods: {
+    updatePreview (model, val) {
+      if (model === 'ktp_photo') {
+        this.form.ktp_photo = val
+        this.formImage = {
+          ...this.formImage,
+          modelKTP: model,
+          typeKTP: val.type,
+          fileNameKTP: val.name,
+          imageKTP: URL.createObjectURL(val)
+        }
+      } else if (model === 'test_result_photo') {
+        this.form.test_result_photo = val
+        this.formImage = {
+          ...this.formImage,
+          modelTestResult: model,
+          typeTestResult: val.type,
+          fileNameTestResult: val.name,
+          imageTestResult: URL.createObjectURL(val)
+        }
+      }
+    },
+    updateFormImage () {
+      this.formImage = {}
+    },
     updateForm (val) {
       this.form = { ...this.form, ...val }
     },
@@ -62,10 +90,12 @@ export default {
       Utils.scrollToTop()
     },
     async onNext () {
-      const valid = await this.$refs.thirdStep.$refs.formValidate.validate()
-      if (!valid) {
-        Utils.scrollToTop()
-        return
+      if (!this.formImage.modelKTP || !this.formImage.modelTestResult) {
+        const valid = await this.$refs.thirdStep.$refs.formValidate.validate()
+        if (!valid) {
+          Utils.scrollToTop()
+          return
+        }
       }
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 4)

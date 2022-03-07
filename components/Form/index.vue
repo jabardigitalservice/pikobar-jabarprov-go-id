@@ -49,6 +49,7 @@
           :placeholder="item.placeholder"
           :accept="item.accept"
           :note="item.note"
+          @input="(value) => onChange(item.model, value, item)"
         />
         <RadioButton
           v-else-if="item.type === 'radio'"
@@ -163,7 +164,9 @@ export default {
           message: 'Tuliskan nomor kontak yang berbeda'
         })
       } else if (model === 'test_location_id') {
-        this.listForm[3].class = (parseInt(value) === 999999) ? 'inline-block w-full' : 'inline-block w-full hidden'
+        this.listForm[4].class = (parseInt(value) === 999999) ? 'inline-block w-full' : 'inline-block w-full hidden'
+      } else if (model === 'ktp_photo' || model === 'test_result_photo') {
+        this.$emit('preview', model, value)
       } else {
         return true
       }
