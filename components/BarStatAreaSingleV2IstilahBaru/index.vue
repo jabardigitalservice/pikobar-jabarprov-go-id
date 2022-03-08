@@ -1116,6 +1116,7 @@ export default {
     enableHarian () {
       this.stat.isActiveHarian = true
       this.stat.isActiveAkumulatif = false
+
       this.changeData()
     },
     enableAkumulatif () {
@@ -1140,6 +1141,7 @@ export default {
           this.selectedListGroupWaktuLabel = this.optionListGroupWaktu[i].label
         }
       }
+
       this.changeData()
     },
     changeData () {

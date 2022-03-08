@@ -37,7 +37,8 @@ export default {
       xAxis: null,
       yAxis: null,
       legends: null,
-      tooltip: null
+      tooltip: null,
+      animation: null
     }
   },
   watch: {
@@ -51,7 +52,7 @@ export default {
   },
   methods: {
     updateData () {
-      if (this.chartData === null) {
+      if (this.chartData === null || this.chartData.length === 0) {
         return
       }
 
@@ -348,7 +349,6 @@ export default {
       }
 
       const data = this.datasets
-
       this.context.clearRect(0, 0, this.contentWidth, this.contentHeight)
 
       data.forEach((val) => {
