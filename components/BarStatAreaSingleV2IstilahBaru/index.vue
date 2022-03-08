@@ -152,6 +152,13 @@ export default {
   },
   data () {
     return {
+      loadedHarianProvinsi: false,
+      loadedHarianKota: false,
+      loadedMingguanProvinsi: false,
+      loadedMingguanKota: false,
+      loadedDwimingguanKota: false,
+      loadedDwimingguanProvinsi: false,
+      loadedNasional: false,
       stat: {
         isActiveHarian: true,
         isActiveAkumulatif: false
@@ -893,6 +900,7 @@ export default {
         this.jsonDataKasus.provinsi.satuan.harian = data.harian
         this.jsonDataKasus.provinsi.kumulatif.harian = data.kumulatif
       })
+      this.loadedHarianProvinsi = true
 
       this.changeData()
     },
@@ -911,6 +919,9 @@ export default {
           }
         }
       }
+      this.loadedHarianKota = true
+
+      this.changeData()
     },
     dataNasionalHarian (val) {
       for (let i = 0; i < val.length; i++) {
@@ -951,6 +962,9 @@ export default {
         const temp3 = { ...temp1, ...temp2 }
         this.jsonDataNasionalHarianKumulatif.push(temp3)
       }
+      this.loadedNasional = true
+
+      this.changeData()
     },
     dataKasusMingguanProvinsi (val) {
       const data = {
@@ -971,6 +985,9 @@ export default {
 
       this.jsonDataKasus.provinsi.satuan.mingguan = data.mingguan
       this.jsonDataKasus.provinsi.kumulatif.mingguan = data.kumulatif
+      this.loadedMingguanProvinsi = true
+
+      this.changeData()
     },
     dataKasusDwiMingguanProvinsi (val) {
       const data = {
@@ -991,6 +1008,9 @@ export default {
 
       this.jsonDataKasus.provinsi.satuan.dwimingguan = data.dwimingguan
       this.jsonDataKasus.provinsi.kumulatif.dwimingguan = data.kumulatif
+      this.loadedDwimingguanProvinsi = true
+
+      this.changeData()
     },
     dataKasusMingguanKota (val) {
       for (let j = 0; j < this.jsonDataKasus.kota.length; j++) {
@@ -1011,6 +1031,9 @@ export default {
           }
         }
       }
+      this.loadedMingguanKota = true
+
+      this.changeData()
     },
     dataKasusDwiMingguanKota (val) {
       for (let j = 0; j < this.jsonDataKasus.kota.length; j++) {
@@ -1031,6 +1054,9 @@ export default {
           }
         }
       }
+      this.loadedDwimingguanKota = true
+
+      this.changeData()
     }
   },
   mounted () {
@@ -1116,7 +1142,6 @@ export default {
     enableHarian () {
       this.stat.isActiveHarian = true
       this.stat.isActiveAkumulatif = false
-
       this.changeData()
     },
     enableAkumulatif () {
@@ -1129,7 +1154,7 @@ export default {
         this.selectedListGroupWaktu = 'harian'
       }
       this.selectedListWilayah = stat
-      this.changeData()
+      this.fetchData()
     },
     changeFilterGroupWaktu () {
       if (this.selectedListGroupWaktu !== 'harian') {
@@ -1142,7 +1167,7 @@ export default {
         }
       }
 
-      this.changeData()
+      this.fetchData()
     },
     changeData () {
       if (this.selectedListGroupWaktu !== 'harian') {
@@ -1176,6 +1201,78 @@ export default {
           this.fetchDataNasionalKumulatif()
         } else {
           this.fetchDataKabupatenKumulatif()
+        }
+      }
+    },
+    fetchData () {
+      if (this.selectedListGroupWaktu === 'harian') {
+        switch (this.selectedListWilayah) {
+          case 'Jawa Barat':
+            if (!this.loadedHarianProvinsi) {
+              this.$store.dispatch('data-kasus-harian-v2/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          case 'Indonesia':
+            if (!this.loadedNasional) {
+              this.$store.dispatch('data-nasional-harian/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          default:
+            if (!this.loadedHarianKota) {
+              this.$store.dispatch('data-kasus-harian-kota-v2/getItems')
+            } else {
+              this.changeData()
+            }
+        }
+      } else if (this.selectedListGroupWaktu === 'mingguan') {
+        switch (this.selectedListWilayah) {
+          case 'Jawa Barat':
+            if (!this.loadedMingguanProvinsi) {
+              this.$store.dispatch('data-kasus-mingguan-provinsi-v2/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          case 'Indonesia':
+            if (!this.loadedNasional) {
+              this.$store.dispatch('data-nasional-harian/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          default:
+            if (!this.loadedMingguanKota) {
+              this.$store.dispatch('data-kasus-mingguan-kota-v2/getItems')
+            } else {
+              this.changeData()
+            }
+        }
+      } else {
+        switch (this.selectedListWilayah) {
+          case 'Jawa Barat':
+            if (!this.loadedDwimingguanProvinsi) {
+              this.$store.dispatch('data-kasus-dwimingguan-provinsi-v2/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          case 'Indonesia':
+            if (!this.loadedNasional) {
+              this.$store.dispatch('data-nasional-harian/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          default:
+            if (!this.loadedDwimingguanKota) {
+              this.$store.dispatch('data-kasus-dwimingguan-kota-v2/getItems')
+            } else {
+              this.changeData()
+            }
         }
       }
     },

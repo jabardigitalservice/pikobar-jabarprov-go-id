@@ -205,18 +205,9 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      Promise.all([
-        this.$store.dispatch('data-kasus-total-v2/getItems'),
-        this.$store.dispatch('data-nasional-harian/getItems'),
-        this.$store.dispatch('data-kasus-harian-v2/getItems'),
-        this.$store.dispatch('data-kasus-harian-kota-v2/getItems'),
-        this.$store.dispatch('data-kasus-mingguan-kota-v2/getItems'),
-        this.$store.dispatch('data-kasus-mingguan-provinsi-v2/getItems'),
-        this.$store.dispatch('data-kasus-dwimingguan-kota-v2/getItems'),
-        this.$store.dispatch('data-kasus-dwimingguan-provinsi-v2/getItems'),
-        this.$store.dispatch('statistics/getCases'),
-      ]).then(() => {
-      })
+      this.$store.dispatch('data-kasus-total-v2/getItems')
+      this.$store.dispatch('data-kasus-harian-v2/getItems')
+      this.$store.dispatch('statistics/getCases')
 
       if (process.browser) {
         analytics.logEvent('dashboard_view')
