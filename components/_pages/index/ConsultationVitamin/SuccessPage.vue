@@ -1,6 +1,6 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
-    <Progress :step.sync="step" />
+    <Progress :step.sync="step" :consultation="consultation" />
     <div class="success-page__title">
       Konsultasi
     </div>

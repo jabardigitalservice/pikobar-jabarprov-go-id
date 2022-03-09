@@ -1,6 +1,6 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
-    <Progress :step.sync="step" />
+    <Progress :step.sync="step" :consultation="consultation" />
     <Form ref="secondStep" :list-option="listOption" :list-form="inputList" @update="updateForm" />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
@@ -36,6 +36,10 @@ export default {
     step: {
       type: Number,
       default: null
+    },
+    consultation: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
