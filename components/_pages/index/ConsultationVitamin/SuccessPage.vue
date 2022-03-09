@@ -62,8 +62,8 @@
 <script>
 import { mapState } from 'vuex'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { consultationLink } from '../IsolasiMandiri/backlinks'
-import BaseAlert from '@/components/Base/Alert'
+import { consultationLink } from '~/components/_pages/index/IsolasiMandiri/backlinks'
+import BaseAlert from '~/components/Base/Alert'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
 
 export default {
