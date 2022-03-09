@@ -1,7 +1,13 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
-    <Progress :step.sync="step" />
-    <Form ref="firstStep" :list-option="listOption" :list-form="inputList" @update="updateForm" @requestType="updateRequestType" />
+    <Progress :step.sync="step" :consultation="consultation" />
+    <Form
+      ref="firstStep"
+      :list-option="listOption"
+      :list-form="inputList"
+      @update="updateForm"
+      @requestType="updateRequestType"
+    />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -23,6 +29,7 @@
 <script>
 import { mapState } from 'vuex'
 import firstStepInput from './firstStep'
+import firstStepVitaminInput from './firstStepVitamin'
 import Form from '~/components/Form'
 import Utils from '~/utils/index.js'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
@@ -39,11 +46,16 @@ export default {
     step: {
       type: Number,
       default: null
+    },
+    consultation: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      inputList: firstStepInput,
+      firstStepInput,
+      firstStepVitaminInput,
       form: {}
     }
   },
@@ -54,6 +66,9 @@ export default {
       'districts',
       'subDistricts'
     ]),
+    inputList () {
+      return (this.consultation) ? firstStepInput : firstStepVitaminInput
+    },
     listOption () {
       return {
         city_id: [
