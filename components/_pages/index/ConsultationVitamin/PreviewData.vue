@@ -28,7 +28,7 @@
         @click="onNext"
       >
         <Spinner v-if="isLoading" />
-        <span v-else>Selanjutnya</span>
+        <span v-else>{{ buttonText }}</span>
       </button>
     </div>
   </div>
@@ -70,7 +70,8 @@ export default {
       form: {},
       isLoading: false,
       showAlert: false,
-      alertMessage: 'Terjadi Kesalahan'
+      buttonText: 'Selanjutnya',
+      alertMessage: 'Submit data gagal, silakan coba lagi.'
     }
   },
   computed: {
@@ -92,6 +93,7 @@ export default {
         this.$emit('update:step', 5)
         Utils.scrollToTop()
       } else {
+        this.buttonText = 'Coba Lagi'
         this.showAlert = true
       }
     }
