@@ -4,7 +4,7 @@
       {{ title }}
     </span>
     <span class="step__info">
-      {{ subTitle }}
+      {{ subtitle }}
     </span>
     <div class="step__img">
       <div v-for="item in 5" :key="item">
@@ -36,10 +36,10 @@ export default {
       return require(`~/assets/progressbar/progress-${this.step}.svg`)
     },
     title () {
-      return (this.consultation) ? 'Konsultasi Dokter' : 'Pengajuan Vitamin'
+      return this.consultation ? 'Konsultasi Dokter' : 'Pengajuan Vitamin'
     },
-    subTitle () {
-      return (this.consultation) ? 'Konsultasi dengan dokter mengenai gejala yang Anda rasakan' : 'Ajukan vitamin ketika Anda sedang melakukan isolasi mandiri dengan mengisi form ini'
+    subtitle () {
+      return this.consultation ? 'Konsultasi dengan dokter mengenai gejala yang Anda rasakan' : 'Ajukan vitamin ketika Anda sedang melakukan isolasi mandiri dengan mengisi form ini'
     }
   }
 }
