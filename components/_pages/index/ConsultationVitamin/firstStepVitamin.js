@@ -12,7 +12,7 @@ export default [
     placeholder: 'Tulis NIK',
     rules: 'required|length:16|numeric|nikAvailability',
     class: 'md:block md:w-full',
-    requestType: 'obat_vitamin'
+    requestType: 'vitamin'
   },
   {
     label: 'Nama Lengkap',
