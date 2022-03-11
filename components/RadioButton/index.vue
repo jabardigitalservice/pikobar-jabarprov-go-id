@@ -2,7 +2,6 @@
   <div class="flex flex-col">
     <label :for="name">
       <span class="input-label md:text-base">{{ label }}</span>
-      <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
     </label>
     <div
       v-for="option in options"

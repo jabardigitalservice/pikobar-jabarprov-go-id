@@ -2,7 +2,7 @@
   <div class="text-area">
     <label :for="name">
       <span class="text-area__label md:text-base">{{ label }}</span>
-      <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
+      <span v-show="model === 'address'" class="text-sm md:text-base text-gray-500">(Nama Jalan)</span>
     </label>
     <textarea
       :name="name"
@@ -26,6 +26,10 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    model: {
+      type: String,
+      default: null
     },
     value: {
       type: String,
