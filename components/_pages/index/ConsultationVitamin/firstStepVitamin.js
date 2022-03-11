@@ -5,6 +5,33 @@ export default [
     class: 'title'
   },
   {
+    label: 'Nama Pasien',
+    required: true,
+    model: 'name',
+    name: 'Nama Pasien',
+    placeholder: 'Tulis nama lengkap',
+    rules: 'required',
+    class: 'md:block md:w-full'
+  },
+  {
+    label: 'Nama Pemohon',
+    required: true,
+    model: 'applicant_name',
+    ref: 'applicantName',
+    name: 'Nama Pemohon',
+    placeholder: 'Tulis nama lengkap',
+    rules: 'required',
+    class: 'md:block md:w-full'
+  },
+  {
+    label: 'Sama dengan pasien',
+    required: false,
+    model: 'simmillary_name',
+    name: 'Nama Sama Dengan Pasien',
+    class: 'md:block md:w-full input-checkbox',
+    type: 'checkbox'
+  },
+  {
     label: 'NIK',
     required: true,
     model: 'nik',
@@ -13,15 +40,6 @@ export default [
     rules: 'required|length:16|numeric|nikAvailability',
     class: 'md:block md:w-full',
     requestType: 'vitamin'
-  },
-  {
-    label: 'Nama Lengkap',
-    required: true,
-    model: 'name',
-    name: 'Nama Lengkap',
-    placeholder: 'Tulis nama lengkap',
-    rules: 'required',
-    class: 'md:block md:w-full'
   },
   {
     label: 'Tanggal Lahir',
