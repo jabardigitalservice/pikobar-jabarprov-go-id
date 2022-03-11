@@ -1,7 +1,14 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" />
-    <Form ref="firstStep" :list-option="listOption" :list-form="inputList" @update="updateForm" @requestType="updateRequestType" />
+    <Form
+      ref="firstStep"
+      :list-option="listOption"
+      :list-form="inputList"
+      @update="updateForm"
+      @requestType="updateRequestType"
+      @applicantName="updateApplicantName"
+    />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -107,6 +114,9 @@ export default {
   methods: {
     updateRequestType (val) {
       this.form.request_type = val
+    },
+    updateApplicantName (val) {
+      this.form.applicant_name = val
     },
     updateForm (val) {
       this.form = { ...this.form, ...val }
