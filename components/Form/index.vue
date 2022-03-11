@@ -35,6 +35,7 @@
           v-else-if="item.type === 'area'"
           v-model="form[item.model]"
           :label="item.label"
+          :model="item.model"
           :required="item.required"
           :name="item.name"
           :placeholder="item.placeholder"
@@ -65,6 +66,7 @@
         />
         <Input
           v-else
+          :ref="item.ref"
           v-model="form[item.model]"
           :label="item.label"
           :required="item.required"
@@ -75,6 +77,7 @@
           :note="item.note"
           :type="item.type"
           @change="(value) => onChange(item.model, value, item.requestType)"
+          @click="(value) => onClick(item.model, value)"
         />
         <div class="flex flex-col mb-4">
           <i class="message">
@@ -138,6 +141,17 @@ export default {
   methods: {
     options (model) {
       return this.listOption[model.toLowerCase()] ?? []
+    },
+    onClick (model, value) {
+      if (model === 'simmillary_name') {
+        if (value) {
+          this.$refs.applicantName[0].$emit('input', this.form.name)
+          this.$emit('applicantName', this.form.name)
+        } else {
+          this.$refs.applicantName[0].$emit('input', null)
+          this.$emit('applicantName', null)
+        }
+      }
     },
     onChange (model, value, requestType) {
       if (model === 'nik') {
