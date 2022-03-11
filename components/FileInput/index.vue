@@ -2,7 +2,6 @@
   <div class="file-input">
     <label :for="name">
       <span class="file-input__label md:text-base">{{ label }}</span>
-      <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
     </label>
     <div class="file-input__container" @click="onChooseFile">
       <FontAwesomeIcon

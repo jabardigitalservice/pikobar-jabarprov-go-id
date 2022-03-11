@@ -7,6 +7,7 @@
       :list-form="inputList"
       @update="updateForm"
       @requestType="updateRequestType"
+      @applicantName="updateApplicantName"
     />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
@@ -122,6 +123,9 @@ export default {
   methods: {
     updateRequestType (val) {
       this.form.request_type = val
+    },
+    updateApplicantName (val) {
+      this.form.applicant_name = val
     },
     updateForm (val) {
       this.form = { ...this.form, ...val }

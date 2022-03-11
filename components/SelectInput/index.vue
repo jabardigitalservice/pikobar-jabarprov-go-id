@@ -2,7 +2,6 @@
   <div>
     <label :for="name">
       <span class="select-input__label md:text-base">{{ label }}</span>
-      <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
     </label>
     <div class="select-input">
       <select

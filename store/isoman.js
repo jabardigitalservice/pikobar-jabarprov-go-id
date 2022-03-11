@@ -16,6 +16,7 @@ export const state = () => ({
   formRequest: {
     request_type: null, // @todo: set this prop dynamically when medicine request feature available
     name: '',
+    applicant_name: '',
     nik: '',
     ktp_photo: null,
     birth_date: null,
@@ -70,6 +71,7 @@ export const mutations = {
     state.formRequest = {
       request_type: 'vitamin', // @todo: set this prop dynamically when medicine request feature available
       name: '',
+      applicant_name: '',
       nik: '',
       ktp_photo: null,
       birth_date: null,
