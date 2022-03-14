@@ -45,6 +45,14 @@
                   <img src="~/assets/icons/copy-clipboard.svg" width="16px" alt="copy to clipboard">
                 </button>
               </div>
+              <div class="inline-block justify-end">
+                <BaseAlert
+                  v-show="clipboard"
+                  info
+                  class="clipboard"
+                  label="copied to clipboard"
+                />
+              </div>
             </span>
           </div>
         </div>
@@ -84,6 +92,7 @@ export default {
   data () {
     return {
       faInfoCircle,
+      clipboard: false,
       result: null,
       whatsappBacklink: consultationLink,
       messageInfo: null,
@@ -119,6 +128,10 @@ export default {
     },
     onCopy () {
       navigator.clipboard.writeText(this.receipt.request_number)
+      this.clipboard = true
+      setTimeout(() => {
+        this.clipboard = false
+      }, 2000)
     }
   }
 }
@@ -170,5 +183,30 @@ export default {
     font-style: normal;
     line-height: 45px;
   }
+}
+.clipboard {
+  width: 185px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  animation: fadeIn linear 1s;
+  -webkit-animation: fadeIn linear 1s;
+  -moz-animation: fadeIn linear 1s;
+  -o-animation: fadeIn linear 1s;
+  -ms-animation: fadeIn linear 1s;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }
 </style>
