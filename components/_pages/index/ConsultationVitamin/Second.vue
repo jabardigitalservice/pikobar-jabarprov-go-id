@@ -84,7 +84,6 @@ export default {
   },
   methods: {
     updateForm (val) {
-      console.log(val)
       this.form = { ...this.form, ...val }
     },
     onBack () {
