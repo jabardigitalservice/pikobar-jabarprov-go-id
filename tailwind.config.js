@@ -1,5 +1,10 @@
 module.exports = {
   theme: {
+    theme: {
+      screens: {
+        'xs': '280px'
+      }
+    },
     extend: {
       colors: {
         'brand-green-lighter': '#8FC749',

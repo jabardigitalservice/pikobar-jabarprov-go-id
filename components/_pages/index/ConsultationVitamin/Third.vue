@@ -2,7 +2,14 @@
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" :consultation="consultation" />
     <PreviewUpload v-if="formImage.modelKTP && formImage.modelTestResult" :form-image="formImage" @update="updateFormImage" />
-    <Form v-else ref="thirdStep" :list-form="inputList" @update="updateForm" @preview="updatePreview" />
+    <Form
+      v-else
+      ref="thirdStep"
+      :form-data="form"
+      :list-form="inputList"
+      @update="updateForm"
+      @preview="updatePreview"
+    />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button

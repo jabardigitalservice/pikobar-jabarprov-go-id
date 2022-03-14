@@ -3,6 +3,7 @@
     <Progress :step.sync="step" :consultation="consultation" />
     <Form
       ref="firstStep"
+      :form-data="form"
       :list-option="listOption"
       :list-form="inputList"
       @update="updateForm"
@@ -131,7 +132,7 @@ export default {
       this.form = { ...this.form, ...val }
     },
     onCancel () {
-      this.$emit('update:step', 0)
+      this.$emit('update:step', 1)
       Utils.scrollToTop()
     },
     async onNext () {
@@ -140,6 +141,7 @@ export default {
         Utils.scrollToTop()
         return
       }
+      this.form.request_type = this.consultation ? 'obat_vitamin' : 'vitamin'
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
       Utils.scrollToTop()
