@@ -131,6 +131,7 @@ export default {
   data () {
     return {
       form: {},
+      message: null,
       faInfoCircle
     }
   },
@@ -171,10 +172,11 @@ export default {
               })
               return true
             } catch (e) {
-              return false
+              this.message = e.response.data.errors.nik[0]
+              return this.message
             }
           },
-          message: 'NIK belum dapat digunakan karena belum memenuhi syarat untuk mengajukan permohonan'
+          message: this.message
         })
         this.$emit('requestType', requestType)
       } else if (model === 'phone_secondary') {
