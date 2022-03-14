@@ -1,8 +1,9 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
-    <Progress :step.sync="step" />
+    <Progress :step.sync="step" :consultation="consultation" />
     <Form
       ref="firstStep"
+      :form-data="form"
       :list-option="listOption"
       :list-form="inputList"
       @update="updateForm"
@@ -30,6 +31,7 @@
 <script>
 import { mapState } from 'vuex'
 import firstStepInput from './firstStep'
+import firstStepVitaminInput from './firstStepVitamin'
 import Form from '~/components/Form'
 import Utils from '~/utils/index.js'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
@@ -46,11 +48,16 @@ export default {
     step: {
       type: Number,
       default: null
+    },
+    consultation: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      inputList: firstStepInput,
+      firstStepInput,
+      firstStepVitaminInput,
       form: {}
     }
   },
@@ -61,6 +68,9 @@ export default {
       'districts',
       'subDistricts'
     ]),
+    inputList () {
+      return (this.consultation) ? firstStepInput : firstStepVitaminInput
+    },
     listOption () {
       return {
         city_id: [
@@ -122,7 +132,7 @@ export default {
       this.form = { ...this.form, ...val }
     },
     onCancel () {
-      this.$emit('update:step', 0)
+      this.$emit('update:step', 1)
       Utils.scrollToTop()
     },
     async onNext () {
@@ -131,6 +141,7 @@ export default {
         Utils.scrollToTop()
         return
       }
+      this.form.request_type = this.consultation ? 'obat_vitamin' : 'vitamin'
       this.$store.dispatch('isoman/updateForm', this.form)
       this.$emit('update:step', 2)
       Utils.scrollToTop()

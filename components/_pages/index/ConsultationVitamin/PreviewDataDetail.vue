@@ -91,7 +91,6 @@ export default {
 <style lang="scss" scoped>
 .preview-data {
   @apply flex flex-col;
-  font-family: font-roboto;
   background: #FAFAFA;
   border-radius: 8px;
   &__title {

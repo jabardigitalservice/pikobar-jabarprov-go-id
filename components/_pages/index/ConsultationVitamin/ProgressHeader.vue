@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <span class="step__title">
-      Konsultasi Dokter
+      {{ title }}
     </span>
     <span class="step__info">
-      Konsultasi dengan dokter mengenai gejala yang Anda rasakan
+      {{ subtitle }}
     </span>
     <div class="step__img">
       <div v-for="item in 5" :key="item">
@@ -25,11 +25,21 @@ export default {
     step: {
       type: Number,
       default: null
+    },
+    consultation: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     img () {
       return require(`~/assets/progressbar/progress-${this.step}.svg`)
+    },
+    title () {
+      return this.consultation ? 'Konsultasi Dokter' : 'Pengajuan Vitamin'
+    },
+    subtitle () {
+      return this.consultation ? 'Konsultasi dengan dokter mengenai gejala yang Anda rasakan' : 'Ajukan vitamin ketika Anda sedang melakukan isolasi mandiri dengan mengisi form ini'
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <FirstStep v-if="showStep === 1" :step.sync="showStep" />
-    <SecondStep v-if="showStep === 2" :step.sync="showStep" />
-    <ThirdStep v-if="showStep === 3" :step.sync="showStep" />
-    <PreviewData v-if="showStep === 4" :step.sync="showStep" />
+    <FirstStep v-if="showStep === 1" :step.sync="showStep" consultation />
+    <SecondStep v-if="showStep === 2" :step.sync="showStep" consultation />
+    <ThirdStep v-if="showStep === 3" :step.sync="showStep" consultation />
+    <PreviewData v-if="showStep === 4" :step.sync="showStep" consultation />
     <SuccessPage v-if="showStep === 5" :step.sync="showStep" consultation />
   </div>
 </template>
