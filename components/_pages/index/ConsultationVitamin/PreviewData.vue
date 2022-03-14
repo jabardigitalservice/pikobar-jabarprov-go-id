@@ -1,7 +1,7 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" :consultation="consultation" />
-    <Form :list-form="inputList" />
+    <Form :list-form="inputList" :form-data="form" />
     <PreviewDataDetail
       v-for="content in contentList"
       :key="content.title"
@@ -80,8 +80,12 @@ export default {
   },
   computed: {
     ...mapState('isoman', [
+      'formRequest',
       'receipt'
     ])
+  },
+  created () {
+    this.form = { ...this.formRequest }
   },
   methods: {
     onBack () {

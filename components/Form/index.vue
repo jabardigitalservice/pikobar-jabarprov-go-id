@@ -122,6 +122,10 @@ export default {
     listOption: {
       type: Object,
       default: () => ({})
+    },
+    formData: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -137,6 +141,9 @@ export default {
       },
       deep: true
     }
+  },
+  created () {
+    this.form = { ...this.formData }
   },
   methods: {
     options (model) {

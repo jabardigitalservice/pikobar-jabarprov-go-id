@@ -1,7 +1,7 @@
 <template>
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" :consultation="consultation" />
-    <Form ref="secondStep" :list-option="listOption" :list-form="inputList" @update="updateForm" />
+    <Form ref="secondStep" :form-data="form" :list-option="listOption" :list-form="inputList" @update="updateForm" />
     <hr class="my-6 -mx-10">
     <div class="flex justify-end gap-2">
       <button
@@ -78,12 +78,13 @@ export default {
     }
   },
   async created () {
+    this.form = { ...this.formRequest }
     await this.$store.dispatch('isoman/getTestLocations')
     await this.$store.dispatch('isoman/getTestTypes')
-    this.form = { ...this.formRequest }
   },
   methods: {
     updateForm (val) {
+      console.log(val)
       this.form = { ...this.form, ...val }
     },
     onBack () {
