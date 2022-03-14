@@ -13,7 +13,7 @@
       <div class="step__title">
         Unggah Foto KTP
       </div>
-      <div class="flex">
+      <div class="md:flex xs:inline-table">
         <div v-if="formImage.typeKTP !== 'application/pdf'" class="md:inline-block md:w-3/12">
           <img
             :src="formImage.imageKTP"
@@ -40,7 +40,7 @@
       <div class="step__title">
         Unggah Bukti PCR/Antigen
       </div>
-      <div class="flex">
+      <div class="md:flex xs:inline-table">
         <div v-if="formImage.typeTestResult !== 'application/pdf'" class="md:inline-block md:w-3/12">
           <img
             :src="formImage.imageTestResult"
