@@ -33,13 +33,19 @@ export default {
   },
   computed: {
     img () {
-      return require(`~/assets/progressbar/progress-${this.step}.svg`)
+      return this.consultation
+        ? require(`~/assets/progressbar/progress-${this.step}.svg`)
+        : require(`~/assets/progressbar/progress-vitamin-${this.step}.svg`)
     },
     title () {
-      return this.consultation ? 'Konsultasi Dokter' : 'Pengajuan Vitamin'
+      return this.consultation
+        ? 'Konsultasi Dokter'
+        : 'Permohonan Kebutuhan Vitamin'
     },
     subtitle () {
-      return this.consultation ? 'Konsultasi dengan dokter mengenai gejala yang Anda rasakan' : 'Ajukan vitamin ketika Anda sedang melakukan isolasi mandiri dengan mengisi form ini'
+      return this.consultation
+        ? 'Konsultasi dengan dokter mengenai gejala yang Anda rasakan'
+        : 'Lengkapi data untuk ajukan permohonan vitamin'
     }
   }
 }
