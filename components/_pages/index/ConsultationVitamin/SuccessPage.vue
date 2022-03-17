@@ -2,7 +2,7 @@
   <div class="form-input container md:px-20 md:py-10">
     <Progress :step.sync="step" :consultation="consultation" />
     <div class="success-page__title">
-      Konsultasi
+      {{ title }}
     </div>
     <div class="success-page__frame">
       <div class="flex">
@@ -13,13 +13,12 @@
           alt="Consultation"
         >
       </div>
-      <span class="success-page__content text-xl">
-        Selesaikan permohonan Anda.
-      </span>
-      <span class="success-page__content text-xl">
-        Lakukan konsultasi dengan dokter sekarang
-      </span>
-      <div class="flex justify-end pt-8">
+      <div v-for="data in subtitle" :key="data" class="text-center">
+        <span class="success-page__content text-xl">
+          {{ data }}
+        </span>
+      </div>
+      <div v-if="consultation" class="flex justify-end pt-8">
         <button
           class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light"
           @click="onClick"
@@ -104,7 +103,18 @@ export default {
       'receipt'
     ]),
     img () {
-      return require('~/assets/conversation.svg')
+      return this.consultation
+        ? require('~/assets/conversation.svg')
+        : require('~/assets/checked-list.svg')
+    },
+    title () {
+      return this.consultation
+        ? 'Konsultasi' : 'Selesai'
+    },
+    subtitle () {
+      return this.consultation
+        ? ['Selesaikan permohonan Anda.', 'Lakukan konsultasi dengan dokter sekarang']
+        : ['Permohonan telah diajukan dan sedang dalam', 'proses verifikasi oleh admin Pikobar.']
     }
   },
   created () {
