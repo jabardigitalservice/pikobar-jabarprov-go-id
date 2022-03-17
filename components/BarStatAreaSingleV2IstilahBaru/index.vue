@@ -122,7 +122,30 @@
           </div>
         </div>
         <hr>
-        <div class="pb-5">
+        <div
+          class="w-full p-5"
+          :class="isLoading?'':'hidden'"
+        >
+          <ContentLoader
+            class="w-full hidden lg:block"
+            :speed="3"
+            :width="400"
+            :height="200"
+            primary-color="#eee"
+            secondary-color="#fff"
+          >
+            <rect
+              :key="1"
+              x="0"
+              :y="4"
+              width="100%"
+              height="200"
+              rx="3"
+              ry="3"
+            />
+          </ContentLoader>
+        </div>
+        <div class="pb-5" :class="!isLoading?'':'hidden'">
           <BarChart
             v-if="stat.isActiveHarian"
             :chartData="chartHarianData"
@@ -140,12 +163,14 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { ContentLoader } from 'vue-content-loader'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 
 export default {
   name: 'BarStatAreaSingleV2IstilahBaru',
   components: {
+    ContentLoader,
     BarChart,
     LineChart,
     FontAwesomeIcon
@@ -863,6 +888,9 @@ export default {
     dataKasusHarianProvinsi () {
       return this.$store.getters['data-kasus-harian-v2/itemsMap']
     },
+    isLoading () {
+      return this.$store.getters['data-kasus-harian-v2/isLoading']
+    },
     dataKasusHarianKota () {
       return this.$store.getters['data-kasus-harian-kota-v2/itemsMap']
     },
@@ -900,9 +928,16 @@ export default {
         this.jsonDataKasus.provinsi.satuan.harian = data.harian
         this.jsonDataKasus.provinsi.kumulatif.harian = data.kumulatif
       })
-      this.loadedHarianProvinsi = true
 
-      this.changeData()
+      if (this.loadedHarianProvinsi === false) {
+        setTimeout(() => {
+          this.changeData()
+        }, 1000)
+      } else {
+        this.changeData()
+      }
+
+      this.loadedHarianProvinsi = true
     },
     dataKasusHarianKota (val) {
       for (let j = 0; j < this.jsonDataKasus.kota.length; j++) {
@@ -1065,8 +1100,14 @@ export default {
     this.selectedDate.start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 90, 0, 0)
     this.selectedDate.end = new Date()
     this.checkIsMobile()
+
+    this.initDataKasus()
   },
   methods: {
+    // get data
+    initDataKasus () {
+      this.$store.dispatch('data-kasus-harian-v2/getItems')
+    },
     ifNullReturnZero (str) {
       if (str === null) {
         return 0

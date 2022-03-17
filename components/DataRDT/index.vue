@@ -175,8 +175,12 @@ export default {
     }
   },
   mounted () {
+    this.getData()
   },
   methods: {
+    getData () {
+      this.$store.dispatch('data-kasus-total-v2/getItems')
+    }
   }
 }
 

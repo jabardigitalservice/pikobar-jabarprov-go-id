@@ -205,8 +205,6 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.$store.dispatch('data-kasus-total-v2/getItems')
-      this.$store.dispatch('data-kasus-harian-v2/getItems')
       this.$store.dispatch('statistics/getCases')
 
       if (process.browser) {
