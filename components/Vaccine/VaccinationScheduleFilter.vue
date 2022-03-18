@@ -26,6 +26,20 @@
         Data Tidak Ditemukan.
       </template>
     </multiselect>
+    <multiselect
+      v-model="query.typeVaccine"
+      :options="typeVaccines"
+      :allow-empty="true"
+      track-by="id"
+      placeholder="Pilih Jenis Vaksinasi"
+      :searchable="true"
+      label="label"
+      class="schedule-filter__filter"
+    >
+      <template v-slot:noResult>
+        Data Tidak Ditemukan.
+      </template>
+    </multiselect>
     <!-- @todo: fix datepicker css -->
     <!-- <DatePicker
       v-model="query.date"
@@ -65,9 +79,11 @@ export default {
     return {
       ageCategory,
       districts: [],
+      typeVaccines: [],
       query: {
         district: null, // {A2. Kota/Kabupaten}
         age: null, // {D1. Target Usia},
+        typeVaccine: null, // {A4. Jenis Kegiatan}
         date: null,
         startDate: null, // {C2. Start Date (Pelaksanaan)}
         endDate: null // {C3. End Date (Pelaksanaan)}
@@ -76,10 +92,38 @@ export default {
   },
   async mounted () {
     await this.getDistrictList()
+    await this.getTypeVaccine()
   },
   methods: {
     _uniqBy,
     formatDate,
+    /**
+     * Fetch type vaccine options from API
+     * and map it to multiselect needs
+     * @returns {Array}
+     */
+    async getTypeVaccine () {
+      const typeVaccineQuery = {
+        setState: false,
+        params: {
+          'fields[]': 'A4. Jenis Kegiatan',
+          'sort[0][field]': 'A4. Jenis Kegiatan',
+          'sort[0][direction]': 'asc'
+        }
+      }
+      let typeVaccineOptions = await this.$store.dispatch('vaksin/getSchedule', typeVaccineQuery)
+      if (Array.isArray(typeVaccineOptions)) {
+        typeVaccineOptions = this._uniqBy(typeVaccineOptions, 'fields["A4. Jenis Kegiatan"]')
+        this.typeVaccines = typeVaccineOptions.map((options) => {
+          return {
+            ...options,
+            label: options.fields['A4. Jenis Kegiatan']
+          }
+        })
+      } else {
+        return []
+      }
+    },
     /**
      * Fetch district options from API
      * and map it to multiselect needs
@@ -119,6 +163,9 @@ export default {
       const district = this.query.district ? `{A2. Kota/Kabupaten}="${this.query.district.label}"` : ''
       if (this.query.district) { params.push(district) }
 
+      const typeVaccine = this.query.typeVaccine ? `{A4. Jenis Kegiatan}="${this.query.typeVaccine.label}"` : ''
+      if (this.query.typeVaccine) { params.push(typeVaccine) }
+
       const age = this.query.age ? `SEARCH("${this.query.age}", ARRAYJOIN({D1. Target Usia}))` : ''
       if (this.query.age) { params.push(age) }
 
@@ -144,6 +191,7 @@ export default {
     onReset () {
       this.query = {
         district: null,
+        typeVaccine: null,
         age: null,
         date: null
       }
