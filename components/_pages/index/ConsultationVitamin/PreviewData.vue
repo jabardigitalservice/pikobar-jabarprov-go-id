@@ -74,7 +74,7 @@ export default {
       form: {},
       isLoading: false,
       showAlert: false,
-      buttonText: 'Selanjutnya',
+      buttonText: 'Submit',
       alertMessage: 'Submit data gagal, silakan coba lagi.'
     }
   },
