@@ -40,14 +40,13 @@
         Data Tidak Ditemukan.
       </template>
     </multiselect>
-    <!-- @todo: fix datepicker css -->
-    <!-- <DatePicker
+    <DatePicker
       v-model="query.date"
       range
-      placeholder="Pilih Tanggal Vaksinasi"
+      placeholder="Pilih Tanggal Pelaksanaan"
       class="schedule-filter__date"
       @input="onDateSelected"
-    /> -->
+    />
     <BaseButton
       label="Cari"
       class="schedule-filter__button"
@@ -65,15 +64,15 @@
 
 <script>
 import { format as formatDate } from 'date-fns'
-// import DatePicker from 'vue2-datepicker'
-// import 'vue2-datepicker/index.css'
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
-    BaseButton
-    // DatePicker
+    BaseButton,
+    DatePicker
   },
   data () {
     return {
