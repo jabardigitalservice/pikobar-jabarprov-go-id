@@ -40,13 +40,27 @@
         Data Tidak Ditemukan.
       </template>
     </multiselect>
-    <DatePicker
+    <vue-rangedate-picker
+      v-if="!isMobile"
       v-model="query.date"
-      range
-      placeholder="Pilih Tanggal Pelaksanaan"
+      righttoleft="true"
       class="schedule-filter__date"
-      @input="onDateSelected"
+      :captions="rangedate.captions"
+      :preset-ranges="rangedate.presetRanges"
+      @selected="onDateSelected"
     />
+    <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 290px;">
+      <div class="card-content pt-2 pb-2" style="margin: auto;">
+        <vue-rangedate-picker
+          v-model="query.date"
+          compact="true"
+          :captions="rangedate.captions"
+          :preset-ranges="rangedate.presetRanges"
+          @selected="onDateSelected"
+        />
+      </div>
+    </div>
+    <br v-if="isMobile">
     <BaseButton
       label="Cari"
       class="schedule-filter__button"
@@ -64,15 +78,13 @@
 
 <script>
 import { format as formatDate } from 'date-fns'
-import DatePicker from 'vue2-datepicker'
-import 'vue2-datepicker/index.css'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
+import Utils from '~/utils/index.js'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
-    BaseButton,
-    DatePicker
+    BaseButton
   },
   data () {
     return {
@@ -86,12 +98,58 @@ export default {
         date: null,
         startDate: null, // {C2. Start Date (Pelaksanaan)}
         endDate: null // {C3. End Date (Pelaksanaan)}
+      },
+      isMobile: false,
+      rangedate: {
+        captions: {
+          title: 'Pilih Tanggal Pelaksanaan',
+          ok_button: 'Terapkan'
+        },
+        presetRanges: {
+          all () {
+            return {
+              label: 'Semua Waktu',
+              active: true,
+              dateRange: {
+                start: new Date('2020-03-01'),
+                end: new Date()
+              }
+            }
+          },
+          seminggu () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Minggu Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          },
+          sebulan () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          }
+        }
       }
     }
   },
   async mounted () {
     await this.getDistrictList()
     await this.getTypeVaccine()
+    this.isMobile = Utils.checkIsMobile()
   },
   methods: {
     _uniqBy,
@@ -199,9 +257,9 @@ export default {
     /**
      * set date value into query
      */
-    onDateSelected () {
-      this.query.startDate = formatDate(this.query.date[0], 'yyyy-MM-dd')
-      this.query.endDate = formatDate(this.query.date[1], 'yyyy-MM-dd')
+    onDateSelected (daterange) {
+      this.query.startDate = formatDate(daterange.start, 'yyyy-MM-dd')
+      this.query.endDate = formatDate(daterange.end, 'yyyy-MM-dd')
     }
   }
 }
