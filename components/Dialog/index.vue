@@ -1,25 +1,33 @@
 <template>
   <div :class="['dialog-popup', isActive && 'is-active']" @click.self="onClose">
     <div class="dialog-popup__content">
-      <header>
-        <h5 class="text-2xl">
-          <b>{{ title }}</b>
-        </h5>
-        <div class="flex justify-end gap-2 pt-6">
-          <button
-            class="button__cancel sm:mr-0 hover:bg-gray-100 w-full"
-            @click="onClose"
+      <header class="dialog-popup__frame">
+        <div class="flex">
+          <img
+            :src="img"
+            width="320px"
+            class="pb-8"
+            alt="Consultation"
           >
-            Tidak
-          </button>
-          <button
-            class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light w-full"
-            @click="onSubmit"
-          >
-            Ya
-          </button>
         </div>
+        <h5 class="text-2xl text-center">
+          <strong>{{ title }}</strong>
+        </h5>
       </header>
+      <div class="flex justify-end gap-2">
+        <button
+          class="button__cancel sm:mr-0 hover:bg-gray-100 w-full"
+          @click="onClose"
+        >
+          Cek Kembali
+        </button>
+        <button
+          class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light w-full"
+          @click="onSubmit"
+        >
+          Ya
+        </button>
+      </div>
       <FontAwesomeIcon
         :icon="icon.faTimesCircle"
         size="lg"
@@ -55,6 +63,11 @@ export default {
       }
     }
   },
+  computed: {
+    img () {
+      return require('~/assets/question.svg')
+    }
+  },
   methods: {
     onClose () {
       this.$emit('update:isActive', false)
@@ -74,6 +87,15 @@ export default {
   @apply hidden pointer-events-none
   fixed inset-0 z-50
   justify-center items-center;
+
+  &__frame {
+    height: 330px;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   &.is-active {
     background-color: rgba(0,0,0,0.25);
