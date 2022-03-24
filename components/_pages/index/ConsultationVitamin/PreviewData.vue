@@ -25,12 +25,18 @@
       </button>
       <button
         class="button__next sm:mr-0 bg-brand-green hover:bg-brand-green-light w-full"
-        @click="onNext"
+        @click="onDialog"
       >
         <Spinner v-if="isLoading" />
         <span v-else>{{ buttonText }}</span>
       </button>
     </div>
+    <Dialog
+      :is-active.sync="showDialog"
+      :return-submit.sync="returnSubmit"
+      title="Apakah data yang Anda masukkan sudah benar?"
+      @update="onUpdate"
+    />
   </div>
 </template>
 
@@ -43,6 +49,7 @@ import Utils from '~/utils/index.js'
 import Form from '~/components/Form'
 import Spinner from '~/components/Spinner'
 import Alert from '~/components/Alert'
+import Dialog from '~/components/Dialog'
 import Progress from '~/components/_pages/index/ConsultationVitamin/ProgressHeader.vue'
 
 export default {
@@ -51,7 +58,8 @@ export default {
     PreviewDataDetail,
     Form,
     Alert,
-    Spinner
+    Spinner,
+    Dialog
   },
   props: {
     step: {
@@ -74,7 +82,9 @@ export default {
       form: {},
       isLoading: false,
       showAlert: false,
-      buttonText: 'Selanjutnya',
+      showDialog: false,
+      returnSubmit: false,
+      buttonText: 'Submit',
       alertMessage: 'Submit data gagal, silakan coba lagi.'
     }
   },
@@ -104,6 +114,16 @@ export default {
         this.buttonText = 'Coba Lagi'
         this.showAlert = true
       }
+    },
+    onDialog () {
+      if (this.returnSubmit) {
+        this.onNext()
+      } else {
+        this.showDialog = true
+      }
+    },
+    onUpdate () {
+      this.onNext()
     }
   }
 }

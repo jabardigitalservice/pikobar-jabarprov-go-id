@@ -170,6 +170,6 @@ export default {
     word-spacing: 1px;
     font-weight: 500;
     font-style: normal;
-    line-height: 45px;
+    line-height: 24px;
   }
 </style>
