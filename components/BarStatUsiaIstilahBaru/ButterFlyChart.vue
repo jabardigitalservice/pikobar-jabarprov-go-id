@@ -22,7 +22,6 @@ export default {
   },
   data () {
     return {
-      loading: true,
       datasets: [],
       margin: {
         top: 20,
@@ -273,7 +272,7 @@ export default {
         const svg = item.append('svg')
           .attr('width', legendSize)
           .attr('height', legendSize)
-          .attr('class', 'me-2')
+          .attr('class', 'mr-2')
 
         if (data.type === 'circle') {
           svg.append('circle')

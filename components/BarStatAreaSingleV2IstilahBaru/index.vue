@@ -6,14 +6,14 @@
         :active="stat.isActiveHarian"
         @click="enableHarian"
       >
-        <font-awesome-icon :icon="fontChartBar" />Angka Harian
+        <font-awesome-icon :icon="fontChartBar" /> Angka Harian
       </button>
       <button
         class="button-selector"
         :active="stat.isActiveAkumulatif"
         @click="enableAkumulatif"
       >
-        <font-awesome-icon :icon="fontChartLine" />Kumulatif
+        <font-awesome-icon :icon="fontChartLine" /> Kumulatif
       </button>
     </div>
 
@@ -26,13 +26,13 @@
 
           <div
             v-if="!isMobile"
-            class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2"
+            class="flex flex-wrap items-stretch justify-center pt-2 pb-2 pr-2 md:w-1/2 mt-2"
             style="margin: auto"
           >
             <select
               v-if="selectedListWilayah !== 'Indonesia'"
               v-model="selectedListGroupWaktu"
-              class="select-option-selector my-2 mx-1 ml-auto"
+              class="select-option-selector my-2 mx-1 md:ml-auto"
               @change="changeFilterGroupWaktu()"
             >
               <option
@@ -122,39 +122,68 @@
           </div>
         </div>
         <hr>
-        <GChart
-          v-if="stat.isActiveHarian"
-          type="ComboChart"
-          class="mb-4"
-          :data="ChartHarianData"
-          :options="ChartHarianOptions"
-        />
-        <GChart
-          v-if="stat.isActiveAkumulatif"
-          type="ComboChart"
-          class="mb-4"
-          :data="ChartKumulatifData"
-          :options="ChartKumulatifOptions"
-        />
+        <div
+          class="w-full p-5"
+          :class="isLoading?'':'hidden'"
+        >
+          <ContentLoader
+            class="w-full hidden lg:block"
+            :speed="3"
+            :width="400"
+            :height="200"
+            primary-color="#eee"
+            secondary-color="#fff"
+          >
+            <rect
+              :key="1"
+              x="0"
+              :y="4"
+              width="100%"
+              height="200"
+              rx="3"
+              ry="3"
+            />
+          </ContentLoader>
+        </div>
+        <div class="pb-5" :class="!isLoading?'':'hidden'">
+          <BarChart
+            v-if="stat.isActiveHarian"
+            :chartData="chartHarianData"
+            :chartOptions="chartHarianOptions" />
+          <LineChart
+            v-if="stat.isActiveAkumulatif"
+            :chartData="chartKumulatifData"
+            :chartOptions="chartKumulatifOptions" />
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { GChart } from 'vue-google-charts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartBar, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { ContentLoader } from 'vue-content-loader'
+import BarChart from './BarChart'
+import LineChart from './LineChart'
 
 export default {
   name: 'BarStatAreaSingleV2IstilahBaru',
   components: {
-    GChart,
+    ContentLoader,
+    BarChart,
+    LineChart,
     FontAwesomeIcon
-    // DateRangePicker
   },
   data () {
     return {
+      loadedHarianProvinsi: false,
+      loadedHarianKota: false,
+      loadedMingguanProvinsi: false,
+      loadedMingguanKota: false,
+      loadedDwimingguanKota: false,
+      loadedDwimingguanProvinsi: false,
+      loadedNasional: false,
       stat: {
         isActiveHarian: true,
         isActiveAkumulatif: false
@@ -725,93 +754,14 @@ export default {
           dataAkumulatif: []
         }
       ],
-      ChartHarianData: [
-        [
-          'Tanggal',
-          'Harian',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { type: 'number', role: 'annotation' },
-          'Rata-rata 7 Hari',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, 0, '']
-      ],
-      ChartKumulatifData: [
-        [
-          'Tanggal',
-          'Aktif',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Sembuh',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Total Terkonfirmasi',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
-      ],
-      ChartHarianOptions: {
-        height: 500,
-        orientation: 'horizontal',
-        colors: ['#5AB55B', '#EC5D5D', '#9C0000'],
-        legend: {
-          position: 'bottom'
-        },
-        annotations: {
-          alwaysOutside: 'true',
-          textStyle: {
-            fontSize: 10,
-            color: 'black'
-          }
-        },
-        hAxis: {
-          slantedText: true,
-          slantedTextAngle: 45
-        },
-        isStacked: true,
-        seriesType: 'bars',
-        series: {
-          1: {
-            type: 'line'
-          }
-        },
-        chartArea: {
-          width: '85%',
-          bottom: 100
-        },
-        tooltip: {
-          isHtml: true
-        }
+      chartHarianData: [],
+      chartKumulatifData: [],
+      chartHarianOptions: {
+        legendAverageChart: 'Rata-rata 7 Hari',
+        selectedListGroupWaktu: 'harian'
       },
-      ChartKumulatifOptions: {
-        height: 500,
-        orientation: 'horizontal',
-        colors: ['#CEB546', '#03B167', '#9c0000', '#3D4486'],
-        legend: {
-          position: 'bottom'
-        },
-        // isStacked: true,
-        // seriesType: 'bars',
-        hAxis: {
-          slantedText: true,
-          slantedTextAngle: 45
-        },
-        vAxis: {
-          viewWindow: {
-            min: 0
-          }
-        },
-        chartArea: {
-          width: '85%',
-          bottom: 100
-        },
-        series: {
-          0: { lineWidth: 3 },
-          1: { lineWidth: 3 },
-          2: { lineWidth: 3 },
-          3: { lineWidth: 3 }
-        },
-        tooltip: { isHtml: true }
+      chartKumulatifOptions: {
+        selectedListGroupWaktu: 'harian'
       },
       optionListWilayah: [
         'Indonesia',
@@ -932,12 +882,14 @@ export default {
       selectedListGroupWaktu: 'harian',
       selectedListGroupWaktuLabel: 'Harian',
       legendAverageChart: 'Rata-rata 7 Hari'
-
     }
   },
   computed: {
     dataKasusHarianProvinsi () {
       return this.$store.getters['data-kasus-harian-v2/itemsMap']
+    },
+    isLoading () {
+      return this.$store.getters['data-kasus-harian-v2/isLoading']
     },
     dataKasusHarianKota () {
       return this.$store.getters['data-kasus-harian-kota-v2/itemsMap']
@@ -977,7 +929,15 @@ export default {
         this.jsonDataKasus.provinsi.kumulatif.harian = data.kumulatif
       })
 
-      this.changeData()
+      if (this.loadedHarianProvinsi === false) {
+        setTimeout(() => {
+          this.changeData()
+        }, 1000)
+      } else {
+        this.changeData()
+      }
+
+      this.loadedHarianProvinsi = true
     },
     dataKasusHarianKota (val) {
       for (let j = 0; j < this.jsonDataKasus.kota.length; j++) {
@@ -994,72 +954,52 @@ export default {
           }
         }
       }
+      this.loadedHarianKota = true
 
       this.changeData()
     },
     dataNasionalHarian (val) {
-      // this.jsonDataNasionalHarianKumulatif = this.propsDataNasionalHarianKumulatif
       for (let i = 0; i < val.length; i++) {
         const temp1 = val[i]
         let jmlHarian = 0
         let ratarataHarian = 0
-        // let jmlKumulatif = 0
-        // let ratarataKumulatif = 0
         if (i === 0) {
           jmlHarian = val[i].jumlah_positif.value
           ratarataHarian = jmlHarian / 1
-          // jmlKumulatif = val[i].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 1
         } else if (i === 1) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value
           ratarataHarian = jmlHarian / 2
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 2
         } else if (i === 2) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value
           ratarataHarian = jmlHarian / 3
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 3
         } else if (i === 3) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value
           ratarataHarian = jmlHarian / 4
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 4
         } else if (i === 4) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value
           ratarataHarian = jmlHarian / 5
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 5
         } else if (i === 5) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value + val[i - 5].jumlah_positif.value
           ratarataHarian = jmlHarian / 6
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 6
         } else if (i >= 6) {
           jmlHarian = val[i].jumlah_positif.value + val[i - 1].jumlah_positif.value + val[i - 2].jumlah_positif.value +
             val[i - 3].jumlah_positif.value + val[i - 4].jumlah_positif.value + val[i - 5].jumlah_positif.value +
             val[i - 6].jumlah_positif.value
           ratarataHarian = jmlHarian / 7
-          // jmlKumulatif = val[i].jumlahKasusKumulatif + val[i - 1].jumlahKasusKumulatif + val[i - 2].jumlahKasusKumulatif +
-          //   val[i - 3].jumlahKasusKumulatif + val[i - 4].jumlahKasusKumulatif + val[i - 5].jumlahKasusKumulatif +
-          //   val[i - 6].jumlahKasusKumulatif
-          // ratarataKumulatif = jmlKumulatif / 7
         } else {
           jmlHarian = 0
           ratarataHarian = 0
-          // jmlKumulatif = 0
-          // ratarataKumulatif = 0
         }
         const temp2 = { jumlah_positif_ratarata: { value: parseInt(ratarataHarian.toFixed(2)) } }
         const temp3 = { ...temp1, ...temp2 }
         this.jsonDataNasionalHarianKumulatif.push(temp3)
       }
+      this.loadedNasional = true
+
+      this.changeData()
     },
     dataKasusMingguanProvinsi (val) {
       const data = {
@@ -1080,6 +1020,7 @@ export default {
 
       this.jsonDataKasus.provinsi.satuan.mingguan = data.mingguan
       this.jsonDataKasus.provinsi.kumulatif.mingguan = data.kumulatif
+      this.loadedMingguanProvinsi = true
 
       this.changeData()
     },
@@ -1102,6 +1043,7 @@ export default {
 
       this.jsonDataKasus.provinsi.satuan.dwimingguan = data.dwimingguan
       this.jsonDataKasus.provinsi.kumulatif.dwimingguan = data.kumulatif
+      this.loadedDwimingguanProvinsi = true
 
       this.changeData()
     },
@@ -1124,6 +1066,7 @@ export default {
           }
         }
       }
+      this.loadedMingguanKota = true
 
       this.changeData()
     },
@@ -1146,6 +1089,7 @@ export default {
           }
         }
       }
+      this.loadedDwimingguanKota = true
 
       this.changeData()
     }
@@ -1156,8 +1100,14 @@ export default {
     this.selectedDate.start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 90, 0, 0)
     this.selectedDate.end = new Date()
     this.checkIsMobile()
+
+    this.initDataKasus()
   },
   methods: {
+    // get data
+    initDataKasus () {
+      this.$store.dispatch('data-kasus-harian-v2/getItems')
+    },
     ifNullReturnZero (str) {
       if (str === null) {
         return 0
@@ -1182,7 +1132,7 @@ export default {
       const options = {
         day: 'numeric',
         month: 'short',
-        year: 'numeric'
+        year: '2-digit'
       }
       return d.toLocaleString('id-ID', options)
     },
@@ -1245,7 +1195,7 @@ export default {
         this.selectedListGroupWaktu = 'harian'
       }
       this.selectedListWilayah = stat
-      this.changeData()
+      this.fetchData()
     },
     changeFilterGroupWaktu () {
       if (this.selectedListGroupWaktu !== 'harian') {
@@ -1257,59 +1207,28 @@ export default {
           this.selectedListGroupWaktuLabel = this.optionListGroupWaktu[i].label
         }
       }
-      this.changeData()
+
+      this.fetchData()
     },
     changeData () {
       if (this.selectedListGroupWaktu !== 'harian') {
-        const hAxisOptions = {
-          slantedText: true,
-          slantedTextAngle: 45,
-          textStyle: {
-            fontSize: 12
-          }
-        }
-        this.ChartHarianOptions.hAxis = hAxisOptions
-        this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata Per Bulan'
       } else {
-        const hAxisOptions = {
-          slantedText: true,
-          slantedTextAngle: 45
-        }
-        this.ChartHarianOptions.hAxis = hAxisOptions
-        this.ChartKumulatifOptions.hAxis = hAxisOptions
         this.legendAverageChart = 'Rata-rata 7 Hari'
       }
 
-      this.ChartHarianData = [
-        [
-          'Tanggal',
-          'Harian',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          { type: 'number', role: 'annotation' },
-          this.legendAverageChart,
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, 0, '']
-      ]
-      this.ChartKumulatifData = [
-        [
-          'Tanggal',
-          'Aktif',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Sembuh',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Meninggal',
-          { type: 'string', role: 'tooltip', p: { html: true } },
-          'Total Terkonfirmasi',
-          { type: 'string', role: 'tooltip', p: { html: true } }
-        ],
-        ['0', 0, '', 0, '', 0, '', 0, '']
-      ]
+      this.chartHarianOptions = {
+        legendAverageChart: this.legendAverageChart,
+        selectedListGroupWaktu: this.selectedListGroupWaktu
+      }
+      this.chartKumulatifOptions.selectedListGroupWaktu = this.selectedListGroupWaktu
+
+      this.chartHarianData = []
+      this.chartKumulatifData = []
       if (this.stat.isActiveHarian === true) {
         this.judul = 'Chart ' + this.selectedListGroupWaktuLabel + ' Terkonfirmasi ' + this.selectedListWilayah
         if (this.selectedListWilayah === 'Jawa Barat') {
-          this.fetchDataProvinsiSatuan()
+          this.fetchDataProvinsiHarian()
         } else if (this.selectedListWilayah === 'Indonesia') {
           this.fetchDataNasionalHarian()
         } else {
@@ -1326,11 +1245,79 @@ export default {
         }
       }
     },
-    fetchDataNasionalHarian () {
-      this.ChartHarianOptions.hAxis = {
-        slantedText: true,
-        slantedTextAngle: 45
+    fetchData () {
+      if (this.selectedListGroupWaktu === 'harian') {
+        switch (this.selectedListWilayah) {
+          case 'Jawa Barat':
+            if (!this.loadedHarianProvinsi) {
+              this.$store.dispatch('data-kasus-harian-v2/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          case 'Indonesia':
+            if (!this.loadedNasional) {
+              this.$store.dispatch('data-nasional-harian/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          default:
+            if (!this.loadedHarianKota) {
+              this.$store.dispatch('data-kasus-harian-kota-v2/getItems')
+            } else {
+              this.changeData()
+            }
+        }
+      } else if (this.selectedListGroupWaktu === 'mingguan') {
+        switch (this.selectedListWilayah) {
+          case 'Jawa Barat':
+            if (!this.loadedMingguanProvinsi) {
+              this.$store.dispatch('data-kasus-mingguan-provinsi-v2/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          case 'Indonesia':
+            if (!this.loadedNasional) {
+              this.$store.dispatch('data-nasional-harian/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          default:
+            if (!this.loadedMingguanKota) {
+              this.$store.dispatch('data-kasus-mingguan-kota-v2/getItems')
+            } else {
+              this.changeData()
+            }
+        }
+      } else {
+        switch (this.selectedListWilayah) {
+          case 'Jawa Barat':
+            if (!this.loadedDwimingguanProvinsi) {
+              this.$store.dispatch('data-kasus-dwimingguan-provinsi-v2/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          case 'Indonesia':
+            if (!this.loadedNasional) {
+              this.$store.dispatch('data-nasional-harian/getItems')
+            } else {
+              this.changeData()
+            }
+            break
+          default:
+            if (!this.loadedDwimingguanKota) {
+              this.$store.dispatch('data-kasus-dwimingguan-kota-v2/getItems')
+            } else {
+              this.changeData()
+            }
+        }
       }
+    },
+    fetchDataNasionalHarian () {
       const self = this
       let startNum = 0
       let endNum = 0
@@ -1350,25 +1337,22 @@ export default {
 
       // get data
       for (let i = startNum; i <= endNum; i++) {
-        const data = self.jsonDataNasionalHarianKumulatif
         const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
+        const data = self.jsonDataNasionalHarianKumulatif
         const showAnnotation = this.getShowAnnotation(data, i, startNum, endNum, 'nasional')
+        const tooltipDate = self.formatDate(date)
+        const xAxisLabel = self.formatDateNoYear(date)
 
-        // by Harian
-        let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-        tooltipHarian += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value) + '</b></td></tr>'
-        tooltipHarian += '<tr><td>Rata-rata 7 Hari</td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value) + '</b></td></tr>'
-        tooltipHarian += '</table>'
-        self.ChartHarianData.push([
-          self.formatDateNoYear(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value, tooltipHarian,
-          !showAnnotation ? self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value : null,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value, tooltipHarian
-        ])
+        self.chartHarianData.push({
+          tooltipDate,
+          xAxisLabel,
+          showAnnotation,
+          value: self.jsonDataNasionalHarianKumulatif[i].jumlah_positif.value,
+          average: Math.floor(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_ratarata.value)
+        })
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
-        self.ChartHarianData.splice(1, 1)
+        self.chartHarianData.splice(1, 1)
       }
     },
     fetchDataNasionalKumulatif () {
@@ -1392,27 +1376,23 @@ export default {
       // get data
       for (let i = startNum; i <= endNum; i++) {
         const date = new Date(self.jsonDataNasionalHarianKumulatif[i].key_as_string)
+        const tooltipDate = self.formatDate(date)
+        const xAxisLabel = self.formatDateNoYear(date)
         // by Akumulatif
-        let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-        tooltipKumulatif += '<tr><td style="font-size: larger;">' + self.formatDate(date) + '</td><td></td></tr>'
-        tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value) + '</b></td></tr>'
-        tooltipKumulatif += '</table>'
-        self.ChartKumulatifData.push([
-          self.formatDateNoYear(date),
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value, tooltipKumulatif,
-          self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value, tooltipKumulatif
-        ])
+        self.chartKumulatifData.push({
+          tooltipDate,
+          xAxisLabel,
+          confirmation_diisolasi: self.jsonDataNasionalHarianKumulatif[i].jumlah_dirawat_kum.value,
+          confirmation_selesai: self.jsonDataNasionalHarianKumulatif[i].jumlah_sembuh_kum.value,
+          confirmation_meninggal: self.jsonDataNasionalHarianKumulatif[i].jumlah_meninggal_kum.value,
+          confirmation_total: self.jsonDataNasionalHarianKumulatif[i].jumlah_positif_kum.value
+        })
       }
       if (self.jsonDataNasionalHarianKumulatif.length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
+        self.chartKumulatifData.splice(1, 1)
       }
     },
-    fetchDataProvinsiSatuan () {
+    fetchDataProvinsiHarian () {
       const self = this
       const data = this.jsonDataKasus.provinsi.satuan[this.selectedListGroupWaktu]
       const today = new Date()
@@ -1459,7 +1439,7 @@ export default {
       }
 
       if (data.length > 0) {
-        self.ChartHarianData.splice(1, 1)
+        self.chartHarianData.splice(1, 1)
       }
     },
     fetchDataProvinsiKumulatif () {
@@ -1506,7 +1486,7 @@ export default {
         }
       }
       if (data.length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
+        self.chartKumulatifData.splice(1, 1)
       }
     },
     fetchDataKabupatenHarian () {
@@ -1565,7 +1545,7 @@ export default {
         }
       }
       if (firstData.length > 0) {
-        self.ChartHarianData.splice(1, 1)
+        self.chartHarianData.splice(1, 1)
       }
     },
     fetchDataKabupatenKumulatif () {
@@ -1627,7 +1607,7 @@ export default {
         }
       }
       if (self.jsonDataKasus.kota[indexKota].kumulatif[groupWaktu].length > 0) {
-        self.ChartKumulatifData.splice(1, 1)
+        self.chartKumulatifData.splice(1, 1)
       }
     },
     onDateSelected (daterange) {
@@ -1667,35 +1647,23 @@ export default {
       }
     },
     generateChartSatuan (data, tooltipDate, xAxisLabel, showAnnotation) {
-      const self = this
-      let tooltipHarian = '<table style="white-space: nowrap; margin: 10px;">'
-      tooltipHarian += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
-      tooltipHarian += '<tr><td>Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data.confirmation_total) + '</b></td></tr>'
-      tooltipHarian += '<tr><td>' + this.legendAverageChart + ' </td><td style="text-align:right;"><b style="margin-left: 10px;">: ' + self.formatThousand(data.confirmation_ratarata) + '</b></td></tr>'
-      tooltipHarian += '</table>'
-      self.ChartHarianData.push([
+      this.chartHarianData.push({
+        tooltipDate,
         xAxisLabel,
-        data.confirmation_total, tooltipHarian,
-        showAnnotation ? data.confirmation_total : null,
-        data.confirmation_ratarata, tooltipHarian
-      ])
+        showAnnotation,
+        value: data.confirmation_total,
+        average: Math.floor(data.confirmation_ratarata)
+      })
     },
     generateChartKumulatif (data, tooltipDate, xAxisLabel) {
-      const self = this
-      let tooltipKumulatif = '<table style="white-space: nowrap; margin: 10px;">'
-      tooltipKumulatif += '<tr><td style="font-size: larger;">' + tooltipDate + '</td><td></td></tr>'
-      tooltipKumulatif += '<tr><td>Total Terkonfirmasi </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_total) + '</b></td></tr>'
-      tooltipKumulatif += '<tr><td>Isolasi/ Dalam Perawatan </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_diisolasi) + '</b></td></tr>'
-      tooltipKumulatif += '<tr><td>Selesai Isolasi/ Sembuh </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_selesai) + '</b></td></tr>'
-      tooltipKumulatif += '<tr><td>Meninggal </td><td style="text-align:right;"><b style="margin-left: 10px;">' + self.formatThousand(data.confirmation_meninggal) + '</b></td></tr>'
-      tooltipKumulatif += '</table>'
-      self.ChartKumulatifData.push([
+      this.chartKumulatifData.push({
+        tooltipDate,
         xAxisLabel,
-        data.confirmation_diisolasi, tooltipKumulatif,
-        data.confirmation_selesai, tooltipKumulatif,
-        data.confirmation_meninggal, tooltipKumulatif,
-        data.confirmation_total, tooltipKumulatif
-      ])
+        confirmation_diisolasi: data.confirmation_diisolasi,
+        confirmation_selesai: data.confirmation_selesai,
+        confirmation_meninggal: data.confirmation_meninggal,
+        confirmation_total: data.confirmation_total
+      })
     }
   }
 }

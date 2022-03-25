@@ -68,27 +68,24 @@
       </ContentLoader>
     </div>
     <div
-      :class="!isLoading?'':'hidden'"
+      :class="!isLoading ? 'p-5' : 'hidden'"
     >
-      <GChart
-        class="p-5"
-        type="PieChart"
-        :data="pieChartJenisKelaminData"
-        :options="pieChartJenisKelaminOptions"
-      />
+      <PieChart
+        :chartData="pieChartJenisKelaminData"
+        :chartOptions="pieChartJenisKelaminOptions" />
     </div>
   </div>
 </template>
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-import { GChart } from 'vue-google-charts'
+import PieChart from './PieChart'
 import { formatNumber, formatNumberPercent } from '~/lib/number'
 
 export default {
   name: 'BarStatJenisKelaminIstilahBaru',
   components: {
-    GChart,
+    PieChart,
     ContentLoader
   },
   data () {
@@ -103,44 +100,36 @@ export default {
       jsonDataKasusGender: {
         confirmation_total: {
           perempuan: 0,
-          lakilaki: 0
+          lakilaki: 0,
+          tidakdiketahui: 0
         },
         confirmation_diisolasi: {
           perempuan: 0,
-          lakilaki: 0
+          lakilaki: 0,
+          tidakdiketahui: 0
         },
         confirmation_meninggal: {
           perempuan: 0,
-          lakilaki: 0
+          lakilaki: 0,
+          tidakdiketahui: 0
         },
         confirmation_selesai: {
           perempuan: 0,
-          lakilaki: 0
+          lakilaki: 0,
+          tidakdiketahui: 0
         }
       },
       angkaNone: 0,
       angkaTotal: 0,
       persenNone: 0,
       messageNone: '',
-      pieChartJenisKelaminData: [
-        ['Jenis Kelamin', 'Data'],
-        ['Pria', 0],
-        ['Wanita', 0],
-        ['N/A', 0]
-      ],
+      pieChartJenisKelaminData: {
+        perempuan: 0,
+        lakilaki: 0,
+        tidakdiketahui: 0
+      },
       pieChartJenisKelaminOptions: {
-        height: 350,
-        widht: 350,
-        slices: {
-          0: { color: '#2DAC55' },
-          1: { color: '#F6D039' },
-          2: { color: '#7D7D7D' }
-        },
-        legend: {
-          position: 'bottom'
-        },
-        pieHole: 0.4,
-        chartArea: { width: '80%' }
+        category: 'Terkonfirmasi'
       }
     }
   },
@@ -185,16 +174,16 @@ export default {
       return [day, month, year].join('-')
     },
     resetPieChartJenisKelaminData () {
-      this.pieChartJenisKelaminData = [
-        ['Jenis Kelamin', 'Data'],
-        ['Pria', 0],
-        ['Wanita', 0],
-        ['N/A', 0]
-      ]
+      this.pieChartJenisKelaminData = {
+        perempuan: 0,
+        lakilaki: 0,
+        tidakdiketahui: 0
+      }
     },
     changeGroupJenisKelamin (stat) {
       const self = this
       this.resetPieChartJenisKelaminData()
+      this.pieChartJenisKelaminOptions.category = stat
 
       let tempJenisKelaminPria = 0
       let tempJenisKelaminWanita = 0
@@ -218,12 +207,11 @@ export default {
         tempJenisKelaminNA = parseInt(this.jsonDataKasusGender.confirmation_meninggal.tidakdiketahui)
       }
 
-      self.pieChartJenisKelaminData = [
-        ['Jenis Kelamin', 'Data'],
-        ['Pria', tempJenisKelaminPria],
-        ['Wanita', tempJenisKelaminWanita],
-        ['N/A', tempJenisKelaminNA]
-      ]
+      this.pieChartJenisKelaminData = {
+        perempuan: tempJenisKelaminWanita,
+        lakilaki: tempJenisKelaminPria,
+        tidakdiketahui: tempJenisKelaminNA
+      }
 
       if (tempJenisKelaminNA) {
         self.angkaNone = tempJenisKelaminNA

@@ -1,6 +1,6 @@
 <template>
   <div class="rdt-antigen p-5 rounded-lg h-full relative">
-    <div :class="isLoading ? 'block' : 'hidden'">
+    <div :class="isLoading && !jsonDataKasusTotal ? 'block' : 'hidden'">
       <ContentLoader
         :speed="2"
         width="400"
@@ -51,7 +51,7 @@
         />
       </ContentLoader>
     </div>
-    <div :class="!isLoading ? 'block' : 'hidden'">
+    <div :class="!isLoading && jsonDataKasusTotal ? 'block' : 'hidden'">
       <b class="text-lg mb-4 inline-block">Pengujian Antigen</b>
       <div class="w-full h-auto text-sm mr-10 mt-5 row flex-row lg:flex xl:flex">
         <div class="w-full pl-2 h-auto text-left">
@@ -109,7 +109,7 @@ export default {
   },
   data () {
     return {
-      jsonDataKasusTotal: {},
+      jsonDataKasusTotal: null,
       metadata: {},
       date_update: '',
       data: {
@@ -175,8 +175,12 @@ export default {
     }
   },
   mounted () {
+    this.getData()
   },
   methods: {
+    getData () {
+      this.$store.dispatch('data-kasus-total-v2/getItems')
+    }
   }
 }
 
