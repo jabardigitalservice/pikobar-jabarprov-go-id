@@ -26,14 +26,41 @@
         Data Tidak Ditemukan.
       </template>
     </multiselect>
-    <!-- @todo: fix datepicker css -->
-    <!-- <DatePicker
+    <multiselect
+      v-model="query.typeVaccine"
+      :options="typeVaccines"
+      :allow-empty="true"
+      track-by="id"
+      placeholder="Pilih Jenis Vaksinasi"
+      :searchable="true"
+      label="label"
+      class="schedule-filter__filter"
+    >
+      <template v-slot:noResult>
+        Data Tidak Ditemukan.
+      </template>
+    </multiselect>
+    <vue-rangedate-picker
+      v-if="!isMobile"
       v-model="query.date"
-      range
-      placeholder="Pilih Tanggal Vaksinasi"
+      righttoleft="true"
       class="schedule-filter__date"
-      @input="onDateSelected"
-    /> -->
+      :captions="rangedate.captions"
+      :preset-ranges="rangedate.presetRanges"
+      @selected="onDateSelected"
+    />
+    <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 290px;">
+      <div class="card-content pt-2 pb-2" style="margin: auto;">
+        <vue-rangedate-picker
+          v-model="query.date"
+          compact="true"
+          :captions="rangedate.captions"
+          :preset-ranges="rangedate.presetRanges"
+          @selected="onDateSelected"
+        />
+      </div>
+    </div>
+    <br v-if="isMobile">
     <BaseButton
       label="Cari"
       class="schedule-filter__button"
@@ -51,35 +78,109 @@
 
 <script>
 import { format as formatDate } from 'date-fns'
-// import DatePicker from 'vue2-datepicker'
-// import 'vue2-datepicker/index.css'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
+import Utils from '~/utils/index.js'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
     BaseButton
-    // DatePicker
   },
   data () {
     return {
       ageCategory,
       districts: [],
+      typeVaccines: [],
       query: {
         district: null, // {A2. Kota/Kabupaten}
         age: null, // {D1. Target Usia},
+        typeVaccine: null, // {A4. Jenis Kegiatan}
         date: null,
         startDate: null, // {C2. Start Date (Pelaksanaan)}
         endDate: null // {C3. End Date (Pelaksanaan)}
+      },
+      isMobile: false,
+      rangedate: {
+        captions: {
+          title: 'Pilih Tanggal Pelaksanaan',
+          ok_button: 'Terapkan'
+        },
+        presetRanges: {
+          all () {
+            return {
+              label: 'Semua Waktu',
+              active: true,
+              dateRange: {
+                start: new Date('2020-03-01'),
+                end: new Date()
+              }
+            }
+          },
+          seminggu () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Minggu Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          },
+          sebulan () {
+            const n = new Date()
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            return {
+              label: '1 Bulan Terakhir',
+              active: false,
+              dateRange: {
+                start: tanggalmulai,
+                end: tanggalselesai
+              }
+            }
+          }
+        }
       }
     }
   },
   async mounted () {
     await this.getDistrictList()
+    await this.getTypeVaccine()
+    this.isMobile = Utils.checkIsMobile()
   },
   methods: {
     _uniqBy,
     formatDate,
+    /**
+     * Fetch type vaccine options from API
+     * and map it to multiselect needs
+     * @returns {Array}
+     */
+    async getTypeVaccine () {
+      const typeVaccineQuery = {
+        setState: false,
+        params: {
+          'fields[]': 'A4. Jenis Kegiatan',
+          'sort[0][field]': 'A4. Jenis Kegiatan',
+          'sort[0][direction]': 'asc'
+        }
+      }
+      let typeVaccineOptions = await this.$store.dispatch('vaksin/getSchedule', typeVaccineQuery)
+      if (Array.isArray(typeVaccineOptions)) {
+        typeVaccineOptions = this._uniqBy(typeVaccineOptions, 'fields["A4. Jenis Kegiatan"]')
+        this.typeVaccines = typeVaccineOptions.map((options) => {
+          return {
+            ...options,
+            label: options.fields['A4. Jenis Kegiatan']
+          }
+        })
+      } else {
+        return []
+      }
+    },
     /**
      * Fetch district options from API
      * and map it to multiselect needs
@@ -119,6 +220,9 @@ export default {
       const district = this.query.district ? `{A2. Kota/Kabupaten}="${this.query.district.label}"` : ''
       if (this.query.district) { params.push(district) }
 
+      const typeVaccine = this.query.typeVaccine ? `{A4. Jenis Kegiatan}="${this.query.typeVaccine.label}"` : ''
+      if (this.query.typeVaccine) { params.push(typeVaccine) }
+
       const age = this.query.age ? `SEARCH("${this.query.age}", ARRAYJOIN({D1. Target Usia}))` : ''
       if (this.query.age) { params.push(age) }
 
@@ -144,6 +248,7 @@ export default {
     onReset () {
       this.query = {
         district: null,
+        typeVaccine: null,
         age: null,
         date: null
       }
@@ -152,9 +257,9 @@ export default {
     /**
      * set date value into query
      */
-    onDateSelected () {
-      this.query.startDate = formatDate(this.query.date[0], 'yyyy-MM-dd')
-      this.query.endDate = formatDate(this.query.date[1], 'yyyy-MM-dd')
+    onDateSelected (daterange) {
+      this.query.startDate = formatDate(daterange.start, 'yyyy-MM-dd')
+      this.query.endDate = formatDate(daterange.end, 'yyyy-MM-dd')
     }
   }
 }

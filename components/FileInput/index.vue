@@ -2,18 +2,18 @@
   <div class="file-input">
     <label :for="name">
       <span class="file-input__label md:text-base">{{ label }}</span>
-      <i v-if="required" class="text-sm md:text-base">(wajib diisi)</i>
     </label>
     <div class="file-input__container" @click="onChooseFile">
       <FontAwesomeIcon
         :icon="icons.faImage"
         class="file-input__icon"
       />
-      <span v-if="!file" class="file-input__placeholder">Unggah gambar</span>
+      <span v-if="!file" class="file-input__placeholder">Unggah gambar/foto di sini</span>
       <span v-else>
         {{ file.name }}
       </span>
-      <span class="file-input__info">PNG, JPG, JPEG up to 10MB</span>
+      <span class="file-input__info">(Format JPG, JPEG, PNG, PDF)</span>
+      <span class="file-input__info">Ukuran maksimal 5MB</span>
     </div>
     <input
       v-show="false"

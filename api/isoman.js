@@ -83,7 +83,7 @@ export async function postVitaminRequest (data) {
     })
     return response.data
   } catch (e) {
-    throw e
+    return e
   }
 }
 export async function checkNikAvailability (data) {
