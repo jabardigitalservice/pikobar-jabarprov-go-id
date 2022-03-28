@@ -34,7 +34,7 @@ export default {
       headerContent: {
         headerSize: 'large',
         title: 'Pasien Omicron Boleh Isoman, Tapi Harus Tahu Hal ini!',
-        body: 'Baca sebentar yuk terkait; syarat isoman, panduan isoman, yang harus dilakukan pada saat kontak dengan pasien omicron, dan yang harus dilakukan setelah selesai isoman.',
+        body: 'Baca sebentar yuk terkait: syarat isoman, panduan isoman, yang harus dilakukan pada saat kontak dengan pasien omicron, dan yang harus dilakukan setelah selesai isoman.',
         image: require('~/assets/illustrations/isoman.svg'),
         imagePosition: 'right',
         prompt: 'Selengkapnya',
