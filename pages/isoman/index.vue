@@ -1,5 +1,4 @@
 <template>
-  <!-- eslint-disable vue/html-closing-bracket-newline -->
   <div>
     <Section class="py-6 md:py-20 bg-white">
       <ContentCard v-bind="headerContent" />

@@ -4,6 +4,7 @@
       Akses Layanan Kesehatan Bagi Pasien <span class="text-green-600">Isolasi Mandiri</span>?
     </template>
     <template>
+      <!-- Todo: fix subtitle wording which actually -->
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur in sed aenean risus pellentesque eget dapibus sed tristique.
     </template>
     <div class="isoman__content-card-grids">
