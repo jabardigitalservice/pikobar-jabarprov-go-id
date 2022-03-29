@@ -24,7 +24,10 @@
         >
       </slot>
     </span>
-    <span class="base-button__label">
+    <span
+      class="base-button__label"
+      :style="styleLabel"
+    >
       <slot>
         {{ label }}
       </slot>
@@ -79,6 +82,11 @@ export default {
       return this.src
         ? require(`~/assets/illustrations/${this.src}`)
         : ''
+    },
+    styleLabel () {
+      return [this.src
+        ? { width: '170px', textAlign: 'left' }
+        : { textAlign: 'center' }]
     }
   }
 }
