@@ -8,10 +8,22 @@
       'base-button--outlined--gray': outlined && monochrome,
       'base-button--shadowed': shadowed || outlined
     }"
+    :style="{
+      'width': width,
+      'height': height
+    }"
     :disabled="disabled"
     v-bind="$attrs"
     v-on="$listeners"
   >
+    <span v-show="src" class="base-button__image">
+      <slot>
+        <img
+          :src="image"
+          alt="content-card-src"
+        >
+      </slot>
+    </span>
     <span class="base-button__label">
       <slot>
         {{ label }}
@@ -48,6 +60,25 @@ export default {
     },
     monochrome: {
       type: Boolean
+    },
+    width: {
+      type: [Number, String],
+      default: 'auto'
+    },
+    height: {
+      type: [Number, String],
+      default: 'auto'
+    },
+    src: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    image () {
+      return this.src
+        ? require(`~/assets/illustrations/${this.src}`)
+        : ''
     }
   }
 }
@@ -89,6 +120,10 @@ export default {
     line-height: 20px;
 
     @apply flex-none text-sm;
+  }
+
+  &__image {
+    margin: 0px 11px;
   }
 
   &__icon {

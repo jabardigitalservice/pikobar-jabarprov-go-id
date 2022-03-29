@@ -1,10 +1,14 @@
 <template>
   <div class="jumbotron">
     <img
+      v-show="showBubble"
+      alt="bubble-left"
       src="~/assets/icons/bubble-accent.svg"
       class="jumbotron__bubble jumbotron__bubble--top"
     >
     <img
+      v-show="showBubble"
+      alt="bubble-right"
       src="~/assets/icons/bubble-accent.svg"
       class="jumbotron__bubble jumbotron__bubble--bottom"
     >
@@ -27,6 +31,10 @@
 <script>
 export default {
   props: {
+    showBubble: {
+      type: Boolean,
+      default: true
+    },
     title: {
       type: String,
       default: ''
@@ -83,7 +91,7 @@ $--bubble-gap: 16px;
   }
 
   &__header {
-    @apply inline-block mb-4
+    @apply inline-block mb-4 text-center
     text-xl font-bold font-lora;
   }
 
