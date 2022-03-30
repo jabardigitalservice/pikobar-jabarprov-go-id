@@ -1,8 +1,10 @@
 <template>
   <div class="isoman">
-    <h2 class="isoman__title">
-      <strong>Pelayanan Kesehatan & Telekonsultasi Selama Isolasi Mandiri</strong>
-    </h2>
+    <div class="isoman__title">
+      <h2 class="header">
+        Baca Panduan <span class="text-green-600">Isolasi Mandiri</span>
+      </h2>
+    </div>
     <ContentLoader
       v-if="isInfoItemsLoading"
       :speed="3"
@@ -138,7 +140,7 @@ export default {
 <style lang="scss" scoped>
 .isoman {
   &__title {
-    @apply mb-4 text-left text-xl;
+    @apply mb-4 mt-4 text-center text-xl;
 
     @screen md {
       @apply mb-8 text-2xl;
@@ -164,6 +166,12 @@ export default {
     @screen sm {
       @apply m-0;
     }
+  }
+}
+.header {
+  @apply inline-block mb-4 text-xl font-bold font-lora;
+  @screen sm {
+    font-size: 28px;
   }
 }
 .html-content::v-deep {
