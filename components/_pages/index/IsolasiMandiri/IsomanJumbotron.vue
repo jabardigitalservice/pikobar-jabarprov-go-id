@@ -1,11 +1,10 @@
 <template>
   <Jumbotron :show-bubble="false">
     <template #header>
-      Akses Layanan Kesehatan Bagi Pasien <span class="text-green-600">Isolasi Mandiri</span>?
+      Akses Layanan Kesehatan Bagi Pasien <span class="text-green-600">Isolasi Mandiri</span>
     </template>
     <template>
-      <!-- Todo: fix subtitle wording which actually -->
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur in sed aenean risus pellentesque eget dapibus sed tristique.
+      Khusus buat kamu yang tengah menjalankan isoman, semua layanan kesehatan ini gratis dan diantar langsung ke rumah.
     </template>
     <div class="isoman__content-card-grids">
       <ContentCardButton
