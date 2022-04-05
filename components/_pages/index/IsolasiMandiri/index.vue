@@ -16,7 +16,7 @@
       <ExpandableContent
         v-for="(item, i) in infoItems"
         :key="i"
-        :open="i === 0 ? true : false"
+        :open="i === 0"
       >
         <template #title>
           {{ item.title }}
