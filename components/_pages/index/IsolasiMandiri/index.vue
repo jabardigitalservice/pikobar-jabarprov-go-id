@@ -16,6 +16,7 @@
       <ExpandableContent
         v-for="(item, i) in infoItems"
         :key="i"
+        :open="i === 0"
       >
         <template #title>
           {{ item.title }}
@@ -26,7 +27,10 @@
         />
       </ExpandableContent>
     </template>
-    <div class="isoman__action-card-grids">
+    <div
+      v-show="false"
+      class="isoman__action-card-grids"
+    >
       <ActionCard
         class="isoman__action-card"
         title="Konsultasi dengan Dokter"
@@ -64,7 +68,10 @@
         :backlink="pemberiOksigenJotform"
       />
     </div>
-    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6">
+    <div
+      v-show="false"
+      class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6"
+    >
       <ActionCard
         class="w-full"
         title="Lacak Permohonan Vitamin/Obat Anda"
