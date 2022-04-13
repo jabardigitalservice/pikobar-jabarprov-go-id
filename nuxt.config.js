@@ -118,7 +118,8 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
-    'nuxt-leaflet'
+    'nuxt-leaflet',
+    '@nuxtjs/sentry'
   ],
   pwa: {
     workbox: {
@@ -145,6 +146,26 @@ export default {
       /(^|\.)vue-slider-/,
       /(^|\.)multiselect_/
     ]
+  },
+  // Sentry configuration https://sentry.nuxtjs.org/sentry/options
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+    disabled: process.env.SENTRY_DISABLED || false,
+    tracing: {
+      tracesSampleRate: parseFloat(process.env.SENTRY_SAMPLE_RATE),
+      vueOptions: {
+        tracing: true,
+        tracingOptions: {
+          hooks: ['mount', 'update'],
+          timeout: 2000,
+          trackComponents: true
+        }
+      },
+      browserOptions: {}
+    },
+    config: {
+      environment: process.env.APP_ENVIRONMENT
+    }
   },
   /*
   ** Build configuration
