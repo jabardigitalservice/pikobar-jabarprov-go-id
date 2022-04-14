@@ -24,14 +24,32 @@
         >
       </slot>
     </span>
-    <span
+    <div
+      v-if="size === 'big'"
       class="base-button__label"
-      :style="styleLabel"
+      :style="styleLabelBig"
     >
-      <slot>
-        {{ label }}
-      </slot>
-    </span>
+      <div class="text-xl mb-3">
+        <slot>
+          {{ label }}
+        </slot>
+      </div>
+      <div class="font-normal">
+        <slot>
+          {{ subtitle }}
+        </slot>
+      </div>
+    </div>
+    <div v-else>
+      <span
+        class="base-button__label"
+        :style="styleLabel"
+      >
+        <slot>
+          {{ label }}
+        </slot>
+      </span>
+    </div>
     <i class="base-button__icon">
       <slot name="icon" />
     </i>
@@ -39,6 +57,7 @@
 </template>
 
 <script>
+import Utils from '~/utils/index.js'
 /**
  * As of now, only supports green color (filled or outlined) and gray (monochrome).
  */
@@ -51,6 +70,14 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    subtitle: {
+      type: String,
+      default: ''
+    },
+    size: {
+      type: String,
+      default: ''
     },
     outlined: {
       type: Boolean
@@ -77,6 +104,11 @@ export default {
       default: ''
     }
   },
+  data () {
+    return {
+      isMobile: false
+    }
+  },
   computed: {
     image () {
       return this.src
@@ -87,7 +119,16 @@ export default {
       return [this.src
         ? { width: '170px', textAlign: 'left' }
         : { textAlign: 'center' }]
+    },
+    styleLabelBig () {
+      return [this.isMobile
+        ? { width: '190px', textAlign: 'left' }
+        : { width: '430px', textAlign: 'left' }
+      ]
     }
+  },
+  mounted () {
+    this.isMobile = Utils.checkIsMobile()
   }
 }
 </script>
