@@ -17,7 +17,7 @@
           <span v-show="bodySplitTwo" :class="colorSplitThree">
             {{ bodySplitTwo }}
           </span>
-          <span v-show="bodySplitThree" :class="colorsplitFour">
+          <span v-show="bodySplitThree" :class="colorSplitFour">
             {{ bodySplitThree }}
           </span>
         </p>
