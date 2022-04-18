@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Section class="py-6 md:py-20 bg-white">
+      <ContentCard v-bind="headerContent" />
+    </Section>
     <div id="section-oxygen-services" class="isoman__action-card-grids">
       <ActionCard
         class="isoman__action-card"
@@ -76,7 +79,9 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import ExpandableContent from '~/components/_pages/index/IsolasiMandiri/ExpandableContent'
+import ContentCard from '~/components/Base/ContentCard'
 import ActionCard from '~/components/_pages/index/IsolasiMandiri/ActionCard'
+import { Section } from '~/components/Base/Section'
 import {
   TAP_PEMINJAM_OKSIGEN as peminjamOksigenEvent,
   TAP_PEMBERI_OKSIGEN as pemberiOksigenEvent
@@ -88,10 +93,21 @@ export default {
     ContentLoader,
     OxygenAccordion: () => import('~/components/OxygenAccordion'),
     ExpandableContent,
+    ContentCard,
+    Section,
     ActionCard
   },
   data () {
     return {
+      headerContent: {
+        headerSize: 'large',
+        title: 'Tabung Oksigen Bagi Pasien Covid-19',
+        body: 'Informasi mengenai pemanfaatan tabung oksigen & sebaran lokasi agen penyedia tabung oksigen di Jawa Barat',
+        image: require('~/assets/illustrations/cek-oksigen.svg'),
+        imagePosition: 'right',
+        prompt: 'Selengkapnya',
+        backLink: '#section-oxygen-services'
+      },
       peminjamOksigenImage,
       pemberiOksigenImage,
       peminjamOksigenJotform: process.env.NUXT_ENV_FORM_OXYGEN_REQUEST,
