@@ -15,7 +15,7 @@
         :style="[{ width: '180px' }]"
       />
       <ArrowRight
-        :class="[isMobile ? '' : 'p-4 ml-12']"
+        :class="{'p-4 ml-12' : !isMobile}"
       />
       <CheckedCard
         icons="checked.svg"
@@ -23,7 +23,7 @@
         :style="[{ width: '210px' }]"
       />
       <ArrowRight
-        :class="[isMobile ? '' : 'p-4 ml-16']"
+        :class="{'p-4 ml-16' : !isMobile}"
       />
       <CheckedCard
         icons="checked.svg"
@@ -31,7 +31,7 @@
         :style="[{ width: '150px' }]"
       />
       <ArrowRight
-        :class="[isMobile ? '' : 'p-4 ml-12']"
+        :class="{'p-4 ml-12' : !isMobile}"
       />
       <CheckedCard
         icons="checked.svg"
@@ -39,7 +39,7 @@
         :style="[{ width: '160px' }]"
       />
       <ArrowRight
-        :class="[isMobile ? '' : 'p-4 ml-12']"
+        :class="{'p-4 ml-12' : !isMobile}"
       />
       <CheckedCard
         icons="checked.svg"
