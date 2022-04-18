@@ -9,7 +9,7 @@
     <div class="isoman__content-card-grids">
       <ContentCardButton
         prompt="Konsultasi Dokter Pikobar"
-        :back-link="permohonanKonsultasiDokter"
+        :back-link="halamanKonsultasiDokter"
         button-type="outline"
         width="358px"
         height="120px"
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { permohonanKonsultasiDokter, permohonanKebutuhan } from './backlinks'
+import { halamanKonsultasiDokter, permohonanKebutuhan } from './backlinks'
 import Jumbotron from '~/components/Base/Jumbotron'
 import ContentCardButton from '~/components/Base/ContentCard/ContentCardButton'
 export default {
@@ -49,7 +49,7 @@ export default {
   },
   data () {
     return {
-      permohonanKonsultasiDokter,
+      halamanKonsultasiDokter,
       permohonanKebutuhan
     }
   }

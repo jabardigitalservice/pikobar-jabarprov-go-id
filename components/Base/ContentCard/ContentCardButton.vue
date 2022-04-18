@@ -2,9 +2,11 @@
   <BaseButton
     tag="a"
     :label="prompt"
+    :subtitle="subtitle"
     :width="width"
     :height="height"
     :src="src"
+    :size="size"
     :href="backLink"
     :outlined="buttonType === 'outline'"
     @click.prevent="onClick"
@@ -48,6 +50,14 @@ export default {
   inheritAttrs: false,
   props: {
     prompt: {
+      type: String,
+      default: ''
+    },
+    subtitle: {
+      type: String,
+      default: ''
+    },
+    size: {
       type: String,
       default: ''
     },
