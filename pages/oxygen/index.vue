@@ -33,10 +33,13 @@
     </div>
     <br>
     <div class="container mx-auto">
-      <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
-        <h2 class="text-2xl font-bold leading-tight mb-6">
-          Terapi Oksigen & Pemanfaatannya
+      <div class="therapy__title">
+        <h2 class="header">
+          Terapi <span class="text-green-600">Oksigen</span>
+          & <span class="text-green-600">Pemanfaatannya</span>
         </h2>
+      </div>
+      <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
         <ContentLoader
           v-if="isInfoItemsLoading"
           :speed="3"
@@ -145,6 +148,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.therapy {
+  &__title {
+    @apply mb-4 mt-4 text-center text-xl;
+
+    @screen md {
+      @apply mb-8 text-2xl;
+    }
+  }
+}
+.header {
+  @apply inline-block mb-4 text-xl font-bold font-lora;
+  @screen sm {
+    font-size: 28px;
+  }
+}
 .html-content::v-deep {
   table {
     overflow-x: auto;
