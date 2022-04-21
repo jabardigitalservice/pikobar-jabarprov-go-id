@@ -118,6 +118,12 @@ export default {
   }
 }
 .subheader {
-  @apply inline-block mb-6 mt-2 text-base text-center leading-tight w-8/12 ml-auto mr-auto;
+  @apply inline-block mb-6 mt-2 text-base text-center leading-tight ml-auto mr-auto;
+  @screen sm {
+    @apply w-full;
+  }
+  @screen md {
+    @apply w-8/12;
+  }
 }
 </style>

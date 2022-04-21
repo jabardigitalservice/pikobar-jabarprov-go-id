@@ -3,7 +3,7 @@
     <Section class="py-6 md:py-20 bg-white">
       <ContentCard v-bind="headerContent" />
     </Section>
-    <div id="section-oxygen-services" class="isoman__action-card-grids">
+    <div id="section-oxygen-services" class="container isoman__action-card-grids">
       <ActionCard
         class="isoman__action-card"
         :split-body="true"
@@ -181,7 +181,7 @@ export default {
 }
 .isoman {
   &__action-card-grids {
-    @apply block;
+    @apply mx-auto block;
 
     @screen sm {
       @apply grid grid-cols-2
