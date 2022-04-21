@@ -1,14 +1,18 @@
 <template>
   <Accordion id="hospitalList" open>
     <template #header>
-      <h2 class="text-2xl font-bold leading-tight">
-        Lokasi Agen Tabung Oksigen
-      </h2>
+      <div class="w-full">
+        <h2 class="header">
+          Lokasi Agen <span class="text-green-600">Tabung Oksigen</span>
+        </h2>
+      </div>
     </template>
     <template #description>
-      <p class="mb-6 mt-2 text-base opacity-50 leading-tight">
-        Berikut ini adalah daftar agen oksigen, baik agen isi ulang maupun tabung oksigen yang ada di Jawa Barat. Silakan gunakan fitur filter untuk mencari agen oksigen di daerah Anda.
-      </p>
+      <div class="text-center -mt-5">
+        <p class="subheader">
+          Berikut ini adalah daftar agen oksigen, baik agen isi ulang maupun tabung oksigen yang ada di Jawa Barat. Silakan gunakan fitur filter untuk mencari agen oksigen di daerah Anda.
+        </p>
+      </div>
     </template>
     <template #content>
       <div>
@@ -25,8 +29,6 @@
           :on-search-items="onSearchItems"
           :on-reset="onReset"
         />
-      </div>
-      <div>
         <ContentLoader
           v-if="isItemsLoading"
           :speed="3"
@@ -104,3 +106,18 @@ export default {
 }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<style lang="scss" scoped>
+.header {
+  @apply inline-block mb-4 mt-4 text-center text-xl font-bold font-lora w-full;
+  @screen sm {
+    font-size: 28px;
+  }
+  @screen md {
+    @apply text-2xl;
+  }
+}
+.subheader {
+  @apply inline-block mb-6 mt-2 text-base text-center leading-tight w-8/12 ml-auto mr-auto;
+}
+</style>
