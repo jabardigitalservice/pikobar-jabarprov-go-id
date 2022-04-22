@@ -3,7 +3,7 @@
     <Section class="py-6 md:py-20 bg-white">
       <ContentCard v-bind="headerContent" />
     </Section>
-    <div id="section-oxygen-services" class="isoman__action-card-grids">
+    <div id="section-oxygen-services" class="container isoman__action-card-grids">
       <ActionCard
         class="isoman__action-card"
         :split-body="true"
@@ -33,10 +33,13 @@
     </div>
     <br>
     <div class="container mx-auto">
-      <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
-        <h2 class="text-2xl font-bold leading-tight mb-6">
-          Terapi Oksigen & Pemanfaatannya
+      <div class="therapy__title">
+        <h2 class="header">
+          Terapi <span class="text-green-600">Oksigen</span>
+          & <span class="text-green-600">Pemanfaatannya</span>
         </h2>
+      </div>
+      <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
         <ContentLoader
           v-if="isInfoItemsLoading"
           :speed="3"
@@ -48,6 +51,7 @@
           <ExpandableContent
             v-for="(item, i) in infoItems"
             :key="i"
+            :open="i === 0"
           >
             <template #title>
               {{ item.title }}
@@ -145,6 +149,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.therapy {
+  &__title {
+    @apply mb-4 mt-4 text-center text-xl;
+
+    @screen md {
+      @apply mb-8 text-2xl;
+    }
+  }
+}
+.header {
+  @apply inline-block mb-4 text-xl font-bold font-lora;
+  @screen sm {
+    font-size: 28px;
+  }
+}
 .html-content::v-deep {
   table {
     overflow-x: auto;
@@ -162,7 +181,7 @@ export default {
 }
 .isoman {
   &__action-card-grids {
-    @apply block;
+    @apply mx-auto block;
 
     @screen sm {
       @apply grid grid-cols-2
