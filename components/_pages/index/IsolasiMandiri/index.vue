@@ -1,8 +1,10 @@
 <template>
   <div class="isoman">
-    <h2 class="isoman__title">
-      <strong>Pelayanan Kesehatan & Telekonsultasi Selama Isolasi Mandiri</strong>
-    </h2>
+    <div class="isoman__title">
+      <h2 class="header">
+        Baca Panduan <span class="text-green-600">Isolasi Mandiri</span>
+      </h2>
+    </div>
     <ContentLoader
       v-if="isInfoItemsLoading"
       :speed="3"
@@ -14,6 +16,7 @@
       <ExpandableContent
         v-for="(item, i) in infoItems"
         :key="i"
+        :open="i === 0"
       >
         <template #title>
           {{ item.title }}
@@ -24,7 +27,10 @@
         />
       </ExpandableContent>
     </template>
-    <div class="isoman__action-card-grids">
+    <div
+      v-show="false"
+      class="isoman__action-card-grids"
+    >
       <ActionCard
         class="isoman__action-card"
         title="Konsultasi dengan Dokter"
@@ -62,7 +68,10 @@
         :backlink="pemberiOksigenJotform"
       />
     </div>
-    <div class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6">
+    <div
+      v-show="false"
+      class="flex flex-col flex-no-wrap sm:flex-row gap-4 mt-4 lg:mt-6"
+    >
       <ActionCard
         class="w-full"
         title="Lacak Permohonan Vitamin/Obat Anda"
@@ -138,7 +147,7 @@ export default {
 <style lang="scss" scoped>
 .isoman {
   &__title {
-    @apply mb-4 text-left text-xl;
+    @apply mb-4 mt-4 text-center text-xl;
 
     @screen md {
       @apply mb-8 text-2xl;
@@ -164,6 +173,12 @@ export default {
     @screen sm {
       @apply m-0;
     }
+  }
+}
+.header {
+  @apply inline-block mb-4 text-xl font-bold font-lora;
+  @screen sm {
+    font-size: 28px;
   }
 }
 .html-content::v-deep {

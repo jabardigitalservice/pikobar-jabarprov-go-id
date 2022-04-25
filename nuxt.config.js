@@ -22,7 +22,8 @@ export default {
     ISOMAN_API_BASEURL: process.env.ISOMAN_API_BASEURL,
     ISOMAN_API_BASEURL_STAGING: process.env.ISOMAN_API_BASEURL_STAGING,
     NUXT_ENV_OXYGEN_CENTER_BASE_URL: process.env.NUXT_ENV_OXYGEN_CENTER_BASE_URL,
-    URL_LOGISTIC: process.env.NUXT_ENV_LOGISTIC_URL
+    URL_LOGISTIC: process.env.NUXT_ENV_LOGISTIC_URL,
+    URL_LOGISTIC_VACCINE: process.env.NUXT_ENV_LOGISTIC_VACCINE_URL
   },
   router: {
     prefetchLinks: false
@@ -118,7 +119,8 @@ export default {
   */
   modules: [
     '@nuxtjs/pwa',
-    'nuxt-leaflet'
+    'nuxt-leaflet',
+    '@nuxtjs/sentry'
   ],
   pwa: {
     workbox: {
@@ -145,6 +147,26 @@ export default {
       /(^|\.)vue-slider-/,
       /(^|\.)multiselect_/
     ]
+  },
+  // Sentry configuration https://sentry.nuxtjs.org/sentry/options
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+    disabled: process.env.SENTRY_DISABLED || false,
+    tracing: {
+      tracesSampleRate: parseFloat(process.env.SENTRY_SAMPLE_RATE),
+      vueOptions: {
+        tracing: true,
+        tracingOptions: {
+          hooks: ['mount', 'update'],
+          timeout: 2000,
+          trackComponents: true
+        }
+      },
+      browserOptions: {}
+    },
+    config: {
+      environment: process.env.APP_ENVIRONMENT
+    }
   },
   /*
   ** Build configuration

@@ -1,21 +1,45 @@
 <template>
   <div>
-    <div class="bg-brand-green-dark">
-      <div class="container mx-auto p-8 lg:p-16 text-white">
-        <h2 class="text-2xl font-bold leading-tight">
-          Tabung Oksigen Bagi Pasien Covid-19
-        </h2>
-        <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
-          Informasi mengenai pemanfaatan tabung oksigen & sebaran lokasi agen penyedia tabung oksigen di Jawa Barat
-        </p>
-      </div>
+    <Section class="py-6 md:py-20 bg-white">
+      <ContentCard v-bind="headerContent" />
+    </Section>
+    <div id="section-oxygen-services" class="container isoman__action-card-grids">
+      <ActionCard
+        class="isoman__action-card"
+        :split-body="true"
+        body="Warga dapat ajukan"
+        body-split="Permohonan Tabung Oksigen"
+        body-split-two="ke pemerintah & warga di sini"
+        color-split-two="text-green-600"
+        prompt="Klik untuk pengajuan"
+        :event="peminjamOksigenEvent"
+        :image="peminjamOksigenImage"
+        :backlink="peminjamOksigenJotform"
+      />
+      <ActionCard
+        class="isoman__action-card"
+        :split-body="true"
+        body="Pinjam"
+        body-split="atau"
+        body-split-two="Donasikan Tabung Oksigen"
+        body-split-three="Anda bagi warga yang membutuhkan"
+        color-split-one="text-green-600"
+        color-split-three="text-green-600"
+        prompt="Daftar sekarang"
+        :event="pemberiOksigenEvent"
+        :image="pemberiOksigenImage"
+        :backlink="pemberiOksigenJotform"
+      />
     </div>
     <br>
     <div class="container mx-auto">
-      <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
-        <h2 class="text-2xl font-bold leading-tight mb-6">
-          Terapi Oksigen & Pemanfaatannya
+      <div class="therapy__title">
+        <h2 class="header">
+          Terapi <span class="text-green-600">Oksigen</span>
+          & <span class="text-green-600">Pemanfaatannya</span>
         </h2>
+      </div>
+      <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white shadow-md">
         <ContentLoader
           v-if="isInfoItemsLoading"
           :speed="3"
@@ -27,6 +51,7 @@
           <ExpandableContent
             v-for="(item, i) in infoItems"
             :key="i"
+            :open="i === 0"
           >
             <template #title>
               {{ item.title }}
@@ -48,11 +73,42 @@ import { ContentLoader } from 'vue-content-loader'
 import { mapState } from 'vuex'
 import { analytics } from '~/lib/firebase'
 import ExpandableContent from '~/components/_pages/index/IsolasiMandiri/ExpandableContent'
+import ContentCard from '~/components/Base/ContentCard'
+import ActionCard from '~/components/_pages/index/IsolasiMandiri/ActionCard'
+import { Section } from '~/components/Base/Section'
+import {
+  TAP_PEMINJAM_OKSIGEN as peminjamOksigenEvent,
+  TAP_PEMBERI_OKSIGEN as pemberiOksigenEvent
+} from '~/components/_pages/index/IsolasiMandiri/events'
+import peminjamOksigenImage from '~/assets/illustrations/peminjam-oksigen.png'
+import pemberiOksigenImage from '~/assets/illustrations/pemberi-oksigen.png'
 export default {
   components: {
     ContentLoader,
     OxygenAccordion: () => import('~/components/OxygenAccordion'),
-    ExpandableContent
+    ExpandableContent,
+    ContentCard,
+    Section,
+    ActionCard
+  },
+  data () {
+    return {
+      headerContent: {
+        headerSize: 'large',
+        title: 'Tabung Oksigen Bagi Pasien Covid-19',
+        body: 'Informasi mengenai pemanfaatan tabung oksigen & sebaran lokasi agen penyedia tabung oksigen di Jawa Barat',
+        image: require('~/assets/illustrations/cek-oksigen.svg'),
+        imagePosition: 'right',
+        prompt: 'Selengkapnya',
+        backLink: '#section-oxygen-services'
+      },
+      peminjamOksigenImage,
+      pemberiOksigenImage,
+      peminjamOksigenJotform: process.env.NUXT_ENV_FORM_OXYGEN_REQUEST,
+      pemberiOksigenJotform: process.env.NUXT_ENV_FORM_OXYGEN_PROVIDE,
+      peminjamOksigenEvent,
+      pemberiOksigenEvent
+    }
   },
   computed: {
     ...mapState('oxygen', [
@@ -93,6 +149,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.therapy {
+  &__title {
+    @apply mb-4 mt-4 text-center text-xl;
+
+    @screen md {
+      @apply mb-8 text-2xl;
+    }
+  }
+}
+.header {
+  @apply inline-block mb-4 text-xl font-bold font-lora;
+  @screen sm {
+    font-size: 28px;
+  }
+}
 .html-content::v-deep {
   table {
     overflow-x: auto;
@@ -105,6 +176,28 @@ export default {
       border-bottom: 1px solid #eee;
       padding: 0 16px;
       vertical-align: top;
+    }
+  }
+}
+.isoman {
+  &__action-card-grids {
+    @apply mx-auto block;
+
+    @screen sm {
+      @apply grid grid-cols-2
+      gap-4 mt-4 p-8;
+    }
+
+    @screen lg {
+      @apply gap-6 mt-6;
+    }
+  }
+
+  &__action-card {
+    @apply font-semibold my-4;
+
+    @screen sm {
+      @apply m-0;
     }
   }
 }

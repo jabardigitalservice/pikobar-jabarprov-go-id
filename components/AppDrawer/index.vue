@@ -94,7 +94,16 @@ export default {
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
         { to: '/oxygen', label: 'Cari Oksigen', icon: this.icon.faLungs },
-        { to: process.env.URL_LOGISTIC, label: 'Logistik', href: true, icon: this.icon.faBoxOpen },
+        {
+          to: '#',
+          label: 'Logistik',
+          icon: this.icon.faBoxOpen,
+          isExpanded: false,
+          children: [
+            { to: process.env.URL_LOGISTIC, label: 'Alat Kesehatan', icon: this.icon.faBoxOpen },
+            { to: process.env.URL_LOGISTIC_VACCINE, label: 'Vaksin', icon: this.icon.faSyringe }
+          ]
+        },
         {
           to: '#',
           label: 'Informasi',

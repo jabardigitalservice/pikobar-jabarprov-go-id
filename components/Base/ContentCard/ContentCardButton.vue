@@ -2,6 +2,11 @@
   <BaseButton
     tag="a"
     :label="prompt"
+    :subtitle="subtitle"
+    :width="width"
+    :height="height"
+    :src="src"
+    :size="size"
     :href="backLink"
     :outlined="buttonType === 'outline'"
     @click.prevent="onClick"
@@ -23,7 +28,7 @@
         class="w-5 h-5 ml-2"
         fill="none"
         viewBox="0 0 24 24"
-        stroke="currentColor"
+        :stroke="color"
       >
         <path
           stroke-linecap="round"
@@ -48,6 +53,14 @@ export default {
       type: String,
       default: ''
     },
+    subtitle: {
+      type: String,
+      default: ''
+    },
+    size: {
+      type: String,
+      default: ''
+    },
     backLink: {
       type: String,
       default: '#'
@@ -59,6 +72,24 @@ export default {
     iconType: {
       type: String,
       default: 'arrow-right'
+    },
+    width: {
+      type: [Number, String],
+      default: 'auto'
+    },
+    height: {
+      type: [Number, String],
+      default: 'auto'
+    },
+    src: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    color () {
+      return this.buttonType === 'outline'
+        ? '#BDBDBD' : 'currentColor'
     }
   },
   methods: {

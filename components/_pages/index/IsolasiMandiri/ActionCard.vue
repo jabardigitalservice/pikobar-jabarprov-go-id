@@ -6,12 +6,30 @@
       alt="action illustration"
     >
     <div class="action-card__content">
-      <h3 class="action-card__title">
-        {{ title }}
-      </h3>
-      <p class="text-gray-800">
-        {{ body }}
-      </p>
+      <div v-if="splitBody">
+        <p class="text-gray-800">
+          <span v-show="body" :class="colorSplitOne">
+            {{ body }}
+          </span>
+          <span v-show="bodySplit" :class="colorSplitTwo">
+            {{ bodySplit }}
+          </span>
+          <span v-show="bodySplitTwo" :class="colorSplitThree">
+            {{ bodySplitTwo }}
+          </span>
+          <span v-show="bodySplitThree" :class="colorSplitFour">
+            {{ bodySplitThree }}
+          </span>
+        </p>
+      </div>
+      <div v-else>
+        <h3 class="action-card__title">
+          {{ title }}
+        </h3>
+        <p class="text-gray-800">
+          {{ body }}
+        </p>
+      </div>
       <a
         :href="backlink"
         target="_blank"
@@ -46,11 +64,43 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      default: ''
+    },
+    splitBody: {
+      type: Boolean,
+      default: false
     },
     body: {
       type: String,
       required: true
+    },
+    bodySplit: {
+      type: String,
+      default: ''
+    },
+    bodySplitTwo: {
+      type: String,
+      default: ''
+    },
+    bodySplitThree: {
+      type: String,
+      default: ''
+    },
+    colorSplitOne: {
+      type: String,
+      default: ''
+    },
+    colorSplitTwo: {
+      type: String,
+      default: ''
+    },
+    colorSplitThree: {
+      type: String,
+      default: ''
+    },
+    colorSplitFour: {
+      type: String,
+      default: ''
     },
     prompt: {
       type: String,
