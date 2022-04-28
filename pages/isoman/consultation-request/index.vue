@@ -1,5 +1,5 @@
 <template>
-  <div class="form-input md:px-20 md:py-10">
+  <div class="container mx-auto form-input md:px-20 md:py-10">
     <div class="header">
       <span class="step__title">
         Konsultasi Dokter
