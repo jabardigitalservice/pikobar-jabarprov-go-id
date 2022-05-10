@@ -146,22 +146,22 @@ export default {
           prompt: 'Selengkapnya'
         },
         {
-          header: 'Kenali Covid-19',
-          title: 'Kenali Informasi Seputar Covid-19',
-          body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
-          image: '/img/icon-kenali-covid.svg',
-          imagePosition: 'right',
-          backLink: '/info/covid-19',
-          buttonType: 'outline',
-          prompt: 'Selanjutnya'
-        },
-        {
           header: 'Penanganan Covid-19',
           title: 'Apa itu Testing, Tracing, Treatment (3T)?',
           body: 'Testing, tracing, dan treatment atau melakukan pengetesan, penelusuran kontak, dan perawatan terhadap pasien Covid-19 dapat bantu petakan penularan sedini mungkin, sehingga peluang penyebaran Covid-19 bisa diantisipasi. Ketahui lebih jauh perkembangan upaya 3T di Jawa Barat selengkapnya.',
           image: '/img/icon-isoman.svg',
           imagePosition: 'left',
           backLink: '/3t',
+          buttonType: 'outline',
+          prompt: 'Selanjutnya'
+        },
+        {
+          header: 'Kenali Covid-19',
+          title: 'Kenali Informasi Seputar Covid-19',
+          body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
+          image: '/img/icon-kenali-covid.svg',
+          imagePosition: 'right',
+          backLink: '/info/covid-19',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },
