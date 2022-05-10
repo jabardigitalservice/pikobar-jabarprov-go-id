@@ -3,6 +3,7 @@
     <img
       class="news-carousel-item__img"
       :src="thumbnail"
+      :alt="url"
       @click="goToUrl"
     >
     <div class="news-carousel-item__body">
@@ -52,6 +53,10 @@ export default {
     url: {
       type: String,
       default: null
+    },
+    backlink: {
+      type: String,
+      default: null
     }
   },
   computed: {
@@ -63,12 +68,14 @@ export default {
   },
   methods: {
     goToUrl () {
-      const { url } = this
+      const { url, source, backlink } = this
       if (typeof url !== 'string' || !url.length) {
         return
       }
       if (url.startsWith('http')) {
         return window.open(url, '_blank')
+      } else if (source === 'Anti Hoax') {
+        return window.open(backlink, '_blank')
       } else {
         return this.$router.push(url)
       }
