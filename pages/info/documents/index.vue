@@ -3,8 +3,8 @@
     <section>
       <h2 class="text-xl md:text-3xl leading-normal">
         <p class="info-text">
-          Lihat dan unduh dokumen serta rilis pers seputar informasi COVID-19 di Jawa Barat.
-          Dokumen dan rilis pers yang ditampilkan berdasarkan informasi resmi dari
+          Lihat dan unduh dokumen serta regulasi seputar informasi COVID-19 di Jawa Barat.
+          Dokumen dan regulasi yang ditampilkan berdasarkan informasi resmi dari
           Pemerintah Provinsi Jawa Barat.
         </p>
       </h2>
