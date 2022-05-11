@@ -176,7 +176,7 @@ export default {
           prompt: 'Selengkapnya'
         },
         {
-          title: 'Tetap waspada dengan menerapkan AKB',
+          title: 'Tetap waspada dengan menerapkan protokol kesehatan',
           image: '/img/icon-penerapan-AKB.svg',
           imagePosition: 'right'
         },
