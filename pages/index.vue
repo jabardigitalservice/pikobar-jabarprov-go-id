@@ -146,6 +146,16 @@ export default {
           prompt: 'Selengkapnya'
         },
         {
+          header: 'Informasi Vaksin',
+          title: 'Pelajari Informasi soal Vaksinasi Covid-19',
+          body: 'Ketahui lebih jauh program Vaksinasi Covid-19 sebagai upaya mencapai herd immunity sekaligus menurunkan angka penyakit dan kematian akibat Covid-19. Baca selengkapnya untuk mengetahui informasi lebih lanjut tentang Vaksinasi Covid-19 di Jawa Barat.',
+          image: '/img/icon-inject-vaccine.svg',
+          imagePosition: 'right',
+          backLink: '/vaccine',
+          buttonType: 'outline',
+          prompt: 'Selanjutnya'
+        },
+        {
           header: 'Penanganan Covid-19',
           title: 'Apa itu Testing, Tracing, Treatment (3T)?',
           body: 'Testing, tracing, dan treatment atau melakukan pengetesan, penelusuran kontak, dan perawatan terhadap pasien Covid-19 dapat bantu petakan penularan sedini mungkin, sehingga peluang penyebaran Covid-19 bisa diantisipasi. Ketahui lebih jauh perkembangan upaya 3T di Jawa Barat selengkapnya.',
@@ -162,16 +172,6 @@ export default {
           image: '/img/icon-kenali-covid.svg',
           imagePosition: 'right',
           backLink: '/info/covid-19',
-          buttonType: 'outline',
-          prompt: 'Selanjutnya'
-        },
-        {
-          header: 'Informasi Vaksin',
-          title: 'Pelajari Informasi soal Vaksinasi Covid-19',
-          body: 'Ketahui lebih jauh program Vaksinasi Covid-19 sebagai upaya mencapai herd immunity sekaligus menurunkan angka penyakit dan kematian akibat Covid-19. Baca selengkapnya untuk mengetahui informasi lebih lanjut tentang Vaksinasi Covid-19 di Jawa Barat.',
-          image: '/img/icon-inject-vaccine.svg',
-          imagePosition: 'right',
-          backLink: '/vaccine',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         }
