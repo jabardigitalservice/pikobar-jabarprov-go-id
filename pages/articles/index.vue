@@ -6,7 +6,7 @@
         Berita Terkini
       </h2>
       <h4 class="subtitle">
-        Berita seputar Covid-19 mulai dari berita lokal hingga mancanegara.
+        Berita seputar Covid-19 mulai dari rilis pers, berita lokal, nasional hingga mancanegara.
       </h4>
     </div>
     <div class="py-10">

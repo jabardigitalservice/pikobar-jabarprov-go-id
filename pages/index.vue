@@ -146,12 +146,12 @@ export default {
           prompt: 'Selengkapnya'
         },
         {
-          header: 'Kenali Covid-19',
-          title: 'Kenali Informasi Seputar Covid-19',
-          body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
-          image: '/img/icon-kenali-covid.svg',
+          header: 'Informasi Vaksin',
+          title: 'Pelajari Informasi soal Vaksinasi Covid-19',
+          body: 'Ketahui lebih jauh program Vaksinasi Covid-19 sebagai upaya mencapai herd immunity sekaligus menurunkan angka penyakit dan kematian akibat Covid-19. Baca selengkapnya untuk mengetahui informasi lebih lanjut tentang Vaksinasi Covid-19 di Jawa Barat.',
+          image: '/img/icon-inject-vaccine.svg',
           imagePosition: 'right',
-          backLink: '/info/covid-19',
+          backLink: '/vaccine',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         },
@@ -166,12 +166,12 @@ export default {
           prompt: 'Selanjutnya'
         },
         {
-          header: 'Informasi Vaksin',
-          title: 'Pelajari Informasi soal Vaksinasi Covid-19',
-          body: 'Ketahui lebih jauh program Vaksinasi Covid-19 sebagai upaya mencapai herd immunity sekaligus menurunkan angka penyakit dan kematian akibat Covid-19. Baca selengkapnya untuk mengetahui informasi lebih lanjut tentang Vaksinasi Covid-19 di Jawa Barat.',
-          image: '/img/icon-inject-vaccine.svg',
+          header: 'Kenali Covid-19',
+          title: 'Kenali Informasi Seputar Covid-19',
+          body: 'Ketahui penyakit yang disebabkan oleh Novel Coronavirus (2019-nCoV), gejala, serta penularan Covid-19. Dapatkan informasi soal tindakan yang harus dilakukan jika tertular Covid-19, juga tren penanganan pandemi di Jawa Barat.',
+          image: '/img/icon-kenali-covid.svg',
           imagePosition: 'right',
-          backLink: '/vaccine',
+          backLink: '/info/covid-19',
           buttonType: 'outline',
           prompt: 'Selanjutnya'
         }
