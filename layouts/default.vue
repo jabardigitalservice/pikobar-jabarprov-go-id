@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-gray-100">
+  <div class="w-full bg-white">
     <div v-if="alertUpdate" class="bg-brand-yellow-darkest">
       <div class="container mx-auto">
         <div class="flex px-6 py-4">
