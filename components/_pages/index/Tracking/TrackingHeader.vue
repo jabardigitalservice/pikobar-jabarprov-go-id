@@ -1,12 +1,18 @@
 <template>
   <div class="container mx-auto">
-    <div class="flex flex-col-reverse lg:flex-row md:m-8 md:p-8 header-card gap-4">
-      <div class="flex flex-col justify-center gap-2">
-        <h2 class="text-2xl font-bold leading-tight text-center sm:text-left">
-          Lacak Permohonan Vitamin/Obat Anda testing
+    <div class="flex lg:flex-col m-10 lg:mx-56 md:m-8 md:p-8">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-4xl font-bold leading-tight text-center md:text-left">
+          Lacak Permohonan
         </h2>
-        <p class="mb-6 mt-2 text-base opacity-75 leading-tight">
-          Anda dapat mengetahui status tindak lanjut permohonan obat/vitamin yang telah diajukan melalui Pikobar
+        <p class="mb-6 mt-2 text-base opacity-75 leading-tight text-center md:text-left">
+          Cari tahu status permohonan obat/vitamin di sini.
+        </p>
+        <h2 class="text-2xl md:text-2xl font-semibold leading-tight text-gray-500 mb-2 mt-4 text-left">
+          Isi ID Request/NIK di bawah
+        </h2>
+        <p class="text-base opacity-75 leading-tight">
+          ID Request/NIK
         </p>
         <div class="relative rounded-md shadow-sm">
           <div class="icon-search">
@@ -35,10 +41,6 @@
         >
           This field is required
         </span>
-        <p class="text-xs">
-          *ID permohonan didapatkan setelah anda melakukan pengisian form
-          pemohonan obat/vitamin
-        </p>
         <vue-recaptcha
           ref="recaptcha"
           :sitekey="recaptchaKey"
@@ -49,18 +51,18 @@
           @error="onRecaptchaError"
         />
         <button
-          class="sm:mr-0 bg-brand-green hover:bg-brand-green-light lg:w-40 search-button"
+          class="sm:mr-0 bg-brand-green-darker hover:opacity-75 lg:w-full search-button"
           @click="onSearch"
         >
           <Spinner v-if="isLoading" />
           <span v-else>Cari</span>
         </button>
       </div>
-      <img
+      <!-- <img
         class="mx-auto md:mx-0 object-contain"
         src="~/assets/illustrations/isoman.png"
         alt="ilustrasi isoman"
-      >
+      > -->
     </div>
   </div>
 </template>
@@ -131,11 +133,11 @@ export default {
 </script>
 
 <style scoped>
-.header-card {
+/* .header-card {
   @apply p-5 m-4
   rounded-lg bg-white shadow-md
   content-center justify-between
-}
+} */
 .search-button {
   @apply px-4 py-2 rounded-lg text-white
   justify-center items-center
