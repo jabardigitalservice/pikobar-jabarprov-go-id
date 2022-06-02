@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="flex lg:flex-col m-10 lg:mx-56 md:m-8 md:p-8">
+    <div class="flex md:flex-col m-10 lg:mx-56 md:m-8 md:mx-20">
       <div class="flex flex-col gap-2">
         <h2 class="text-4xl font-bold leading-tight text-center md:text-left">
           Lacak Permohonan
