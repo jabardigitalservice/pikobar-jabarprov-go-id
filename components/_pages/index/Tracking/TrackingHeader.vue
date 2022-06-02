@@ -29,7 +29,7 @@
             :class="{
               'border-red-500': !isValid
             }"
-            placeholder="Masukkan ID Permohonan/NIK Anda"
+            placeholder="Tulis ID Request/NIK"
             @keyup.enter="onSearch"
           >
         </div>
@@ -58,11 +58,6 @@
           <span v-else>Cari</span>
         </button>
       </div>
-      <!-- <img
-        class="mx-auto md:mx-0 object-contain"
-        src="~/assets/illustrations/isoman.png"
-        alt="ilustrasi isoman"
-      > -->
     </div>
   </div>
 </template>
@@ -133,11 +128,6 @@ export default {
 </script>
 
 <style scoped>
-/* .header-card {
-  @apply p-5 m-4
-  rounded-lg bg-white shadow-md
-  content-center justify-between
-} */
 .search-button {
   @apply px-4 py-2 rounded-lg text-white
   justify-center items-center
