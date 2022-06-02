@@ -55,7 +55,7 @@
           @click="onSearch"
         >
           <Spinner v-if="isLoading" />
-          <span v-else>Cari</span>
+          <span v-else class="font-medium">Lacak Permohonan</span>
         </button>
       </div>
     </div>
