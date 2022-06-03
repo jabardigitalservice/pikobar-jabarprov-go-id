@@ -1,52 +1,84 @@
 <template>
   <div class="container mx-auto">
-    <div class="md:m-8 md:p-8 result-card">
-      <h2 class="text-2xl font-bold leading-tight mb-6">
-        Hasil Pelacakan Status Permohonan Anda
+    <div class="flex flex-col m-10 pb-12 lg:mx-56 md:m-8 md:mx-20">
+      <h2 class="text-2xl md:text-2xl font-semibold leading-tight text-gray-500 mb-4 mt-4 text-left">
+        Detail ID Permohonan
       </h2>
-      <div class="flex flex-col rounded-lg border-gray-400 border-solid border-2 p-4">
-        <div class="flex flex-col gap-2 mb-2 md:p-8">
-          <div v-for="identity in resultIdentity" :key="identity.title" class="flex flex-row">
-            <span class="text-sm md:text-base w-6/12 sm:w-3/12">{{ identity.title }}</span>
-            <span class="text-sm md:text-base w-6/12 sm:w-9/12">{{ identity.value }}</span>
-          </div>
+      <div class="flex flex-col gap-2 bg-gray-100 rounded p-5">
+        <div v-for="identity in resultIdentity" :key="identity.title" class="m-1">
+          <p class="text-base text-gray-600">
+            {{ identity.title }}
+          </p>
+          <p class="text-base font-semibold">
+            {{ identity.value }}
+          </p>
         </div>
-        <div v-if="activeTabId">
-          <TabLayout
-            :tabs="listTabs"
-            :active-tab-id="activeTabId"
-            fixed
-          />
-          <div class="flex flex-col">
-            <span class="self-center sm:self-start my-2">Status Permohonan Anda</span>
-            <span class="text-xl font-bold self-center">{{ requestStatus }}</span>
-            <span
-              v-if="displayReason"
-              class="mt-2 self-center sm:self-start"
-            >
-              Alasan: {{ trackingResult.verify_info.reason }}
-            </span>
-            <div
-              v-if="activeTabId === 'distribution' || activeTabId === 'received'"
-              class="flex flex-col self-center lg:w-3/12 mt-6"
-            >
-              <div class="flex flex-row">
-                <span class="text-sm md:text-base w-6/12 sm:w-6/12">Nomor Resi :</span>
-                <span class="text-sm md:text-base w-6/12 sm:w-6/12">{{ trackingResult.delivery_info.airwaybill }}</span>
-              </div>
-              <div class="flex flex-row">
-                <span class="text-sm md:text-base w-6/12 sm:w-6/12">Nomor Kurir :</span>
-                <span class="text-sm md:text-base w-6/12 sm:w-6/12">{{ trackingResult.delivery_info.courier }}</span>
-              </div>
-              <a
-                :href="trackingResult.delivery_info.track_url"
-                target="_blank"
-                class="md:self-center hover:bg-green-200 trace-button"
-              >
-                Cek status pengiriman
-              </a>
+      </div>
+      <!-- Status permohonan -->
+      <h2 class="text-2xl md:text-2xl font-semibold leading-tight text-gray-500 mb-4 mt-12 text-left">
+        Status Permohonan
+      </h2>
+      <div class="flex items-center p-4 bg-blue-100 rounded-lg border border-blue-600">
+        <img class="inline-block" src="/img/icon-info.svg" alt="info">
+        <p class="px-3 inline-block">
+          {{ detailPackageCurrentPosition[0].statusPermohonan }}
+        </p>
+      </div>
+      <!-- Kurir info -->
+      <div v-if="result.status === 'DELIVERY'" class="flex flex-col gap-2 bg-gray-100 rounded p-5 mt-5">
+        <div v-for="identity in courierIdentity" :key="identity.title" class="m-1">
+          <p class="text-base text-gray-600">
+            {{ identity.title }}
+          </p>
+          <p class="text-base font-semibold">
+            {{ identity.value }}
+          </p>
+        </div>
+        <div class="mt-2">
+          <button
+            class="flex items-center bg-brand-green-darker hover:opacity-75 search-button w-auto"
+            @click="onSearch"
+          >
+            <div class="flex items-center">
+              <span class="font-medium">Lacak Pengiriman</span>
+              <img class="inline-block ml-2 mt-n1" src="/img/icon-open-tab.svg" alt="open tab">
             </div>
-          </div>
+          </button>
+        </div>
+      </div>
+      <!-- Detail progress paket -->
+      <div v-for="item in detailPackageCurrentPosition" :key="item.status">
+        <div class="flex items-center mt-5">
+          <img class="inline-block" src="/img/icon-dot.svg" alt="dot icon">
+          <p class="inline-block items-center px-5 text-base font-bold uppercase">
+            {{ item.status }}
+            <span class="text-base text-brand-green-darker font-normal capitalize mx-3">
+              {{ item.date }}
+            </span>
+          </p>
+        </div>
+        <div class="flex mt-3">
+          <div class="h-auto bg-brand-green-darker w-2 md:w-1 ml-3" />
+          <p class="inline-block items-center px-5 text-base max-w-sm">
+            {{ item.note }}
+          </p>
+        </div>
+      </div>
+      <div v-for="item in detailPackageHistory" :key="item.status">
+        <div class="flex items-center mt-5">
+          <img class="inline-block" src="/img/icon-dot-gray.svg" alt="dot icon gray">
+          <p class="inline-block items-center px-5 text-base font-bold uppercase text-gray-500">
+            {{ item.status }}
+            <span class="text-base text-gray-500 font-normal capitalize mx-3">
+              {{ item.date }}
+            </span>
+          </p>
+        </div>
+        <div class="flex mt-3">
+          <div class="h-auto bg-gray-400 w-4 md:w-1 ml-3" />
+          <p class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
+            {{ item.note }}
+          </p>
         </div>
       </div>
     </div>
@@ -55,12 +87,12 @@
 
 <script>
 import { mapState } from 'vuex'
+import packageHistory from './data'
 export default {
-  components: {
-    TabLayout: () => import('../../../TabLayout')
-  },
   data () {
     return {
+      packageHistory,
+      statusPackage: null,
       listTabs: [
         {
           id: 'request',
@@ -84,7 +116,8 @@ export default {
         }
       ],
       trackingResult: null,
-      resultIdentity: null
+      resultIdentity: null,
+      courierIdentity: null
     }
   },
   computed: {
@@ -138,10 +171,29 @@ export default {
       return this.activeTabId === 'verification' &&
         this.trackingResult.verify_info &&
         !this.trackingResult.verify_info.approved
+    },
+    detailPackageCurrentPosition () {
+      const status = [this.packageHistory[0]]
+      // this.statusPackage = status
+      return status
+    },
+    detailPackageHistory () {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      return [this.packageHistory[1]]
     }
   },
   created () {
     this.trackingResult = this.result
+    this.courierIdentity = [
+      {
+        title: 'Nama Kurir',
+        value: this.trackingResult.delivery_info.courier
+      },
+      {
+        title: 'Nomor Resi',
+        value: this.trackingResult.delivery_info.airwaybill
+      }
+    ]
     this.resultIdentity = [
       {
         title: 'ID Permohonan',
@@ -164,11 +216,20 @@ export default {
         value: this.trackingResult.address || ''
       }
     ]
+  },
+  methods: {
+    onSearch () {
+      window.open(this.trackingResult.delivery_info.track_url)
+    }
   }
 }
 </script>
 
 <style scoped>
+.search-button {
+  @apply px-4 py-2 rounded-lg text-white
+  justify-center items-center
+}
 .result-card {
   @apply flex flex-col p-5 m-4
   rounded-lg bg-white shadow-md
