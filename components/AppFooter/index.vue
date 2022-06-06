@@ -1,6 +1,6 @@
 <template>
   <footer class="app-footer">
-    <BaseSection class="bg-gray-100">
+    <BaseSection class="bg-brand-gray">
       <div class="app-footer__body">
         <div>
           <a href="/">

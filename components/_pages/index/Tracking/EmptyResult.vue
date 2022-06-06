@@ -6,7 +6,7 @@
         Data Permohonan Tidak Ditemukan
       </span>
       <span class="text-center">
-        Maaf, kami tidak dapat menemukan data permohonan yang anda cari.
+        Maaf, kami tidak dapat menemukan data permohonan yang Anda cari.
       </span>
     </div>
   </div>
@@ -14,8 +14,6 @@
 
 <style scoped>
 .result-card {
-  @apply flex flex-col p-5 m-4
-  rounded-lg bg-white shadow-md
-  items-center
+  @apply flex flex-col p-5 m-5 mb-16 bg-white items-center
 }
 </style>
