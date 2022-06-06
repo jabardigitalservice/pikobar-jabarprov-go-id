@@ -3,7 +3,7 @@
     <Section class="py-6 md:py-20 bg-white">
       <ContentCard v-bind="headerContent" />
     </Section>
-    <Section id="section-health-services" class="py-6 md:py-20 bg-gray-50">
+    <Section id="section-health-services" class="py-6 md:py-20 bg-brand-gray">
       <IsomanJumbotron />
     </Section>
     <Section class="bg-white">
