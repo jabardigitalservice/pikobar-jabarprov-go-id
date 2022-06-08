@@ -32,7 +32,7 @@
                 v-for="(val, indexRow) in row"
                 :key="indexRow"
               >
-                <a :href="val.link" target="_blank" rel="noopener noreferrer" class="app-footer__link">
+                <a :href="val.link" target="_blank" rel="noopener noreferrer" class="app-footer__link font-lato">
                   {{ val.title }}
                 </a>
               </li>
@@ -132,7 +132,7 @@ export default {
   }
 
   &__link-header {
-    @apply text-base font-bold font-roboto;
+    @apply text-base font-bold font-lato;
     color: #424242;
 ;
   }
