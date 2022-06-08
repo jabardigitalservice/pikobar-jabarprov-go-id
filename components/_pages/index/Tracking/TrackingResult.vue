@@ -60,9 +60,11 @@
         </div>
         <div class="flex mt-3">
           <div class="h-auto bg-brand-green-darker w-2 md:w-1 ml-3" />
-          <p class="inline-block items-center px-5 text-base max-w-sm">
-            {{ item.note }}
-          </p>
+          <div>
+            <p class="inline-block items-center px-5 text-base max-w-sm">
+              {{ item.note || '-' }}
+            </p>
+          </div>
         </div>
       </div>
       <div v-for="item in histories" :key="item.status">
@@ -76,10 +78,12 @@
           </p>
         </div>
         <div class="flex mt-3">
-          <div class="h-auto bg-gray-400 w-4 md:w-1 ml-3" />
-          <p class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
-            {{ item.note || '-' }}
-          </p>
+          <div class="h-auto bg-gray-400 w-2 md:w-1 ml-3" />
+          <div>
+            <p class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
+              {{ item.note || '-' }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
