@@ -54,7 +54,7 @@
           <p class="inline-block items-center px-5 text-base font-bold uppercase">
             {{ checkStatus(item.status) }}
             <span class="text-base text-brand-green-darker font-normal capitalize mx-3">
-              {{ item.date ? `(${item.date})` : '-' }}
+              {{ item.date === ' WIB' ? '-' : `(${item.date})` }}
             </span>
           </p>
         </div>
@@ -73,7 +73,7 @@
           <p class="inline-block items-center px-5 text-base font-bold uppercase text-gray-500">
             {{ checkStatus(item.status) }}
             <span class="text-base text-gray-500 font-normal capitalize mx-3">
-              {{ item.date ? `(${item.date})` : '-' }}
+              {{ item.date === ' WIB' ? '-' : `(${item.date})` }}
             </span>
           </p>
         </div>
