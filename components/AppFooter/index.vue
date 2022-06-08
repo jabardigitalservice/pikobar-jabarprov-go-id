@@ -132,13 +132,13 @@ export default {
   }
 
   &__link-header {
-    @apply text-sm font-semibold tracking-wider uppercase;
-    color: #757575;
+    @apply text-base font-bold font-roboto;
+    color: #424242;
+;
   }
 
   &__link {
     @apply text-base;
-    font-family: Roboto;
     font-size: 14px;
     color: #757575;
   }
