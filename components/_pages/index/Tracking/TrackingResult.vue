@@ -14,18 +14,18 @@
           </p>
         </div>
       </div>
-      <!-- Status permohonan -->
+
       <h2 class="text-2xl md:text-2xl font-semibold leading-tight text-gray-500 mb-4 mt-12 text-left">
         Status Permohonan
       </h2>
       <div class="flex items-center p-4 bg-blue-100 rounded-lg border border-blue-600">
         <img class="inline-block" src="/img/icon-info.svg" alt="info">
         <p class="px-3 inline-block">
-          {{ detailPackageCurrentPosition[0].statusPermohonan }}
+          {{ checkStatusHighlight(result.status) }}
         </p>
       </div>
-      <!-- Kurir info -->
-      <div v-if="result.status === 'DELIVERY'" class="flex flex-col gap-2 bg-gray-100 rounded p-5 mt-5">
+
+      <div v-if="result.status === 'DELIVERY' || result.status === 'DELIVERED'" class="flex flex-col gap-2 bg-gray-100 rounded p-5 mt-5">
         <div v-for="identity in courierIdentity" :key="identity.title" class="m-1">
           <p class="text-base text-gray-600">
             {{ identity.title }}
@@ -36,6 +36,7 @@
         </div>
         <div class="mt-2">
           <button
+            v-if="trackingResult.delivery_info"
             class="flex items-center bg-brand-green-darker hover:opacity-75 search-button w-auto"
             @click="onSearch"
           >
@@ -46,14 +47,14 @@
           </button>
         </div>
       </div>
-      <!-- Detail progress paket -->
-      <div v-for="item in detailPackageCurrentPosition" :key="item.status">
+
+      <div v-for="item in currentStatus" :key="item.status">
         <div class="flex items-center mt-5">
           <img class="inline-block" src="/img/icon-dot.svg" alt="dot icon">
           <p class="inline-block items-center px-5 text-base font-bold uppercase">
-            {{ item.status }}
+            {{ checkStatus(item.status) }}
             <span class="text-base text-brand-green-darker font-normal capitalize mx-3">
-              {{ item.date }}
+              {{ item.date ? `(${item.date})` : '-' }}
             </span>
           </p>
         </div>
@@ -64,20 +65,20 @@
           </p>
         </div>
       </div>
-      <div v-for="item in detailPackageHistory" :key="item.status">
+      <div v-for="item in histories" :key="item.status">
         <div class="flex items-center mt-5">
           <img class="inline-block" src="/img/icon-dot-gray.svg" alt="dot icon gray">
           <p class="inline-block items-center px-5 text-base font-bold uppercase text-gray-500">
-            {{ item.status }}
+            {{ checkStatus(item.status) }}
             <span class="text-base text-gray-500 font-normal capitalize mx-3">
-              {{ item.date }}
+              {{ item.date ? `(${item.date})` : '-' }}
             </span>
           </p>
         </div>
         <div class="flex mt-3">
           <div class="h-auto bg-gray-400 w-4 md:w-1 ml-3" />
           <p class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
-            {{ item.note }}
+            {{ item.note || '-' }}
           </p>
         </div>
       </div>
@@ -87,34 +88,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import packageHistory from './data'
 export default {
   data () {
     return {
-      packageHistory,
       statusPackage: null,
-      listTabs: [
-        {
-          id: 'request',
-          title: '1. Permohonan'
-        },
-        {
-          id: 'verification',
-          title: '2. Verifikasi'
-        },
-        {
-          id: 'packing',
-          title: '3. Packing'
-        },
-        {
-          id: 'distribution',
-          title: '4. Distribusi'
-        },
-        {
-          id: 'received',
-          title: '5. Diterima'
-        }
-      ],
       trackingResult: null,
       resultIdentity: null,
       courierIdentity: null
@@ -122,76 +99,21 @@ export default {
   },
   computed: {
     ...mapState('tracking', [
-      'result'
-    ]),
-    requestStatus () {
-      switch (this.activeTabId) {
-        case 'verification':
-          return this.verificationLabel
-        case 'packing':
-          return 'PAKET ANDA SEDANG DI PACKING'
-        case 'distribution':
-          return this.trackingResult.delivery_info.status === 'RETURNED'
-            ? 'PENGIRIMAN PAKET GAGAL DILAKUKAN'
-            : 'PAKET ANDA SEDANG DI DISTRIBUSIKAN'
-        case 'received':
-          return 'SUDAH DITERIMA'
-        default:
-          return ''
-      }
-    },
-    activeTabId () {
-      if (this.trackingResult && this.trackingResult.status) {
-        switch (this.trackingResult.status) {
-          case 'NEW':
-            return 'request'
-          case 'VERIFY':
-            return 'verification'
-          case 'PACKAGING':
-            return 'packing'
-          case 'DELIVERY':
-            return 'distribution'
-          case 'DELIVERED':
-            return 'received'
-          default:
-            return ''
-        }
-      } else {
-        return ''
-      }
-    },
-    verificationLabel () {
-      if (this.trackingResult.verify_info) {
-        return this.trackingResult.verify_info.approved ? 'LOLOS VERIFIKASI' : 'TIDAK MEMENUHI VERIFIKASI'
-      } else {
-        return 'SEDANG DALAM TAHAPAN VERIFIKASI'
-      }
-    },
-    displayReason () {
-      return this.activeTabId === 'verification' &&
-        this.trackingResult.verify_info &&
-        !this.trackingResult.verify_info.approved
-    },
-    detailPackageCurrentPosition () {
-      const status = [this.packageHistory[0]]
-      // this.statusPackage = status
-      return status
-    },
-    detailPackageHistory () {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return [this.packageHistory[1]]
-    }
+      'result',
+      'histories',
+      'currentStatus'
+    ])
   },
   created () {
     this.trackingResult = this.result
     this.courierIdentity = [
       {
         title: 'Nama Kurir',
-        value: this.trackingResult.delivery_info.courier
+        value: this.trackingResult.delivery_info ? this.trackingResult.delivery_info.courier : '-'
       },
       {
         title: 'Nomor Resi',
-        value: this.trackingResult.delivery_info.airwaybill
+        value: this.trackingResult.delivery_info ? this.trackingResult.delivery_info.airwaybill : '-'
       }
     ]
     this.resultIdentity = [
@@ -218,6 +140,43 @@ export default {
     ]
   },
   methods: {
+    checkStatusHighlight (status) {
+      if (status === 'NEW_REQUEST') {
+        return 'Permohonan Diajukan'
+      } else if (status === 'VERIFY') {
+        if (this.currentStatus[0].note === 'Permohonan diterima') {
+          return 'Permohonan Diterima'
+        } else {
+          return 'Permohonan Ditolak'
+        }
+      } else if (status === 'PACKAGING') {
+        return 'Paket Sedang Dikemas'
+      } else if (status === 'DELIVERY') {
+        if (this.currentStatus[0].note === 'Paket gagal dipickup') {
+          return 'Paket Gagal Dipickup'
+        } else {
+          return 'Paket Sedang dalam Pengiriman'
+        }
+      } else if (status === 'DELIVERED') {
+        return 'Paket Diterima'
+      }
+    },
+    checkStatus (status) {
+      switch (status) {
+        case 'NEW_REQUEST':
+          return 'Permohonan'
+        case 'VERIFY':
+          return 'Verifikasi'
+        case 'PACKAGING':
+          return 'Pengemasan'
+        case 'DELIVERY':
+          return 'Pengiriman'
+        case 'DELIVERED':
+          return 'Diterima'
+        default:
+          return ''
+      }
+    },
     onSearch () {
       window.open(this.trackingResult.delivery_info.track_url)
     }
