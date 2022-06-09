@@ -204,6 +204,7 @@ export default {
             label: options.fields['A2. Kota/Kabupaten']
           }
         })
+        this.districts.unshift({ label: 'Semua wilayah' })
       } else {
         return []
       }
@@ -218,7 +219,9 @@ export default {
       const params = []
 
       const district = this.query.district ? `{A2. Kota/Kabupaten}="${this.query.district.label}"` : ''
-      if (this.query.district) { params.push(district) }
+      if (this.query.district && this.query.district.label !== 'Semua wilayah') {
+        params.push(district)
+      }
 
       const typeVaccine = this.query.typeVaccine ? `{A4. Jenis Kegiatan}="${this.query.typeVaccine.label}"` : ''
       if (this.query.typeVaccine) { params.push(typeVaccine) }
