@@ -5,7 +5,7 @@
       :options="districts"
       :allow-empty="true"
       track-by="id"
-      placeholder="Pilih Kabupaten/Kota"
+      placeholder="Ketik Nama Kota/Kabupaten"
       :searchable="true"
       label="label"
       class="schedule-filter__filter"
