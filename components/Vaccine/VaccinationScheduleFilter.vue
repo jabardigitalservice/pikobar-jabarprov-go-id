@@ -227,7 +227,7 @@ export default {
       if (this.query.typeVaccine) { params.push(typeVaccine) }
 
       const age = this.query.age ? `SEARCH("${this.query.age}", ARRAYJOIN({D1. Target Usia}))` : ''
-      if (this.query.age) { params.push(age) }
+      if (this.query.age && this.query.age !== 'Semua usia') { params.push(age) }
 
       const date = this.query.startDate
         ? `OR(

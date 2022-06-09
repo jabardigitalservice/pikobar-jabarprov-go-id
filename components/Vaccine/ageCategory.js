@@ -1,4 +1,5 @@
 export default [
+  'Semua usia',
   'Anak-anak (6-11 Tahun)',
   'Remaja (12-17 tahun)',
   'Umum (18-49 tahun)',
