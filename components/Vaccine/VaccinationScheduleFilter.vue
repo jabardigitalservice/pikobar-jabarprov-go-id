@@ -118,23 +118,10 @@ export default {
           },
           seminggu () {
             const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate())
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 8, 0, 0)
             return {
-              label: '1 Minggu Terakhir',
-              active: false,
-              dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
-              }
-            }
-          },
-          sebulan () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
-            return {
-              label: '1 Bulan Terakhir',
+              label: '1 Minggu ke depan',
               active: false,
               dateRange: {
                 start: tanggalmulai,
