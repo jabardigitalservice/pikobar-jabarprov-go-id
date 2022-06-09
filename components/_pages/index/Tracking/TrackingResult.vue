@@ -60,7 +60,13 @@
         </div>
         <div class="flex mt-3">
           <div class="h-auto bg-brand-green-darker w-2 md:w-1 ml-3" />
-          <div>
+          <div v-if="checkStatusHighlight (item.status) === 'Permohonan Ditolak'" class="inline-block items-center px-5 text-base max-w-sm">
+            <p>Permohonan ditolak dengan catatan:</p>
+            <p class="pl-3">
+              {{ item.note || '-' }}
+            </p>
+          </div>
+          <div v-else>
             <p class="inline-block items-center px-5 text-base max-w-sm">
               {{ item.note || '-' }}
             </p>
@@ -80,6 +86,12 @@
         <div class="flex mt-3">
           <div class="h-auto bg-gray-400 w-2 md:w-1 ml-3" />
           <div>
+            <div v-if="checkStatusHighlight (item.status) === 'Permohonan Ditolak'" class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
+              <p>Permohonan ditolak dengan catatan:</p>
+              <p class="pl-3">
+                {{ item.note || '-' }}
+              </p>
+            </div>
             <p class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
               {{ item.note || '-' }}
             </p>
@@ -122,24 +134,24 @@ export default {
     ]
     this.resultIdentity = [
       {
-        title: 'ID Permohonan',
-        value: this.trackingResult.request_number || ''
+        title: 'ID Request',
+        value: this.trackingResult.request_number || '-'
       },
       {
         title: 'NIK',
-        value: this.trackingResult.nik || ''
+        value: this.trackingResult.nik || '-'
       },
       {
-        title: 'Nama Pemohon',
-        value: this.trackingResult.name || ''
+        title: 'Atas Nama',
+        value: this.trackingResult.name || '-'
       },
       {
         title: 'Nama Paket',
-        value: this.trackingResult.package_name || ''
+        value: this.trackingResult.package_name || '-'
       },
       {
         title: 'Alamat Domisili',
-        value: this.trackingResult.address || ''
+        value: this.trackingResult.address || '-'
       }
     ]
   },
