@@ -86,12 +86,6 @@
         <div class="flex mt-3">
           <div class="h-auto bg-gray-400 w-2 md:w-1 ml-3" />
           <div>
-            <div v-if="checkStatusHighlight (item.status) === 'Permohonan Ditolak'" class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
-              <p>Permohonan ditolak dengan catatan:</p>
-              <p class="pl-3">
-                {{ item.note || '-' }}
-              </p>
-            </div>
             <p class="inline-block items-center px-5 text-base max-w-sm text-gray-500">
               {{ item.note || '-' }}
             </p>
