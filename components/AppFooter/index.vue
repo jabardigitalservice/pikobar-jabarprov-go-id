@@ -132,13 +132,13 @@ export default {
   }
 
   &__link-header {
-    @apply text-base font-bold font-lato;
+    @apply text-base font-bold font-inter;
     color: #424242;
 ;
   }
 
   &__link {
-    @apply text-base;
+    @apply text-base font-inter;
     font-size: 14px;
     color: #757575;
   }

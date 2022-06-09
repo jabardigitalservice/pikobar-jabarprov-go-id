@@ -33,7 +33,8 @@ module.exports = {
     fontFamily: {
       'roboto': 'Roboto, sans-serif',
       'lora': 'Lora, serif',
-      'lato': 'Lato, serif'
+      'lato': 'Lato, serif',
+      'inter': 'Inter, sans-serif'
     }
   },
   variants: {},
