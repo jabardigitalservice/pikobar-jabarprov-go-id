@@ -5,7 +5,7 @@
       :options="districts"
       :allow-empty="true"
       track-by="id"
-      placeholder="Pilih Kabupaten/Kota"
+      placeholder="Ketik Nama Kota/Kabupaten"
       :searchable="true"
       label="label"
       class="schedule-filter__filter"
@@ -118,23 +118,10 @@ export default {
           },
           seminggu () {
             const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 8, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
+            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate())
+            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 8, 0, 0)
             return {
-              label: '1 Minggu Terakhir',
-              active: false,
-              dateRange: {
-                start: tanggalmulai,
-                end: tanggalselesai
-              }
-            }
-          },
-          sebulan () {
-            const n = new Date()
-            const tanggalmulai = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 31, 0, 0)
-            const tanggalselesai = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 23, 59)
-            return {
-              label: '1 Bulan Terakhir',
+              label: '1 Minggu ke depan',
               active: false,
               dateRange: {
                 start: tanggalmulai,
@@ -204,6 +191,7 @@ export default {
             label: options.fields['A2. Kota/Kabupaten']
           }
         })
+        this.districts.unshift({ label: 'Semua wilayah' })
       } else {
         return []
       }
@@ -218,13 +206,15 @@ export default {
       const params = []
 
       const district = this.query.district ? `{A2. Kota/Kabupaten}="${this.query.district.label}"` : ''
-      if (this.query.district) { params.push(district) }
+      if (this.query.district && this.query.district.label !== 'Semua wilayah') {
+        params.push(district)
+      }
 
       const typeVaccine = this.query.typeVaccine ? `{A4. Jenis Kegiatan}="${this.query.typeVaccine.label}"` : ''
       if (this.query.typeVaccine) { params.push(typeVaccine) }
 
       const age = this.query.age ? `SEARCH("${this.query.age}", ARRAYJOIN({D1. Target Usia}))` : ''
-      if (this.query.age) { params.push(age) }
+      if (this.query.age && this.query.age !== 'Semua usia') { params.push(age) }
 
       const date = this.query.startDate
         ? `OR(

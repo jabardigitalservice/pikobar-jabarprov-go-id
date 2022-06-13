@@ -131,10 +131,10 @@ export default {
           to: '#',
           label: 'Data',
           children: [
-            { to: '/data', label: 'Statisik' },
-            { to: '/distribution-case', label: 'Sebaran Kasus' },
-            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur' },
-            { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan' }
+            { label: 'Statisik', href: process.env.URL_STATISTIK },
+            { label: 'Sebaran Kasus', to: '/distribution-case' },
+            { label: 'Keterisian Tempat Tidur', href: process.env.URL_FASYANKES_TREATMENT },
+            { label: 'Peta Potensi dan Risiko Penularan', to: '/transmission-potential' }
           ]
         },
         { to: '/vaccine', label: 'Vaksinasi' },
