@@ -1,6 +1,6 @@
 <template>
   <footer class="app-footer">
-    <BaseSection class="bg-gray-100">
+    <BaseSection class="bg-brand-gray">
       <div class="app-footer__body">
         <div>
           <a href="/">
@@ -32,7 +32,7 @@
                 v-for="(val, indexRow) in row"
                 :key="indexRow"
               >
-                <a :href="val.link" target="_blank" rel="noopener noreferrer" class="app-footer__link">
+                <a :href="val.link" target="_blank" rel="noopener noreferrer" class="app-footer__link font-lato">
                   {{ val.title }}
                 </a>
               </li>
@@ -132,13 +132,13 @@ export default {
   }
 
   &__link-header {
-    @apply text-sm font-semibold tracking-wider uppercase;
-    color: #757575;
+    @apply text-base font-bold font-inter;
+    color: #424242;
+;
   }
 
   &__link {
-    @apply text-base;
-    font-family: Roboto;
+    @apply text-base font-inter;
     font-size: 14px;
     color: #757575;
   }

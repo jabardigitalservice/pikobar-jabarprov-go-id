@@ -63,8 +63,7 @@ $--bubble-gap: 16px;
   flex flex-col flex-no-wrap
   p-4
   justify-start items-center
-  rounded-lg
-  bg-gray-100;
+  rounded-lg;
 
   &__bubble {
     width: $--bubble-width;
