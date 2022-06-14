@@ -132,14 +132,11 @@ export default {
           label: 'Data',
           children: [
             { label: 'Statisik', href: process.env.URL_STATISTIK },
-            { label: 'Sebaran Kasus', to: '/distribution-case' },
-            { label: 'Keterisian Tempat Tidur', href: process.env.URL_FASYANKES_TREATMENT },
-            { label: 'Peta Potensi dan Risiko Penularan', to: '/transmission-potential' }
+            { label: 'Keterisian Tempat Tidur', href: process.env.URL_FASYANKES_TREATMENT }
           ]
         },
         { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/isoman', label: 'Isoman' },
-        { to: '/oxygen', label: 'Cari Oksigen' },
         {
           to: '#',
           label: 'Logistik',
@@ -157,9 +154,11 @@ export default {
             { to: '/contact', label: 'Kontak' },
             { to: '/cekbansos', label: 'Bantuan Sosial' },
             { to: '/info/infographics', label: 'Info Praktikal' },
-            { to: '/info/documents', label: 'Dokumen' }
+            { to: '/info/documents', label: 'Dokumen' },
+            { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan' }
           ]
-        }
+        },
+        { to: '/oxygen', label: 'Kontak' }
       ]
     }
   },
