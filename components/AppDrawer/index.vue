@@ -85,15 +85,12 @@ export default {
           icon: this.icon.faTachometerAlt,
           isExpanded: false,
           children: [
-            { to: '/data', label: 'Statistik', icon: this.icon.faChartLine },
-            { to: '/distribution-case', label: 'Sebaran Kasus', icon: this.icon.faMapMarked },
-            { to: '/distribution-healthcare', label: 'Keterisian Tempat Tidur', icon: this.icon.faBed },
-            { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan', icon: this.icon.faMap }
+            { to: process.env.URL_STATISTIK, label: 'Statistik', icon: this.icon.faChartLine },
+            { to: process.env.URL_FASYANKES_TREATMENT, label: 'Keterisian Tempat Tidur', icon: this.icon.faBed }
           ]
         },
         { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
-        { to: '/oxygen', label: 'Cari Oksigen', icon: this.icon.faLungs },
         {
           to: '#',
           label: 'Logistik',
@@ -112,12 +109,13 @@ export default {
           children: [
             { to: '/articles?tab=jabar', label: 'Berita', icon: this.icon.faNewspaper },
             { to: '/faq', label: 'FAQ', icon: this.icon.faQuestionCircle },
-            { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt },
             { to: '/cekbansos', label: 'Bantuan Sosial', icon: this.icon.faBoxOpen },
             { to: '/info/infographics', label: 'Info Praktikal', icon: this.icon.faInfoCircle },
-            { to: '/info/documents', label: 'Dokumen', icon: this.icon.faFolderOpen }
+            { to: '/info/documents', label: 'Dokumen', icon: this.icon.faFolderOpen },
+            { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan', icon: this.icon.faMap }
           ]
-        }
+        },
+        { to: '/contact', label: 'Kontak', icon: this.icon.faPhoneAlt }
       ]
     }
   },
