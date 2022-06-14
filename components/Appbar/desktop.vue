@@ -151,14 +151,13 @@ export default {
           children: [
             { to: '/articles', label: 'Berita' },
             { to: '/faq', label: 'FAQ' },
-            { to: '/contact', label: 'Kontak' },
             { to: '/cekbansos', label: 'Bantuan Sosial' },
             { to: '/info/infographics', label: 'Info Praktikal' },
             { to: '/info/documents', label: 'Dokumen' },
             { to: '/transmission-potential', label: 'Peta Potensi dan Risiko Penularan' }
           ]
         },
-        { to: '/oxygen', label: 'Kontak' }
+        { to: '/contact', label: 'Kontak' }
       ]
     }
   },
