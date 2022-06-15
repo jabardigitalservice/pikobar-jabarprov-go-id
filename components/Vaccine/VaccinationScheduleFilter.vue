@@ -50,12 +50,14 @@
       :preset-ranges="rangedate.presetRanges"
       @selected="onDateSelected"
     />
-    <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 290px;">
-      <div class="card-content pt-2 pb-2" style="margin: auto;">
+    <div v-if="isMobile" style="padding-bottom: 220px;">
+      <div>
         <vue-rangedate-picker
           :key="rangeDateKey"
           v-model="query.date"
           compact="true"
+          class="schedule-filter__date"
+          :style="cssVars"
           :captions="rangedate.captions"
           :preset-ranges="rangedate.presetRanges"
           @selected="onDateSelected"
@@ -267,21 +269,9 @@ export default {
   }
 
   &__date::v-deep {
-    @apply flex col-span-2 rounded-lg px-4
+    @apply col-span-2 rounded-lg
     cursor-pointer w-full h-full
     justify-between items-center;
-
-    border: 1px solid #e8e8e8;
-    color: #adadad;
-
-    .mx-input-wrapper {
-      @apply w-full
-    }
-
-    .mx-input {
-      @apply border-none shadow-none p-0
-      font-lato text-sm text-brand-gray-dark
-    }
   }
 
   &__button {
@@ -292,16 +282,42 @@ export default {
 
 <!-- override class css for library vue-rangedate-picker -->
 <style lang="scss">
-.calendar {
-  box-shadow: 0px 0px 0px 10000rem rgba(0,0,0,0.60) !important;
-  border-radius: 5px;
-}
 .input-date {
-  width: 100% !important;
+  width: 209% !important;
   height: 43px;
   padding: 10px !important;
   border: 1px solid #e8e8e8 !important;
   border-radius: 5px;
+}
+.calendar {
+  height: 230px !important;
+}
+.calendar-mobile {
+  width: 300px !important;
+}
+.calendar-wrap {
+  width: 100% !important;
+}
+.calendar-range-mobile {
+  height: 50%;
+}
+@media only screen and (min-width: 768px) {
+  .input-date {
+    width: 205% !important;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .calendar {
+    box-shadow: 0px 0px 0px 10000rem rgba(0,0,0,0.60) !important;
+    border-radius: 5px;
+  }
+  .input-date {
+    width: 100% !important;
+    height: 43px;
+    padding: 10px !important;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: 5px;
+  }
 }
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
