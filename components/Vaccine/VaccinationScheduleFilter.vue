@@ -55,9 +55,8 @@
         <vue-rangedate-picker
           :key="rangeDateKey"
           v-model="query.date"
-          compact="true"
+          :compact="isCompact"
           class="schedule-filter__date"
-          :style="cssVars"
           :captions="rangedate.captions"
           :preset-ranges="rangedate.presetRanges"
           @selected="onDateSelected"
@@ -92,6 +91,7 @@ export default {
   },
   data () {
     return {
+      isCompact: 'false',
       rangeDateKey: false,
       ageCategory,
       districts: [],
@@ -282,24 +282,27 @@ export default {
 
 <!-- override class css for library vue-rangedate-picker -->
 <style lang="scss">
-.input-date {
-  width: 209% !important;
-  height: 43px;
-  padding: 10px !important;
-  border: 1px solid #e8e8e8 !important;
-  border-radius: 5px;
-}
-.calendar {
-  height: 230px !important;
-}
-.calendar-mobile {
-  width: 300px !important;
-}
-.calendar-wrap {
-  width: 100% !important;
-}
-.calendar-range-mobile {
-  height: 50%;
+@media only screen and (max-width: 768px) {
+  .input-date {
+    width: 209% !important;
+    height: 43px;
+    padding: 10px !important;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: 5px;
+  }
+  .calendar {
+    --display: none !important;
+    height: 230px !important;
+  }
+  .calendar-mobile {
+    width: 300px !important;
+  }
+  .calendar-wrap {
+    width: 100% !important;
+  }
+  .calendar-range-mobile {
+    height: 50%;
+  }
 }
 @media only screen and (min-width: 768px) {
   .input-date {
