@@ -91,7 +91,7 @@ export default {
   },
   data () {
     return {
-      isCompact: 'false',
+      isCompact: 'true',
       rangeDateKey: false,
       ageCategory,
       districts: [],
@@ -251,6 +251,7 @@ export default {
     onDateSelected (daterange) {
       this.query.startDate = formatDate(daterange.start, 'yyyy-MM-dd')
       this.query.endDate = formatDate(daterange.end, 'yyyy-MM-dd')
+      this.onSearch()
     }
   }
 }
