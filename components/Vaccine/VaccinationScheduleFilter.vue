@@ -83,7 +83,6 @@
 import { format as formatDate } from 'date-fns'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
-import Utils from '~/utils/index.js'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
@@ -141,9 +140,16 @@ export default {
   async mounted () {
     await this.getDistrictList()
     await this.getTypeVaccine()
-    this.isMobile = Utils.checkIsMobile()
+    this.getResolution()
   },
   methods: {
+    getResolution () {
+      if (window.screen.width < 1024) {
+        this.isMobile = true
+      } else {
+        this.isMobile = false
+      }
+    },
     _uniqBy,
     formatDate,
     /**
