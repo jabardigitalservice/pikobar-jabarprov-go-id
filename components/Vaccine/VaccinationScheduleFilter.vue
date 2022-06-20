@@ -144,10 +144,10 @@ export default {
   },
   methods: {
     getResolution () {
-      if (window.screen.width < 1024) {
-        this.isMobile = true
-      } else {
+      if (window.screen.width >= 1024) {
         this.isMobile = false
+      } else {
+        this.isMobile = true
       }
     },
     _uniqBy,
