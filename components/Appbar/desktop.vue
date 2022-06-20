@@ -106,7 +106,7 @@
         <a
           v-show="enableDownload"
           :href="downloadAppURL"
-          class="appbar-desktop__download"
+          class="appbar-desktop__download ml-2"
           style="color: white;"
         >
           Download App

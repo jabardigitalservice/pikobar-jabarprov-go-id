@@ -81,6 +81,14 @@
     </Section>
     <Section class="bg-white">
       <EmergencyNumbers />
+      <a
+        href="https://hipaa.jotform.com/221661451935052"
+        target="_blank"
+        class="appbar-desktop__download block mt-10 mx-auto w-full md:w-1/4 lg:w-1/5"
+        style="color: white;"
+      >
+        Isi Survei
+      </a>
     </Section>
     <SponsorList />
   </div>
