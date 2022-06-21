@@ -90,7 +90,6 @@ export default {
   },
   data () {
     return {
-      widthEx: window.screen.width,
       isCompact: 'true',
       rangeDateKey: false,
       ageCategory,
