@@ -42,18 +42,21 @@
     </multiselect>
     <vue-rangedate-picker
       v-if="!isMobile"
+      :key="rangeDateKey"
       v-model="query.date"
       righttoleft="true"
-      class="schedule-filter__date"
+      class="schedule-filter__filter"
       :captions="rangedate.captions"
       :preset-ranges="rangedate.presetRanges"
       @selected="onDateSelected"
     />
-    <div v-if="isMobile" class="flex flex-wrap items-stretch pt-2 pb-2 pr-2 md:w-1/2 mt-2" style="margin: auto; padding-bottom: 290px;">
-      <div class="card-content pt-2 pb-2" style="margin: auto;">
+    <div v-if="isMobile" style="padding-bottom: 220px;">
+      <div>
         <vue-rangedate-picker
+          :key="rangeDateKey"
           v-model="query.date"
-          compact="true"
+          :compact="isCompact"
+          class="schedule-filter__date"
           :captions="rangedate.captions"
           :preset-ranges="rangedate.presetRanges"
           @selected="onDateSelected"
@@ -80,7 +83,6 @@
 import { format as formatDate } from 'date-fns'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
-import Utils from '~/utils/index.js'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
@@ -88,6 +90,8 @@ export default {
   },
   data () {
     return {
+      isCompact: 'true',
+      rangeDateKey: false,
       ageCategory,
       districts: [],
       typeVaccines: [],
@@ -133,12 +137,25 @@ export default {
       }
     }
   },
+  destroyed () {
+    window.removeEventListener('resize', this.getResolution)
+  },
+  created () {
+    this.getResolution()
+  },
   async mounted () {
+    window.addEventListener('resize', this.getResolution)
     await this.getDistrictList()
     await this.getTypeVaccine()
-    this.isMobile = Utils.checkIsMobile()
   },
   methods: {
+    getResolution () {
+      if (window.screen.width >= 1024) {
+        this.isMobile = false
+      } else {
+        this.isMobile = true
+      }
+    },
     _uniqBy,
     formatDate,
     /**
@@ -236,12 +253,8 @@ export default {
      * @property {Array}
      */
     onReset () {
-      this.query = {
-        district: null,
-        typeVaccine: null,
-        age: null,
-        date: null
-      }
+      Object.assign(this.$data.query, this.$options.data().query)
+      this.rangeDateKey = !this.rangeDateKey
       this.$emit('search', [])
     },
     /**
@@ -250,6 +263,7 @@ export default {
     onDateSelected (daterange) {
       this.query.startDate = formatDate(daterange.start, 'yyyy-MM-dd')
       this.query.endDate = formatDate(daterange.end, 'yyyy-MM-dd')
+      this.onSearch()
     }
   }
 }
@@ -268,25 +282,57 @@ export default {
   }
 
   &__date::v-deep {
-    @apply flex col-span-2 rounded-lg px-4
+    @apply col-span-2 rounded-lg
     cursor-pointer w-full h-full
     justify-between items-center;
-
-    border: 1px solid #e8e8e8;
-    color: #adadad;
-
-    .mx-input-wrapper {
-      @apply w-full
-    }
-
-    .mx-input {
-      @apply border-none shadow-none p-0
-      font-lato text-sm text-brand-gray-dark
-    }
   }
 
   &__button {
     @apply col-span-1
+  }
+}
+</style>
+
+<!-- override class css for library vue-rangedate-picker -->
+<style lang="scss">
+@media only screen and (max-width: 768px) {
+  .input-date {
+    width: 209% !important;
+    height: 43px;
+    padding: 10px !important;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: 5px;
+  }
+  .calendar {
+    --display: none !important;
+    height: 230px !important;
+  }
+  .calendar-mobile {
+    width: 300px !important;
+  }
+  .calendar-wrap {
+    width: 100% !important;
+  }
+  .calendar-range-mobile {
+    height: 50%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .input-date {
+    width: 205% !important;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .calendar {
+    box-shadow: 0px 0px 0px 10000rem rgba(0,0,0,0.60) !important;
+    border-radius: 5px;
+  }
+  .input-date {
+    width: 100% !important;
+    height: 43px;
+    padding: 10px !important;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: 5px;
   }
 }
 </style>

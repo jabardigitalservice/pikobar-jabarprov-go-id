@@ -96,11 +96,7 @@ export default {
   transition-property: transform, opacity;
   transition-duration: 0.45s;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  @apply z-10 fixed w-16 h-16 flex justify-center items-center rounded-full shadow-xl text-white text-xl bg-brand-green;
-
-  @screen lg {
-    --translateY: -2rem;
-  }
+  @apply z-10 fixed w-16 h-16 flex justify-center items-center rounded-full shadow-xl text-white text-xl bg-brand-green-darker;
 
   &:focus,
   &:active {
