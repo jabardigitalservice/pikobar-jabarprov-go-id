@@ -90,6 +90,7 @@ export default {
   },
   data () {
     return {
+      widthEx: window.screen.width,
       isCompact: 'true',
       rangeDateKey: false,
       ageCategory,
@@ -137,10 +138,16 @@ export default {
       }
     }
   },
+  destroyed () {
+    window.removeEventListener('resize', this.getResolution)
+  },
+  created () {
+    this.getResolution()
+  },
   async mounted () {
+    window.addEventListener('resize', this.getResolution)
     await this.getDistrictList()
     await this.getTypeVaccine()
-    this.getResolution()
   },
   methods: {
     getResolution () {
