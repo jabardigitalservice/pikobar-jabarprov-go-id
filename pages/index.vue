@@ -178,7 +178,7 @@ export default {
       ],
       button: {
         eventStatistics: {
-          backLink: '/data',
+          backLink: process.env.URL_STATISTIK,
           prompt: 'Selengkapnya',
           buttonType: 'outline'
         },
