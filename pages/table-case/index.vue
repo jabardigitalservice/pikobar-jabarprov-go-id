@@ -339,6 +339,9 @@ export default {
       return this.$store.getters['data-kasus-harian-kota-v2/itemsMap']
     },
   },
+  beforeMount () {
+    window.location.replace(process.env.URL_TABLE_CASE)
+  },
   mounted () {
     this.$nextTick(() => {
       Promise.all([

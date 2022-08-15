@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     theme: {
       screens: {
-        'xs': '280px'
+        xs: '280px'
       }
     },
     extend: {
@@ -31,10 +31,10 @@ module.exports = {
       }
     },
     fontFamily: {
-      'roboto': 'Roboto, sans-serif',
-      'lora': 'Lora, serif',
-      'lato': 'Lato, serif',
-      'inter': 'Inter, sans-serif'
+      roboto: 'Roboto, sans-serif',
+      lora: 'Lora, serif',
+      lato: 'Lato, serif',
+      inter: 'Inter, sans-serif'
     }
   },
   variants: {},
