@@ -203,6 +203,9 @@ export default {
       }
     })
   },
+  beforeMount () {
+    window.location.replace(process.env.URL_STATISTIK)
+  },
   mounted () {
     this.$nextTick(() => {
       this.$store.dispatch('statistics/getCases')

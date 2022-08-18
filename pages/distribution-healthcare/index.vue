@@ -134,6 +134,9 @@ export default {
       this.lastupdate = moment(val.last_update).locale('id').format('dddd, DD MMMM YYYY') + ' 11.00'
     }
   },
+  beforeMount () {
+    window.location.replace(process.env.URL_FASYANKES_TREATMENT)
+  },
   mounted () {
     this.$nextTick(() => {
       if (process.browser) {

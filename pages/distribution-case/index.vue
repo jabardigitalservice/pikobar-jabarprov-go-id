@@ -299,6 +299,9 @@ export default {
       this.optionsKecamatan = optionsKecamatan
     }
   },
+  beforeMount () {
+    window.location.replace(process.env.URL_STATISTIK)
+  },
   mounted () {
     this.$nextTick(() => {
       Promise.all([
