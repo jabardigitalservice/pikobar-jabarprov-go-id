@@ -5,7 +5,7 @@
       :options="districts"
       :allow-empty="true"
       track-by="id"
-      placeholder="Ketik Nama Kota/Kabupaten"
+      placeholder="Pilih Kota/Kab."
       :searchable="true"
       label="label"
       class="schedule-filter__filter"
@@ -18,22 +18,8 @@
       v-model="query.age"
       :options="ageCategory"
       :allow-empty="true"
-      placeholder="Pilih Range Usia"
+      placeholder="Pilih Sasaran/Usia"
       :searchable="true"
-      class="schedule-filter__filter"
-    >
-      <template v-slot:noResult>
-        Data Tidak Ditemukan.
-      </template>
-    </multiselect>
-    <multiselect
-      v-model="query.typeVaccine"
-      :options="typeVaccines"
-      :allow-empty="true"
-      track-by="id"
-      placeholder="Pilih Jenis Vaksinasi"
-      :searchable="true"
-      label="label"
       class="schedule-filter__filter"
     >
       <template v-slot:noResult>
@@ -50,6 +36,32 @@
       :preset-ranges="rangedate.presetRanges"
       @selected="onDateSelected"
     />
+    <multiselect
+      v-model="query.typeDosage"
+      :options="typeDosage"
+      :allow-empty="true"
+      track-by="id"
+      placeholder="Pilih Dosis Vaksinasi"
+      :searchable="true"
+      label="label"
+      class="schedule-filter__filter"
+    >
+      <template v-slot:noResult>
+        Data Tidak Ditemukan.
+      </template>
+    </multiselect>
+    <multiselect
+      v-model="query.typeVaccine"
+      :options="typeVaccines"
+      :allow-empty="true"
+      placeholder="Pilih Jenis Vaksinasi"
+      :searchable="true"
+      class="schedule-filter__filter"
+    >
+      <template v-slot:noResult>
+        Data Tidak Ditemukan.
+      </template>
+    </multiselect>
     <div v-if="isMobile" style="padding-bottom: 220px;">
       <div>
         <vue-rangedate-picker
@@ -83,6 +95,7 @@
 import { format as formatDate } from 'date-fns'
 import _uniqBy from 'lodash/uniqBy'
 import ageCategory from './ageCategory'
+import typeVaccines from './typeVaccines'
 import BaseButton from '@/components/Base/Button'
 export default {
   components: {
@@ -94,19 +107,21 @@ export default {
       rangeDateKey: false,
       ageCategory,
       districts: [],
-      typeVaccines: [],
+      typeVaccines,
+      typeDosage: [],
       query: {
         district: null, // {A2. Kota/Kabupaten}
         age: null, // {D1. Target Usia},
-        typeVaccine: null, // {A4. Jenis Kegiatan}
+        typeVaccine: null, // {Jenis Vaksin}
         date: null,
         startDate: null, // {C2. Start Date (Pelaksanaan)}
-        endDate: null // {C3. End Date (Pelaksanaan)}
+        endDate: null, // {C3. End Date (Pelaksanaan)},
+        typeDosage: null // {A4. Jenis Kegiatan}
       },
       isMobile: false,
       rangedate: {
         captions: {
-          title: 'Pilih Tanggal Pelaksanaan',
+          title: 'Pilih Tanggal Vaksinasi',
           ok_button: 'Terapkan'
         },
         presetRanges: {
@@ -146,7 +161,7 @@ export default {
   async mounted () {
     window.addEventListener('resize', this.getResolution)
     await this.getDistrictList()
-    await this.getTypeVaccine()
+    await this.getTypeDosage()
   },
   methods: {
     getResolution () {
@@ -163,8 +178,8 @@ export default {
      * and map it to multiselect needs
      * @returns {Array}
      */
-    async getTypeVaccine () {
-      const typeVaccineQuery = {
+    async getTypeDosage () {
+      const typeDosageQuery = {
         setState: false,
         params: {
           'fields[]': 'A4. Jenis Kegiatan',
@@ -172,10 +187,10 @@ export default {
           'sort[0][direction]': 'asc'
         }
       }
-      let typeVaccineOptions = await this.$store.dispatch('vaksin/getSchedule', typeVaccineQuery)
-      if (Array.isArray(typeVaccineOptions)) {
-        typeVaccineOptions = this._uniqBy(typeVaccineOptions, 'fields["A4. Jenis Kegiatan"]')
-        this.typeVaccines = typeVaccineOptions.map((options) => {
+      let typeDosageOptions = await this.$store.dispatch('vaksin/getSchedule', typeDosageQuery)
+      if (Array.isArray(typeDosageOptions)) {
+        typeDosageOptions = this._uniqBy(typeDosageOptions, 'fields["A4. Jenis Kegiatan"]')
+        this.typeDosage = typeDosageOptions.map((options) => {
           return {
             ...options,
             label: options.fields['A4. Jenis Kegiatan']
@@ -227,7 +242,10 @@ export default {
         params.push(district)
       }
 
-      const typeVaccine = this.query.typeVaccine ? `{A4. Jenis Kegiatan}="${this.query.typeVaccine.label}"` : ''
+      const typeDosage = this.query.typeDosage ? `{A4. Jenis Kegiatan}="${this.query.typeDosage.label}"` : ''
+      if (this.query.typeDosage) { params.push(typeDosage) }
+
+      const typeVaccine = this.query.typeVaccine ? `SEARCH("${this.query.typeVaccine}", ARRAYJOIN({Jenis Vaksin}))` : ''
       if (this.query.typeVaccine) { params.push(typeVaccine) }
 
       const age = this.query.age ? `SEARCH("${this.query.age}", ARRAYJOIN({D1. Target Usia}))` : ''
@@ -274,7 +292,7 @@ export default {
   @apply grid grid-cols-2 gap-4;
 
   @screen lg {
-    @apply grid-cols-8
+    @apply grid-cols-6;
   }
 
   &__filter {

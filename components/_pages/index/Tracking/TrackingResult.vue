@@ -54,7 +54,7 @@
           <p class="inline-block items-center px-5 text-base font-bold uppercase">
             {{ checkStatus(item.status) }}
             <span class="text-base text-brand-green-darker font-normal capitalize mx-3">
-              {{ item.date === ' WIB' ? '-' : `(${item.date})` }}
+              {{ item.date ? `(${formatDateIndonesia(item.date, 'DD MMMM YYYY - HH:mm')} WIB)` : '-' }}
             </span>
           </p>
         </div>
@@ -79,7 +79,7 @@
           <p class="inline-block items-center px-5 text-base font-bold uppercase text-gray-500">
             {{ checkStatus(item.status) }}
             <span class="text-base text-gray-500 font-normal capitalize mx-3">
-              {{ item.date === ' WIB' ? '-' : `(${item.date})` }}
+              {{ item.date ? `(${formatDateIndonesia(item.date, 'DD MMMM YYYY - HH:mm')} WIB)` : '-' }}
             </span>
           </p>
         </div>
@@ -98,6 +98,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { formatDateIndonesia } from '~/lib/date'
 export default {
   data () {
     return {
@@ -150,6 +151,7 @@ export default {
     ]
   },
   methods: {
+    formatDateIndonesia,
     checkStatusHighlight (status) {
       if (status === 'NEW_REQUEST') {
         return 'Permohonan Diajukan'
