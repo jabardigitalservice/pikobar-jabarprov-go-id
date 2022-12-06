@@ -16,7 +16,7 @@ export default {
           title: 'Ada pertanyaan seputar vaksinasi? Hubungi hotline kami di sini',
           prompt: 'Chatbot Pikobar',
           image: require('~/assets/illustrations/chatbot.svg'),
-          backlink: `https://api.whatsapp.com/send/?phone=6285697391854&text=${chatbotMsg}`
+          backlink: `https://wa.me/${process.env.HOTLINE_PIKOBAR}?text=${chatbotMsg}`
         },
         {
           title: 'Ingin mencari pertanyaan lain seputar vaksinasi? Cek di sini',
