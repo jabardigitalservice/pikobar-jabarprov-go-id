@@ -26,7 +26,8 @@ export default {
     URL_LOGISTIC_VACCINE: process.env.NUXT_ENV_LOGISTIC_VACCINE_URL,
     URL_STATISTIK: process.env.NUXT_ENV_STATISTIK_URL,
     URL_FASYANKES_TREATMENT: process.env.NUXT_ENV_FASYANKES_TREATMENT_URL,
-    URL_TABLE_CASE: process.env.NUXT_ENV_TABLE_CASE
+    URL_TABLE_CASE: process.env.NUXT_ENV_TABLE_CASE,
+    HOTLINE_PIKOBAR: process.env.NUXT_ENV_HOTLINE_PIKOBAR
   },
   router: {
     prefetchLinks: false

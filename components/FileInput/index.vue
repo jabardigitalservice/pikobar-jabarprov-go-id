@@ -12,7 +12,7 @@
       <span v-else>
         {{ file.name }}
       </span>
-      <span class="file-input__info">(Format JPG, JPEG, PNG, PDF)</span>
+      <span class="file-input__info">(Format JPG, JPEG, PNG)</span>
       <span class="file-input__info">Ukuran maksimal 5MB</span>
     </div>
     <input

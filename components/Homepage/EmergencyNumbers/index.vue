@@ -22,7 +22,7 @@ export default {
           title: 'Ingin chat lebih banyak lagi seputar Covid-19? Hubungi Hotline kami di sini',
           prompt: 'Hotline Pikobar',
           image: require('~/assets/illustrations/konsultasi-dokter.png'),
-          backlink: `https://wa.me/6285697391854?text=${hotlineMessage}`
+          backlink: `https://wa.me/${process.env.HOTLINE_PIKOBAR}?text=${hotlineMessage}`
         }
       ])
     }
