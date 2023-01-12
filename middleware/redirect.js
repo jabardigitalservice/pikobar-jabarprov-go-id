@@ -31,7 +31,7 @@ export default function ({ redirect, route }) {
     },
     {
       path: '/distribution-healthcare',
-      to: 'healtcare'
+      to: 'healthcare'
     },
     {
       path: '/table-case',
@@ -44,7 +44,7 @@ export default function ({ redirect, route }) {
       switch (el.to) {
         case 'table-case':
           return redirect(process.env.URL_TABLE_CASE)
-        case 'healtcare':
+        case 'healthcare':
           return redirect(process.env.URL_FASYANKES_TREATMENT)
         case 'statistic':
           return redirect(process.env.URL_STATISTIK)
