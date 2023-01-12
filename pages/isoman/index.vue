@@ -3,9 +3,6 @@
     <Section class="py-6 md:py-20 bg-white">
       <ContentCard v-bind="headerContent" />
     </Section>
-    <Section id="section-health-services" class="py-6 md:py-20 bg-brand-gray">
-      <IsomanJumbotron />
-    </Section>
     <Section class="bg-white">
       <div class="m-4 md:m-8 p-5 md:p-8 rounded-lg bg-white">
         <IsolasiMandiri />
@@ -22,7 +19,6 @@
 <script>
 import IsolasiMandiri from '~/components/_pages/index/IsolasiMandiri'
 import Testimonial from '~/components/_pages/testimonial'
-import IsomanJumbotron from '~/components/_pages/index/IsolasiMandiri/IsomanJumbotron'
 import ContentCard from '~/components/Base/ContentCard'
 import { Section } from '~/components/Base/Section'
 export default {
@@ -30,8 +26,7 @@ export default {
     IsolasiMandiri,
     Testimonial,
     ContentCard,
-    Section,
-    IsomanJumbotron
+    Section
   },
   data () {
     return {

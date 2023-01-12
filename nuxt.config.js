@@ -30,7 +30,8 @@ export default {
     HOTLINE_PIKOBAR: process.env.NUXT_ENV_HOTLINE_PIKOBAR
   },
   router: {
-    prefetchLinks: false
+    prefetchLinks: false,
+    middleware: 'redirect'
   },
   generate: {
     fallback: true,
