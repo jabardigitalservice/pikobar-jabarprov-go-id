@@ -19,4 +19,20 @@ export default function ({ redirect, route }) {
   if (route.path === '/oxygen') {
     return redirect('/isoman')
   }
+
+  if (route.path === '/data') {
+    return redirect(process.env.URL_STATISTIK)
+  }
+
+  if (route.path === '/distribution-case') {
+    return redirect(process.env.URL_STATISTIK)
+  }
+
+  if (route.path === '/distribution-healthcare') {
+    return redirect(process.env.URL_FASYANKES_TREATMENT)
+  }
+
+  if (route.path === '/table-case') {
+    return redirect(process.env.URL_TABLE_CASE)
+  }
 }
