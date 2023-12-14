@@ -135,7 +135,6 @@ export default {
             { label: 'Keterisian Tempat Tidur', href: process.env.URL_FASYANKES_TREATMENT }
           ]
         },
-        { to: '/vaccine', label: 'Vaksinasi' },
         { to: '/isoman', label: 'Isoman' },
         {
           to: '#',
