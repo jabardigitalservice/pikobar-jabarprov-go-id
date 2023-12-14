@@ -89,7 +89,6 @@ export default {
             { to: process.env.URL_FASYANKES_TREATMENT, label: 'Keterisian Tempat Tidur', icon: this.icon.faBed }
           ]
         },
-        { to: '/vaccine', label: 'Vaksinasi', icon: this.icon.faSyringe },
         { to: '/isoman', label: 'Isoman', icon: this.icon.faHotel },
         {
           to: '#',
