@@ -34,7 +34,7 @@
     "lodash": "^4.17.15",
     "lodash.orderby": "^4.6.0",
     "mdbvue": "^6.5.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "numbro": "^2.2.0",
     "nuxt": "^2.12.2",
     "nuxt-leaflet": "0.0.21",
